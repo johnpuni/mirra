@@ -117,7 +117,7 @@
 
 <main>
   <div class="search-box">
-    <input type="text" id="search" placeholder="イベントを検索（例: 夏、限定、復刻）">
+    <input type="text" id="search" placeholder="イベントを検索（例: 夏、限定、復刻、10周年）">
   </div>
 
   <div class="tab-buttons">
@@ -143,28 +143,32 @@
   const eventData = {
     '2025': [
       {
-        title: '夏祭りコラボ開催',
-        img: 'images/natsumatsuri.jpg',
-        link: 'https://example.com/2025-natsu'
+        title: '10周年復刻イベント',
+        img: 'images/10th.jpg',
+        link: 'event2025-10th.html',
+        keywords: ['10周年', '復刻', '8月前半', '限定']
       },
       {
-        title: 'お正月限定キャラ復刻',
-        img: 'images/newyear.jpg',
-        link: 'https://example.com/2025-newyear'
+        title: '夏祭りコラボ開催',
+        img: 'images/natsumatsuri.jpg',
+        link: 'https://example.com/2025-natsu',
+        keywords: ['夏', 'コラボ', '2025']
       }
     ],
     '2024': [
       {
         title: '梅雨イベント',
         img: 'images/rain.jpg',
-        link: 'https://example.com/2024-rain'
+        link: 'https://example.com/2024-rain',
+        keywords: ['梅雨', '2024']
       }
     ],
     '2023': [
       {
         title: '水着イベント2023',
         img: 'images/swimsuit.jpg',
-        link: 'https://example.com/2023-swimsuit'
+        link: 'https://example.com/2023-swimsuit',
+        keywords: ['水着', '2023']
       }
     ],
     '2022': [],
@@ -198,7 +202,12 @@
 
   function displayEvents(year, keyword = '') {
     const events = eventData[year] || [];
-    const filtered = events.filter(e => e.title.toLowerCase().includes(keyword));
+    const filtered = events.filter(e => {
+      if (!keyword) return true;
+      const titleMatch = e.title.toLowerCase().includes(keyword);
+      const keywordsMatch = e.keywords && e.keywords.some(k => k.toLowerCase().includes(keyword));
+      return titleMatch || keywordsMatch;
+    });
 
     if (filtered.length === 0) {
       content.innerHTML = '<p>該当するイベントはありません。</p>';
@@ -215,6 +224,7 @@
     `).join('');
   }
 
+  // 初期表示
   activateTab(currentYear);
 </script>
 
