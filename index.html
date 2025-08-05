@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
-  <title>ドロップダウンメニュー付きサイト</title>
+  <title>ドロップダウン＆タブ付きサイト</title>
   <style>
     body {
       font-family: sans-serif;
@@ -16,13 +16,11 @@
       padding: 10px 0;
     }
 
-    /* メニュー全体 */
     nav {
       max-width: 900px;
       margin: 0 auto;
     }
 
-    /* メニューリスト */
     ul.menu {
       list-style: none;
       margin: 0;
@@ -31,12 +29,10 @@
       justify-content: center;
     }
 
-    /* メニューアイテム */
     ul.menu > li {
       position: relative;
     }
 
-    /* 親リンク */
     ul.menu > li > a {
       display: block;
       padding: 15px 20px;
@@ -50,7 +46,6 @@
       background-color: #555;
     }
 
-    /* ドロップダウンメニュー（子メニュー） */
     ul.submenu {
       display: none;
       position: absolute;
@@ -74,7 +69,6 @@
       background-color: #666;
     }
 
-    /* 親メニューにマウス乗せたら子メニューを表示 */
     ul.menu > li:hover > ul.submenu {
       display: block;
     }
@@ -102,6 +96,43 @@
     main ul.recent-item li {
       margin-bottom: 8px;
     }
+
+    /* タブのスタイル */
+    .tabs {
+      margin-top: 30px;
+    }
+
+    .tab-buttons {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .tab-buttons button {
+      background-color: #eee;
+      border: 1px solid #ccc;
+      padding: 8px 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+
+    .tab-buttons button.active {
+      background-color: #333;
+      color: white;
+      border-color: #333;
+    }
+
+    .tab-content {
+      border: 1px solid #ccc;
+      padding: 20px;
+      border-radius: 5px;
+      min-height: 120px;
+      background-color: #fafafa;
+    }
   </style>
 </head>
 <body>
@@ -118,6 +149,18 @@
           <li><a href="#">属性別</a></li>
         </ul>
       </li>
+      <li>
+        <a href="#">エモモイベント ▾</a>
+        <ul class="submenu">
+          <li><a href="#" class="tab-link" data-year="2025">2025年</a></li>
+          <li><a href="#" class="tab-link" data-year="2024">2024年</a></li>
+          <li><a href="#" class="tab-link" data-year="2023">2023年</a></li>
+          <li><a href="#" class="tab-link" data-year="2022">2022年</a></li>
+          <li><a href="#" class="tab-link" data-year="2021">2021年</a></li>
+          <li><a href="#" class="tab-link" data-year="2020">2020年</a></li>
+          <li><a href="#" class="tab-link" data-year="2019">2019年</a></li>
+        </ul>
+      </li>
       <li><a href="#">今後の予定</a></li>
     </ul>
   </nav>
@@ -125,17 +168,64 @@
 
 <main>
   <h2>ようこそ！</h2>
-  <p>これはドロップダウンメニュー付きのホームページです。</p>
+  <p>これはドロップダウンメニューと年別タブ付きのサイトです。</p>
 
-  <section>
-    <h3>🆕 最近追加したもの</h3>
-    <ul class="recent-item">
-      <li>2025/08/01 - モンスト図鑑にキャラ追加</li>
-      <li>2025/07/30 - GGの自動化メモを公開</li>
-      <li>2025/07/25 - サイトデザインを変更</li>
-    </ul>
+  <section class="tabs">
+    <div class="tab-buttons">
+      <button data-year="2025" class="active">2025年</button>
+      <button data-year="2024">2024年</button>
+      <button data-year="2023">2023年</button>
+      <button data-year="2022">2022年</button>
+      <button data-year="2021">2021年</button>
+      <button data-year="2020">2020年</button>
+      <button data-year="2019">2019年</button>
+    </div>
+    <div class="tab-content" id="tab-content">
+      <p>2025年のエモモイベント情報がここに表示されます。</p>
+    </div>
   </section>
 </main>
+
+<script>
+  const buttons = document.querySelectorAll('.tab-buttons button');
+  const content = document.getElementById('tab-content');
+
+  const eventData = {
+    '2025': '2025年のエモモイベント情報がここに表示されます。',
+    '2024': '2024年のエモモイベント情報がここに表示されます。',
+    '2023': '2023年のエモモイベント情報がここに表示されます。',
+    '2022': '2022年のエモモイベント情報がここに表示されます。',
+    '2021': '2021年のエモモイベント情報がここに表示されます。',
+    '2020': '2020年のエモモイベント情報がここに表示されます。',
+    '2019': '2019年のエモモイベント情報がここに表示されます。',
+  };
+
+  // ドロップダウンの年リンククリック時にタブ切り替え
+  document.querySelectorAll('.tab-link').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const year = link.dataset.year;
+      activateTab(year);
+    });
+  });
+
+  // タブボタンクリック時に内容を切り替え
+  buttons.forEach(button => {
+    button.addEventListener('click', () => {
+      const year = button.dataset.year;
+      activateTab(year);
+    });
+  });
+
+  function activateTab(year) {
+    // ボタンのactive切り替え
+    buttons.forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.year === year);
+    });
+    // コンテンツ切り替え
+    content.innerHTML = `<p>${eventData[year]}</p>`;
+  }
+</script>
 
 </body>
 </html>
