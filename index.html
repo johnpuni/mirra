@@ -1,11 +1,87 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>はじめてのサイト</title>
-  </head>
-  <body>
-    <h1>こんにちは！GitHub Pages</h1>
-    <p>これはGitHubで作ったWebサイトです！</p>
-  </body>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>ホームページ</title>
+  <style>
+    /* 全体スタイル */
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      background-color: #f5f5f5;
+    }
+
+    /* ヘッダー（メニュー） */
+    header {
+      background-color: #333;
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+    }
+
+    nav a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    /* メインコンテンツ */
+    main {
+      padding: 40px;
+      text-align: center;
+    }
+
+    .section {
+      background-color: white;
+      padding: 30px;
+      margin: 20px auto;
+      max-width: 600px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      border-radius: 10px;
+    }
+
+    .recent-item {
+      text-align: left;
+      margin-top: 10px;
+    }
+
+    .recent-item li {
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ヘッダー（ナビ） -->
+  <header>
+    <nav>
+      <a href="#">ホーム</a>
+      <a href="#">最近追加</a>
+      <a href="#">お問い合わせ</a>
+    </nav>
+  </header>
+
+  <!-- メイン -->
+  <main>
+    <div class="section">
+      <h2>ようこそ！</h2>
+      <p>ここはあなたのホームページです。</p>
+    </div>
+
+    <div class="section">
+      <h3>🆕 最近追加したもの</h3>
+      <ul class="recent-item">
+        <li>2025/08/01 - モンスト図鑑にキャラ追加</li>
+        <li>2025/07/30 - GGの自動化メモを公開</li>
+        <li>2025/07/25 - サイトデザインを変更</li>
+      </ul>
+    </div>
+  </main>
+
+</body>
 </html>
