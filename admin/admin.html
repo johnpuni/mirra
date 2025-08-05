@@ -1,189 +1,110 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>イベント管理フォーム</title>
-<style>
-  body {
-    font-family: sans-serif;
-    margin: 20px;
-    background: #f0f0f0;
-  }
-  h1 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  form {
-    background: white;
-    padding: 15px 20px;
-    border-radius: 8px;
-    max-width: 600px;
-    margin: 0 auto 20px;
-    box-shadow: 0 0 8px rgba(0,0,0,0.1);
-  }
-  .event-item {
-    border: 1px solid #ddd;
-    padding: 10px 15px;
-    border-radius: 6px;
-    margin-bottom: 15px;
-    position: relative;
-    background: #fafafa;
-  }
-  .event-item:not(:last-child) {
-    margin-bottom: 15px;
-  }
-  .event-item label {
-    display: block;
-    font-weight: bold;
-    margin-top: 10px;
-  }
-  .event-item input[type="text"],
-  .event-item textarea {
-    width: 100%;
-    padding: 6px 8px;
-    margin-top: 4px;
-    box-sizing: border-box;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    font-size: 14px;
-  }
-  .event-item textarea {
-    resize: vertical;
-    min-height: 50px;
-  }
-  button {
-    background-color: #333;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    padding: 10px 18px;
-    font-weight: bold;
-    cursor: pointer;
-    margin-right: 10px;
-    transition: background-color 0.3s;
-  }
-  button:hover {
-    background-color: #555;
-  }
-  #add-event {
-    display: block;
-    margin: 0 auto 20px auto;
-    max-width: 600px;
-  }
-  #json-output {
-    width: 100%;
-    max-width: 600px;
-    min-height: 150px;
-    margin: 0 auto;
-    display: block;
-    padding: 10px;
-    font-family: monospace;
-    font-size: 14px;
-    white-space: pre-wrap;
-    background: #fff;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-  }
-  .remove-btn {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    background: #e74c3c;
-    border: none;
-    border-radius: 50%;
-    color: white;
-    font-weight: bold;
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-    font-size: 16px;
-    line-height: 20px;
-    text-align: center;
-    padding: 0;
-  }
-  .remove-btn:hover {
-    background: #c0392b;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>イベント登録フォーム</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f0f0f0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    form {
+      max-width: 600px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      font-size: 14px;
+      margin-top: 5px;
+      box-sizing: border-box;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    textarea {
+      resize: vertical;
+      min-height: 50px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      font-weight: bold;
+      background: #333;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    #result {
+      white-space: pre-wrap;
+      background: #fff;
+      border: 1px solid #ccc;
+      padding: 15px;
+      border-radius: 8px;
+      max-width: 600px;
+      margin: 20px auto 0;
+      font-family: monospace;
+      font-size: 14px;
+    }
+  </style>
 </head>
 <body>
 
-<h1>イベント登録・管理フォーム</h1>
+<h1>イベント登録フォーム</h1>
 
 <form id="event-form">
-  <div class="event-item">
-    <button type="button" class="remove-btn" title="このイベントを削除" style="display:none;">×</button>
-    <label>ID（例：01）<small>※画像名とリンクの数字部分</small></label>
-    <input type="text" name="id" required placeholder="例: 01" pattern="\d{2}" title="2桁の数字を入力してください" />
+  <label>イベントID（数字2桁）</label>
+  <input type="text" id="event-id" placeholder="例: 01" required pattern="\d{2}" />
 
-    <label>イベント名（任意）</label>
-    <input type="text" name="title" placeholder="例: 10周年復刻イベント" />
+  <label>イベントタイトル（任意）</label>
+  <input type="text" id="event-title" placeholder="例: 夏祭りイベント" />
 
-    <label>キーワード（カンマか改行で複数入力可）</label>
-    <textarea name="keywords" placeholder="例: 夏, 限定, 2025"></textarea>
-  </div>
+  <label>キーワード（カンマや改行で複数入力OK）</label>
+  <textarea id="event-keywords" placeholder="例: 夏, 2025, 限定"></textarea>
 
-  <button type="button" id="add-event">イベントを追加</button>
   <button type="submit">JSONを生成</button>
 </form>
 
-<textarea id="json-output" readonly placeholder="ここにJSONが生成されます"></textarea>
+<div id="result"></div>
 
 <script>
-  const form = document.getElementById('event-form');
-  const addBtn = document.getElementById('add-event');
-  const jsonOutput = document.getElementById('json-output');
-
-  // イベントフォームの１セットを複製して追加
-  addBtn.addEventListener('click', () => {
-    const firstEvent = form.querySelector('.event-item');
-    const clone = firstEvent.cloneNode(true);
-
-    // 値を空にする
-    clone.querySelectorAll('input, textarea').forEach(el => el.value = '');
-    // 削除ボタン表示
-    clone.querySelector('.remove-btn').style.display = 'block';
-
-    // 削除ボタンに動作を追加
-    clone.querySelector('.remove-btn').addEventListener('click', e => {
-      e.target.closest('.event-item').remove();
-    });
-
-    form.insertBefore(clone, addBtn);
-  });
-
-  // 最初のイベントブロックに削除ボタンは非表示（消せない）
-  form.querySelector('.event-item .remove-btn').style.display = 'none';
-
-  // フォーム送信でJSONを生成
-  form.addEventListener('submit', e => {
+  document.getElementById('event-form').addEventListener('submit', function (e) {
     e.preventDefault();
 
-    const events = [];
-    const eventItems = form.querySelectorAll('.event-item');
+    const id = document.getElementById('event-id').value.trim();
+    const title = document.getElementById('event-title').value.trim();
+    const keywordsRaw = document.getElementById('event-keywords').value.trim();
 
-    for (const item of eventItems) {
-      const id = item.querySelector('input[name="id"]').value.trim();
-      if (!id.match(/^\d{2}$/)) {
-        alert('IDは2桁の数字で入力してください');
-        return;
-      }
-      const title = item.querySelector('input[name="title"]').value.trim();
-      const keywordsRaw = item.querySelector('textarea[name="keywords"]').value.trim();
-
-      // カンマか改行で分割して配列化、空文字は除く
-      const keywords = keywordsRaw.split(/[\n,]+/).map(k => k.trim()).filter(k => k);
-
-      events.push({
-        id,
-        title,
-        keywords
-      });
+    if (!id.match(/^\d{2}$/)) {
+      alert("IDは2桁の数字で入力してください");
+      return;
     }
 
-    // JSON文字列化して出力
-    jsonOutput.value = JSON.stringify(events, null, 2);
+    const keywords = keywordsRaw.split(/[\n,]+/).map(k => k.trim()).filter(k => k);
+
+    const data = {
+      title: title,
+      img: `images/${id}.png`,
+      link: `mirr:///notice/r?c=${id}`,
+      keywords: keywords
+    };
+
+    document.getElementById('result').textContent = JSON.stringify(data, null, 2);
   });
 </script>
 
