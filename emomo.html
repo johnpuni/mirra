@@ -1,10 +1,8 @@
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
   <title>エモモイベント</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
       font-family: sans-serif;
@@ -14,73 +12,22 @@
 
     header {
       background-color: #333;
+      padding: 10px;
+      text-align: center;
       color: white;
-      padding: 10px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 1.2em;
-    }
-
-    .menu-toggle {
-      display: none;
-      flex-direction: column;
-      cursor: pointer;
-    }
-
-    .menu-toggle span {
-      height: 3px;
-      width: 25px;
-      background: white;
-      margin: 4px 0;
-    }
-
-    nav {
-      background-color: #444;
-    }
-
-    nav ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    nav li {
-      margin: 0;
-    }
-
-    nav a {
-      display: block;
-      padding: 10px 15px;
-      color: white;
-      text-decoration: none;
       font-weight: bold;
     }
 
-    nav a:hover {
-      background-color: #666;
+    nav {
+      text-align: center;
+      margin-top: 10px;
     }
 
-    @media (max-width: 600px) {
-      .menu-toggle {
-        display: flex;
-      }
-
-      nav ul {
-        display: none;
-        flex-direction: column;
-      }
-
-      nav ul.active {
-        display: flex;
-      }
+    nav a {
+      color: #333;
+      font-weight: bold;
+      text-decoration: none;
+      margin-right: 20px;
     }
 
     main {
@@ -130,6 +77,10 @@
     }
 
     .tab-content {
+      border: 1px solid #ccc;
+      padding: 20px;
+      border-radius: 5px;
+      background-color: #fafafa;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
       gap: 16px;
@@ -139,123 +90,68 @@
       position: relative;
       overflow: hidden;
       border-radius: 8px;
-      cursor: pointer;
     }
 
     .event-card img {
       width: 100%;
       height: auto;
+      display: block;
       border: 1px solid #ccc;
       border-radius: 6px;
-      display: block;
     }
 
-    .event-card .hover-title {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background-color: rgba(0,0,0,0.6);
-      color: white;
-      padding: 5px;
-      font-size: 12px;
-      text-align: center;
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-
-    .event-card:hover .hover-title {
-      opacity: 1;
-    }
-
-    /* モーダル */
-    .modal {
+    .hidden-title {
       display: none;
-      position: fixed;
-      z-index: 999;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(0,0,0,0.8);
-    }
-
-    .modal img {
-      display: block;
-      margin: 5% auto;
-      max-width: 90%;
-      border-radius: 8px;
     }
   </style>
 </head>
 <body>
 
 <header>
-  <h1>エモモイベント</h1>
-  <div class="menu-toggle" onclick="toggleMenu()">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
+  エモモイベント
 </header>
 
 <nav>
-  <ul id="nav-menu">
-    <li><a href="index.html">← ホームに戻る</a></li>
-  </ul>
+  <a href="index.html">← ホームに戻る</a>
 </nav>
 
 <main>
   <div class="search-box">
-    <input type="text" id="search" placeholder="イベントを検索（例: 夏 限定 復刻）">
+    <input type="text" id="search" placeholder="イベントを検索（例: 夏、限定、復刻、10周年）">
   </div>
 
   <div class="tab-buttons">
     <button data-year="2025" class="active">2025年</button>
     <button data-year="2024">2024年</button>
     <button data-year="2023">2023年</button>
+    <button data-year="2022">2022年</button>
+    <button data-year="2021">2021年</button>
+    <button data-year="2020">2020年</button>
+    <button data-year="2019">2019年</button>
   </div>
 
   <div class="tab-content" id="tab-content">
-    <!-- イベントカード -->
+    <!-- イベント画像が表示されます -->
   </div>
 </main>
-
-<div class="modal" id="image-modal" onclick="closeModal()">
-  <img id="modal-image" src="" alt="拡大画像">
-</div>
 
 <script>
   const buttons = document.querySelectorAll('.tab-buttons button');
   const content = document.getElementById('tab-content');
   const searchInput = document.getElementById('search');
-
-  const eventData = {
-    '2025': [
-      {
-        title: '10周年復刻イベント',
-        img: 'images/10th.jpg',
-        link: 'event2025-10th.html',
-        keywords: ['10周年', '復刻', '8月前半', '限定']
-      }
-    ],
-    '2024': [],
-    '2023': [
-      {
-        title: 'エモバト専用ギフトガチャ',
-        img: 'images/IMG_4423.png',
-        link: 'mirr:///notice/r?c=3306',
-        keywords: ['2023年', 'エモバト', '1月', '前半', 'ギフト']
-      }
-    ]
-  };
-
+  let eventData = {};
   let currentYear = '2025';
 
-  function toggleMenu() {
-    document.getElementById('nav-menu').classList.toggle('active');
-  }
+  fetch("data/events.json")
+    .then(response => response.json())
+    .then(json => {
+      eventData = json;
+      activateTab(currentYear);
+    })
+    .catch(error => {
+      console.error("JSONの読み込みに失敗しました:", error);
+      content.innerHTML = "<p>イベントデータの読み込みに失敗しました。</p>";
+    });
 
   buttons.forEach(button => {
     button.addEventListener('click', () => {
@@ -271,19 +167,23 @@
   });
 
   function activateTab(year) {
-    buttons.forEach(btn => btn.classList.toggle('active', btn.dataset.year === year));
+    buttons.forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.year === year);
+    });
     displayEvents(year);
   }
 
   function displayEvents(year, keyword = '') {
     let events = [];
+
     if (keyword) {
-      const keywordsArray = keyword.split(/\s+/).map(k => k.toLowerCase());
-      for (const y in eventData) events = events.concat(eventData[y]);
+      for (const y in eventData) {
+        events = events.concat(eventData[y]);
+      }
       const filtered = events.filter(e => {
-        const title = e.title.toLowerCase();
-        const allKeywords = (e.keywords || []).map(k => k.toLowerCase());
-        return keywordsArray.every(k => title.includes(k) || allKeywords.some(kw => kw.includes(k)));
+        const titleMatch = e.title.toLowerCase().includes(keyword);
+        const keywordsMatch = e.keywords && e.keywords.some(k => k.toLowerCase().includes(keyword));
+        return titleMatch || keywordsMatch;
       });
       renderEvents(filtered);
     } else {
@@ -298,26 +198,14 @@
       return;
     }
     content.innerHTML = events.map(event => `
-      <div class="event-card" onclick="openModal('${event.img}')">
+      <div class="event-card">
         <a href="${event.link}" target="_blank" title="${event.title}">
           <img src="${event.img}" alt="${event.title}">
-          <div class="hover-title">${event.title}</div>
+          <span class="hidden-title">${event.title}</span>
         </a>
       </div>
     `).join('');
   }
-
-  function openModal(imgSrc) {
-    document.getElementById('modal-image').src = imgSrc;
-    document.getElementById('image-modal').style.display = 'block';
-  }
-
-  function closeModal() {
-    document.getElementById('image-modal').style.display = 'none';
-  }
-
-  // 初期表示
-  activateTab(currentYear);
 </script>
 
 </body>
