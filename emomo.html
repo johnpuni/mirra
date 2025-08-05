@@ -82,7 +82,7 @@
       border-radius: 5px;
       background-color: #fafafa;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); /* ここ修正 */
       gap: 16px;
     }
 
@@ -98,6 +98,8 @@
       display: block;
       border: 1px solid #ccc;
       border-radius: 6px;
+      max-height: 200px; /* ← ここ追加 */
+      object-fit: cover;
     }
 
     .hidden-title {
