@@ -87,8 +87,8 @@
 <header>📱 イベント登録フォーム</header>
 
 <form id="event-form">
-  <label>🖼️ 画像ID（2桁）</label>
-  <input type="text" id="image-id" placeholder="例: 01" required pattern="\d{2}" inputmode="numeric" />
+  <label>🖼️ 画像ID（拡張子なし、桁数自由）</label>
+  <input type="text" id="image-id" placeholder="例: 1, 001, 123" required inputmode="numeric" />
 
   <label>🔗 リンクID（数字）</label>
   <input type="text" id="link-id" placeholder="例: 1234" required pattern="\d+" inputmode="numeric" />
@@ -113,8 +113,8 @@
     const title = document.getElementById('event-title').value.trim();
     const keywordsRaw = document.getElementById('event-keywords').value.trim();
 
-    if (!imageId.match(/^\d{2}$/)) {
-      alert("画像IDは2桁の数字で入力してください");
+    if (!imageId.match(/^\d+$/)) {
+      alert("画像IDは数字で入力してください");
       return;
     }
     if (!linkId.match(/^\d+$/)) {
