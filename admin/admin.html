@@ -68,8 +68,11 @@
 <h1>イベント登録フォーム</h1>
 
 <form id="event-form">
-  <label>イベントID（数字2桁）</label>
-  <input type="text" id="event-id" placeholder="例: 01" required pattern="\d{2}" />
+  <label>画像ID（例: 01）</label>
+  <input type="text" id="image-id" placeholder="画像ファイル名（拡張子なし）" required pattern="\d{2}" />
+
+  <label>リンクID（例: 1234）</label>
+  <input type="text" id="link-id" placeholder="mirr:///notice/r?c= の後ろの数字" required pattern="\d+" />
 
   <label>イベントタイトル（任意）</label>
   <input type="text" id="event-title" placeholder="例: 夏祭りイベント" />
@@ -86,12 +89,17 @@
   document.getElementById('event-form').addEventListener('submit', function (e) {
     e.preventDefault();
 
-    const id = document.getElementById('event-id').value.trim();
+    const imageId = document.getElementById('image-id').value.trim();
+    const linkId = document.getElementById('link-id').value.trim();
     const title = document.getElementById('event-title').value.trim();
     const keywordsRaw = document.getElementById('event-keywords').value.trim();
 
-    if (!id.match(/^\d{2}$/)) {
-      alert("IDは2桁の数字で入力してください");
+    if (!imageId.match(/^\d{2}$/)) {
+      alert("画像IDは2桁の数字で入力してください");
+      return;
+    }
+    if (!linkId.match(/^\d+$/)) {
+      alert("リンクIDは数字で入力してください");
       return;
     }
 
@@ -99,8 +107,8 @@
 
     const data = {
       title: title,
-      img: `images/${id}.png`,
-      link: `mirr:///notice/r?c=${id}`,
+      img: `images/${imageId}.png`,
+      link: `mirr:///notice/r?c=${linkId}`,
       keywords: keywords
     };
 
