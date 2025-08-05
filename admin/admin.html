@@ -7,80 +7,99 @@
   <style>
     body {
       font-family: sans-serif;
-      background: #f0f0f0;
-      padding: 20px;
+      background: #fafafa;
+      margin: 0;
+      padding: 0;
     }
-    h1 {
-      text-align: center;
-    }
-    form {
-      max-width: 600px;
-      margin: 0 auto;
-      background: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-    label {
-      display: block;
-      margin-top: 15px;
-      font-weight: bold;
-    }
-    input, textarea {
-      width: 100%;
-      padding: 8px;
-      font-size: 14px;
-      margin-top: 5px;
-      box-sizing: border-box;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-    textarea {
-      resize: vertical;
-      min-height: 50px;
-    }
-    button {
-      margin-top: 20px;
-      padding: 10px 20px;
-      font-size: 16px;
-      font-weight: bold;
+
+    header {
       background: #333;
       color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 18px;
+    }
+
+    form {
+      max-width: 95%;
+      width: 500px;
+      margin: 20px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+      display: block;
+      margin: 15px 0 5px;
+      font-weight: bold;
+      font-size: 15px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    textarea {
+      min-height: 60px;
+      resize: vertical;
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      background: #4CAF50;
+      color: white;
+      padding: 12px;
+      font-size: 16px;
       border: none;
       border-radius: 6px;
       cursor: pointer;
     }
+
+    button:hover {
+      background: #45a049;
+    }
+
     #result {
-      white-space: pre-wrap;
+      max-width: 95%;
+      width: 500px;
+      margin: 20px auto;
       background: #fff;
       border: 1px solid #ccc;
+      border-radius: 10px;
       padding: 15px;
-      border-radius: 8px;
-      max-width: 600px;
-      margin: 20px auto 0;
       font-family: monospace;
+      white-space: pre-wrap;
       font-size: 14px;
+      word-break: break-word;
     }
   </style>
 </head>
 <body>
 
-<h1>イベント登録フォーム</h1>
+<header>📱 イベント登録フォーム</header>
 
 <form id="event-form">
-  <label>画像ID（例: 01）</label>
-  <input type="text" id="image-id" placeholder="画像ファイル名（拡張子なし）" required pattern="\d{2}" />
+  <label>🖼️ 画像ID（2桁）</label>
+  <input type="text" id="image-id" placeholder="例: 01" required pattern="\d{2}" inputmode="numeric" />
 
-  <label>リンクID（例: 1234）</label>
-  <input type="text" id="link-id" placeholder="mirr:///notice/r?c= の後ろの数字" required pattern="\d+" />
+  <label>🔗 リンクID（数字）</label>
+  <input type="text" id="link-id" placeholder="例: 1234" required pattern="\d+" inputmode="numeric" />
 
-  <label>イベントタイトル（任意）</label>
-  <input type="text" id="event-title" placeholder="例: 夏祭りイベント" />
+  <label>📝 イベントタイトル（任意）</label>
+  <input type="text" id="event-title" placeholder="例: 夏の限定イベント" />
 
-  <label>キーワード（カンマや改行で複数入力OK）</label>
-  <textarea id="event-keywords" placeholder="例: 夏, 2025, 限定"></textarea>
+  <label>🏷️ キーワード（カンマ or 改行で複数入力）</label>
+  <textarea id="event-keywords" placeholder="夏, 8月, 限定"></textarea>
 
-  <button type="submit">JSONを生成</button>
+  <button type="submit">✅ JSONを生成する</button>
 </form>
 
 <div id="result"></div>
