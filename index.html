@@ -1,87 +1,149 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <title>ホームページ</title>
+  <meta charset="UTF-8" />
+  <title>ドロップダウンメニュー付きサイト</title>
   <style>
-    /* 全体スタイル */
     body {
       font-family: sans-serif;
       margin: 0;
       background-color: #f5f5f5;
     }
 
-    /* ヘッダー（メニュー） */
+    /* ヘッダー */
     header {
       background-color: #333;
-      color: white;
-      padding: 20px 0;
-      text-align: center;
+      padding: 10px 0;
     }
 
-    nav a {
+    /* メニュー全体 */
+    nav {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* メニューリスト */
+    ul.menu {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* メニューアイテム */
+    ul.menu > li {
+      position: relative;
+    }
+
+    /* 親リンク */
+    ul.menu > li > a {
+      display: block;
+      padding: 15px 20px;
       color: white;
-      margin: 0 15px;
       text-decoration: none;
       font-weight: bold;
+      cursor: pointer;
     }
 
-    nav a:hover {
-      text-decoration: underline;
+    ul.menu > li > a:hover {
+      background-color: #555;
     }
 
-    /* メインコンテンツ */
+    /* ドロップダウンメニュー（子メニュー） */
+    ul.submenu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background-color: #444;
+      min-width: 180px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+      border-radius: 0 0 5px 5px;
+      z-index: 1000;
+    }
+
+    ul.submenu li a {
+      display: block;
+      padding: 10px 15px;
+      color: white;
+      text-decoration: none;
+    }
+
+    ul.submenu li a:hover {
+      background-color: #666;
+    }
+
+    /* 親メニューにマウス乗せたら子メニューを表示 */
+    ul.menu > li:hover > ul.submenu {
+      display: block;
+    }
+
+    /* メイン */
     main {
-      padding: 40px;
-      text-align: center;
-    }
-
-    .section {
+      max-width: 700px;
+      margin: 40px auto;
       background-color: white;
       padding: 30px;
-      margin: 20px auto;
-      max-width: 600px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      border-radius: 10px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
 
-    .recent-item {
+    main h2 {
+      margin-top: 0;
+      color: #333;
+    }
+
+    main ul.recent-item {
       text-align: left;
-      margin-top: 10px;
+      padding-left: 20px;
     }
 
-    .recent-item li {
-      margin-bottom: 5px;
+    main ul.recent-item li {
+      margin-bottom: 8px;
     }
   </style>
 </head>
 <body>
 
-  <!-- ヘッダー（ナビ） -->
-  <header>
-    <nav>
-      <a href="#">ホーム</a>
-      <a href="#">最近追加</a>
-      <a href="#">お問い合わせ</a>
-    </nav>
-  </header>
+<header>
+  <nav>
+    <ul class="menu">
+      <li><a href="#">ホーム</a></li>
+      <li>
+        <a href="#">モンスト図鑑 ▾</a>
+        <ul class="submenu">
+          <li><a href="#">キャラクター一覧</a></li>
+          <li><a href="#">最新キャラ</a></li>
+          <li><a href="#">属性別</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#">自動化メモ ▾</a>
+        <ul class="submenu">
+          <li><a href="#">ゲーム操作</a></li>
+          <li><a href="#">OCR認識</a></li>
+          <li><a href="#">スプレッドシート連携</a></li>
+        </ul>
+      </li>
+      <li><a href="#">サイトについて</a></li>
+    </ul>
+  </nav>
+</header>
 
-  <!-- メイン -->
-  <main>
-    <div class="section">
-      <h2>ようこそ！</h2>
-      <p>ここはあなたのホームページです。</p>
-    </div>
+<main>
+  <h2>ようこそ！</h2>
+  <p>これはドロップダウンメニュー付きのホームページです。</p>
 
-    <div class="section">
-      <h3>🆕 最近追加したもの</h3>
-      <ul class="recent-item">
-        <li>2025/08/01 - モンスト図鑑にキャラ追加</li>
-        <li>2025/07/30 - GGの自動化メモを公開</li>
-        <li>2025/07/25 - サイトデザインを変更</li>
-      </ul>
-    </div>
-  </main>
+  <section>
+    <h3>🆕 最近追加したもの</h3>
+    <ul class="recent-item">
+      <li>2025/08/01 - モンスト図鑑にキャラ追加</li>
+      <li>2025/07/30 - GGの自動化メモを公開</li>
+      <li>2025/07/25 - サイトデザインを変更</li>
+    </ul>
+  </section>
+</main>
 
 </body>
 </html>
