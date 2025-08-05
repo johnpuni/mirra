@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>イベント登録フォーム</title>
+  <title>イベント登録フォーム（連続追加対応）</title>
   <style>
     body {
       font-family: sans-serif;
@@ -70,7 +70,7 @@
     #result {
       max-width: 95%;
       width: 500px;
-      margin: 20px auto;
+      margin: 20px auto 40px;
       background: #fff;
       border: 1px solid #ccc;
       border-radius: 10px;
@@ -80,14 +80,22 @@
       font-size: 14px;
       word-break: break-word;
     }
+
+    .json-entry {
+      margin-bottom: 10px;
+      padding: 10px;
+      border: 1px dashed #aaa;
+      border-radius: 6px;
+      background-color: #f9f9f9;
+    }
   </style>
 </head>
 <body>
 
-<header>📱 イベント登録フォーム</header>
+<header>📱 イベント登録フォーム（連続追加OK）</header>
 
 <form id="event-form">
-  <label>🖼️ 画像ID（拡張子なし、桁数自由）</label>
+  <label>🖼️ 画像ID（拡張子なし）</label>
   <input type="text" id="image-id" placeholder="例: 1, 001, 123" required inputmode="numeric" />
 
   <label>🔗 リンクID（数字）</label>
@@ -99,13 +107,16 @@
   <label>🏷️ キーワード（カンマ or 改行で複数入力）</label>
   <textarea id="event-keywords" placeholder="夏, 8月, 限定"></textarea>
 
-  <button type="submit">✅ JSONを生成する</button>
+  <button type="submit">✅ JSONを追加する</button>
 </form>
 
-<div id="result"></div>
+<div id="result"><h3>📋 追加されたイベント一覧：</h3></div>
 
 <script>
-  document.getElementById('event-form').addEventListener('submit', function (e) {
+  const form = document.getElementById('event-form');
+  const resultDiv = document.getElementById('result');
+
+  form.addEventListener('submit', function (e) {
     e.preventDefault();
 
     const imageId = document.getElementById('image-id').value.trim();
@@ -131,7 +142,14 @@
       keywords: keywords
     };
 
-    document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+    const entry = document.createElement("div");
+    entry.className = "json-entry";
+    entry.textContent = JSON.stringify(data, null, 2);
+    resultDiv.appendChild(entry);
+
+    // フォームをクリア
+    form.reset();
+    document.getElementById('image-id').focus();
   });
 </script>
 
