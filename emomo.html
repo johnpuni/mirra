@@ -81,37 +81,27 @@
       padding: 20px;
       border-radius: 5px;
       background-color: #fafafa;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 16px;
     }
 
     .event-card {
-      display: flex;
-      align-items: center;
-      margin-bottom: 15px;
-      background-color: #fff;
-      border: 1px solid #ddd;
-      border-radius: 6px;
+      position: relative;
       overflow: hidden;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+      border-radius: 8px;
     }
 
     .event-card img {
-      width: 100px;
-      height: 100px;
-      object-fit: cover;
+      width: 100%;
+      height: auto;
+      display: block;
+      border: 1px solid #ccc;
+      border-radius: 6px;
     }
 
-    .event-info {
-      padding: 10px 15px;
-    }
-
-    .event-info a {
-      text-decoration: none;
-      color: #333;
-      font-weight: bold;
-    }
-
-    .event-info a:hover {
-      color: #0066cc;
+    .hidden-title {
+      display: none;
     }
   </style>
 </head>
@@ -141,7 +131,7 @@
   </div>
 
   <div class="tab-content" id="tab-content">
-    <!-- イベントが表示される -->
+    <!-- イベント画像が表示される -->
   </div>
 </main>
 
@@ -217,12 +207,10 @@
 
     content.innerHTML = filtered.map(event => `
       <div class="event-card">
-        <a href="${event.link}" target="_blank">
+        <a href="${event.link}" target="_blank" title="${event.title}">
           <img src="${event.img}" alt="${event.title}">
+          <span class="hidden-title">${event.title}</span>
         </a>
-        <div class="event-info">
-          <a href="${event.link}" target="_blank">${event.title}</a>
-        </div>
       </div>
     `).join('');
   }
