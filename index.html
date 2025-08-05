@@ -1,14 +1,134 @@
-<!-- index.htmlのメニュー部分一部 -->
-<ul class="menu">
-  <li><a href="#">ホーム</a></li>
-  <li>
-    <a href="#">メニュー ▾</a>
-    <ul class="submenu">
-      <li><a href="#">キャラクター一覧</a></li>
-      <li><a href="#">最新キャラ</a></li>
-      <li><a href="#">属性別</a></li>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>ホームページ</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      background-color: #f5f5f5;
+    }
+
+    header {
+      background-color: #333;
+      padding: 10px 0;
+    }
+
+    nav {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    ul.menu {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    ul.menu > li {
+      position: relative;
+    }
+
+    ul.menu > li > a {
+      display: block;
+      padding: 15px 20px;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    ul.menu > li > a:hover {
+      background-color: #555;
+    }
+
+    ul.submenu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background-color: #444;
+      min-width: 180px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+      border-radius: 0 0 5px 5px;
+      z-index: 1000;
+    }
+
+    ul.submenu li a {
+      display: block;
+      padding: 10px 15px;
+      color: white;
+      text-decoration: none;
+    }
+
+    ul.submenu li a:hover {
+      background-color: #666;
+    }
+
+    ul.menu > li:hover > ul.submenu {
+      display: block;
+    }
+
+    main {
+      max-width: 700px;
+      margin: 40px auto;
+      background-color: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    main h2 {
+      margin-top: 0;
+      color: #333;
+    }
+
+    main ul.recent-item {
+      text-align: left;
+      padding-left: 20px;
+    }
+
+    main ul.recent-item li {
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <ul class="menu">
+      <li><a href="#">ホーム</a></li>
+      <li>
+        <a href="#">メニュー ▾</a>
+        <ul class="submenu">
+          <li><a href="#">キャラクター一覧</a></li>
+          <li><a href="#">最新キャラ</a></li>
+          <li><a href="#">属性別</a></li>
+        </ul>
+      </li>
+      <li><a href="emomo.html">エモモイベント</a></li>
+      <li><a href="#">今後の予定</a></li>
     </ul>
-  </li>
-  <li><a href="emomo.html">エモモイベント</a></li> <!-- ここがリンクに -->
-  <li><a href="#">今後の予定</a></li>
-</ul>
+  </nav>
+</header>
+
+<main>
+  <h2>ようこそ！</h2>
+  <p>これはホームページです。メニューや最新情報を表示します。</p>
+
+  <section>
+    <h3>🆕 最近追加したもの</h3>
+    <ul class="recent-item">
+      <li>2025/08/01 - モンスト図鑑にキャラ追加</li>
+      <li>2025/07/30 - GGの自動化メモを公開</li>
+      <li>2025/07/25 - サイトデザインを変更</li>
+    </ul>
+  </section>
+</main>
+
+</body>
+</html>
