@@ -12,24 +12,44 @@
 
     header {
       background-color: #333;
-      padding: 10px 0;
+      padding: 10px;
       text-align: center;
       color: white;
       font-weight: bold;
     }
 
+    nav {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    nav a {
+      color: #333;
+      font-weight: bold;
+      text-decoration: none;
+      margin-right: 20px;
+    }
+
     main {
       max-width: 700px;
-      margin: 40px auto;
+      margin: 20px auto;
       background-color: white;
       padding: 30px;
       border-radius: 8px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
 
-    /* タブのスタイル */
-    .tabs {
-      margin-top: 30px;
+    .search-box {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .search-box input {
+      padding: 8px;
+      width: 70%;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
     }
 
     .tab-buttons {
@@ -63,6 +83,10 @@
       min-height: 120px;
       background-color: #fafafa;
     }
+
+    .event-item {
+      margin-bottom: 10px;
+    }
   </style>
 </head>
 <body>
@@ -71,50 +95,81 @@
   エモモイベント
 </header>
 
+<nav>
+  <a href="index.html">← ホームに戻る</a>
+</nav>
+
 <main>
-  <section class="tabs">
-    <div class="tab-buttons">
-      <button data-year="2025" class="active">2025年</button>
-      <button data-year="2024">2024年</button>
-      <button data-year="2023">2023年</button>
-      <button data-year="2022">2022年</button>
-      <button data-year="2021">2021年</button>
-      <button data-year="2020">2020年</button>
-      <button data-year="2019">2019年</button>
-    </div>
-    <div class="tab-content" id="tab-content">
-      <p>2025年のエモモイベント情報がここに表示されます。</p>
-    </div>
-  </section>
+  <div class="search-box">
+    <input type="text" id="search" placeholder="イベントを検索（例: 夏、復刻、限定）">
+  </div>
+
+  <div class="tab-buttons">
+    <button data-year="2025" class="active">2025年</button>
+    <button data-year="2024">2024年</button>
+    <button data-year="2023">2023年</button>
+    <button data-year="2022">2022年</button>
+    <button data-year="2021">2021年</button>
+    <button data-year="2020">2020年</button>
+    <button data-year="2019">2019年</button>
+  </div>
+
+  <div class="tab-content" id="tab-content">
+    <!-- イベント内容がここに入る -->
+  </div>
 </main>
 
 <script>
   const buttons = document.querySelectorAll('.tab-buttons button');
   const content = document.getElementById('tab-content');
+  const searchInput = document.getElementById('search');
 
+  // 年別イベントデータ（仮）
   const eventData = {
-    '2025': '2025年のエモモイベント情報がここに表示されます。',
-    '2024': '2024年のエモモイベント情報がここに表示されます。',
-    '2023': '2023年のエモモイベント情報がここに表示されます。',
-    '2022': '2022年のエモモイベント情報がここに表示されます。',
-    '2021': '2021年のエモモイベント情報がここに表示されます。',
-    '2020': '2020年のエモモイベント情報がここに表示されます。',
-    '2019': '2019年のエモモイベント情報がここに表示されます。',
+    '2025': ['夏祭りコラボ開催', 'お正月限定キャラ復刻', 'エモモフェス2025'],
+    '2024': ['梅雨イベント', 'ハロウィン限定', '復刻ガチャ'],
+    '2023': ['春の大型アップデート', '水着イベント2023'],
+    '2022': ['クリスマスコラボ', '学園祭キャンペーン'],
+    '2021': ['お年玉配布', 'バレンタインイベント'],
+    '2020': ['周年記念キャンペーン', '限定エモモ追加'],
+    '2019': ['初期リリースイベント', '第一回エモモ祭り'],
   };
 
+  let currentYear = '2025';
+
+  // タブ切り替え処理
   buttons.forEach(button => {
     button.addEventListener('click', () => {
       const year = button.dataset.year;
+      currentYear = year;
       activateTab(year);
+      searchInput.value = ''; // 検索クリア
     });
+  });
+
+  // 検索機能
+  searchInput.addEventListener('input', () => {
+    const keyword = searchInput.value.trim().toLowerCase();
+    displayEvents(currentYear, keyword);
   });
 
   function activateTab(year) {
     buttons.forEach(btn => {
       btn.classList.toggle('active', btn.dataset.year === year);
     });
-    content.innerHTML = `<p>${eventData[year]}</p>`;
+    displayEvents(year);
   }
+
+  function displayEvents(year, keyword = '') {
+    const events = eventData[year] || [];
+    const filtered = events.filter(e => e.toLowerCase().includes(keyword));
+    content.innerHTML = filtered.length
+      ? filtered.map(e => `<div class="event-item">・${e}</div>`).join('')
+      : '<p>該当するイベントはありません。</p>';
+  }
+
+  // 初期表示
+  activateTab(currentYear);
 </script>
 
 </body>
