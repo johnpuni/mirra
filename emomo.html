@@ -181,9 +181,8 @@
 
   buttons.forEach(button => {
     button.addEventListener('click', () => {
-      const year = button.dataset.year;
-      currentYear = year;
-      activateTab(year);
+      currentYear = button.dataset.year;
+      activateTab(currentYear);
       searchInput.value = '';
     });
   });
@@ -201,20 +200,32 @@
   }
 
   function displayEvents(year, keyword = '') {
-    const events = eventData[year] || [];
-    const filtered = events.filter(e => {
-      if (!keyword) return true;
-      const titleMatch = e.title.toLowerCase().includes(keyword);
-      const keywordsMatch = e.keywords && e.keywords.some(k => k.toLowerCase().includes(keyword));
-      return titleMatch || keywordsMatch;
-    });
+    let events = [];
 
-    if (filtered.length === 0) {
+    if (keyword) {
+      // 検索語があれば全年度イベントから探す
+      for (const y in eventData) {
+        events = events.concat(eventData[y]);
+      }
+      const filtered = events.filter(e => {
+        const titleMatch = e.title.toLowerCase().includes(keyword);
+        const keywordsMatch = e.keywords && e.keywords.some(k => k.toLowerCase().includes(keyword));
+        return titleMatch || keywordsMatch;
+      });
+      renderEvents(filtered);
+    } else {
+      // 検索語なしは選択中の年度だけ表示
+      events = eventData[year] || [];
+      renderEvents(events);
+    }
+  }
+
+  function renderEvents(events) {
+    if (events.length === 0) {
       content.innerHTML = '<p>該当するイベントはありません。</p>';
       return;
     }
-
-    content.innerHTML = filtered.map(event => `
+    content.innerHTML = events.map(event => `
       <div class="event-card">
         <a href="${event.link}" target="_blank" title="${event.title}">
           <img src="${event.img}" alt="${event.title}">
