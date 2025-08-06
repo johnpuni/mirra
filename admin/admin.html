@@ -2,36 +2,36 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>イベント追加フォーム（画像数字指定）</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>エモモイベント登録フォーム</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       font-family: sans-serif;
-      background: #f9f9f9;
-      padding: 1em;
+      background-color: #f4f4f4;
+      padding: 20px;
       margin: 0;
     }
     form {
       background: #fff;
-      padding: 1em;
-      border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      max-width: 96%;
-      margin: 0 auto 20px;
+      padding: 20px;
+      border-radius: 8px;
+      max-width: 700px;
+      margin: 0 auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
     label {
       display: block;
-      margin-top: 1em;
+      margin-top: 15px;
       font-weight: bold;
     }
-    input[type="text"] {
+    input[type="text"], textarea {
       width: 100%;
-      padding: 12px;
-      font-size: 16px;
-      margin-top: 6px;
+      padding: 10px;
+      margin-top: 5px;
       box-sizing: border-box;
-      border-radius: 6px;
       border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 16px;
     }
     .checkbox-group {
       display: flex;
@@ -39,64 +39,44 @@
       gap: 10px;
       margin-top: 5px;
     }
+    .checkbox-group label {
+      font-weight: normal;
+      background: #eaeaea;
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-size: 14px;
+    }
     button {
-      width: 100%;
-      margin-top: 20px;
-      padding: 14px;
-      background: #28a745;
+      margin-top: 25px;
+      padding: 12px;
+      background: #333;
       color: white;
-      font-size: 16px;
       border: none;
-      border-radius: 8px;
-      cursor: pointer;
+      border-radius: 5px;
+      font-size: 16px;
+      width: 100%;
     }
-    button:hover {
-      background-color: #218838;
-    }
-    h2 {
-      text-align: center;
-    }
-    pre {
-      background: #eee;
-      padding: 1em;
-      overflow-x: auto;
-      white-space: pre-wrap;
-      word-break: break-word;
-      font-size: 14px;
+    img#previewImage {
+      display: none;
+      max-width: 100%;
+      margin-top: 15px;
       border-radius: 6px;
-      max-width: 96%;
-      margin: 0 auto;
-    }
-    img#preview {
-      display: block;
-      margin: 10px auto;
-      max-width: 90%;
-      border-radius: 8px;
-      box-shadow: 0 0 4px rgba(0,0,0,0.1);
-    }
-    div#error {
-      color: red;
-      text-align: center;
-      margin-top: 5px;
-      font-size: 14px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.2);
     }
   </style>
 </head>
 <body>
 
 <form id="eventForm">
-  <h2>📋 エモモイベント追加フォーム</h2>
+  <h2>📋 エモモイベント登録フォーム</h2>
 
   <label>タイトル</label>
   <input type="text" id="title" required>
 
-  <label>画像番号（数字のみ）</label>
-  <input type="text" id="image_id" placeholder="例: 3146" required oninput="updatePreview()">
+  <label>画像ID（数字のみ・拡張子不要）</label>
+  <input type="text" id="image_id" placeholder="例: 3146" required>
 
-  <img id="preview" src="" alt="画像プレビュー" style="display:none">
-  <div id="error"></div>
-
-  <label>リンクID（数字）</label>
+  <label>リンクID（mirr:///notice/r?c= の後）</label>
   <input type="text" id="link_id" placeholder="例: 6166" required>
 
   <label>キーワード（チェック式）</label>
@@ -105,79 +85,72 @@
   <label>追加キーワード（カンマ区切り）</label>
   <input type="text" id="custom_keywords" placeholder="例: コラボ, 夏">
 
-  <button type="submit">このイベントを追加</button>
+  <img id="previewImage" src="" alt="画像プレビュー">
+
+  <button type="submit">保存（表示）</button>
 </form>
 
-<h2>🧾 作成されたJSON（コピペ用）</h2>
-<pre id="jsonOutput">[]</pre>
-
 <script>
-const BASE_URL = "https://johnpuni.github.io/mirra/images/";
-
 const keywordsList = [
   "復刻", "新規", "ルレ", "ギフガチャ", "エモバト",
-  "エモラン", "ハンズアイテム", "1月", "2月", "前半", "後半"
+  "エモラン", "ハンズアイテム", "1月", "2月", "3月", "前半", "後半", "2025"
 ];
 
-const checkboxContainer = document.getElementById("keywordCheckboxes");
+// チェックボックス作成
+const checkGroup = document.getElementById("keywordCheckboxes");
 keywordsList.forEach(kw => {
-  const lbl = document.createElement("label");
-  lbl.innerHTML = `<input type="checkbox" value="${kw}"> ${kw}`;
-  checkboxContainer.appendChild(lbl);
+  const label = document.createElement("label");
+  label.innerHTML = `<input type="checkbox" value="${kw}"> ${kw}`;
+  checkGroup.appendChild(label);
 });
 
-const form = document.getElementById("eventForm");
-const preview = document.getElementById("preview");
-const errorDiv = document.getElementById("error");
-const jsonOutput = document.getElementById("jsonOutput");
-
-let events = [];
-
-function updatePreview() {
-  const id = document.getElementById("image_id").value.trim().replace(/\D/g, "");
-  if (!id) {
-    preview.style.display = "none";
-    errorDiv.textContent = "";
-    return;
+// プレビュー画像表示
+document.getElementById("image_id").addEventListener("input", () => {
+  const id = document.getElementById("image_id").value.trim();
+  const imgEl = document.getElementById("previewImage");
+  if (id) {
+    imgEl.src = `https://johnpuni.github.io/mirra/images/${id}.webp`;
+    imgEl.style.display = "block";
+  } else {
+    imgEl.style.display = "none";
   }
+});
 
-  const url = BASE_URL + id + ".webp";
-  preview.src = url;
-
-  preview.onload = () => {
-    preview.style.display = "block";
-    errorDiv.textContent = "";
-  };
-  preview.onerror = () => {
-    preview.style.display = "none";
-    errorDiv.textContent = `❌ 画像が見つかりませんでした: ${url}`;
-  };
-}
-
-form.addEventListener("submit", function(e) {
+// 保存処理
+document.getElementById("eventForm").addEventListener("submit", function(e) {
   e.preventDefault();
 
   const title = document.getElementById("title").value.trim();
-  const imageId = document.getElementById("image_id").value.trim().replace(/\D/g, "");
-  const img = "images/" + imageId + ".webp";  // ← JSONでは相対パスで出力
-  const linkId = document.getElementById("link_id").value.trim().replace(/\D/g, "");
-  const link = "mirr:///notice/r?c=" + linkId;
+  const imgID = document.getElementById("image_id").value.trim();
+  const linkID = document.getElementById("link_id").value.trim();
 
-  const checked = [...document.querySelectorAll("input[type=checkbox]:checked")].map(cb => cb.value);
-  const extra = document.getElementById("custom_keywords").value
+  const img = `images/${imgID}.webp`;
+  const link = `mirr:///notice/r?c=${linkID}`;
+
+  const selectedKeywords = [...document.querySelectorAll("input[type=checkbox]:checked")].map(cb => cb.value);
+  const extraKeywords = document.getElementById("custom_keywords").value
     .split(",")
     .map(k => k.trim())
     .filter(k => k);
-  const keywords = [...checked, ...extra];
 
-  const newEvent = { title, img, link, keywords };
-  events.push(newEvent);
-  jsonOutput.textContent = JSON.stringify(events, null, 2);
+  const keywords = [...selectedKeywords, ...extraKeywords];
 
-  form.reset();
-  preview.style.display = "none";
-  errorDiv.textContent = "";
-  document.querySelectorAll("input[type=checkbox]").forEach(cb => cb.checked = false);
+  // ✅ キーワードの最低条件チェック
+  const requiredKeywords = ["2025", "1月", "2月", "3月", "前半", "後半"];
+  const hasRequired = keywords.some(k => requiredKeywords.includes(k));
+  if (!hasRequired) {
+    alert("⚠️ 年や月、期間（前半・後半）に関するキーワードが最低1つ必要です。");
+    return;
+  }
+
+  // ✅ 確認ダイアログ
+  const confirmed = confirm("この内容で保存しますか？");
+  if (!confirmed) return;
+
+  // ✅ 表示（ここではalertで表示するだけ）
+  alert("✅ 入力内容を確認しました！\n\n（この例では保存は行いません）");
+
+  // 必要に応じてここで JSON 出力処理などに接続可能
 });
 </script>
 
