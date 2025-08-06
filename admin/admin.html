@@ -2,85 +2,97 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>イベント追加フォーム（JSON出力付き）</title>
+  <title>イベント追加フォーム（複数・JSON出力対応）</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       font-family: sans-serif;
-      background: #f9f9f9;
-      padding: 20px;
+      background: #f0f0f0;
+      padding: 15px;
       margin: 0;
     }
     form {
       background: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      max-width: 700px;
-      margin: 0 auto;
+      padding: 16px;
+      border-radius: 10px;
+      max-width: 600px;
+      margin: 0 auto 20px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
     h2 {
       margin-top: 0;
+      font-size: 20px;
     }
     label {
       display: block;
       margin-top: 12px;
       font-weight: bold;
+      font-size: 14px;
     }
     input[type="text"], textarea, select {
       width: 100%;
-      padding: 8px;
+      padding: 10px;
       margin-top: 5px;
-      border-radius: 4px;
+      font-size: 16px;
+      border-radius: 6px;
       border: 1px solid #ccc;
       box-sizing: border-box;
-      font-size: 16px;
     }
     .checkbox-group {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin-top: 5px;
+      margin-top: 8px;
     }
     .checkbox-group label {
       font-weight: normal;
       background: #eee;
-      padding: 5px 10px;
-      border-radius: 4px;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 14px;
     }
     button {
       margin-top: 20px;
-      padding: 10px 20px;
+      padding: 10px;
+      width: 100%;
+      font-size: 16px;
       background: #333;
       color: white;
       border: none;
-      border-radius: 5px;
-      font-size: 16px;
+      border-radius: 6px;
     }
     #preview {
       display: block;
-      margin-top: 15px;
+      margin-top: 10px;
       max-width: 100%;
       border-radius: 8px;
     }
     #jsonOutput {
-      background: #eee;
-      padding: 15px;
-      border-radius: 5px;
-      margin-top: 20px;
+      background: #f4f4f4;
+      padding: 16px;
+      border-radius: 8px;
       white-space: pre-wrap;
       font-size: 14px;
       overflow-x: auto;
+      max-width: 600px;
+      margin: 0 auto 10px;
     }
     #copyBtn {
-      margin-top: 10px;
+      display: block;
+      margin: 0 auto 30px;
       background: #007bff;
+    }
+    @media screen and (max-width: 480px) {
+      input, select, textarea, button {
+        font-size: 16px;
+      }
     }
   </style>
 </head>
 <body>
 
 <form id="eventForm">
-  <h2>📋 イベント追加フォーム</h2>
+  <h2>📋 イベントを追加</h2>
 
   <label>タイトル</label>
   <input type="text" id="title" required>
@@ -98,10 +110,9 @@
   <label>追加キーワード（カンマ区切り）</label>
   <input type="text" id="custom_keywords" placeholder="例: コラボ, 夏">
 
-  <button type="submit">保存してJSON表示</button>
+  <button type="submit">追加（確認あり）</button>
 </form>
 
-<!-- JSON出力 -->
 <div id="jsonOutput" style="display:none;"></div>
 <button id="copyBtn" style="display:none;">📋 JSONをコピー</button>
 
@@ -109,10 +120,10 @@
 const keywordsList = [
   "復刻", "新規", "ルレ", "ギフガチャ", "エモバト",
   "エモラン", "ハンズアイテム", "4月", "5月", "6月",
-  "前半", "後半", "プチ", "カラバリ復刻", "エモバト(S49)", "エモラン(S65)"
+  "前半", "後半", "プチ", "カラバリ復刻", "プチルレ",
+  "エモバト(S49)", "2025"
 ];
 
-// チェックボックス作成
 const checkGroup = document.getElementById("keywordCheckboxes");
 keywordsList.forEach(kw => {
   const label = document.createElement("label");
@@ -120,7 +131,7 @@ keywordsList.forEach(kw => {
   checkGroup.appendChild(label);
 });
 
-// プレビュー画像
+// プレビュー画像更新
 document.getElementById("image_id").addEventListener("input", function() {
   const id = this.value.trim();
   const img = document.getElementById("preview");
@@ -132,7 +143,8 @@ document.getElementById("image_id").addEventListener("input", function() {
   }
 });
 
-// 送信処理
+const eventList = []; // 複数件保存用
+
 document.getElementById("eventForm").addEventListener("submit", function(e) {
   e.preventDefault();
 
@@ -146,7 +158,7 @@ document.getElementById("eventForm").addEventListener("submit", function(e) {
 
   if (!title || !imgId || !linkId) return alert("すべての項目を入力してください");
 
-  // 確認ダイアログ
+  // キーワード確認ダイアログ
   if (!confirm(`このキーワードで大丈夫ですか？\n\n${keywords.join(", ")}`)) return;
 
   const eventData = {
@@ -156,21 +168,26 @@ document.getElementById("eventForm").addEventListener("submit", function(e) {
     keywords: keywords
   };
 
-  const jsonBlock = JSON.stringify(eventData, null, 2);
+  eventList.push(eventData);
 
-  // JSON表示とコピーUI
+  // JSON表示更新
   const jsonOutput = document.getElementById("jsonOutput");
-  jsonOutput.textContent = jsonBlock;
+  jsonOutput.textContent = JSON.stringify(eventList, null, 2);
   jsonOutput.style.display = "block";
 
   const copyBtn = document.getElementById("copyBtn");
-  copyBtn.style.display = "inline-block";
+  copyBtn.style.display = "block";
 
   copyBtn.onclick = function() {
-    navigator.clipboard.writeText(jsonBlock).then(() => {
+    navigator.clipboard.writeText(jsonOutput.textContent).then(() => {
       alert("JSONをコピーしました！");
     });
   };
+
+  // フォーム初期化
+  this.reset();
+  document.getElementById("preview").style.display = "none";
+  document.querySelectorAll("#keywordCheckboxes input").forEach(cb => cb.checked = false);
 });
 </script>
 
