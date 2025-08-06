@@ -2,32 +2,36 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>エモモイベント登録</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>イベント追加フォーム（JSON出力付き）</title>
   <style>
     body {
       font-family: sans-serif;
-      background: #f0f0f0;
+      background: #f9f9f9;
       padding: 20px;
       margin: 0;
     }
     form {
       background: #fff;
-      max-width: 700px;
-      margin: auto;
       padding: 20px;
       border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      max-width: 700px;
+      margin: 0 auto;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    h2 {
+      margin-top: 0;
     }
     label {
       display: block;
-      margin-top: 15px;
+      margin-top: 12px;
       font-weight: bold;
     }
-    input[type="text"], textarea {
+    input[type="text"], textarea, select {
       width: 100%;
-      padding: 10px;
+      padding: 8px;
       margin-top: 5px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
       box-sizing: border-box;
       font-size: 16px;
     }
@@ -38,41 +42,54 @@
       margin-top: 5px;
     }
     .checkbox-group label {
+      font-weight: normal;
       background: #eee;
-      padding: 6px 10px;
+      padding: 5px 10px;
       border-radius: 4px;
-      font-size: 14px;
     }
     button {
-      width: 100%;
-      padding: 12px;
-      margin-top: 25px;
-      font-size: 16px;
+      margin-top: 20px;
+      padding: 10px 20px;
       background: #333;
       color: white;
       border: none;
       border-radius: 5px;
+      font-size: 16px;
     }
-    img#previewImage {
-      display: none;
+    #preview {
+      display: block;
+      margin-top: 15px;
       max-width: 100%;
+      border-radius: 8px;
+    }
+    #jsonOutput {
+      background: #eee;
+      padding: 15px;
+      border-radius: 5px;
+      margin-top: 20px;
+      white-space: pre-wrap;
+      font-size: 14px;
+      overflow-x: auto;
+    }
+    #copyBtn {
       margin-top: 10px;
-      border-radius: 6px;
+      background: #007bff;
     }
   </style>
 </head>
 <body>
 
 <form id="eventForm">
-  <h2>📋 イベント登録フォーム</h2>
+  <h2>📋 イベント追加フォーム</h2>
 
   <label>タイトル</label>
   <input type="text" id="title" required>
 
   <label>画像ID（数字のみ）</label>
   <input type="text" id="image_id" placeholder="例: 3146" required>
+  <img id="preview" src="" alt="画像プレビュー" style="display:none;">
 
-  <label>リンクID（mirr:///notice/r?c= の後）</label>
+  <label>リンクID（mirr:///notice/r?c= の後ろ）</label>
   <input type="text" id="link_id" placeholder="例: 6166" required>
 
   <label>キーワード（チェック式）</label>
@@ -81,18 +98,21 @@
   <label>追加キーワード（カンマ区切り）</label>
   <input type="text" id="custom_keywords" placeholder="例: コラボ, 夏">
 
-  <img id="previewImage" src="" alt="画像プレビュー">
-
-  <button type="submit">保存（表示）</button>
+  <button type="submit">保存してJSON表示</button>
 </form>
+
+<!-- JSON出力 -->
+<div id="jsonOutput" style="display:none;"></div>
+<button id="copyBtn" style="display:none;">📋 JSONをコピー</button>
 
 <script>
 const keywordsList = [
   "復刻", "新規", "ルレ", "ギフガチャ", "エモバト",
-  "エモラン", "ハンズアイテム", "1月", "2月", "3月", "前半", "後半", "2025"
+  "エモラン", "ハンズアイテム", "4月", "5月", "6月",
+  "前半", "後半", "プチ", "カラバリ復刻", "エモバト(S49)", "エモラン(S65)"
 ];
 
-// チェックボックス生成
+// チェックボックス作成
 const checkGroup = document.getElementById("keywordCheckboxes");
 keywordsList.forEach(kw => {
   const label = document.createElement("label");
@@ -100,46 +120,57 @@ keywordsList.forEach(kw => {
   checkGroup.appendChild(label);
 });
 
-// プレビュー画像表示
-document.getElementById("image_id").addEventListener("input", () => {
-  const id = document.getElementById("image_id").value.trim();
-  const imgEl = document.getElementById("previewImage");
+// プレビュー画像
+document.getElementById("image_id").addEventListener("input", function() {
+  const id = this.value.trim();
+  const img = document.getElementById("preview");
   if (id) {
-    imgEl.src = `https://johnpuni.github.io/mirra/images/${id}.webp`;
-    imgEl.style.display = "block";
+    img.src = `https://johnpuni.github.io/mirra/images/${id}.webp`;
+    img.style.display = "block";
   } else {
-    imgEl.style.display = "none";
+    img.style.display = "none";
   }
 });
 
+// 送信処理
 document.getElementById("eventForm").addEventListener("submit", function(e) {
   e.preventDefault();
 
   const title = document.getElementById("title").value.trim();
-  const imgID = document.getElementById("image_id").value.trim();
-  const linkID = document.getElementById("link_id").value.trim();
+  const imgId = document.getElementById("image_id").value.trim().replace(/\D/g, "");
+  const linkId = document.getElementById("link_id").value.trim().replace(/\D/g, "");
 
   const selectedKeywords = [...document.querySelectorAll("input[type=checkbox]:checked")].map(cb => cb.value);
-  const extraKeywords = document.getElementById("custom_keywords").value
-    .split(",")
-    .map(k => k.trim())
-    .filter(k => k);
-
+  const extraKeywords = document.getElementById("custom_keywords").value.split(",").map(k => k.trim()).filter(k => k);
   const keywords = [...selectedKeywords, ...extraKeywords];
 
-  // 必須キーワードチェック（年・月・期間など）
-  const required = ["2025", "1月", "2月", "3月", "前半", "後半"];
-  if (!keywords.some(k => required.includes(k))) {
-    alert("⚠️ 年・月・前半/後半のキーワードを1つ以上選んでください。");
-    return;
-  }
+  if (!title || !imgId || !linkId) return alert("すべての項目を入力してください");
 
-  // キーワード確認ダイアログ
-  const confirmText = `このキーワードで大丈夫ですか？\n\n【選択されたキーワード】\n${keywords.join(", ")}`;
-  if (!confirm(confirmText)) return;
+  // 確認ダイアログ
+  if (!confirm(`このキーワードで大丈夫ですか？\n\n${keywords.join(", ")}`)) return;
 
-  // 確認用の出力（実際の保存処理は未実装）
-  alert("✅ 入力内容を確認しました！");
+  const eventData = {
+    title: title,
+    img: `images/${imgId}.webp`,
+    link: `mirr:///notice/r?c=${linkId}`,
+    keywords: keywords
+  };
+
+  const jsonBlock = JSON.stringify(eventData, null, 2);
+
+  // JSON表示とコピーUI
+  const jsonOutput = document.getElementById("jsonOutput");
+  jsonOutput.textContent = jsonBlock;
+  jsonOutput.style.display = "block";
+
+  const copyBtn = document.getElementById("copyBtn");
+  copyBtn.style.display = "inline-block";
+
+  copyBtn.onclick = function() {
+    navigator.clipboard.writeText(jsonBlock).then(() => {
+      alert("JSONをコピーしました！");
+    });
+  };
 });
 </script>
 
