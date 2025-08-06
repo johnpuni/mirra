@@ -3,64 +3,62 @@
 <head>
   <meta charset="UTF-8">
   <title>イベント登録・編集フォーム</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     body {
       font-family: sans-serif;
       background-color: #f4f4f4;
-      padding: 20px;
+      padding: 10px;
+      margin: 0;
     }
     form, .edit-section {
       background: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      margin-bottom: 30px;
-      max-width: 700px;
+      padding: 16px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      max-width: 96%;
       margin-left: auto;
       margin-right: auto;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
     label {
       display: block;
-      margin-top: 10px;
+      margin-top: 12px;
+      font-size: 15px;
       font-weight: bold;
     }
-    input[type="text"], textarea {
+    input[type="text"], select {
       width: 100%;
-      padding: 8px;
-      margin-top: 5px;
+      padding: 12px;
+      margin-top: 6px;
+      font-size: 16px;
       box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 6px;
     }
     .checkbox-group {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin-top: 5px;
+      margin-top: 6px;
     }
     .checkbox-group label {
       font-weight: normal;
+      font-size: 14px;
     }
     button {
-      margin-top: 20px;
-      padding: 10px 20px;
-      background: #333;
-      color: white;
-      border: none;
-      border-radius: 5px;
-    }
-    select {
       width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-    }
-    pre#output {
-      background: #fff;
-      padding: 15px;
-      white-space: pre-wrap;
-      word-wrap: break-word;
+      margin-top: 20px;
+      padding: 14px;
+      background: #007bff;
+      color: white;
+      font-size: 16px;
+      border: none;
       border-radius: 8px;
-      max-width: 700px;
-      margin: 0 auto 40px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
     }
   </style>
 </head>
@@ -97,10 +95,8 @@
   <label>追加キーワード（カンマ区切り）</label>
   <input type="text" id="custom_keywords" placeholder="例: コラボ, 夏">
 
-  <button type="submit">保存（表示）</button>
+  <button type="submit">保存する</button>
 </form>
-
-<pre id="output">ここに登録データが表示されます</pre>
 
 <script>
 const keywordsList = [
@@ -113,6 +109,7 @@ const sampleEvents = [
   { title: "ネイルアイテム", img: "3151.webp", link: "6248", keywords: ["2025", "1月", "後半", "ギフガチャ", "ハンズアイテム"] }
 ];
 
+// チェックボックス生成
 const checkGroup = document.getElementById("keywordCheckboxes");
 keywordsList.forEach(kw => {
   const label = document.createElement("label");
@@ -120,6 +117,7 @@ keywordsList.forEach(kw => {
   checkGroup.appendChild(label);
 });
 
+// セレクタにイベント追加
 const selector = document.getElementById("eventSelector");
 sampleEvents.forEach((event, index) => {
   const opt = document.createElement("option");
@@ -128,12 +126,14 @@ sampleEvents.forEach((event, index) => {
   selector.appendChild(opt);
 });
 
+// 検索連動
 document.getElementById("search").addEventListener("input", function() {
   const term = this.value.toLowerCase();
   const match = sampleEvents.findIndex(ev => ev.title.toLowerCase().includes(term) || ev.link.includes(term));
   if (match >= 0) selector.value = match;
 });
 
+// 選択イベントをフォームに反映
 function loadSelectedEvent() {
   const selected = selector.value;
   if (selected === "") return alert("イベントを選択してください");
@@ -152,25 +152,10 @@ function loadSelectedEvent() {
   document.getElementById("custom_keywords").value = ev.keywords.filter(kw => !keywordsList.includes(kw)).join(", ");
 }
 
+// フォーム送信時の処理（今は何も保存しない）
 document.getElementById("eventForm").addEventListener("submit", function(e) {
   e.preventDefault();
-
-  const title = document.getElementById("title").value.trim();
-  const img = "images/" + document.getElementById("image_id").value.trim().replace(/\D/g, "") + ".webp";
-  const link = "mirr:///notice/r?c=" + document.getElementById("link_id").value.trim().replace(/\D/g, "");
-
-  const selectedKeywords = [...document.querySelectorAll("input[type=checkbox]:checked")].map(cb => cb.value);
-  const extraKeywords = document.getElementById("custom_keywords").value.split(",").map(k => k.trim()).filter(k => k);
-  const keywords = [...selectedKeywords, ...extraKeywords];
-
-  const result = {
-    title,
-    img,
-    link,
-    keywords
-  };
-
-  document.getElementById("output").textContent = JSON.stringify(result, null, 2);
+  alert("保存しました（実際の保存処理は未実装です）");
 });
 </script>
 
