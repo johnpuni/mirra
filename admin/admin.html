@@ -93,7 +93,7 @@
 <script>
 const keywordsList = [
   "復刻", "新規", "ルレ", "ギフガチャ", "エモバト",
-  "エモラン", "ハンズアイテム", "1月", "2月", "3月", "前半", "後半", "2025"
+  "エモラン", "ハンズアイテム", "4月", "5月", "6月", "前半", "後半", "2025"
 ];
 
 // チェックボックス作成
@@ -136,21 +136,19 @@ document.getElementById("eventForm").addEventListener("submit", function(e) {
   const keywords = [...selectedKeywords, ...extraKeywords];
 
   // ✅ キーワードの最低条件チェック
-  const requiredKeywords = ["2025", "1月", "2月", "3月", "前半", "後半"];
+  const requiredKeywords = ["2025", "4月", "5月", "6月", "前半", "後半"];
   const hasRequired = keywords.some(k => requiredKeywords.includes(k));
   if (!hasRequired) {
     alert("⚠️ 年や月、期間（前半・後半）に関するキーワードが最低1つ必要です。");
     return;
   }
 
-  // ✅ 確認ダイアログ
-  const confirmed = confirm("この内容で保存しますか？");
-  if (!confirmed) return;
+  // ✅ 確認ダイアログ（キーワードだけ確認）
+  const confirmMessage = `このキーワードで大丈夫ですか？\n\n【選択されたキーワード】\n${keywords.join(", ")}`;
+  if (!confirm(confirmMessage)) return;
 
   // ✅ 表示（ここではalertで表示するだけ）
-  alert("✅ 入力内容を確認しました！\n\n（この例では保存は行いません）");
-
-  // 必要に応じてここで JSON 出力処理などに接続可能
+  alert("✅ 入力内容を確認しました！（保存処理はまだ未実装）");
 });
 </script>
 
