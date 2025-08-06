@@ -2,21 +2,21 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>エモモイベント登録フォーム</title>
+  <title>エモモイベント登録</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       font-family: sans-serif;
-      background-color: #f4f4f4;
+      background: #f0f0f0;
       padding: 20px;
       margin: 0;
     }
     form {
       background: #fff;
+      max-width: 700px;
+      margin: auto;
       padding: 20px;
       border-radius: 8px;
-      max-width: 700px;
-      margin: 0 auto;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
     label {
@@ -29,8 +29,6 @@
       padding: 10px;
       margin-top: 5px;
       box-sizing: border-box;
-      border: 1px solid #ccc;
-      border-radius: 4px;
       font-size: 16px;
     }
     .checkbox-group {
@@ -40,40 +38,38 @@
       margin-top: 5px;
     }
     .checkbox-group label {
-      font-weight: normal;
-      background: #eaeaea;
-      padding: 5px 10px;
+      background: #eee;
+      padding: 6px 10px;
       border-radius: 4px;
       font-size: 14px;
     }
     button {
-      margin-top: 25px;
+      width: 100%;
       padding: 12px;
+      margin-top: 25px;
+      font-size: 16px;
       background: #333;
       color: white;
       border: none;
       border-radius: 5px;
-      font-size: 16px;
-      width: 100%;
     }
     img#previewImage {
       display: none;
       max-width: 100%;
-      margin-top: 15px;
+      margin-top: 10px;
       border-radius: 6px;
-      box-shadow: 0 0 5px rgba(0,0,0,0.2);
     }
   </style>
 </head>
 <body>
 
 <form id="eventForm">
-  <h2>📋 エモモイベント登録フォーム</h2>
+  <h2>📋 イベント登録フォーム</h2>
 
   <label>タイトル</label>
   <input type="text" id="title" required>
 
-  <label>画像ID（数字のみ・拡張子不要）</label>
+  <label>画像ID（数字のみ）</label>
   <input type="text" id="image_id" placeholder="例: 3146" required>
 
   <label>リンクID（mirr:///notice/r?c= の後）</label>
@@ -93,10 +89,10 @@
 <script>
 const keywordsList = [
   "復刻", "新規", "ルレ", "ギフガチャ", "エモバト",
-  "エモラン", "ハンズアイテム", "4月", "5月", "6月", "前半", "後半", "2025"
+  "エモラン", "ハンズアイテム", "1月", "2月", "3月", "前半", "後半", "2025"
 ];
 
-// チェックボックス作成
+// チェックボックス生成
 const checkGroup = document.getElementById("keywordCheckboxes");
 keywordsList.forEach(kw => {
   const label = document.createElement("label");
@@ -116,16 +112,12 @@ document.getElementById("image_id").addEventListener("input", () => {
   }
 });
 
-// 保存処理
 document.getElementById("eventForm").addEventListener("submit", function(e) {
   e.preventDefault();
 
   const title = document.getElementById("title").value.trim();
   const imgID = document.getElementById("image_id").value.trim();
   const linkID = document.getElementById("link_id").value.trim();
-
-  const img = `images/${imgID}.webp`;
-  const link = `mirr:///notice/r?c=${linkID}`;
 
   const selectedKeywords = [...document.querySelectorAll("input[type=checkbox]:checked")].map(cb => cb.value);
   const extraKeywords = document.getElementById("custom_keywords").value
@@ -135,20 +127,19 @@ document.getElementById("eventForm").addEventListener("submit", function(e) {
 
   const keywords = [...selectedKeywords, ...extraKeywords];
 
-  // ✅ キーワードの最低条件チェック
-  const requiredKeywords = ["2025", "4月", "5月", "6月", "前半", "後半"];
-  const hasRequired = keywords.some(k => requiredKeywords.includes(k));
-  if (!hasRequired) {
-    alert("⚠️ 年や月、期間（前半・後半）に関するキーワードが最低1つ必要です。");
+  // 必須キーワードチェック（年・月・期間など）
+  const required = ["2025", "1月", "2月", "3月", "前半", "後半"];
+  if (!keywords.some(k => required.includes(k))) {
+    alert("⚠️ 年・月・前半/後半のキーワードを1つ以上選んでください。");
     return;
   }
 
-  // ✅ 確認ダイアログ（キーワードだけ確認）
-  const confirmMessage = `このキーワードで大丈夫ですか？\n\n【選択されたキーワード】\n${keywords.join(", ")}`;
-  if (!confirm(confirmMessage)) return;
+  // キーワード確認ダイアログ
+  const confirmText = `このキーワードで大丈夫ですか？\n\n【選択されたキーワード】\n${keywords.join(", ")}`;
+  if (!confirm(confirmText)) return;
 
-  // ✅ 表示（ここではalertで表示するだけ）
-  alert("✅ 入力内容を確認しました！（保存処理はまだ未実装）");
+  // 確認用の出力（実際の保存処理は未実装）
+  alert("✅ 入力内容を確認しました！");
 });
 </script>
 
