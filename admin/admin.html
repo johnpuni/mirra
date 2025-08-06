@@ -64,9 +64,18 @@
       padding: 1em;
       overflow-x: auto;
       white-space: pre-wrap;
-      word-break: break-all;
+      word-break: break-word;
       font-size: 14px;
       border-radius: 6px;
+      max-width: 96%;
+      margin: 0 auto;
+    }
+    #preview {
+      display: block;
+      margin: 10px auto;
+      max-width: 90%;
+      border-radius: 8px;
+      box-shadow: 0 0 4px rgba(0,0,0,0.1);
     }
   </style>
 </head>
@@ -79,7 +88,9 @@
   <input type="text" id="title" required>
 
   <label>画像ファイル名（数字のみ、拡張子不要）</label>
-  <input type="text" id="image_id" placeholder="例: 3146" required>
+  <input type="text" id="image_id" placeholder="例: 3146" required oninput="updatePreview()">
+
+  <img id="preview" src="" alt="画像プレビュー" style="display:none">
 
   <label>リンクID（数字）</label>
   <input type="text" id="link_id" placeholder="例: 6166" required>
@@ -102,6 +113,7 @@ const keywordsList = [
   "エモラン", "ハンズアイテム", "1月", "2月", "前半", "後半"
 ];
 
+// チェックボックス生成
 const checkboxContainer = document.getElementById("keywordCheckboxes");
 keywordsList.forEach(kw => {
   const label = document.createElement("label");
@@ -111,6 +123,7 @@ keywordsList.forEach(kw => {
 
 const form = document.getElementById("eventForm");
 const jsonOutput = document.getElementById("jsonOutput");
+const preview = document.getElementById("preview");
 
 let events = [];
 
@@ -118,8 +131,10 @@ form.addEventListener("submit", function(e) {
   e.preventDefault();
 
   const title = document.getElementById("title").value.trim();
-  const img = "images/" + document.getElementById("image_id").value.trim().replace(/\D/g, "") + ".webp";
-  const link = "mirr:///notice/r?c=" + document.getElementById("link_id").value.trim().replace(/\D/g, "");
+  const imageId = document.getElementById("image_id").value.trim().replace(/\D/g, "");
+  const img = "images/" + imageId + ".webp";
+  const linkId = document.getElementById("link_id").value.trim().replace(/\D/g, "");
+  const link = "mirr:///notice/r?c=" + linkId;
 
   const selectedKeywords = [...document.querySelectorAll("input[type=checkbox]:checked")].map(cb => cb.value);
   const extraKeywords = document.getElementById("custom_keywords").value.split(",").map(k => k.trim()).filter(k => k);
@@ -137,8 +152,20 @@ form.addEventListener("submit", function(e) {
 
   // 入力欄リセット
   form.reset();
+  preview.style.display = "none";
   document.querySelectorAll("input[type=checkbox]").forEach(cb => cb.checked = false);
 });
+
+function updatePreview() {
+  const id = document.getElementById("image_id").value.trim().replace(/\D/g, "");
+  const url = "images/" + id + ".webp";
+  if (id.length > 0) {
+    preview.src = url;
+    preview.style.display = "block";
+  } else {
+    preview.style.display = "none";
+  }
+}
 </script>
 
 </body>
