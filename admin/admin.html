@@ -2,55 +2,51 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>イベント登録・編集フォーム</title>
+  <title>エモモイベント追加フォーム</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     body {
       font-family: sans-serif;
-      background-color: #f4f4f4;
-      padding: 10px;
+      background: #f9f9f9;
+      padding: 1em;
       margin: 0;
     }
-    form, .edit-section {
+    form {
       background: #fff;
-      padding: 16px;
+      padding: 1em;
       border-radius: 10px;
-      margin-bottom: 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
       max-width: 96%;
-      margin-left: auto;
-      margin-right: auto;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      margin: 0 auto 20px;
     }
     label {
       display: block;
-      margin-top: 12px;
-      font-size: 15px;
+      margin-top: 1em;
       font-weight: bold;
     }
-    input[type="text"], select {
+    input[type="text"], textarea {
       width: 100%;
       padding: 12px;
-      margin-top: 6px;
       font-size: 16px;
+      margin-top: 6px;
       box-sizing: border-box;
-      border: 1px solid #ccc;
       border-radius: 6px;
+      border: 1px solid #ccc;
     }
     .checkbox-group {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin-top: 6px;
+      margin-top: 5px;
     }
     .checkbox-group label {
       font-weight: normal;
-      font-size: 14px;
     }
     button {
       width: 100%;
       margin-top: 20px;
       padding: 14px;
-      background: #007bff;
+      background: #28a745;
       color: white;
       font-size: 16px;
       border: none;
@@ -58,35 +54,34 @@
       cursor: pointer;
     }
     button:hover {
-      background-color: #0056b3;
+      background-color: #218838;
+    }
+    h2 {
+      text-align: center;
+    }
+    pre {
+      background: #eee;
+      padding: 1em;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-break: break-all;
+      font-size: 14px;
+      border-radius: 6px;
     }
   </style>
 </head>
 <body>
 
-<div class="edit-section">
-  <h2>🔍 編集対象を選択</h2>
-  <label>タイトルまたはリンクIDで検索</label>
-  <input type="text" id="search" placeholder="例: ルーレット or 6244" />
-
-  <label>または一覧から選択</label>
-  <select id="eventSelector">
-    <option value="">-- イベントを選択 --</option>
-  </select>
-
-  <button onclick="loadSelectedEvent()">読み込む</button>
-</div>
-
 <form id="eventForm">
-  <h2>📋 イベント登録・編集</h2>
+  <h2>📋 エモモイベント追加フォーム</h2>
 
   <label>タイトル</label>
   <input type="text" id="title" required>
 
-  <label>画像ファイル名（拡張子不要・images/ 配下）</label>
+  <label>画像ファイル名（数字のみ、拡張子不要）</label>
   <input type="text" id="image_id" placeholder="例: 3146" required>
 
-  <label>リンクID（mirr:///notice/r?c= の後ろ）</label>
+  <label>リンクID（数字）</label>
   <input type="text" id="link_id" placeholder="例: 6166" required>
 
   <label>キーワード（チェック式）</label>
@@ -95,8 +90,11 @@
   <label>追加キーワード（カンマ区切り）</label>
   <input type="text" id="custom_keywords" placeholder="例: コラボ, 夏">
 
-  <button type="submit">保存する</button>
+  <button type="submit">このイベントを追加</button>
 </form>
+
+<h2>🧾 作成されたJSON（コピペ用）</h2>
+<pre id="jsonOutput">[]</pre>
 
 <script>
 const keywordsList = [
@@ -104,58 +102,42 @@ const keywordsList = [
   "エモラン", "ハンズアイテム", "1月", "2月", "前半", "後半"
 ];
 
-const sampleEvents = [
-  { title: "エモモセレクションギフトガチャ", img: "3146.webp", link: "6166", keywords: ["2025", "復刻", "1月", "前半"] },
-  { title: "ネイルアイテム", img: "3151.webp", link: "6248", keywords: ["2025", "1月", "後半", "ギフガチャ", "ハンズアイテム"] }
-];
-
-// チェックボックス生成
-const checkGroup = document.getElementById("keywordCheckboxes");
+const checkboxContainer = document.getElementById("keywordCheckboxes");
 keywordsList.forEach(kw => {
   const label = document.createElement("label");
   label.innerHTML = `<input type="checkbox" value="${kw}"> ${kw}`;
-  checkGroup.appendChild(label);
+  checkboxContainer.appendChild(label);
 });
 
-// セレクタにイベント追加
-const selector = document.getElementById("eventSelector");
-sampleEvents.forEach((event, index) => {
-  const opt = document.createElement("option");
-  opt.value = index;
-  opt.textContent = `${event.title}（ID: ${event.link}）`;
-  selector.appendChild(opt);
-});
+const form = document.getElementById("eventForm");
+const jsonOutput = document.getElementById("jsonOutput");
 
-// 検索連動
-document.getElementById("search").addEventListener("input", function() {
-  const term = this.value.toLowerCase();
-  const match = sampleEvents.findIndex(ev => ev.title.toLowerCase().includes(term) || ev.link.includes(term));
-  if (match >= 0) selector.value = match;
-});
+let events = [];
 
-// 選択イベントをフォームに反映
-function loadSelectedEvent() {
-  const selected = selector.value;
-  if (selected === "") return alert("イベントを選択してください");
-
-  const ev = sampleEvents[selected];
-  document.getElementById("title").value = ev.title;
-  document.getElementById("image_id").value = ev.img.replace(".webp", "");
-  document.getElementById("link_id").value = ev.link;
-
-  checkGroup.querySelectorAll("input[type=checkbox]").forEach(cb => cb.checked = false);
-  ev.keywords.forEach(kw => {
-    const box = [...checkGroup.querySelectorAll("input")].find(cb => cb.value === kw);
-    if (box) box.checked = true;
-  });
-
-  document.getElementById("custom_keywords").value = ev.keywords.filter(kw => !keywordsList.includes(kw)).join(", ");
-}
-
-// フォーム送信時の処理（今は何も保存しない）
-document.getElementById("eventForm").addEventListener("submit", function(e) {
+form.addEventListener("submit", function(e) {
   e.preventDefault();
-  alert("保存しました（実際の保存処理は未実装です）");
+
+  const title = document.getElementById("title").value.trim();
+  const img = "images/" + document.getElementById("image_id").value.trim().replace(/\D/g, "") + ".webp";
+  const link = "mirr:///notice/r?c=" + document.getElementById("link_id").value.trim().replace(/\D/g, "");
+
+  const selectedKeywords = [...document.querySelectorAll("input[type=checkbox]:checked")].map(cb => cb.value);
+  const extraKeywords = document.getElementById("custom_keywords").value.split(",").map(k => k.trim()).filter(k => k);
+  const keywords = [...selectedKeywords, ...extraKeywords];
+
+  const newEvent = {
+    title,
+    img,
+    link,
+    keywords
+  };
+
+  events.push(newEvent);
+  jsonOutput.textContent = JSON.stringify(events, null, 2);
+
+  // 入力欄リセット
+  form.reset();
+  document.querySelectorAll("input[type=checkbox]").forEach(cb => cb.checked = false);
 });
 </script>
 
