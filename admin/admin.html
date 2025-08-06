@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>エモモイベント追加フォーム</title>
+  <title>イベント追加フォーム（画像数字指定）</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     body {
@@ -24,7 +24,7 @@
       margin-top: 1em;
       font-weight: bold;
     }
-    input[type="text"], textarea {
+    input[type="text"] {
       width: 100%;
       padding: 12px;
       font-size: 16px;
@@ -38,9 +38,6 @@
       flex-wrap: wrap;
       gap: 10px;
       margin-top: 5px;
-    }
-    .checkbox-group label {
-      font-weight: normal;
     }
     button {
       width: 100%;
@@ -70,12 +67,18 @@
       max-width: 96%;
       margin: 0 auto;
     }
-    #preview {
+    img#preview {
       display: block;
       margin: 10px auto;
       max-width: 90%;
       border-radius: 8px;
       box-shadow: 0 0 4px rgba(0,0,0,0.1);
+    }
+    div#error {
+      color: red;
+      text-align: center;
+      margin-top: 5px;
+      font-size: 14px;
     }
   </style>
 </head>
@@ -87,10 +90,11 @@
   <label>タイトル</label>
   <input type="text" id="title" required>
 
-  <label>画像ファイル名（数字のみ、拡張子不要）</label>
+  <label>画像番号（数字のみ）</label>
   <input type="text" id="image_id" placeholder="例: 3146" required oninput="updatePreview()">
 
   <img id="preview" src="" alt="画像プレビュー" style="display:none">
+  <div id="error"></div>
 
   <label>リンクID（数字）</label>
   <input type="text" id="link_id" placeholder="例: 6166" required>
@@ -108,64 +112,73 @@
 <pre id="jsonOutput">[]</pre>
 
 <script>
+const BASE_URL = "https://johnpuni.github.io/mirra/images/";
+
 const keywordsList = [
   "復刻", "新規", "ルレ", "ギフガチャ", "エモバト",
   "エモラン", "ハンズアイテム", "1月", "2月", "前半", "後半"
 ];
 
-// チェックボックス生成
 const checkboxContainer = document.getElementById("keywordCheckboxes");
 keywordsList.forEach(kw => {
-  const label = document.createElement("label");
-  label.innerHTML = `<input type="checkbox" value="${kw}"> ${kw}`;
-  checkboxContainer.appendChild(label);
+  const lbl = document.createElement("label");
+  lbl.innerHTML = `<input type="checkbox" value="${kw}"> ${kw}`;
+  checkboxContainer.appendChild(lbl);
 });
 
 const form = document.getElementById("eventForm");
-const jsonOutput = document.getElementById("jsonOutput");
 const preview = document.getElementById("preview");
+const errorDiv = document.getElementById("error");
+const jsonOutput = document.getElementById("jsonOutput");
 
 let events = [];
+
+function updatePreview() {
+  const id = document.getElementById("image_id").value.trim().replace(/\D/g, "");
+  if (!id) {
+    preview.style.display = "none";
+    errorDiv.textContent = "";
+    return;
+  }
+
+  const url = BASE_URL + id + ".webp";
+  preview.src = url;
+
+  preview.onload = () => {
+    preview.style.display = "block";
+    errorDiv.textContent = "";
+  };
+  preview.onerror = () => {
+    preview.style.display = "none";
+    errorDiv.textContent = `❌ 画像が見つかりませんでした: ${url}`;
+  };
+}
 
 form.addEventListener("submit", function(e) {
   e.preventDefault();
 
   const title = document.getElementById("title").value.trim();
   const imageId = document.getElementById("image_id").value.trim().replace(/\D/g, "");
-  const img = "images/" + imageId + ".webp";
+  const img = "images/" + imageId + ".webp";  // ← JSONでは相対パスで出力
   const linkId = document.getElementById("link_id").value.trim().replace(/\D/g, "");
   const link = "mirr:///notice/r?c=" + linkId;
 
-  const selectedKeywords = [...document.querySelectorAll("input[type=checkbox]:checked")].map(cb => cb.value);
-  const extraKeywords = document.getElementById("custom_keywords").value.split(",").map(k => k.trim()).filter(k => k);
-  const keywords = [...selectedKeywords, ...extraKeywords];
+  const checked = [...document.querySelectorAll("input[type=checkbox]:checked")].map(cb => cb.value);
+  const extra = document.getElementById("custom_keywords").value
+    .split(",")
+    .map(k => k.trim())
+    .filter(k => k);
+  const keywords = [...checked, ...extra];
 
-  const newEvent = {
-    title,
-    img,
-    link,
-    keywords
-  };
-
+  const newEvent = { title, img, link, keywords };
   events.push(newEvent);
   jsonOutput.textContent = JSON.stringify(events, null, 2);
 
-  // 入力欄リセット
   form.reset();
   preview.style.display = "none";
+  errorDiv.textContent = "";
   document.querySelectorAll("input[type=checkbox]").forEach(cb => cb.checked = false);
 });
-
-function updatePreview() {
-  const id = document.getElementById("image_id").value.trim().replace(/\D/g, "");
-  const url = "images/" + id + ".webp";
-  if (id.length > 0) {
-    preview.src = url;
-    preview.style.display = "block";
-  } else {
-    preview.style.display = "none";
-  }
-}
 </script>
 
 </body>
