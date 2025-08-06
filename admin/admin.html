@@ -52,6 +52,16 @@
       padding: 8px;
       margin-top: 5px;
     }
+    pre#output {
+      background: #fff;
+      padding: 15px;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      border-radius: 8px;
+      max-width: 700px;
+      margin: 0 auto 40px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
   </style>
 </head>
 <body>
@@ -90,13 +100,14 @@
   <button type="submit">保存（表示）</button>
 </form>
 
+<pre id="output">ここに登録データが表示されます</pre>
+
 <script>
 const keywordsList = [
   "復刻", "新規", "ルレ", "ギフガチャ", "エモバト",
   "エモラン", "ハンズアイテム", "1月", "2月", "前半", "後半"
 ];
 
-// 仮のイベント（一覧表示用に最低1個入れておいてね）
 const sampleEvents = [
   { title: "エモモセレクションギフトガチャ", img: "3146.webp", link: "6166", keywords: ["2025", "復刻", "1月", "前半"] },
   { title: "ネイルアイテム", img: "3151.webp", link: "6248", keywords: ["2025", "1月", "後半", "ギフガチャ", "ハンズアイテム"] }
@@ -145,8 +156,8 @@ document.getElementById("eventForm").addEventListener("submit", function(e) {
   e.preventDefault();
 
   const title = document.getElementById("title").value.trim();
-  const img = "images/" + document.getElementById("image_id").value.trim().replace(/\\D/g, "") + ".webp";
-  const link = "mirr:///notice/r?c=" + document.getElementById("link_id").value.trim().replace(/\\D/g, "");
+  const img = "images/" + document.getElementById("image_id").value.trim().replace(/\D/g, "") + ".webp";
+  const link = "mirr:///notice/r?c=" + document.getElementById("link_id").value.trim().replace(/\D/g, "");
 
   const selectedKeywords = [...document.querySelectorAll("input[type=checkbox]:checked")].map(cb => cb.value);
   const extraKeywords = document.getElementById("custom_keywords").value.split(",").map(k => k.trim()).filter(k => k);
@@ -159,8 +170,7 @@ document.getElementById("eventForm").addEventListener("submit", function(e) {
     keywords
   };
 
-  console.log("登録データ：", result);
-  alert("登録データをコンソールに表示しました。保存処理は未実装です。");
+  document.getElementById("output").textContent = JSON.stringify(result, null, 2);
 });
 </script>
 
