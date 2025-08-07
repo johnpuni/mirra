@@ -60,7 +60,6 @@
     .toggle.active {
       background-color: #333;
       color: white;
-      border-color: #333;
     }
 
     .tab-buttons {
@@ -123,7 +122,7 @@
 <main>
   <div class="controls">
     <input type="text" id="search" placeholder="キーワードで検索 (スペース区切り)">
-    <button id="andBtn" class="toggle">AND</button>
+    <button id="andBtn" class="toggle active">AND</button>
     <button id="orBtn" class="toggle">OR</button>
     <select id="sortSelect">
       <option value="newest">新しい順</option>
@@ -145,7 +144,7 @@
 <script>
   let data = {};
   let currentYear = "2025";
-  let searchMode = "";
+  let searchMode = "AND";
 
   fetch("data/events.json")
     .then(res => res.json())
@@ -159,6 +158,18 @@
     const tabContainer = document.getElementById("yearTabs");
     const years = Object.keys(data).sort((a, b) => b - a);
     tabContainer.innerHTML = "";
+
+    const allBtn = document.createElement("button");
+    allBtn.textContent = "すべて";
+    allBtn.className = currentYear === "all" ? "active" : "";
+    allBtn.addEventListener("click", () => {
+      currentYear = "all";
+      document.querySelectorAll("#yearTabs button").forEach(b => b.classList.remove("active"));
+      allBtn.classList.add("active");
+      renderEvents();
+    });
+    tabContainer.appendChild(allBtn);
+
     years.forEach(year => {
       const btn = document.createElement("button");
       btn.textContent = year + "年";
@@ -219,9 +230,7 @@
       const keywordMatch = searchWords.length === 0 || (
         searchMode === "AND"
           ? searchWords.every(w => title.includes(w) || keys.some(k => k.includes(w)))
-          : searchMode === "OR"
-            ? searchWords.some(w => title.includes(w) || keys.some(k => k.includes(w)))
-            : true
+          : searchWords.some(w => title.includes(w) || keys.some(k => k.includes(w)))
       );
 
       const categoryMatch = !category || keys.some(k => k.includes(category.toLowerCase()));
@@ -229,13 +238,17 @@
       return keywordMatch && categoryMatch;
     });
 
+    // 並び替え
     filtered.sort((a, b) => {
-      const dA = new Date(a.date);
-      const dB = new Date(b.date);
+      const dA = new Date(a.date || a.title);
+      const dB = new Date(b.date || b.title);
       return sortBy === "newest" ? dB - dA : dA - dB;
     });
 
-    const yearFiltered = filtered.filter(ev => ev.year === currentYear);
+    // 年で絞る（"all" 以外のときのみ）
+    const yearFiltered = currentYear === "all"
+      ? filtered
+      : filtered.filter(ev => ev.year === currentYear);
 
     if (yearFiltered.length === 0) {
       list.innerHTML = "<p>該当イベントがありません。</p>";
