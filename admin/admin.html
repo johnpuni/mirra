@@ -6,85 +6,148 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
-      font-family: sans-serif;
+      font-family: "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
       background: #f0f0f0;
-      padding: 15px;
+      padding: 15px 10px;
       margin: 0;
     }
     form {
       background: #fff;
-      padding: 16px;
+      padding: 20px 18px;
       border-radius: 10px;
-      max-width: 600px;
+      max-width: 100%;
       margin: 0 auto 20px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+      box-sizing: border-box;
     }
     h2 {
       margin-top: 0;
-      font-size: 20px;
+      font-size: 22px;
+      text-align: center;
+      font-weight: 700;
     }
     label {
       display: block;
-      margin-top: 12px;
-      font-weight: bold;
-      font-size: 14px;
+      margin-top: 18px;
+      font-weight: 600;
+      font-size: 16px;
+      color: #222;
+      cursor: pointer;
     }
     input[type="text"], textarea, select {
       width: 100%;
-      padding: 10px;
-      margin-top: 5px;
+      padding: 14px 12px;
+      margin-top: 8px;
       font-size: 16px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
+      border-radius: 8px;
+      border: 1.8px solid #bbb;
       box-sizing: border-box;
+      transition: border-color 0.25s ease;
+    }
+    input[type="text"]:focus, textarea:focus, select:focus {
+      border-color: #007bff;
+      outline: none;
+      background: #fcfcff;
+    }
+    textarea {
+      resize: vertical;
+      min-height: 70px;
     }
     .checkbox-group {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin-top: 8px;
+      margin-top: 10px;
     }
     .checkbox-group label {
-      font-weight: normal;
-      background: #eee;
-      padding: 6px 10px;
-      border-radius: 6px;
+      font-weight: 500;
+      background: #e6e6e6;
+      padding: 8px 14px;
+      border-radius: 18px;
       font-size: 14px;
+      user-select: none;
+      border: 2px solid transparent;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .checkbox-group input[type="checkbox"] {
+      display: none;
+    }
+    .checkbox-group input[type="checkbox"]:checked + span {
+      background: #007bff;
+      color: white;
+      border-radius: 18px;
+      padding: 8px 14px;
+      border-color: #0056b3;
+      display: inline-block;
     }
     button {
-      margin-top: 20px;
-      padding: 10px;
+      margin-top: 26px;
+      padding: 16px;
       width: 100%;
-      font-size: 16px;
-      background: #333;
+      font-size: 18px;
+      font-weight: 700;
+      background: #007bff;
       color: white;
       border: none;
-      border-radius: 6px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+    button:hover {
+      background: #0056b3;
     }
     #preview {
       display: block;
-      margin-top: 10px;
+      margin-top: 14px;
       max-width: 100%;
-      border-radius: 8px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
     }
     #jsonOutput {
-      background: #f4f4f4;
-      padding: 16px;
-      border-radius: 8px;
+      background: #f9f9f9;
+      padding: 18px;
+      border-radius: 12px;
       white-space: pre-wrap;
-      font-size: 14px;
+      font-size: 15px;
       overflow-x: auto;
       max-width: 600px;
-      margin: 0 auto 10px;
+      margin: 0 auto 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      font-family: Consolas, "Courier New", monospace;
+      display: none;
     }
     #copyBtn {
       display: block;
       margin: 0 auto 30px;
-      background: #007bff;
+      background: #28a745;
+      padding: 14px 22px;
+      border-radius: 10px;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+      color: white;
+      border: none;
+      width: auto;
+      min-width: 180px;
+      transition: background-color 0.3s ease;
+      display: none;
+    }
+    #copyBtn:hover {
+      background: #1e7e34;
     }
     @media screen and (max-width: 480px) {
       input, select, textarea, button {
-        font-size: 16px;
+        font-size: 17px;
+        padding: 16px 14px;
+      }
+      .checkbox-group label {
+        font-size: 15px;
+        padding: 10px 16px;
       }
     }
   </style>
@@ -94,27 +157,27 @@
 <form id="eventForm">
   <h2>📋 イベントを追加</h2>
 
-  <label>タイトル</label>
+  <label for="title">タイトル</label>
   <input type="text" id="title" required>
 
-  <label>画像ID（数字のみ）</label>
+  <label for="image_id">画像ID（数字のみ）</label>
   <input type="text" id="image_id" placeholder="例: 3146" required>
   <img id="preview" src="" alt="画像プレビュー" style="display:none;">
 
-  <label>リンクID（mirr:///notice/r?c= の後ろ）</label>
+  <label for="link_id">リンクID（mirr:///notice/r?c= の後ろ）</label>
   <input type="text" id="link_id" placeholder="例: 6166" required>
 
   <label>キーワード（チェック式）</label>
   <div class="checkbox-group" id="keywordCheckboxes"></div>
 
-  <label>追加キーワード（カンマ区切り）</label>
+  <label for="custom_keywords">追加キーワード（カンマ区切り）</label>
   <input type="text" id="custom_keywords" placeholder="例: コラボ, 夏">
 
   <button type="submit">追加（確認あり）</button>
 </form>
 
-<div id="jsonOutput" style="display:none;"></div>
-<button id="copyBtn" style="display:none;">📋 JSONをコピー</button>
+<div id="jsonOutput"></div>
+<button id="copyBtn">📋 JSONをコピー</button>
 
 <script>
 const keywordsList = [
@@ -127,7 +190,7 @@ const keywordsList = [
 const checkGroup = document.getElementById("keywordCheckboxes");
 keywordsList.forEach(kw => {
   const label = document.createElement("label");
-  label.innerHTML = `<input type="checkbox" value="${kw}"> ${kw}`;
+  label.innerHTML = `<input type="checkbox" value="${kw}" id="kw_${kw}"><span>${kw}</span>`;
   checkGroup.appendChild(label);
 });
 
@@ -149,14 +212,27 @@ document.getElementById("eventForm").addEventListener("submit", function(e) {
   e.preventDefault();
 
   const title = document.getElementById("title").value.trim();
-  const imgId = document.getElementById("image_id").value.trim().replace(/\D/g, "");
-  const linkId = document.getElementById("link_id").value.trim().replace(/\D/g, "");
+  let imgId = document.getElementById("image_id").value.trim();
+  imgId = imgId.replace(/\D/g, ""); // 数字以外除去
+  let linkId = document.getElementById("link_id").value.trim();
+  linkId = linkId.replace(/\D/g, ""); // 数字以外除去
 
-  const selectedKeywords = [...document.querySelectorAll("input[type=checkbox]:checked")].map(cb => cb.value);
+  const selectedKeywords = [...document.querySelectorAll("input[type=checkbox]:checked")].map(cb => cb.value.trim());
   const extraKeywords = document.getElementById("custom_keywords").value.split(",").map(k => k.trim()).filter(k => k);
-  const keywords = [...selectedKeywords, ...extraKeywords];
+  let keywords = [...selectedKeywords, ...extraKeywords];
 
-  if (!title || !imgId || !linkId) return alert("すべての項目を入力してください");
+  // キーワードの重複除去
+  keywords = [...new Set(keywords)];
+
+  if (!title || !imgId || !linkId) {
+    alert("タイトル、画像ID、リンクIDは必須項目です。");
+    return;
+  }
+
+  if (keywords.length === 0) {
+    alert("キーワードを1つ以上選択または入力してください。");
+    return;
+  }
 
   // キーワード確認ダイアログ
   if (!confirm(`このキーワードで大丈夫ですか？\n\n${keywords.join(", ")}`)) return;
@@ -167,6 +243,13 @@ document.getElementById("eventForm").addEventListener("submit", function(e) {
     link: `mirr:///notice/r?c=${linkId}`,
     keywords: keywords
   };
+
+  // 重複チェック（タイトル＋リンクが同じなら追加しない）
+  const isDuplicate = eventList.some(ev => ev.title === eventData.title && ev.link === eventData.link);
+  if (isDuplicate) {
+    alert("同じタイトルとリンクのイベントがすでに追加されています。");
+    return;
+  }
 
   eventList.push(eventData);
 
