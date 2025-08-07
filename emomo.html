@@ -10,7 +10,6 @@
       margin: 0;
       background-color: #f5f5f5;
     }
-
     header {
       background-color: #333;
       padding: 12px;
@@ -18,12 +17,10 @@
       color: white;
       font-size: 1.3em;
     }
-
     nav {
       text-align: center;
       margin: 15px 0;
     }
-
     nav a {
       color: #333;
       font-weight: bold;
@@ -31,7 +28,6 @@
       margin: 0 15px;
       font-size: 1.1em;
     }
-
     main {
       max-width: 900px;
       margin: 0 auto;
@@ -40,12 +36,10 @@
       border-radius: 8px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
-
     .search-box {
       margin-bottom: 20px;
       text-align: center;
     }
-
     .search-box input {
       padding: 10px;
       width: 85%;
@@ -54,7 +48,6 @@
       border: 1px solid #ccc;
       border-radius: 6px;
     }
-
     .tab-buttons {
       display: flex;
       gap: 10px;
@@ -62,7 +55,6 @@
       flex-wrap: wrap;
       justify-content: center;
     }
-
     .tab-buttons button {
       background-color: #eee;
       border: 1px solid #ccc;
@@ -72,25 +64,21 @@
       font-weight: bold;
       transition: background-color 0.3s;
     }
-
     .tab-buttons button.active {
       background-color: #333;
       color: white;
       border-color: #333;
     }
-
     .tab-content {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
       gap: 16px;
     }
-
     .event-card {
       position: relative;
       overflow: hidden;
       border-radius: 8px;
     }
-
     .event-card img {
       width: 100%;
       height: auto;
@@ -98,7 +86,6 @@
       border: 1px solid #ccc;
       border-radius: 6px;
     }
-
     .hidden-title {
       display: none;
     }
@@ -116,7 +103,7 @@
 
 <main>
   <div class="search-box">
-    <input type="text" id="search" placeholder="イベントを検索（例: 夏、限定、復刻、10周年）">
+    <input type="text" id="search" placeholder="イベントを検索（例: 夏 OR 復刻 10周年）">
   </div>
 
   <div class="tab-buttons">
@@ -176,19 +163,40 @@
   function displayEvents(year, keyword = '') {
     let events = [];
 
+    for (const y in eventData) {
+      events = events.concat(eventData[y]);
+    }
+
     if (keyword) {
-      for (const y in eventData) {
-        events = events.concat(eventData[y]);
+      const isOR = keyword.includes(' or ') || keyword.includes(' OR ');
+      const rawWords = keyword.replace(/\s+/g, ' ').trim().split(' ');
+      const keywords = [];
+      let group = [];
+
+      for (let word of rawWords) {
+        if (word.toLowerCase() === 'or') {
+          if (group.length > 0) {
+            keywords.push(group);
+            group = [];
+          }
+        } else {
+          group.push(word);
+        }
       }
+      if (group.length > 0) keywords.push(group);
+
       const filtered = events.filter(e => {
-        const titleMatch = e.title.toLowerCase().includes(keyword);
-        const keywordsMatch = e.keywords && e.keywords.some(k => k.toLowerCase().includes(keyword));
-        return titleMatch || keywordsMatch;
+        return keywords.every(group =>
+          group.some(k =>
+            (e.title && e.title.toLowerCase().includes(k)) ||
+            (e.keywords && e.keywords.some(tag => tag.toLowerCase().includes(k)))
+          )
+        );
       });
+
       renderEvents(filtered);
     } else {
-      events = eventData[year] || [];
-      renderEvents(events);
+      renderEvents(eventData[year] || []);
     }
   }
 
