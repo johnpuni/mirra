@@ -103,8 +103,8 @@ function createEntry() {
   const container = document.getElementById("entryContainer");
   const entry = document.createElement("div");
   entry.className = "entry";
-  entry.innerHTML = \`
-    <h3>イベント \${entryIndex + 1}</h3>
+  entry.innerHTML = `
+    <h3>イベント ${entryIndex + 1}</h3>
     <label>タイトル:</label>
     <textarea class="title"></textarea>
     <label>画像番号（例: 3146）:</label>
@@ -117,12 +117,10 @@ function createEntry() {
     <input type="date" class="date">
     <div class="error"></div>
     <button class="remove-button" onclick="this.parentElement.remove()">削除</button>
-  \`;
+  `;
   container.appendChild(entry);
   entryIndex++;
 }
-
-document.getElementById("addBtn").addEventListener("click", createEntry);
 
 function generateJSON() {
   const entries = document.querySelectorAll(".entry");
@@ -185,7 +183,11 @@ function copyJSON() {
     alert("JSONをコピーしました！");
   });
 }
-createEntry();
+
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("addBtn").addEventListener("click", createEntry);
+  createEntry();
+});
 </script>
 </body>
 </html>
