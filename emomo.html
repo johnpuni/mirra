@@ -57,6 +57,16 @@
       border-radius: 6px;
     }
 
+    .toggle.active {
+      background-color: #333;
+      color: white;
+    }
+
+    .toggle {
+      background-color: #ddd;
+      color: #333;
+    }
+
     .tab-buttons {
       display: flex;
       flex-wrap: wrap;
@@ -95,6 +105,10 @@
       width: 100%;
       border: 1px solid #ccc;
       border-radius: 6px;
+    }
+
+    .event-card div {
+      display: none; /* タイトル非表示 */
     }
 
     @media (max-width: 600px) {
@@ -190,7 +204,6 @@
       allEvents = allEvents.concat(data[y].map(ev => ({...ev, year: y})));
     }
 
-    // フィルター処理
     let filtered = allEvents.filter(ev => {
       const title = ev.title.toLowerCase();
       const keys = ev.keywords?.map(k => k.toLowerCase()) || [];
@@ -206,14 +219,12 @@
       return keywordMatch && categoryMatch;
     });
 
-    // 並び替え
     filtered.sort((a, b) => {
       const dA = new Date(a.date);
       const dB = new Date(b.date);
       return sortBy === "newest" ? dB - dA : dA - dB;
     });
 
-    // 年で絞る
     const yearFiltered = filtered.filter(ev => ev.year === currentYear);
 
     if (yearFiltered.length === 0) {
