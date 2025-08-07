@@ -60,11 +60,7 @@
     .toggle.active {
       background-color: #333;
       color: white;
-    }
-
-    .toggle {
-      background-color: #ddd;
-      color: #333;
+      border-color: #333;
     }
 
     .tab-buttons {
@@ -127,7 +123,7 @@
 <main>
   <div class="controls">
     <input type="text" id="search" placeholder="キーワードで検索 (スペース区切り)">
-    <button id="andBtn" class="toggle active">AND</button>
+    <button id="andBtn" class="toggle">AND</button>
     <button id="orBtn" class="toggle">OR</button>
     <select id="sortSelect">
       <option value="newest">新しい順</option>
@@ -149,7 +145,7 @@
 <script>
   let data = {};
   let currentYear = "2025";
-  let searchMode = "AND";
+  let searchMode = "";
 
   fetch("data/events.json")
     .then(res => res.json())
@@ -180,16 +176,28 @@
   document.getElementById("search").addEventListener("input", renderEvents);
   document.getElementById("sortSelect").addEventListener("change", renderEvents);
   document.getElementById("filterSelect").addEventListener("change", renderEvents);
+
   document.getElementById("andBtn").addEventListener("click", () => {
-    searchMode = "AND";
-    document.getElementById("andBtn").classList.add("active");
-    document.getElementById("orBtn").classList.remove("active");
+    if (searchMode === "AND") {
+      searchMode = "";
+      document.getElementById("andBtn").classList.remove("active");
+    } else {
+      searchMode = "AND";
+      document.getElementById("andBtn").classList.add("active");
+      document.getElementById("orBtn").classList.remove("active");
+    }
     renderEvents();
   });
+
   document.getElementById("orBtn").addEventListener("click", () => {
-    searchMode = "OR";
-    document.getElementById("orBtn").classList.add("active");
-    document.getElementById("andBtn").classList.remove("active");
+    if (searchMode === "OR") {
+      searchMode = "";
+      document.getElementById("orBtn").classList.remove("active");
+    } else {
+      searchMode = "OR";
+      document.getElementById("orBtn").classList.add("active");
+      document.getElementById("andBtn").classList.remove("active");
+    }
     renderEvents();
   });
 
@@ -210,11 +218,13 @@
 
       const keywordMatch = searchWords.length === 0 || (
         searchMode === "AND"
-          ? searchWords.every(w => title.includes(w) || keys.includes(w))
-          : searchWords.some(w => title.includes(w) || keys.includes(w))
+          ? searchWords.every(w => title.includes(w) || keys.some(k => k.includes(w)))
+          : searchMode === "OR"
+            ? searchWords.some(w => title.includes(w) || keys.some(k => k.includes(w)))
+            : true
       );
 
-      const categoryMatch = !category || keys.includes(category.toLowerCase());
+      const categoryMatch = !category || keys.some(k => k.includes(category.toLowerCase()));
 
       return keywordMatch && categoryMatch;
     });
