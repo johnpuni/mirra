@@ -2,182 +2,133 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>イベント追加フォーム（複数・JSON出力対応）</title>
+  <title>イベント追加フォーム（履歴＆折りたたみ対応）</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
-      font-family: "Yu Gothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+      font-family: sans-serif;
       background: #f0f0f0;
-      padding: 15px 10px;
+      padding: 15px;
       margin: 0;
     }
-    form {
-      background: #fff;
-      padding: 20px 18px;
-      border-radius: 10px;
-      max-width: 100%;
-      margin: 0 auto 20px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-      box-sizing: border-box;
+    .accordion-header {
+      background: #444;
+      color: #fff;
+      padding: 12px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 8px 8px 0 0;
     }
-    h2 {
-      margin-top: 0;
-      font-size: 22px;
-      text-align: center;
-      font-weight: 700;
+    .accordion-header.open {
+      background: #007bff;
+    }
+    .accordion-content {
+      display: none;
+      background: #fff;
+      padding: 16px;
+      border-radius: 0 0 10px 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      max-width: 600px;
+      margin: 0 auto 20px;
+    }
+    form {
+      margin: 0;
     }
     label {
       display: block;
-      margin-top: 18px;
-      font-weight: 600;
-      font-size: 16px;
-      color: #222;
-      cursor: pointer;
+      margin-top: 12px;
+      font-weight: bold;
+      font-size: 14px;
     }
     input[type="text"], textarea, select {
       width: 100%;
-      padding: 14px 12px;
-      margin-top: 8px;
+      padding: 10px;
+      margin-top: 5px;
       font-size: 16px;
-      border-radius: 8px;
-      border: 1.8px solid #bbb;
+      border-radius: 6px;
+      border: 1px solid #ccc;
       box-sizing: border-box;
-      transition: border-color 0.25s ease;
-    }
-    input[type="text"]:focus, textarea:focus, select:focus {
-      border-color: #007bff;
-      outline: none;
-      background: #fcfcff;
-    }
-    textarea {
-      resize: vertical;
-      min-height: 70px;
     }
     .checkbox-group {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin-top: 10px;
+      margin-top: 8px;
     }
     .checkbox-group label {
-      font-weight: 500;
-      background: #e6e6e6;
-      padding: 8px 14px;
-      border-radius: 18px;
+      font-weight: normal;
+      background: #eee;
+      padding: 6px 10px;
+      border-radius: 6px;
       font-size: 14px;
-      user-select: none;
-      border: 2px solid transparent;
-      transition: background-color 0.3s ease, border-color 0.3s ease;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .checkbox-group input[type="checkbox"] {
-      display: none;
-    }
-    .checkbox-group input[type="checkbox"]:checked + span {
-      background: #007bff;
-      color: white;
-      border-radius: 18px;
-      padding: 8px 14px;
-      border-color: #0056b3;
-      display: inline-block;
     }
     button {
-      margin-top: 26px;
-      padding: 16px;
+      margin-top: 20px;
+      padding: 10px;
       width: 100%;
-      font-size: 18px;
-      font-weight: 700;
-      background: #007bff;
+      font-size: 16px;
+      background: #333;
       color: white;
       border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      user-select: none;
-    }
-    button:hover {
-      background: #0056b3;
+      border-radius: 6px;
     }
     #preview {
       display: block;
-      margin-top: 14px;
+      margin-top: 10px;
       max-width: 100%;
-      border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      border-radius: 8px;
     }
     #jsonOutput {
-      background: #f9f9f9;
-      padding: 18px;
-      border-radius: 12px;
+      background: #f4f4f4;
+      padding: 16px;
+      border-radius: 8px;
       white-space: pre-wrap;
-      font-size: 15px;
+      font-size: 14px;
       overflow-x: auto;
       max-width: 600px;
-      margin: 0 auto 20px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      font-family: Consolas, "Courier New", monospace;
-      display: none;
+      margin: 0 auto 10px;
     }
     #copyBtn {
       display: block;
       margin: 0 auto 30px;
-      background: #28a745;
-      padding: 14px 22px;
-      border-radius: 10px;
-      font-size: 17px;
-      font-weight: 700;
-      cursor: pointer;
-      color: white;
-      border: none;
-      width: auto;
-      min-width: 180px;
-      transition: background-color 0.3s ease;
-      display: none;
-    }
-    #copyBtn:hover {
-      background: #1e7e34;
+      background: #007bff;
     }
     @media screen and (max-width: 480px) {
       input, select, textarea, button {
-        font-size: 17px;
-        padding: 16px 14px;
-      }
-      .checkbox-group label {
-        font-size: 15px;
-        padding: 10px 16px;
+        font-size: 16px;
       }
     }
   </style>
 </head>
 <body>
 
-<form id="eventForm">
-  <h2>📋 イベントを追加</h2>
+<div class="accordion">
+  <div class="accordion-header" id="accordionHeader">📋 イベントフォームを開く</div>
+  <div class="accordion-content" id="accordionContent">
+    <form id="eventForm">
+      <label>タイトル</label>
+      <input type="text" id="title" required>
 
-  <label for="title">タイトル</label>
-  <input type="text" id="title" required>
+      <label>画像ID（数字のみ）</label>
+      <input type="text" id="image_id" placeholder="例: 3146" required>
+      <img id="preview" src="" alt="画像プレビュー" style="display:none;">
 
-  <label for="image_id">画像ID（数字のみ）</label>
-  <input type="text" id="image_id" placeholder="例: 3146" required>
-  <img id="preview" src="" alt="画像プレビュー" style="display:none;">
+      <label>リンクID（mirr:///notice/r?c= の後ろ）</label>
+      <input type="text" id="link_id" placeholder="例: 6166" required>
 
-  <label for="link_id">リンクID（mirr:///notice/r?c= の後ろ）</label>
-  <input type="text" id="link_id" placeholder="例: 6166" required>
+      <label>キーワード（チェック式）</label>
+      <div class="checkbox-group" id="keywordCheckboxes"></div>
 
-  <label>キーワード（チェック式）</label>
-  <div class="checkbox-group" id="keywordCheckboxes"></div>
+      <label>追加キーワード（カンマ区切り）</label>
+      <input type="text" id="custom_keywords" placeholder="例: コラボ, 夏">
 
-  <label for="custom_keywords">追加キーワード（カンマ区切り）</label>
-  <input type="text" id="custom_keywords" placeholder="例: コラボ, 夏">
+      <button type="submit">追加（確認あり）</button>
+    </form>
+  </div>
+</div>
 
-  <button type="submit">追加（確認あり）</button>
-</form>
-
-<div id="jsonOutput"></div>
-<button id="copyBtn">📋 JSONをコピー</button>
+<div id="jsonOutput" style="display:none;"></div>
+<button id="copyBtn" style="display:none;">📋 JSONをコピー</button>
 
 <script>
 const keywordsList = [
@@ -190,7 +141,7 @@ const keywordsList = [
 const checkGroup = document.getElementById("keywordCheckboxes");
 keywordsList.forEach(kw => {
   const label = document.createElement("label");
-  label.innerHTML = `<input type="checkbox" value="${kw}" id="kw_${kw}"><span>${kw}</span>`;
+  label.innerHTML = `<input type="checkbox" value="${kw}"> ${kw}`;
   checkGroup.appendChild(label);
 });
 
@@ -206,35 +157,21 @@ document.getElementById("image_id").addEventListener("input", function() {
   }
 });
 
-const eventList = []; // 複数件保存用
+const eventList = [];
 
 document.getElementById("eventForm").addEventListener("submit", function(e) {
   e.preventDefault();
 
   const title = document.getElementById("title").value.trim();
-  let imgId = document.getElementById("image_id").value.trim();
-  imgId = imgId.replace(/\D/g, ""); // 数字以外除去
-  let linkId = document.getElementById("link_id").value.trim();
-  linkId = linkId.replace(/\D/g, ""); // 数字以外除去
+  const imgId = document.getElementById("image_id").value.trim().replace(/\D/g, "");
+  const linkId = document.getElementById("link_id").value.trim().replace(/\D/g, "");
 
-  const selectedKeywords = [...document.querySelectorAll("input[type=checkbox]:checked")].map(cb => cb.value.trim());
+  const selectedKeywords = [...document.querySelectorAll("input[type=checkbox]:checked")].map(cb => cb.value);
   const extraKeywords = document.getElementById("custom_keywords").value.split(",").map(k => k.trim()).filter(k => k);
-  let keywords = [...selectedKeywords, ...extraKeywords];
+  const keywords = [...selectedKeywords, ...extraKeywords];
 
-  // キーワードの重複除去
-  keywords = [...new Set(keywords)];
+  if (!title || !imgId || !linkId) return alert("すべての項目を入力してください");
 
-  if (!title || !imgId || !linkId) {
-    alert("タイトル、画像ID、リンクIDは必須項目です。");
-    return;
-  }
-
-  if (keywords.length === 0) {
-    alert("キーワードを1つ以上選択または入力してください。");
-    return;
-  }
-
-  // キーワード確認ダイアログ
   if (!confirm(`このキーワードで大丈夫ですか？\n\n${keywords.join(", ")}`)) return;
 
   const eventData = {
@@ -244,16 +181,8 @@ document.getElementById("eventForm").addEventListener("submit", function(e) {
     keywords: keywords
   };
 
-  // 重複チェック（タイトル＋リンクが同じなら追加しない）
-  const isDuplicate = eventList.some(ev => ev.title === eventData.title && ev.link === eventData.link);
-  if (isDuplicate) {
-    alert("同じタイトルとリンクのイベントがすでに追加されています。");
-    return;
-  }
-
   eventList.push(eventData);
 
-  // JSON表示更新
   const jsonOutput = document.getElementById("jsonOutput");
   jsonOutput.textContent = JSON.stringify(eventList, null, 2);
   jsonOutput.style.display = "block";
@@ -267,11 +196,63 @@ document.getElementById("eventForm").addEventListener("submit", function(e) {
     });
   };
 
-  // フォーム初期化
+  saveFormToLocal();
+
   this.reset();
   document.getElementById("preview").style.display = "none";
   document.querySelectorAll("#keywordCheckboxes input").forEach(cb => cb.checked = false);
+  localStorage.removeItem("eventFormData");
 });
+
+// 📌 履歴の保存＆復元（ローカルストレージ）
+function saveFormToLocal() {
+  const formData = {
+    title: document.getElementById("title").value,
+    image_id: document.getElementById("image_id").value,
+    link_id: document.getElementById("link_id").value,
+    custom_keywords: document.getElementById("custom_keywords").value,
+    checked: [...document.querySelectorAll("#keywordCheckboxes input:checked")].map(cb => cb.value)
+  };
+  localStorage.setItem("eventFormData", JSON.stringify(formData));
+}
+
+function restoreFormFromLocal() {
+  const saved = localStorage.getItem("eventFormData");
+  if (!saved) return;
+  try {
+    const data = JSON.parse(saved);
+    document.getElementById("title").value = data.title || "";
+    document.getElementById("image_id").value = data.image_id || "";
+    document.getElementById("link_id").value = data.link_id || "";
+    document.getElementById("custom_keywords").value = data.custom_keywords || "";
+    document.querySelectorAll("#keywordCheckboxes input").forEach(cb => {
+      cb.checked = data.checked?.includes(cb.value);
+    });
+
+    // プレビュー反映
+    if (data.image_id) {
+      document.getElementById("preview").src = `https://johnpuni.github.io/mirra/images/${data.image_id}.webp`;
+      document.getElementById("preview").style.display = "block";
+    }
+  } catch (e) {
+    console.warn("フォーム履歴の読み込みに失敗:", e);
+  }
+}
+restoreFormFromLocal();
+
+// 📌 折りたたみ機能
+const accHeader = document.getElementById("accordionHeader");
+const accContent = document.getElementById("accordionContent");
+accHeader.addEventListener("click", () => {
+  const isOpen = accContent.style.display === "block";
+  accContent.style.display = isOpen ? "none" : "block";
+  accHeader.classList.toggle("open", !isOpen);
+  accHeader.textContent = isOpen ? "📋 イベントフォームを開く" : "📕 イベントフォームを閉じる";
+});
+// 初回開く
+accContent.style.display = "block";
+accHeader.classList.add("open");
+accHeader.textContent = "📕 イベントフォームを閉じる";
 </script>
 
 </body>
