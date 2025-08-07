@@ -37,8 +37,9 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
     .search-box {
-      margin-bottom: 20px;
+      margin-bottom: 10px;
       text-align: center;
+      position: relative;
     }
     .search-box input {
       padding: 10px;
@@ -47,6 +48,22 @@
       font-size: 16px;
       border: 1px solid #ccc;
       border-radius: 6px;
+    }
+    .search-buttons {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .search-buttons button, .sort-button {
+      margin: 4px;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .sort-button {
+      background-color: #eee;
+      border: 1px solid #ccc;
     }
     .tab-buttons {
       display: flex;
@@ -75,7 +92,6 @@
       gap: 16px;
     }
     .event-card {
-      position: relative;
       overflow: hidden;
       border-radius: 8px;
     }
@@ -89,23 +105,40 @@
     .hidden-title {
       display: none;
     }
+    .autocomplete-box {
+      position: absolute;
+      top: 42px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 85%;
+      max-width: 400px;
+      background: white;
+      border: 1px solid #ccc;
+      border-top: none;
+      z-index: 1000;
+    }
+    .autocomplete-item {
+      padding: 8px;
+      cursor: pointer;
+    }
+    .autocomplete-item:hover {
+      background-color: #f0f0f0;
+    }
   </style>
 </head>
 <body>
-
-<header>
-  エモモイベント
-</header>
-
-<nav>
-  <a href="index.html">← ホームに戻る</a>
-</nav>
-
+<header>エモモイベント</header>
+<nav><a href="index.html">← ホームに戻る</a></nav>
 <main>
   <div class="search-box">
-    <input type="text" id="search" placeholder="イベントを検索（例: 夏 OR 復刻 10周年）">
+    <input type="text" id="search" placeholder="イベントを検索（例: 夏、限定、復刻、10周年）">
+    <div id="autocomplete" class="autocomplete-box" style="display:none;"></div>
   </div>
-
+  <div class="search-buttons">
+    <button onclick="setSearchMode('AND')">AND検索</button>
+    <button onclick="setSearchMode('OR')">OR検索</button>
+    <button class="sort-button" onclick="toggleSort()">🔃 並び替え</button>
+  </div>
   <div class="tab-buttons">
     <button data-year="2025" class="active">2025年</button>
     <button data-year="2024">2024年</button>
@@ -115,20 +148,18 @@
     <button data-year="2020">2020年</button>
     <button data-year="2019">2019年</button>
   </div>
-
-  <div class="tab-content" id="tab-content">
-    <p>読み込み中...</p>
-  </div>
+  <div class="tab-content" id="tab-content"><p>読み込み中...</p></div>
 </main>
-
 <script>
   const buttons = document.querySelectorAll('.tab-buttons button');
   const content = document.getElementById('tab-content');
   const searchInput = document.getElementById('search');
+  const autocompleteBox = document.getElementById('autocomplete');
   let eventData = {};
   let currentYear = '2025';
+  let searchMode = 'AND';
+  let sortDescending = true;
 
-  // JSON読み込み
   fetch("data/events.json")
     .then(res => res.json())
     .then(json => {
@@ -150,8 +181,19 @@
 
   searchInput.addEventListener('input', () => {
     const keyword = searchInput.value.trim().toLowerCase();
+    showAutocomplete(keyword);
     displayEvents(currentYear, keyword);
   });
+
+  function setSearchMode(mode) {
+    searchMode = mode;
+    displayEvents(currentYear, searchInput.value.trim().toLowerCase());
+  }
+
+  function toggleSort() {
+    sortDescending = !sortDescending;
+    displayEvents(currentYear, searchInput.value.trim().toLowerCase());
+  }
 
   function activateTab(year) {
     buttons.forEach(btn => {
@@ -162,45 +204,25 @@
 
   function displayEvents(year, keyword = '') {
     let events = [];
-
-    for (const y in eventData) {
-      events = events.concat(eventData[y]);
-    }
-
     if (keyword) {
-      const isOR = keyword.includes(' or ') || keyword.includes(' OR ');
-      const rawWords = keyword.replace(/\s+/g, ' ').trim().split(' ');
-      const keywords = [];
-      let group = [];
-
-      for (let word of rawWords) {
-        if (word.toLowerCase() === 'or') {
-          if (group.length > 0) {
-            keywords.push(group);
-            group = [];
-          }
-        } else {
-          group.push(word);
-        }
+      for (const y in eventData) {
+        events = events.concat(eventData[y]);
       }
-      if (group.length > 0) keywords.push(group);
-
+      const terms = keyword.split(/\s+/);
       const filtered = events.filter(e => {
-        return keywords.every(group =>
-          group.some(k =>
-            (e.title && e.title.toLowerCase().includes(k)) ||
-            (e.keywords && e.keywords.some(tag => tag.toLowerCase().includes(k)))
-          )
-        );
+        const combined = (e.title + ' ' + (e.keywords || []).join(' ')).toLowerCase();
+        if (searchMode === 'OR') return terms.some(term => combined.includes(term));
+        return terms.every(term => combined.includes(term));
       });
-
       renderEvents(filtered);
     } else {
-      renderEvents(eventData[year] || []);
+      events = eventData[year] || [];
+      renderEvents(events);
     }
   }
 
   function renderEvents(events) {
+    if (!sortDescending) events = [...events].reverse();
     if (events.length === 0) {
       content.innerHTML = '<p>該当するイベントはありません。</p>';
       return;
@@ -214,7 +236,35 @@
       </div>
     `).join('');
   }
-</script>
 
+  function showAutocomplete(input) {
+    if (!input) {
+      autocompleteBox.style.display = "none";
+      return;
+    }
+    let keywords = new Set();
+    Object.values(eventData).flat().forEach(e => (e.keywords || []).forEach(k => keywords.add(k)));
+    const filtered = [...keywords].filter(k => k.toLowerCase().includes(input) && !searchInput.value.toLowerCase().includes(k.toLowerCase()));
+    if (filtered.length === 0) {
+      autocompleteBox.style.display = "none";
+      return;
+    }
+    autocompleteBox.innerHTML = filtered.map(k => `<div class="autocomplete-item">${k}</div>`).join('');
+    autocompleteBox.style.display = "block";
+    document.querySelectorAll(".autocomplete-item").forEach(item => {
+      item.addEventListener("click", () => {
+        searchInput.value += (searchInput.value ? " " : "") + item.textContent;
+        autocompleteBox.style.display = "none";
+        displayEvents(currentYear, searchInput.value.trim().toLowerCase());
+      });
+    });
+  }
+
+  document.addEventListener('click', function(event) {
+    if (!autocompleteBox.contains(event.target) && event.target !== searchInput) {
+      autocompleteBox.style.display = "none";
+    }
+  });
+</script>
 </body>
 </html>
