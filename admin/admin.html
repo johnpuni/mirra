@@ -1,193 +1,195 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
+  <title>イベント追加フォーム（複数・JSON出力対応）</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>エモモ管理ツール</title>
   <style>
     body {
       font-family: sans-serif;
+      background: #f0f0f0;
+      padding: 15px;
       margin: 0;
-      background-color: #f5f5f5;
     }
-    header {
-      background-color: #333;
-      padding: 12px;
-      text-align: center;
-      color: white;
-      font-size: 1.3em;
-    }
-    main {
-      max-width: 960px;
-      margin: 20px auto;
-      background-color: white;
-      padding: 20px;
-      border-radius: 8px;
+    form {
+      background: #fff;
+      padding: 16px;
+      border-radius: 10px;
+      max-width: 600px;
+      margin: 0 auto 20px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
-    .entry {
-      border: 1px solid #ccc;
-      padding: 15px;
-      margin-bottom: 15px;
-      border-radius: 6px;
-      position: relative;
-    }
-    .entry h3 {
+    h2 {
       margin-top: 0;
+      font-size: 20px;
     }
-    .entry input,
-    .entry textarea {
-      width: 100%;
-      margin-top: 5px;
-      margin-bottom: 10px;
-      padding: 8px;
-      border-radius: 4px;
-      border: 1px solid #ccc;
+    label {
+      display: block;
+      margin-top: 12px;
+      font-weight: bold;
       font-size: 14px;
     }
-    .entry .error {
-      color: red;
-      font-size: 0.9em;
+    input[type="text"], textarea, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
     }
-    .remove-button {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      background: #e74c3c;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      padding: 4px 8px;
+    .checkbox-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 8px;
+    }
+    .checkbox-group label {
+      font-weight: normal;
+      background: #eee;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 14px;
     }
     button {
-      padding: 10px 16px;
-      font-size: 15px;
-      border-radius: 6px;
+      margin-top: 20px;
+      padding: 10px;
+      width: 100%;
+      font-size: 16px;
+      background: #333;
+      color: white;
       border: none;
-      cursor: pointer;
-      margin: 5px;
+      border-radius: 6px;
+    }
+    #preview {
+      display: block;
+      margin-top: 10px;
+      max-width: 100%;
+      border-radius: 8px;
     }
     #jsonOutput {
+      background: #f4f4f4;
+      padding: 16px;
+      border-radius: 8px;
       white-space: pre-wrap;
-      background-color: #f0f0f0;
-      border: 1px solid #ccc;
-      padding: 12px;
-      margin-top: 20px;
-      border-radius: 6px;
-      font-family: monospace;
+      font-size: 14px;
+      overflow-x: auto;
+      max-width: 600px;
+      margin: 0 auto 10px;
     }
     #copyBtn {
-      background-color: #2980b9;
-      color: white;
+      display: block;
+      margin: 0 auto 30px;
+      background: #007bff;
     }
-    #addBtn {
-      background-color: #27ae60;
-      color: white;
+    @media screen and (max-width: 480px) {
+      input, select, textarea, button {
+        font-size: 16px;
+      }
     }
   </style>
 </head>
 <body>
-<header>📦 エモモイベント JSON 作成ツール</header>
-<main>
-  <div id="entryContainer"></div>
-  <button id="addBtn">＋ イベントを追加</button>
-  <button onclick="generateJSON()">✅ JSON生成</button>
-  <button id="copyBtn" onclick="copyJSON()">📋 コピー</button>
-  <div id="jsonOutput"></div>
-</main>
+
+<form id="eventForm">
+  <h2>📋 イベントを追加</h2>
+
+  <label>タイトル</label>
+  <input type="text" id="title" required>
+
+  <label>画像ID（数字のみ）</label>
+  <input type="text" id="image_id" placeholder="例: 3146" required>
+  <img id="preview" src="" alt="画像プレビュー" style="display:none;">
+
+  <label>リンクID（mirr:///notice/r?c= の後ろ）</label>
+  <input type="text" id="link_id" placeholder="例: 6166" required>
+
+  <label>キーワード（チェック式）</label>
+  <div class="checkbox-group" id="keywordCheckboxes"></div>
+
+  <label>追加キーワード（カンマ区切り）</label>
+  <input type="text" id="custom_keywords" placeholder="例: コラボ, 夏">
+
+  <button type="submit">追加（確認あり）</button>
+</form>
+
+<div id="jsonOutput" style="display:none;"></div>
+<button id="copyBtn" style="display:none;">📋 JSONをコピー</button>
+
 <script>
-let entryIndex = 0;
+const keywordsList = [
+  "復刻", "新規", "ルレ", "ギフガチャ", "エモバト",
+  "エモラン", "ハンズアイテム", "4月", "5月", "6月",
+  "前半", "後半", "プチ", "カラバリ復刻", "プチルレ",
+  "エモバト(S49)", "2025"
+];
 
-function createEntry() {
-  const container = document.getElementById("entryContainer");
-  const entry = document.createElement("div");
-  entry.className = "entry";
-  entry.innerHTML = `
-    <h3>イベント ${entryIndex + 1}</h3>
-    <label>タイトル:</label>
-    <textarea class="title"></textarea>
-    <label>画像番号（例: 3146）:</label>
-    <input type="text" class="img">
-    <label>リンク（例: mirr:///notice/r?c=6166）:</label>
-    <input type="text" class="link">
-    <label>キーワード（カンマ区切り）:</label>
-    <input type="text" class="keywords">
-    <label>日付（例: 2025-01-01）:</label>
-    <input type="date" class="date">
-    <div class="error"></div>
-    <button class="remove-button" onclick="this.parentElement.remove()">削除</button>
-  `;
-  container.appendChild(entry);
-  entryIndex++;
-}
+const checkGroup = document.getElementById("keywordCheckboxes");
+keywordsList.forEach(kw => {
+  const label = document.createElement("label");
+  label.innerHTML = `<input type="checkbox" value="${kw}"> ${kw}`;
+  checkGroup.appendChild(label);
+});
 
-function generateJSON() {
-  const entries = document.querySelectorAll(".entry");
-  const result = [];
-  let hasError = false;
-
-  entries.forEach(entry => {
-    const title = entry.querySelector(".title").value.trim();
-    const img = entry.querySelector(".img").value.trim();
-    const link = entry.querySelector(".link").value.trim();
-    const keywords = entry.querySelector(".keywords").value.trim();
-    const date = entry.querySelector(".date").value;
-    const errorDiv = entry.querySelector(".error");
-    errorDiv.textContent = "";
-
-    if (!title || !img || !link || !keywords || !date) {
-      errorDiv.textContent = "すべての項目を入力してください。";
-      hasError = true;
-      return;
-    }
-
-    if (!/^\d+$/.test(img)) {
-      errorDiv.textContent = "画像番号が不正です。数字のみで入力してください。";
-      hasError = true;
-      return;
-    }
-
-    if (!/^mirr:\/\/\/notice\/r\?c=\d+$/.test(link)) {
-      errorDiv.textContent = "リンクの形式が不正です。";
-      hasError = true;
-      return;
-    }
-
-    const keywordArray = keywords.split(",").map(k => k.trim()).filter(k => k);
-    if (keywordArray.length === 0) {
-      errorDiv.textContent = "キーワードを1つ以上入力してください。";
-      hasError = true;
-      return;
-    }
-
-    result.push({
-      title: title,
-      img: "images/" + img + ".webp",
-      link: link,
-      keywords: keywordArray,
-      date: date
-    });
-  });
-
-  if (!hasError) {
-    document.getElementById("jsonOutput").textContent = JSON.stringify(result, null, 2);
+// プレビュー画像更新
+document.getElementById("image_id").addEventListener("input", function() {
+  const id = this.value.trim();
+  const img = document.getElementById("preview");
+  if (id) {
+    img.src = `https://johnpuni.github.io/mirra/images/${id}.webp`;
+    img.style.display = "block";
   } else {
-    document.getElementById("jsonOutput").textContent = "";
+    img.style.display = "none";
   }
-}
+});
 
-function copyJSON() {
-  const json = document.getElementById("jsonOutput").textContent;
-  navigator.clipboard.writeText(json).then(() => {
-    alert("JSONをコピーしました！");
-  });
-}
+const eventList = []; // 複数件保存用
 
-document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("addBtn").addEventListener("click", createEntry);
-  createEntry();
+document.getElementById("eventForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const title = document.getElementById("title").value.trim();
+  const imgId = document.getElementById("image_id").value.trim().replace(/\D/g, "");
+  const linkId = document.getElementById("link_id").value.trim().replace(/\D/g, "");
+
+  const selectedKeywords = [...document.querySelectorAll("input[type=checkbox]:checked")].map(cb => cb.value);
+  const extraKeywords = document.getElementById("custom_keywords").value.split(",").map(k => k.trim()).filter(k => k);
+  const keywords = [...selectedKeywords, ...extraKeywords];
+
+  if (!title || !imgId || !linkId) return alert("すべての項目を入力してください");
+
+  // キーワード確認ダイアログ
+  if (!confirm(`このキーワードで大丈夫ですか？\n\n${keywords.join(", ")}`)) return;
+
+  const eventData = {
+    title: title,
+    img: `images/${imgId}.webp`,
+    link: `mirr:///notice/r?c=${linkId}`,
+    keywords: keywords
+  };
+
+  eventList.push(eventData);
+
+  // JSON表示更新
+  const jsonOutput = document.getElementById("jsonOutput");
+  jsonOutput.textContent = JSON.stringify(eventList, null, 2);
+  jsonOutput.style.display = "block";
+
+  const copyBtn = document.getElementById("copyBtn");
+  copyBtn.style.display = "block";
+
+  copyBtn.onclick = function() {
+    navigator.clipboard.writeText(jsonOutput.textContent).then(() => {
+      alert("JSONをコピーしました！");
+    });
+  };
+
+  // フォーム初期化
+  this.reset();
+  document.getElementById("preview").style.display = "none";
+  document.querySelectorAll("#keywordCheckboxes input").forEach(cb => cb.checked = false);
 });
 </script>
+
 </body>
 </html>
