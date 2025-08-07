@@ -1,270 +1,458 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>エモモイベント</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      margin: 0;
-      background-color: #f5f5f5;
-    }
-    header {
-      background-color: #333;
-      padding: 12px;
-      text-align: center;
-      color: white;
-      font-size: 1.3em;
-    }
-    nav {
-      text-align: center;
-      margin: 15px 0;
-    }
-    nav a {
-      color: #333;
-      font-weight: bold;
-      text-decoration: none;
-      margin: 0 15px;
-      font-size: 1.1em;
-    }
-    main {
-      max-width: 900px;
-      margin: 0 auto;
-      background-color: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-    .search-box {
-      margin-bottom: 10px;
-      text-align: center;
-      position: relative;
-    }
-    .search-box input {
-      padding: 10px;
-      width: 85%;
-      max-width: 400px;
-      font-size: 16px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-    }
-    .search-buttons {
-      text-align: center;
-      margin-bottom: 10px;
-    }
-    .search-buttons button, .sort-button {
-      margin: 4px;
-      padding: 8px 16px;
-      border: none;
-      border-radius: 6px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    .sort-button {
-      background-color: #eee;
-      border: 1px solid #ccc;
-    }
-    .tab-buttons {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .tab-buttons button {
-      background-color: #eee;
-      border: 1px solid #ccc;
-      padding: 8px 16px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: background-color 0.3s;
-    }
-    .tab-buttons button.active {
-      background-color: #333;
-      color: white;
-      border-color: #333;
-    }
-    .tab-content {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 16px;
-    }
-    .event-card {
-      overflow: hidden;
-      border-radius: 8px;
-    }
-    .event-card img {
-      width: 100%;
-      height: auto;
-      display: block;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-    }
-    .hidden-title {
-      display: none;
-    }
-    .autocomplete-box {
-      position: absolute;
-      top: 42px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 85%;
-      max-width: 400px;
-      background: white;
-      border: 1px solid #ccc;
-      border-top: none;
-      z-index: 1000;
-    }
-    .autocomplete-item {
-      padding: 8px;
-      cursor: pointer;
-    }
-    .autocomplete-item:hover {
-      background-color: #f0f0f0;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>エモモイベント一覧</title>
+<style>
+  body {
+    font-family: sans-serif;
+    margin: 0;
+    background: #f5f5f5;
+  }
+  header {
+    background: #333;
+    color: #fff;
+    padding: 12px;
+    text-align: center;
+    font-size: 1.3em;
+  }
+  nav {
+    text-align: center;
+    margin: 15px 0;
+  }
+  nav a {
+    color: #333;
+    font-weight: bold;
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 1.1em;
+  }
+  main {
+    max-width: 900px;
+    margin: 0 auto 40px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+  }
+  .tab-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .tab-buttons button {
+    background: #eee;
+    border: 1px solid #ccc;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+  }
+  .tab-buttons button.active {
+    background-color: #333;
+    color: #fff;
+    border-color: #333;
+  }
+
+  .filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 20px;
+    justify-content: center;
+  }
+
+  .filter-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .filter-group label {
+    font-weight: bold;
+  }
+  .filter-group button {
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background: #eee;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s;
+  }
+  .filter-group button.active {
+    background: #333;
+    color: #fff;
+    border-color: #333;
+  }
+
+  #search-container {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto 30px;
+  }
+  #search {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+  #suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-top: none;
+    max-height: 150px;
+    overflow-y: auto;
+    z-index: 1000;
+  }
+  #suggestions div {
+    padding: 8px 12px;
+    cursor: pointer;
+  }
+  #suggestions div:hover {
+    background-color: #eee;
+  }
+
+  .tab-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(160px,1fr));
+    gap: 16px;
+  }
+  .event-card {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 5px rgb(0 0 0 / 0.1);
+    background: #fff;
+    transition: box-shadow 0.3s;
+  }
+  .event-card:hover {
+    box-shadow: 0 4px 12px rgb(0 0 0 / 0.2);
+  }
+  .event-card img {
+    width: 100%;
+    display: block;
+    border-bottom: 1px solid #ddd;
+    border-radius: 8px 8px 0 0;
+  }
+  .event-card a {
+    display: block;
+    padding: 8px 10px;
+    color: #333;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .event-card a:hover {
+    text-decoration: underline;
+  }
+</style>
 </head>
 <body>
-<header>エモモイベント</header>
+
+<header>エモモイベント一覧</header>
 <nav><a href="index.html">← ホームに戻る</a></nav>
+
 <main>
-  <div class="search-box">
-    <input type="text" id="search" placeholder="イベントを検索（例: 夏、限定、復刻、10周年）">
-    <div id="autocomplete" class="autocomplete-box" style="display:none;"></div>
+  <!-- 年タブ -->
+  <div class="tab-buttons" id="yearTabs">
+    <!-- JSで年ボタン生成 -->
   </div>
-  <div class="search-buttons">
-    <button onclick="setSearchMode('AND')">AND検索</button>
-    <button onclick="setSearchMode('OR')">OR検索</button>
-    <button class="sort-button" onclick="toggleSort()">🔃 並び替え</button>
+
+  <!-- フィルター群 -->
+  <div class="filter-row">
+    <!-- AND/OR切替 -->
+    <div class="filter-group" id="andOrGroup">
+      <label>検索モード:</label>
+      <button id="andBtn" class="active">AND</button>
+      <button id="orBtn">OR</button>
+    </div>
+
+    <!-- 並び替え -->
+    <div class="filter-group" id="sortGroup">
+      <label for="sortSelect">並び替え:</label>
+      <select id="sortSelect" aria-label="並び替え">
+        <option value="newest">新しい順</option>
+        <option value="oldest">古い順</option>
+      </select>
+    </div>
+
+    <!-- カテゴリ絞り込み -->
+    <div class="filter-group" id="categoryGroup">
+      <label>カテゴリ絞り込み:</label>
+      <button data-category="all" class="active">全て</button>
+      <button data-category="ルレ">ルレだけ</button>
+      <button data-category="ギフガチャ">ギフガチャだけ</button>
+      <button data-category="エモバト">エモバトだけ</button>
+      <button data-category="エモラン">エモランだけ</button>
+    </div>
   </div>
-  <div class="tab-buttons">
-    <button data-year="2025" class="active">2025年</button>
-    <button data-year="2024">2024年</button>
-    <button data-year="2023">2023年</button>
-    <button data-year="2022">2022年</button>
-    <button data-year="2021">2021年</button>
-    <button data-year="2020">2020年</button>
-    <button data-year="2019">2019年</button>
+
+  <!-- 検索ボックス + 入力補助 -->
+  <div id="search-container">
+    <input type="text" id="search" placeholder="イベントを検索（例: 夏、限定、復刻、10周年）" autocomplete="off" aria-label="イベント検索">
+    <div id="suggestions" hidden></div>
   </div>
-  <div class="tab-content" id="tab-content"><p>読み込み中...</p></div>
+
+  <!-- イベント表示エリア -->
+  <div class="tab-content" id="tabContent">
+    <p>読み込み中...</p>
+  </div>
 </main>
+
 <script>
-  const buttons = document.querySelectorAll('.tab-buttons button');
-  const content = document.getElementById('tab-content');
+(() => {
+  const yearTabs = document.getElementById('yearTabs');
+  const tabContent = document.getElementById('tabContent');
   const searchInput = document.getElementById('search');
-  const autocompleteBox = document.getElementById('autocomplete');
+  const suggestionsBox = document.getElementById('suggestions');
+  const andBtn = document.getElementById('andBtn');
+  const orBtn = document.getElementById('orBtn');
+  const sortSelect = document.getElementById('sortSelect');
+  const categoryGroup = document.getElementById('categoryGroup');
+
+  // 使用する年リスト（ここは必要に応じて増減してください）
+  const years = ['2025', '2024', '2023', '2022', '2021', '2020', '2019'];
+
+  // グローバル変数：読み込んだイベントデータ
   let eventData = {};
   let currentYear = '2025';
-  let searchMode = 'AND';
-  let sortDescending = true;
+  let currentCategory = 'all';
+  let currentAndOr = 'AND';
 
-  fetch("data/events.json")
+  // 全イベントの配列キャッシュ（年度関係なく検索用に使う）
+  let allEventsFlat = [];
+
+  // 年タブの初期生成
+  function createYearTabs() {
+    years.forEach(y => {
+      const btn = document.createElement('button');
+      btn.textContent = y + '年';
+      btn.dataset.year = y;
+      if (y === currentYear) btn.classList.add('active');
+      btn.addEventListener('click', () => {
+        currentYear = y;
+        clearSearch();
+        updateYearTabs();
+        renderEvents();
+      });
+      yearTabs.appendChild(btn);
+    });
+  }
+  function updateYearTabs() {
+    yearTabs.querySelectorAll('button').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.year === currentYear);
+    });
+  }
+
+  // AND/OR切り替えボタンイベント
+  andBtn.addEventListener('click', () => {
+    currentAndOr = 'AND';
+    andBtn.classList.add('active');
+    orBtn.classList.remove('active');
+    renderEvents();
+  });
+  orBtn.addEventListener('click', () => {
+    currentAndOr = 'OR';
+    orBtn.classList.add('active');
+    andBtn.classList.remove('active');
+    renderEvents();
+  });
+
+  // 並び替えセレクト変更イベント
+  sortSelect.addEventListener('change', () => {
+    renderEvents();
+  });
+
+  // カテゴリボタン群イベント
+  categoryGroup.querySelectorAll('button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentCategory = btn.dataset.category;
+      categoryGroup.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderEvents();
+    });
+  });
+
+  // 検索文字列変更イベント（入力補助兼ねる）
+  searchInput.addEventListener('input', () => {
+    const val = searchInput.value.trim().toLowerCase();
+    updateSuggestions(val);
+    renderEvents();
+  });
+
+  // 入力補助（検索候補）更新
+  function updateSuggestions(keyword) {
+    if (!keyword) {
+      suggestionsBox.hidden = true;
+      suggestionsBox.innerHTML = '';
+      return;
+    }
+    const suggestions = allEventsFlat
+      .filter(e => e.title.toLowerCase().includes(keyword))
+      .slice(0, 10);
+
+    if (suggestions.length === 0) {
+      suggestionsBox.hidden = true;
+      suggestionsBox.innerHTML = '';
+      return;
+    }
+
+    suggestionsBox.innerHTML = '';
+    suggestions.forEach(e => {
+      const div = document.createElement('div');
+      div.textContent = e.title;
+      div.title = e.title;
+      div.tabIndex = 0;
+      div.addEventListener('click', () => {
+        searchInput.value = e.title;
+        suggestionsBox.hidden = true;
+        renderEvents();
+      });
+      div.addEventListener('keydown', (ev) => {
+        if (ev.key === "Enter") {
+          searchInput.value = e.title;
+          suggestionsBox.hidden = true;
+          renderEvents();
+        }
+      });
+      suggestionsBox.appendChild(div);
+    });
+    suggestionsBox.hidden = false;
+  }
+
+  // 年をまたぐ全イベント配列を作成
+  function flattenEvents(data) {
+    let arr = [];
+    Object.values(data).forEach(arrYear => {
+      if(Array.isArray(arrYear)) arr = arr.concat(arrYear);
+    });
+    return arr;
+  }
+
+  // イベント表示
+  function renderEvents() {
+    let eventsToShow = [];
+
+    const searchWords = searchInput.value.trim().toLowerCase().split(/\s+/).filter(Boolean);
+
+    // 検索が空欄なら年タブのイベントだけ表示
+    if (searchWords.length === 0) {
+      eventsToShow = eventData[currentYear] || [];
+    } else {
+      // 全年度のイベントからAND/OR検索
+      if (currentAndOr === 'AND') {
+        eventsToShow = allEventsFlat.filter(ev => {
+          return searchWords.every(word => 
+            ev.title.toLowerCase().includes(word) || 
+            (ev.keywords && ev.keywords.some(k => k.toLowerCase().includes(word)))
+          );
+        });
+      } else {
+        eventsToShow = allEventsFlat.filter(ev => {
+          return searchWords.some(word => 
+            ev.title.toLowerCase().includes(word) || 
+            (ev.keywords && ev.keywords.some(k => k.toLowerCase().includes(word)))
+          );
+        });
+      }
+    }
+
+    // カテゴリ絞り込み
+    if (currentCategory !== 'all') {
+      eventsToShow = eventsToShow.filter(ev => {
+        if(!ev.keywords) return false;
+        return ev.keywords.some(k => k.includes(currentCategory));
+      });
+    }
+
+    // 並び替え
+    eventsToShow.sort((a,b) => {
+      // IDっぽい数字を抜き出して比較（linkのc=の値）
+      const aNum = extractLinkId(a.link);
+      const bNum = extractLinkId(b.link);
+      if(sortSelect.value === 'newest') {
+        return bNum - aNum;
+      } else {
+        return aNum - bNum;
+      }
+    });
+
+    // 表示処理
+    if(eventsToShow.length === 0) {
+      tabContent.innerHTML = '<p>該当するイベントはありません。</p>';
+      return;
+    }
+
+    tabContent.innerHTML = eventsToShow.map(ev => {
+      return `
+        <div class="event-card" title="${escapeHtml(ev.title)}">
+          <a href="${ev.link}" target="_blank" rel="noopener noreferrer">
+            <img src="${escapeHtml(ev.img)}" alt="${escapeHtml(ev.title)}" loading="lazy" />
+            <div class="event-title">${escapeHtml(ev.title)}</div>
+          </a>
+        </div>
+      `;
+    }).join('');
+  }
+
+  // リンクID抽出
+  function extractLinkId(link) {
+    try {
+      const match = link.match(/c=(\d+)/);
+      return match ? Number(match[1]) : 0;
+    } catch {
+      return 0;
+    }
+  }
+
+  // HTMLエスケープ（タイトルなどに安全のため）
+  function escapeHtml(text) {
+    return text.replace(/[&<>"']/g, m => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    })[m]);
+  }
+
+  // 検索ボックス外クリックで候補非表示
+  document.addEventListener('click', e => {
+    if (!searchInput.contains(e.target) && !suggestionsBox.contains(e.target)) {
+      suggestionsBox.hidden = true;
+    }
+  });
+
+  // 検索クリア
+  function clearSearch() {
+    searchInput.value = '';
+    suggestionsBox.hidden = true;
+  }
+
+  // JSON読み込みと初期化
+  fetch('data/events.json')
     .then(res => res.json())
     .then(json => {
       eventData = json;
-      activateTab(currentYear);
+      allEventsFlat = flattenEvents(eventData);
+      createYearTabs();
+      renderEvents();
     })
-    .catch(error => {
-      console.error("JSONの読み込みに失敗:", error);
-      content.innerHTML = "<p>イベントデータの読み込みに失敗しました。</p>";
+    .catch(err => {
+      tabContent.innerHTML = '<p>イベントデータの読み込みに失敗しました。</p>';
+      console.error('読み込み失敗:', err);
     });
-
-  buttons.forEach(button => {
-    button.addEventListener('click', () => {
-      currentYear = button.dataset.year;
-      activateTab(currentYear);
-      searchInput.value = '';
-    });
-  });
-
-  searchInput.addEventListener('input', () => {
-    const keyword = searchInput.value.trim().toLowerCase();
-    showAutocomplete(keyword);
-    displayEvents(currentYear, keyword);
-  });
-
-  function setSearchMode(mode) {
-    searchMode = mode;
-    displayEvents(currentYear, searchInput.value.trim().toLowerCase());
-  }
-
-  function toggleSort() {
-    sortDescending = !sortDescending;
-    displayEvents(currentYear, searchInput.value.trim().toLowerCase());
-  }
-
-  function activateTab(year) {
-    buttons.forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.year === year);
-    });
-    displayEvents(year);
-  }
-
-  function displayEvents(year, keyword = '') {
-    let events = [];
-    if (keyword) {
-      for (const y in eventData) {
-        events = events.concat(eventData[y]);
-      }
-      const terms = keyword.split(/\s+/);
-      const filtered = events.filter(e => {
-        const combined = (e.title + ' ' + (e.keywords || []).join(' ')).toLowerCase();
-        if (searchMode === 'OR') return terms.some(term => combined.includes(term));
-        return terms.every(term => combined.includes(term));
-      });
-      renderEvents(filtered);
-    } else {
-      events = eventData[year] || [];
-      renderEvents(events);
-    }
-  }
-
-  function renderEvents(events) {
-    if (!sortDescending) events = [...events].reverse();
-    if (events.length === 0) {
-      content.innerHTML = '<p>該当するイベントはありません。</p>';
-      return;
-    }
-    content.innerHTML = events.map(event => `
-      <div class="event-card">
-        <a href="${event.link}" target="_blank" title="${event.title}">
-          <img src="${event.img}" alt="${event.title}">
-          <span class="hidden-title">${event.title}</span>
-        </a>
-      </div>
-    `).join('');
-  }
-
-  function showAutocomplete(input) {
-    if (!input) {
-      autocompleteBox.style.display = "none";
-      return;
-    }
-    let keywords = new Set();
-    Object.values(eventData).flat().forEach(e => (e.keywords || []).forEach(k => keywords.add(k)));
-    const filtered = [...keywords].filter(k => k.toLowerCase().includes(input) && !searchInput.value.toLowerCase().includes(k.toLowerCase()));
-    if (filtered.length === 0) {
-      autocompleteBox.style.display = "none";
-      return;
-    }
-    autocompleteBox.innerHTML = filtered.map(k => `<div class="autocomplete-item">${k}</div>`).join('');
-    autocompleteBox.style.display = "block";
-    document.querySelectorAll(".autocomplete-item").forEach(item => {
-      item.addEventListener("click", () => {
-        searchInput.value += (searchInput.value ? " " : "") + item.textContent;
-        autocompleteBox.style.display = "none";
-        displayEvents(currentYear, searchInput.value.trim().toLowerCase());
-      });
-    });
-  }
-
-  document.addEventListener('click', function(event) {
-    if (!autocompleteBox.contains(event.target) && event.target !== searchInput) {
-      autocompleteBox.style.display = "none";
-    }
-  });
+})();
 </script>
+
 </body>
 </html>
