@@ -113,8 +113,8 @@
       <input type="text" id="image_id" placeholder="例: 3146" required>
       <img id="preview" src="" alt="画像プレビュー" style="display:none;">
 
-      <label>リンクID（mirr:///notice/r?c= の後ろ）</label>
-      <input type="text" id="link_id" placeholder="例: 6166" required>
+      <label>リンクID または URL</label>
+      <input type="text" id="link_id" placeholder="例: 6166 または https://mirrativ.com/live/xxxx" required>
 
       <label>キーワード（チェック式）</label>
       <div class="checkbox-group" id="keywordCheckboxes"></div>
@@ -164,20 +164,30 @@ document.getElementById("eventForm").addEventListener("submit", function(e) {
 
   const title = document.getElementById("title").value.trim();
   const imgId = document.getElementById("image_id").value.trim().replace(/\D/g, "");
-  const linkId = document.getElementById("link_id").value.trim().replace(/\D/g, "");
+  const linkInput = document.getElementById("link_id").value.trim();
 
   const selectedKeywords = [...document.querySelectorAll("input[type=checkbox]:checked")].map(cb => cb.value);
   const extraKeywords = document.getElementById("custom_keywords").value.split(",").map(k => k.trim()).filter(k => k);
   const keywords = [...selectedKeywords, ...extraKeywords];
 
-  if (!title || !imgId || !linkId) return alert("すべての項目を入力してください");
+  if (!title || !imgId || !linkInput) return alert("すべての項目を入力してください");
 
   if (!confirm(`このキーワードで大丈夫ですか？\n\n${keywords.join(", ")}`)) return;
+
+  let linkValue;
+  if (/^https?:\/\//i.test(linkInput)) {
+    // URL入力時
+    linkValue = `mirr://webview/window/open?url=${encodeURIComponent(linkInput)}`;
+  } else {
+    // 数字ID入力時
+    const numericId = linkInput.replace(/\D/g, "");
+    linkValue = `mirr:///notice/r?c=${numericId}`;
+  }
 
   const eventData = {
     title: title,
     img: `images/${imgId}.webp`,
-    link: `mirr:///notice/r?c=${linkId}`,
+    link: linkValue,
     keywords: keywords
   };
 
@@ -204,7 +214,7 @@ document.getElementById("eventForm").addEventListener("submit", function(e) {
   localStorage.removeItem("eventFormData");
 });
 
-// 📌 履歴の保存＆復元（ローカルストレージ）
+// 履歴の保存＆復元
 function saveFormToLocal() {
   const formData = {
     title: document.getElementById("title").value,
@@ -229,7 +239,6 @@ function restoreFormFromLocal() {
       cb.checked = data.checked?.includes(cb.value);
     });
 
-    // プレビュー反映
     if (data.image_id) {
       document.getElementById("preview").src = `https://johnpuni.github.io/mirra/images/${data.image_id}.webp`;
       document.getElementById("preview").style.display = "block";
@@ -240,7 +249,7 @@ function restoreFormFromLocal() {
 }
 restoreFormFromLocal();
 
-// 📌 折りたたみ機能
+// 折りたたみ機能
 const accHeader = document.getElementById("accordionHeader");
 const accContent = document.getElementById("accordionContent");
 accHeader.addEventListener("click", () => {
@@ -249,7 +258,6 @@ accHeader.addEventListener("click", () => {
   accHeader.classList.toggle("open", !isOpen);
   accHeader.textContent = isOpen ? "📋 イベントフォームを開く" : "📕 イベントフォームを閉じる";
 });
-// 初回開く
 accContent.style.display = "block";
 accHeader.classList.add("open");
 accHeader.textContent = "📕 イベントフォームを閉じる";
