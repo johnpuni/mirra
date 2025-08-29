@@ -71,6 +71,14 @@
       color: white;
       border: none;
       border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      opacity: 0.9;
+    }
+    #resetBtn {
+      background: #dc3545;
+      margin-top: 10px;
     }
     #preview {
       display: block;
@@ -123,6 +131,7 @@
       <input type="text" id="custom_keywords" placeholder="例: コラボ, 夏">
 
       <button type="submit">追加（確認あり）</button>
+      <button type="button" id="resetBtn">リセット（履歴も削除）</button>
     </form>
   </div>
 </div>
@@ -176,10 +185,8 @@ document.getElementById("eventForm").addEventListener("submit", function(e) {
 
   let linkValue;
   if (/^https?:\/\//i.test(linkInput)) {
-    // URL入力時
     linkValue = `mirr://webview/window/open?url=${encodeURIComponent(linkInput)}`;
   } else {
-    // 数字ID入力時
     const numericId = linkInput.replace(/\D/g, "");
     linkValue = `mirr:///notice/r?c=${numericId}`;
   }
@@ -199,22 +206,28 @@ document.getElementById("eventForm").addEventListener("submit", function(e) {
 
   const copyBtn = document.getElementById("copyBtn");
   copyBtn.style.display = "block";
-
   copyBtn.onclick = function() {
     navigator.clipboard.writeText(jsonOutput.textContent).then(() => {
       alert("JSONをコピーしました！");
     });
   };
 
+  // ✅ 履歴を保存（送信しても内容保持）
   saveFormToLocal();
-
-  this.reset();
-  document.getElementById("preview").style.display = "none";
-  document.querySelectorAll("#keywordCheckboxes input").forEach(cb => cb.checked = false);
-  localStorage.removeItem("eventFormData");
 });
 
-// 履歴の保存＆復元
+// ✅ リセットボタン（入力欄 + 履歴を消す）
+document.getElementById("resetBtn").addEventListener("click", () => {
+  if (confirm("本当にリセットしますか？履歴も削除されます。")) {
+    document.getElementById("eventForm").reset();
+    document.getElementById("preview").style.display = "none";
+    document.querySelectorAll("#keywordCheckboxes input").forEach(cb => cb.checked = false);
+    localStorage.removeItem("eventFormData");
+    alert("フォームをリセットしました");
+  }
+});
+
+// 履歴保存＆復元
 function saveFormToLocal() {
   const formData = {
     title: document.getElementById("title").value,
@@ -238,7 +251,6 @@ function restoreFormFromLocal() {
     document.querySelectorAll("#keywordCheckboxes input").forEach(cb => {
       cb.checked = data.checked?.includes(cb.value);
     });
-
     if (data.image_id) {
       document.getElementById("preview").src = `https://johnpuni.github.io/mirra/images/${data.image_id}.webp`;
       document.getElementById("preview").style.display = "block";
