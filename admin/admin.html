@@ -31,9 +31,7 @@
       max-width: 600px;
       margin: 0 auto 20px;
     }
-    form {
-      margin: 0;
-    }
+    form { margin: 0; }
     label {
       display: block;
       margin-top: 12px;
@@ -73,9 +71,7 @@
       border-radius: 6px;
       cursor: pointer;
     }
-    button:hover {
-      opacity: 0.9;
-    }
+    button:hover { opacity: 0.9; }
     #resetBtn {
       background: #dc3545;
       margin-top: 10px;
@@ -102,9 +98,7 @@
       background: #007bff;
     }
     @media screen and (max-width: 480px) {
-      input, select, textarea, button {
-        font-size: 16px;
-      }
+      input, select, textarea, button { font-size: 16px; }
     }
   </style>
 </head>
@@ -147,6 +141,7 @@ const keywordsList = [
   "2024", "2023","2022", "2021", "2020","2019", "2018", "2016"
 ];
 
+// チェックボックス生成
 const checkGroup = document.getElementById("keywordCheckboxes");
 keywordsList.forEach(kw => {
   const label = document.createElement("label");
@@ -167,15 +162,22 @@ document.getElementById("image_id").addEventListener("input", function() {
 });
 
 const eventList = [];
+const form = document.getElementById("eventForm");
+const storageKey = "eventFormData";
 
-document.getElementById("eventForm").addEventListener("submit", function(e) {
+// ✅ 入力するたびに保存
+form.addEventListener("input", saveFormToLocal);
+form.addEventListener("change", saveFormToLocal);
+
+// 送信
+form.addEventListener("submit", function(e) {
   e.preventDefault();
 
   const title = document.getElementById("title").value.trim();
   const imgId = document.getElementById("image_id").value.trim().replace(/\D/g, "");
   const linkInput = document.getElementById("link_id").value.trim();
 
-  const selectedKeywords = [...document.querySelectorAll("input[type=checkbox]:checked")].map(cb => cb.value);
+  const selectedKeywords = [...document.querySelectorAll("#keywordCheckboxes input:checked")].map(cb => cb.value);
   const extraKeywords = document.getElementById("custom_keywords").value.split(",").map(k => k.trim()).filter(k => k);
   const keywords = [...selectedKeywords, ...extraKeywords];
 
@@ -206,28 +208,28 @@ document.getElementById("eventForm").addEventListener("submit", function(e) {
 
   const copyBtn = document.getElementById("copyBtn");
   copyBtn.style.display = "block";
-  copyBtn.onclick = function() {
+  copyBtn.onclick = () => {
     navigator.clipboard.writeText(jsonOutput.textContent).then(() => {
       alert("JSONをコピーしました！");
     });
   };
 
-  // ✅ 履歴を保存（送信しても内容保持）
+  // ✅ 送信後も内容は保持（リセットしない）
   saveFormToLocal();
 });
 
-// ✅ リセットボタン（入力欄 + 履歴を消す）
+// ✅ リセットボタン
 document.getElementById("resetBtn").addEventListener("click", () => {
   if (confirm("本当にリセットしますか？履歴も削除されます。")) {
-    document.getElementById("eventForm").reset();
+    form.reset();
     document.getElementById("preview").style.display = "none";
     document.querySelectorAll("#keywordCheckboxes input").forEach(cb => cb.checked = false);
-    localStorage.removeItem("eventFormData");
+    localStorage.removeItem(storageKey);
     alert("フォームをリセットしました");
   }
 });
 
-// 履歴保存＆復元
+// 保存
 function saveFormToLocal() {
   const formData = {
     title: document.getElementById("title").value,
@@ -236,11 +238,12 @@ function saveFormToLocal() {
     custom_keywords: document.getElementById("custom_keywords").value,
     checked: [...document.querySelectorAll("#keywordCheckboxes input:checked")].map(cb => cb.value)
   };
-  localStorage.setItem("eventFormData", JSON.stringify(formData));
+  localStorage.setItem(storageKey, JSON.stringify(formData));
 }
 
+// 復元
 function restoreFormFromLocal() {
-  const saved = localStorage.getItem("eventFormData");
+  const saved = localStorage.getItem(storageKey);
   if (!saved) return;
   try {
     const data = JSON.parse(saved);
@@ -256,12 +259,12 @@ function restoreFormFromLocal() {
       document.getElementById("preview").style.display = "block";
     }
   } catch (e) {
-    console.warn("フォーム履歴の読み込みに失敗:", e);
+    console.warn("履歴の復元に失敗:", e);
   }
 }
 restoreFormFromLocal();
 
-// 折りたたみ機能
+// 折りたたみ
 const accHeader = document.getElementById("accordionHeader");
 const accContent = document.getElementById("accordionContent");
 accHeader.addEventListener("click", () => {
