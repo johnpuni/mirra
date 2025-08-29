@@ -5,101 +5,22 @@
   <title>イベント追加フォーム（履歴＆折りたたみ対応）</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body {
-      font-family: sans-serif;
-      background: #f0f0f0;
-      padding: 15px;
-      margin: 0;
-    }
-    .accordion-header {
-      background: #444;
-      color: #fff;
-      padding: 12px;
-      font-size: 16px;
-      cursor: pointer;
-      border-radius: 8px 8px 0 0;
-    }
-    .accordion-header.open {
-      background: #007bff;
-    }
-    .accordion-content {
-      display: none;
-      background: #fff;
-      padding: 16px;
-      border-radius: 0 0 10px 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      max-width: 600px;
-      margin: 0 auto 20px;
-    }
+    body { font-family: sans-serif; background: #f0f0f0; padding: 15px; margin: 0; }
+    .accordion-header { background: #444; color: #fff; padding: 12px; font-size: 16px; cursor: pointer; border-radius: 8px 8px 0 0; }
+    .accordion-header.open { background: #007bff; }
+    .accordion-content { display: none; background: #fff; padding: 16px; border-radius: 0 0 10px 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); max-width: 600px; margin: 0 auto 20px; }
     form { margin: 0; }
-    label {
-      display: block;
-      margin-top: 12px;
-      font-weight: bold;
-      font-size: 14px;
-    }
-    input[type="text"], textarea, select {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      font-size: 16px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      box-sizing: border-box;
-    }
-    .checkbox-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 8px;
-    }
-    .checkbox-group label {
-      font-weight: normal;
-      background: #eee;
-      padding: 6px 10px;
-      border-radius: 6px;
-      font-size: 14px;
-    }
-    button {
-      margin-top: 20px;
-      padding: 10px;
-      width: 100%;
-      font-size: 16px;
-      background: #333;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
+    label { display: block; margin-top: 12px; font-weight: bold; font-size: 14px; }
+    input[type="text"], textarea, select { width: 100%; padding: 10px; margin-top: 5px; font-size: 16px; border-radius: 6px; border: 1px solid #ccc; box-sizing: border-box; }
+    .checkbox-group { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
+    .checkbox-group label { font-weight: normal; background: #eee; padding: 6px 10px; border-radius: 6px; font-size: 14px; }
+    button { margin-top: 20px; padding: 10px; width: 100%; font-size: 16px; background: #333; color: white; border: none; border-radius: 6px; cursor: pointer; }
     button:hover { opacity: 0.9; }
-    #resetBtn {
-      background: #dc3545;
-      margin-top: 10px;
-    }
-    #preview {
-      display: block;
-      margin-top: 10px;
-      max-width: 100%;
-      border-radius: 8px;
-    }
-    #jsonOutput {
-      background: #f4f4f4;
-      padding: 16px;
-      border-radius: 8px;
-      white-space: pre-wrap;
-      font-size: 14px;
-      overflow-x: auto;
-      max-width: 600px;
-      margin: 0 auto 10px;
-    }
-    #copyBtn {
-      display: block;
-      margin: 0 auto 30px;
-      background: #007bff;
-    }
-    @media screen and (max-width: 480px) {
-      input, select, textarea, button { font-size: 16px; }
-    }
+    #resetBtn { background: #dc3545; margin-top: 10px; }
+    #preview { display: block; margin-top: 10px; max-width: 100%; border-radius: 8px; }
+    #jsonOutput { background: #f4f4f4; padding: 16px; border-radius: 8px; white-space: pre-wrap; font-size: 14px; overflow-x: auto; max-width: 600px; margin: 0 auto 10px; }
+    #copyBtn { display: block; margin: 0 auto 30px; background: #007bff; }
+    @media screen and (max-width: 480px) { input, select, textarea, button { font-size: 16px; } }
   </style>
 </head>
 <body>
@@ -161,16 +82,26 @@ document.getElementById("image_id").addEventListener("input", function() {
   }
 });
 
-const eventList = [];
-const form = document.getElementById("eventForm");
-const storageKey = "eventFormData";
+// localStorageキー
+const storageKeyEvents = "eventHistory";
 
-// ✅ 入力するたびに保存
-form.addEventListener("input", saveFormToLocal);
-form.addEventListener("change", saveFormToLocal);
+// 履歴を表示
+function showHistory() {
+  const history = JSON.parse(localStorage.getItem(storageKeyEvents)) || [];
+  const jsonOutput = document.getElementById("jsonOutput");
+  if (history.length > 0) {
+    jsonOutput.textContent = JSON.stringify(history, null, 2);
+    jsonOutput.style.display = "block";
+    document.getElementById("copyBtn").style.display = "block";
+  } else {
+    jsonOutput.textContent = "";
+    jsonOutput.style.display = "none";
+    document.getElementById("copyBtn").style.display = "none";
+  }
+}
 
-// 送信
-form.addEventListener("submit", function(e) {
+// 登録
+document.getElementById("eventForm").addEventListener("submit", function(e) {
   e.preventDefault();
 
   const title = document.getElementById("title").value.trim();
@@ -200,69 +131,39 @@ form.addEventListener("submit", function(e) {
     keywords: keywords
   };
 
-  eventList.push(eventData);
+  // 保存
+  let history = JSON.parse(localStorage.getItem(storageKeyEvents)) || [];
+  history.push(eventData);
+  localStorage.setItem(storageKeyEvents, JSON.stringify(history));
 
-  const jsonOutput = document.getElementById("jsonOutput");
-  jsonOutput.textContent = JSON.stringify(eventList, null, 2);
-  jsonOutput.style.display = "block";
-
-  const copyBtn = document.getElementById("copyBtn");
-  copyBtn.style.display = "block";
-  copyBtn.onclick = () => {
-    navigator.clipboard.writeText(jsonOutput.textContent).then(() => {
-      alert("JSONをコピーしました！");
-    });
-  };
-
-  // ✅ 送信後も内容は保持（リセットしない）
-  saveFormToLocal();
+  showHistory();
+  alert("イベントを登録しました！");
+  form.reset();
+  document.getElementById("preview").style.display = "none";
+  document.querySelectorAll("#keywordCheckboxes input").forEach(cb => cb.checked = false);
 });
 
-// ✅ リセットボタン
+// コピー
+document.getElementById("copyBtn").onclick = () => {
+  navigator.clipboard.writeText(document.getElementById("jsonOutput").textContent).then(() => {
+    alert("JSONをコピーしました！");
+  });
+};
+
+// リセット（履歴ごと削除）
 document.getElementById("resetBtn").addEventListener("click", () => {
   if (confirm("本当にリセットしますか？履歴も削除されます。")) {
+    localStorage.removeItem(storageKeyEvents);
+    showHistory();
     form.reset();
     document.getElementById("preview").style.display = "none";
     document.querySelectorAll("#keywordCheckboxes input").forEach(cb => cb.checked = false);
-    localStorage.removeItem(storageKey);
-    alert("フォームをリセットしました");
+    alert("履歴を削除しました");
   }
 });
 
-// 保存
-function saveFormToLocal() {
-  const formData = {
-    title: document.getElementById("title").value,
-    image_id: document.getElementById("image_id").value,
-    link_id: document.getElementById("link_id").value,
-    custom_keywords: document.getElementById("custom_keywords").value,
-    checked: [...document.querySelectorAll("#keywordCheckboxes input:checked")].map(cb => cb.value)
-  };
-  localStorage.setItem(storageKey, JSON.stringify(formData));
-}
-
-// 復元
-function restoreFormFromLocal() {
-  const saved = localStorage.getItem(storageKey);
-  if (!saved) return;
-  try {
-    const data = JSON.parse(saved);
-    document.getElementById("title").value = data.title || "";
-    document.getElementById("image_id").value = data.image_id || "";
-    document.getElementById("link_id").value = data.link_id || "";
-    document.getElementById("custom_keywords").value = data.custom_keywords || "";
-    document.querySelectorAll("#keywordCheckboxes input").forEach(cb => {
-      cb.checked = data.checked?.includes(cb.value);
-    });
-    if (data.image_id) {
-      document.getElementById("preview").src = `https://johnpuni.github.io/mirra/images/${data.image_id}.webp`;
-      document.getElementById("preview").style.display = "block";
-    }
-  } catch (e) {
-    console.warn("履歴の復元に失敗:", e);
-  }
-}
-restoreFormFromLocal();
+// ページ読み込み時に履歴復元
+showHistory();
 
 // 折りたたみ
 const accHeader = document.getElementById("accordionHeader");
