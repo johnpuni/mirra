@@ -20,6 +20,8 @@
     #preview { display: block; margin-top: 10px; max-width: 100%; border-radius: 8px; }
     #jsonOutput { background: #f4f4f4; padding: 16px; border-radius: 8px; white-space: pre-wrap; font-size: 14px; overflow-x: auto; max-width: 600px; margin: 0 auto 10px; }
     #copyBtn { display: block; margin: 0 auto 30px; background: #007bff; }
+    #linkPreviewFrame { width: 100%; height: 300px; border: 1px solid #ccc; border-radius: 8px; }
+    #linkPreviewAlt { display: block; margin-top: 6px; color: #007bff; }
     @media screen and (max-width: 480px) { input, select, textarea, button { font-size: 16px; } }
   </style>
 </head>
@@ -38,6 +40,13 @@
 
       <label>リンクID または URL</label>
       <input type="text" id="link_id" placeholder="例: 6166 または https://mirrativ.com/live/xxxx" required>
+
+      <!-- 🔗 リンクプレビュー -->
+      <div id="linkPreviewContainer" style="display:none; margin-top:12px;">
+        <p style="font-weight:bold;">🔗 リンクプレビュー</p>
+        <iframe id="linkPreviewFrame" src=""></iframe>
+        <a id="linkPreviewAlt" href="#" target="_blank">🔗 新しいタブで開く</a>
+      </div>
 
       <label>キーワード（チェック式）</label>
       <div class="checkbox-group" id="keywordCheckboxes"></div>
@@ -80,6 +89,32 @@ document.getElementById("image_id").addEventListener("input", function() {
   } else {
     img.style.display = "none";
   }
+});
+
+// 🔗 リンクプレビュー更新
+document.getElementById("link_id").addEventListener("input", function() {
+  const val = this.value.trim();
+  const frameContainer = document.getElementById("linkPreviewContainer");
+  const frame = document.getElementById("linkPreviewFrame");
+  const altLink = document.getElementById("linkPreviewAlt");
+
+  if (!val) {
+    frameContainer.style.display = "none";
+    frame.src = "";
+    return;
+  }
+
+  let previewUrl;
+  if (/^https?:\/\//i.test(val)) {
+    previewUrl = val;
+  } else {
+    const numericId = val.replace(/\D/g, "");
+    previewUrl = `https://www.mirrativ.com/notice/r?c=${numericId}`;
+  }
+
+  frame.src = previewUrl;
+  altLink.href = previewUrl;
+  frameContainer.style.display = "block";
 });
 
 // localStorageキー
@@ -138,9 +173,12 @@ document.getElementById("eventForm").addEventListener("submit", function(e) {
 
   showHistory();
   alert("イベントを登録しました！");
-  form.reset();
+
+  // フォームリセット完全対応
+  this.reset();
   document.getElementById("preview").style.display = "none";
   document.querySelectorAll("#keywordCheckboxes input").forEach(cb => cb.checked = false);
+  document.getElementById("linkPreviewContainer").style.display = "none";
 });
 
 // コピー
@@ -155,9 +193,10 @@ document.getElementById("resetBtn").addEventListener("click", () => {
   if (confirm("本当にリセットしますか？履歴も削除されます。")) {
     localStorage.removeItem(storageKeyEvents);
     showHistory();
-    form.reset();
+    document.getElementById("eventForm").reset();
     document.getElementById("preview").style.display = "none";
     document.querySelectorAll("#keywordCheckboxes input").forEach(cb => cb.checked = false);
+    document.getElementById("linkPreviewContainer").style.display = "none";
     alert("履歴を削除しました");
   }
 });
