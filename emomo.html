@@ -5,133 +5,212 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>エモモイベント</title>
 <style>
-body { font-family:sans-serif; margin:0; background:#f9f9f9; color:#333; transition: background 0.3s,color 0.3s; }
-body.dark { background:#1e1e1e; color:#f5f5f5; }
-header { text-align:center; padding:1rem; font-size:1.5rem; font-weight:bold; background:#4a90e2; color:#fff; display:flex; justify-content:center; align-items:center; position:relative; }
-#darkToggle { position:absolute; right:10px; top:10px; background:transparent; border:none; font-size:20px; cursor:pointer; color:inherit; }
-.controls { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; align-items:center; padding:1rem; }
-#search { flex:1; min-width:280px; max-width:600px; padding:14px 16px; font-size:18px; border:2px solid #ccc; border-radius:10px; box-shadow:0 2px 5px rgba(0,0,0,0.1); }
-body.dark #search { background:#333; color:#fff; border-color:#666; }
-#suggestions { position:absolute; background:#fff; border:1px solid #ddd; border-radius:6px; max-height:200px; overflow-y:auto; z-index:999; width:calc(100% - 40px); margin-top:-5px; }
-body.dark #suggestions { background:#2a2a2a; border-color:#555; color:#fff; }
-#suggestions div { padding:8px 12px; cursor:pointer; }
-#suggestions div:hover { background:#f0f0f0; }
-body.dark #suggestions div:hover { background:#444; }
-.toggle { padding:10px 16px; border:1px solid #ccc; border-radius:8px; background:#fff; cursor:pointer; }
-.toggle.active { background:#4a90e2; color:#fff; border-color:#4a90e2; }
-body.dark .toggle { background:#333; color:#fff; border-color:#555; }
-select { padding:10px; border-radius:8px; font-size:14px; }
-body.dark select { background:#333; color:#fff; border-color:#555; }
-.event-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(120px,1fr)); gap:12px; padding:1rem; }
-.event-card img { width:100%; border-radius:6px; box-shadow:0 2px 4px rgba(0,0,0,0.2); }
-.tab-buttons { text-align:center; margin:1rem; }
-.tab-buttons button { margin:4px; padding:8px 12px; border:none; border-radius:6px; cursor:pointer; }
-.tab-buttons button.active { background:#4a90e2; color:#fff; }
+:root{
+  --bg:#f5f5f5; --card:#fff; --text:#222; --muted:#666; --border:#ccc; --accent:#333; --btn:#eee; --shadow:0 2px 8px rgba(0,0,0,0.1);
+}
+body.dark{ --bg:#0f1115; --card:#151922; --text:#e6e6e6; --muted:#a3a3a3; --border:#2b2f3a; --accent:#7aa2f7; --btn:#1b2030; --shadow:0 2px 10px rgba(0,0,0,0.35);}
+body{ font-family:sans-serif; margin:0; background:var(--bg); color:var(--text); transition: .2s;}
+header{background:var(--accent); padding:12px; text-align:center; color:#fff; font-size:1.3em;}
+nav{text-align:center; margin:10px 0;}
+nav a{color:var(--accent); font-weight:bold; text-decoration:none; font-size:1.1em;}
+main{max-width:960px; margin:0 auto; background:var(--card); padding:20px; border-radius:8px; box-shadow:var(--shadow);}
+.controls{display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-bottom:15px;}
+.controls input,.controls select,.controls button{padding:8px; font-size:14px; border:1px solid var(--border); border-radius:6px; background:var(--card); color:var(--text);}
+.toggle.active{background:var(--accent); color:#fff; border-color:var(--accent);}
+.tab-buttons{display:flex; flex-wrap:wrap; justify-content:center; gap:6px; margin-bottom:15px;}
+.tab-buttons button{padding:6px 12px; border-radius:6px; border:1px solid var(--border); background:var(--btn); color:var(--text); cursor:pointer;}
+.tab-buttons button.active{background:var(--accent); color:#fff; border-color:var(--accent);}
+.event-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px;}
+.event-card{border-radius:8px; overflow:hidden; text-align:center;}
+.event-card img{width:100%; border:1px solid var(--border); border-radius:6px; display:block;}
+.event-card div{display:none;}
+.search-wrap{position:relative; min-width:260px;}
+#suggestions{position:absolute; top:100%; left:0; right:0; background:var(--card); border:1px solid var(--border); border-top:none; max-height:220px; overflow-y:auto; z-index:20; display:none;}
+#suggestions button{width:100%; text-align:left; background:transparent; border:none; border-bottom:1px solid var(--border); padding:8px 10px; cursor:pointer; color:var(--text);}
+#suggestions button:hover{background:var(--btn);}
+.muted{color:var(--muted); font-size:12px;}
+@media (max-width:600px){.controls{flex-direction:column; align-items:center;} .search-wrap{width:100%;}}
 </style>
 </head>
 <body>
 
-<header>
-  エモモイベント一覧
-  <button id="darkToggle">🌙</button>
-</header>
+<header>エモモイベント一覧</header>
+<nav><a href="index.html">← ホームに戻る</a></nav>
 
+<main>
 <div class="controls">
-  <div style="position:relative; flex:1; max-width:600px;">
+  <div class="search-wrap">
     <input type="text" id="search" placeholder="キーワードで検索 (スペース区切り)">
     <div id="suggestions"></div>
   </div>
-  <button id="andBtn" class="toggle active">AND</button>
+  <button id="andBtn" class="toggle">AND</button>
   <button id="orBtn" class="toggle">OR</button>
-  <select id="sortSelect">
+  <select id="sortSelect" title="並び替え">
     <option value="newest">新しい順</option>
     <option value="oldest">古い順</option>
   </select>
-  <select id="filterSelect">
-    <option value="">全カテゴリ</option>
-    <option value="ルレ">ルレ</option>
-    <option value="ギフガチャ">ギフガチャ</option>
-    <option value="エモバト">エモバト</option>
-    <option value="エモラン">エモラン</option>
+  <select id="filterSelect" title="カテゴリ絞り込み">
+    <option value="">全てのカテゴリ</option>
+    <option value="ルレ">ルレだけ</option>
+    <option value="ギフガチャ">ギフガチャだけ</option>
+    <option value="エモバト">エモバトだけ</option>
+    <option value="エモラン">エモランだけ</option>
   </select>
+  <button id="themeToggle" title="ダークモード切替">🌙 ダーク</button>
 </div>
 
 <div class="tab-buttons" id="yearTabs"></div>
 <div class="event-grid" id="eventList">読み込み中...</div>
+<p class="muted" id="hint"></p>
+</main>
 
 <script>
-let data = {}, allEvents=[], searchMode="AND", currentYear="2025", allKeywords=new Set(), allTitles=new Set();
+let data={}, currentYear="2025", searchMode="", allEvents=[], allKeywords=new Set(), allTitles=new Set();
 
-function normalizeForSearch(str){ 
-  if(!str) return ""; 
-  str = str.replace(/[\u30A1-\u30F6]/g,ch=>String.fromCharCode(ch.charCodeAt(0)-0x60)); 
-  str = str.toLowerCase(); 
-  str = str.replace(/[Ａ-Ｚａ-ｚ０-９]/g,s=>String.fromCharCode(s.charCodeAt(0)-0xFEE0)); 
-  return str;
+(function initTheme(){
+  if(localStorage.getItem("emomo_theme")==="dark") document.body.classList.add("dark");
+})();
+
+function normalizeForSearch(s){
+  if(!s) return "";
+  s=s.toLowerCase();
+  s=s.replace(/[Ａ-Ｚａ-ｚ０-９]/g,c=>String.fromCharCode(c.charCodeAt(0)-0xFEE0));
+  s=s.replace(/[ァ-ン]/g,c=>String.fromCharCode(c.charCodeAt(0)-0x60)); // カタカナ→ひらがな
+  s=s.normalize("NFKC");
+  // 簡易 漢字→ひらがな（代表例のみ）
+  s=s.replace(/一/,"い").replace(/二/,"に").replace(/三/,"さん").replace(/四/,"よん").replace(/五/,"ご");
+  s=s.replace(/六/,"ろく").replace(/七/,"なな").replace(/八/,"はち").replace(/九/,"きゅう").replace(/十/,"じゅう");
+  return s;
 }
 
-fetch("data/events.json").then(r=>r.json()).then(json=>{
-  data=json; flattenData(); initTabs(); initControls(); renderEvents();
+fetch("data/events.json")
+.then(res=>res.json())
+.then(json=>{
+  data=json;
+  flattenAndNormalize();
+  initYearTabs();
+  initControls();
+  renderEvents();
+})
+.catch(err=>{
+  console.error(err);
+  document.getElementById("eventList").innerHTML="<p>データの読み込みに失敗しました。</p>";
 });
 
-function flattenData(){
-  for(const y in data){ (data[y]||[]).forEach(ev=>{
-    const copy={...ev}; copy.year=y; copy.ts=new Date(ev.date||`${y}-01-01`).getTime();
-    if(copy.title) allTitles.add(copy.title);
-    if(Array.isArray(copy.keywords)) copy.keywords.forEach(k=>allKeywords.add(k));
-    allEvents.push(copy);
-  }); }
+function flattenAndNormalize(){
+  allEvents=[];
+  for(const y in data){
+    (data[y]||[]).forEach(ev=>{
+      const copy={...ev,year:y};
+      copy.ts=normalizeDateToTs(copy,y);
+      if(copy.title) allTitles.add(copy.title);
+      if(Array.isArray(copy.keywords)) copy.keywords.forEach(k=>allKeywords.add(k));
+      allEvents.push(copy);
+    });
+  }
 }
 
-function initTabs(){
+function normalizeDateToTs(ev,fallbackYear){
+  if(typeof ev.date==="string"){
+    const d=parseISOish(ev.date);
+    if(d) return d.getTime();
+  }
+  if(typeof ev.title==="string"){
+    const dFromTitle=extractDateFromText(ev.title);
+    if(dFromTitle) return dFromTitle.getTime();
+  }
+  const kwYear=Array.isArray(ev.keywords)?ev.keywords.find(k=>/^\d{4}$/.test(k)):null;
+  if(kwYear&&typeof ev.title==="string"){
+    const md=ev.title.match(/(\d{1,2})[\/\-月](\d{1,2})/);
+    if(md){ const y=+kwYear,m=+md[1],d=+md[2]; return new Date(Date.UTC(y,m-1,d)).getTime(); }
+  }
+  const y=+fallbackYear||new Date().getUTCFullYear();
+  return new Date(Date.UTC(y,0,1)).getTime();
+}
+
+function parseISOish(s){const m=s.match(/^(\d{4})[\/\-.](\d{1,2})[\/\-.](\d{1,2})$/); if(!m) return null; return new Date(Date.UTC(+m[1],+m[2]-1,+m[3]));}
+function extractDateFromText(t){const a=t.match(/(\d{4})[\/\-.](\d{1,2})[\/\-.](\d{1,2})/); if(a) return new Date(Date.UTC(+a[1],+a[2]-1,+a[3])); const b=t.match(/(\d{4})\s*年\s*(\d{1,2})\s*月(?:\s*(\d{1,2})\s*日)?/); if(b){ return new Date(Date.UTC(+b[1],+b[2]-1,b[3]?+b[3]:1)); } return null;}
+
+function initYearTabs(){
   const tabContainer=document.getElementById("yearTabs");
   const years=Object.keys(data).sort((a,b)=>b-a);
   tabContainer.innerHTML="";
-  const allBtn=document.createElement("button"); allBtn.textContent="すべて";
+  const allBtn=document.createElement("button");
+  allBtn.textContent="すべて";
   allBtn.className=currentYear==="all"?"active":"";
-  allBtn.addEventListener("click",()=>{ currentYear="all"; tabContainer.querySelectorAll("button").forEach(b=>b.classList.remove("active")); allBtn.classList.add("active"); renderEvents(); });
+  allBtn.addEventListener("click",()=>{
+    currentYear="all"; tabContainer.querySelectorAll("button").forEach(b=>b.classList.remove("active")); allBtn.classList.add("active"); renderEvents();
+  });
   tabContainer.appendChild(allBtn);
-  years.forEach(year=>{ const btn=document.createElement("button"); btn.textContent=year+"年"; btn.className=year===currentYear?"active":""; btn.addEventListener("click",()=>{ currentYear=year; tabContainer.querySelectorAll("button").forEach(b=>b.classList.remove("active")); btn.classList.add("active"); renderEvents(); }); tabContainer.appendChild(btn); });
+  years.forEach(y=>{
+    const btn=document.createElement("button");
+    btn.textContent=y+"年"; btn.className=y===currentYear?"active":"";
+    btn.addEventListener("click",()=>{ currentYear=y; tabContainer.querySelectorAll("button").forEach(b=>b.classList.remove("active")); btn.classList.add("active"); renderEvents(); });
+    tabContainer.appendChild(btn);
+  });
 }
 
 function initControls(){
-  const $and=document.getElementById("andBtn"), $or=document.getElementById("orBtn"), $search=document.getElementById("search"), $suggest=document.getElementById("suggestions"), $dark=document.getElementById("darkToggle");
-  $and.addEventListener("click",()=>{ searchMode="AND"; $and.classList.add("active"); $or.classList.remove("active"); renderEvents(); });
-  $or.addEventListener("click",()=>{ searchMode="OR"; $or.classList.add("active"); $and.classList.remove("active"); renderEvents(); });
-  document.getElementById("sortSelect").addEventListener("change",renderEvents);
-  document.getElementById("filterSelect").addEventListener("change",renderEvents);
-  $search.addEventListener("input",()=>{ showSuggestions($search.value,$suggest); renderEvents(); });
-  $dark.addEventListener("click",()=>{ document.body.classList.toggle("dark"); $dark.textContent=document.body.classList.contains("dark")?"☀️":"🌙"; });
+  const $and=document.getElementById("andBtn"), $or=document.getElementById("orBtn"), $sort=document.getElementById("sortSelect"),
+        $filter=document.getElementById("filterSelect"), $search=document.getElementById("search"), $suggest=document.getElementById("suggestions"),
+        $theme=document.getElementById("themeToggle");
+  $and.addEventListener("click",()=>{ searchMode=(searchMode==="AND")?"":"AND"; $and.classList.toggle("active",searchMode==="AND"); $or.classList.remove("active"); renderEvents(); });
+  $or.addEventListener("click",()=>{ searchMode=(searchMode==="OR")?"":"OR"; $or.classList.toggle("active",searchMode==="OR"); $and.classList.remove("active"); renderEvents(); });
+  $sort.addEventListener("change",renderEvents);
+  $filter.addEventListener("change",renderEvents);
+  $search.addEventListener("input",()=>{ showSuggestions($search.value); renderEvents(); });
+  $search.addEventListener("focus",()=>{ if(!$search.value.trim()) showSuggestions(""); });
+  document.addEventListener("click",e=>{if(!e.target.closest(".search-wrap"))$suggest.style.display="none";});
+  $theme.addEventListener("click",()=>{document.body.classList.toggle("dark"); const isDark=document.body.classList.contains("dark"); localStorage.setItem("emomo_theme",isDark?"dark":"light"); $theme.textContent=isDark?"☀️ ライト":"🌙 ダーク";});
+  $theme.textContent=document.body.classList.contains("dark")?"☀️ ライト":"🌙 ダーク";
 }
 
-function showSuggestions(query, container){
-  container.innerHTML=""; const q=normalizeForSearch(query);
-  if(!q) return;
-  const candidates=[...allTitles,...allKeywords];
-  const matches=candidates.filter(c=>normalizeForSearch(c).includes(q)).slice(0,10);
-  matches.forEach(m=>{ const div=document.createElement("div"); div.textContent=m; div.addEventListener("click",()=>{ document.getElementById("search").value=m; container.innerHTML=""; renderEvents(); }); container.appendChild(div); });
+function showSuggestions(input){
+  const box=document.getElementById("suggestions");
+  const q=normalizeForSearch(input.trim());
+  let items=[];
+  if(q){
+    const kw=Array.from(allKeywords).filter(k=>normalizeForSearch(k).includes(q));
+    const tt=Array.from(allTitles).filter(t=>normalizeForSearch(t).includes(q));
+    items=[...kw.slice(0,10),...tt.slice(0,10)];
+  }else{
+    const freq={};
+    allEvents.forEach(ev=>{ (ev.keywords||[]).forEach(k=>{ freq[k]=(freq[k]||0)+1; }); });
+    items=Object.entries(freq).sort((a,b)=>b[1]-a[1]).slice(0,10).map(([k])=>k);
+  }
+  if(items.length===0){ box.style.display="none"; box.innerHTML=""; return; }
+  box.innerHTML=items.map(txt=>`<button type="button">${txt}</button>`).join("");
+  box.style.display="block";
+  box.querySelectorAll("button").forEach(btn=>{ btn.addEventListener("click",()=>{ const cur=$search.value.trim(); $search.value=cur?cur+" "+btn.textContent:btn.textContent; $search.dispatchEvent(new Event("input")); box.style.display="none"; }); });
 }
 
 function renderEvents(){
-  const list=document.getElementById("eventList");
+  const list=document.getElementById("eventList"), hint=document.getElementById("hint");
   const searchWords=document.getElementById("search").value.trim().split(/\s+/).filter(Boolean).map(normalizeForSearch);
   const sortBy=document.getElementById("sortSelect").value;
   const category=document.getElementById("filterSelect").value;
+  const catNorm=normalizeForSearch(category);
 
-  let filtered=allEvents.filter(ev=>{
+  const filtered=allEvents.filter(ev=>{
     const title=normalizeForSearch(ev.title||"");
     const keys=(ev.keywords||[]).map(normalizeForSearch);
-    const keywordMatch=searchWords.length===0||(searchMode==="AND"?searchWords.every(w=>title.includes(w)||keys.some(k=>k.includes(w))):searchWords.some(w=>title.includes(w)||keys.some(k=>k.includes(w))));
-    const categoryMatch=!category||(ev.keywords||[]).includes(category);
+
+    const keywordMatch=searchWords.length===0 ? true :
+      searchMode==="AND" ? searchWords.every(w=>title.includes(w)||keys.some(k=>k.includes(w))) :
+      searchMode==="OR" ? searchWords.some(w=>title.includes(w)||keys.some(k=>k.includes(w))) : true;
+
+    const categoryMatch=!category||keys.includes(catNorm);
     const yearMatch=currentYear==="all"?true:ev.year===currentYear;
     return keywordMatch && categoryMatch && yearMatch;
   });
 
-  filtered.sort((a,b)=> sortBy==="newest"?b.ts-a.ts:a.ts-b.ts);
+  filtered.sort((a,b)=>sortBy==="newest"?b.ts-a.ts:a.ts-b.ts);
+  hint.textContent=`${filtered.length}件ヒット / 並び: ${sortBy==="newest"?"新しい順":"古い順"} / 年: ${currentYear==="all"?"すべて":currentYear}`;
 
   if(filtered.length===0){ list.innerHTML="<p>該当イベントがありません。</p>"; }
   else{ list.innerHTML=filtered.map(ev=>`<div class="event-card"><a href="${ev.link}" target="_blank" title="${ev.title}"><img src="${ev.img}" alt="${ev.title}"></a></div>`).join(''); }
 }
 </script>
+
 </body>
 </html>
