@@ -5,14 +5,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>エモモイベント</title>
   <style>
+    :root{
+      --bg:#f5f5f5;
+      --card:#ffffff;
+      --text:#222;
+      --muted:#666;
+      --border:#ccc;
+      --accent:#333;
+      --btn:#eee;
+      --shadow:0 2px 8px rgba(0,0,0,0.1);
+    }
+    body.dark{
+      --bg:#0f1115;
+      --card:#151922;
+      --text:#e6e6e6;
+      --muted:#a3a3a3;
+      --border:#2b2f3a;
+      --accent:#7aa2f7;
+      --btn:#1b2030;
+      --shadow:0 2px 10px rgba(0,0,0,0.35);
+    }
+
     body {
       font-family: sans-serif;
       margin: 0;
-      background-color: #f5f5f5;
+      background-color: var(--bg);
+      color: var(--text);
+      transition: background-color .2s, color .2s;
     }
 
     header {
-      background-color: #333;
+      background-color: var(--accent);
       padding: 12px;
       text-align: center;
       color: white;
@@ -25,7 +48,7 @@
     }
 
     nav a {
-      color: #333;
+      color: var(--accent);
       font-weight: bold;
       text-decoration: none;
       font-size: 1.1em;
@@ -34,10 +57,10 @@
     main {
       max-width: 960px;
       margin: 0 auto;
-      background-color: white;
+      background-color: var(--card);
       padding: 20px;
       border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      box-shadow: var(--shadow);
     }
 
     .controls {
@@ -53,13 +76,16 @@
     .controls button {
       padding: 8px;
       font-size: 14px;
-      border: 1px solid #ccc;
+      border: 1px solid var(--border);
       border-radius: 6px;
+      background: var(--card);
+      color: var(--text);
     }
 
     .toggle.active {
-      background-color: #333;
+      background-color: var(--accent);
       color: white;
+      border-color: var(--accent);
     }
 
     .tab-buttons {
@@ -73,15 +99,16 @@
     .tab-buttons button {
       padding: 6px 12px;
       border-radius: 6px;
-      border: 1px solid #ccc;
-      background-color: #eee;
+      border: 1px solid var(--border);
+      background-color: var(--btn);
+      color: var(--text);
       cursor: pointer;
     }
 
     .tab-buttons button.active {
-      background-color: #333;
+      background-color: var(--accent);
       color: white;
-      border-color: #333;
+      border-color: var(--accent);
     }
 
     .event-grid {
@@ -98,19 +125,50 @@
 
     .event-card img {
       width: 100%;
-      border: 1px solid #ccc;
+      border: 1px solid var(--border);
       border-radius: 6px;
+      display:block;
     }
 
     .event-card div {
-      display: none; /* タイトル非表示 */
+      display: none; /* タイトル非表示（alt/titleで見える） */
     }
+
+    /* 🔎 検索候補（予備検索） */
+    .search-wrap { position: relative; min-width: 260px; }
+    #suggestions {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-top: none;
+      max-height: 220px;
+      overflow-y: auto;
+      z-index: 20;
+      display: none;
+    }
+    #suggestions button{
+      width: 100%;
+      text-align: left;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--border);
+      padding: 8px 10px;
+      cursor: pointer;
+      color: var(--text);
+    }
+    #suggestions button:hover{ background: var(--btn); }
+
+    .muted{ color: var(--muted); font-size: 12px; }
 
     @media (max-width: 600px) {
       .controls {
         flex-direction: column;
         align-items: center;
       }
+      .search-wrap{ width: 100%; }
     }
   </style>
 </head>
@@ -121,39 +179,139 @@
 
 <main>
   <div class="controls">
-    <input type="text" id="search" placeholder="キーワードで検索 (スペース区切り)">
-    <button id="andBtn" class="toggle active">AND</button>
+    <div class="search-wrap">
+      <input type="text" id="search" placeholder="キーワードで検索 (スペース区切り)">
+      <div id="suggestions"></div>
+    </div>
+
+    <button id="andBtn" class="toggle">AND</button>
     <button id="orBtn" class="toggle">OR</button>
-    <select id="sortSelect">
+
+    <select id="sortSelect" title="並び替え">
       <option value="newest">新しい順</option>
       <option value="oldest">古い順</option>
     </select>
-    <select id="filterSelect">
+
+    <select id="filterSelect" title="カテゴリ絞り込み">
       <option value="">全てのカテゴリ</option>
       <option value="ルレ">ルレだけ</option>
       <option value="ギフガチャ">ギフガチャだけ</option>
       <option value="エモバト">エモバトだけ</option>
       <option value="エモラン">エモランだけ</option>
     </select>
+
+    <button id="themeToggle" title="ダークモード切替">🌙 ダーク</button>
   </div>
 
   <div class="tab-buttons" id="yearTabs"></div>
   <div class="event-grid" id="eventList">読み込み中...</div>
+  <p class="muted" id="hint"></p>
 </main>
 
 <script>
+  // ====== 状態 ======
   let data = {};
   let currentYear = "2025";
-  let searchMode = "AND";
+  let searchMode = ""; // "", "AND", "OR"
+  let allEvents = [];  // 正規化後の全イベント
+  let allKeywords = new Set(); // 候補表示用
+  let allTitles = new Set();   // 候補表示用
 
+  // ダークモード初期化
+  (function initTheme(){
+    const saved = localStorage.getItem("emomo_theme");
+    if(saved === "dark"){ document.body.classList.add("dark"); }
+  })();
+
+  // ====== データ読み込み ======
   fetch("data/events.json")
     .then(res => res.json())
     .then(json => {
       data = json;
+      flattenAndNormalize();
       initYearTabs();
+      initControls();
       renderEvents();
+    })
+    .catch(err=>{
+      console.error(err);
+      document.getElementById("eventList").innerHTML = "<p>データの読み込みに失敗しました。</p>";
     });
 
+  // 年キー付きのオブジェクトから、yearとタイムスタンプ(ts)を付けてフラット化
+  function flattenAndNormalize(){
+    allEvents = [];
+    for(const y in data){
+      (data[y]||[]).forEach(ev=>{
+        const copy = {...ev};
+        copy.year = y;
+        copy.ts = normalizeDateToTs(copy, y); // 並び替え用timestamp
+        // 候補収集
+        if (copy.title) allTitles.add(copy.title);
+        if (Array.isArray(copy.keywords)) copy.keywords.forEach(k=>allKeywords.add(k));
+        allEvents.push(copy);
+      });
+    }
+  }
+
+  // ====== 日付正規化（ソートの要：ここがキモ！） ======
+  // できれば ev.date は "YYYY-MM-DD" を推奨。
+  // 無い場合は title/keywords から推定し、最後に year だけでも補完。
+  function normalizeDateToTs(ev, fallbackYear){
+    // 1) 明示的な date
+    if(typeof ev.date === "string"){
+      const d = parseISOish(ev.date);
+      if(d) return d.getTime();
+    }
+    // 2) タイトルから "YYYY-MM-DD" / "YYYY/MM/DD" / "YYYY年M月D日" を検索
+    if(typeof ev.title === "string"){
+      const dFromTitle = extractDateFromText(ev.title);
+      if(dFromTitle) return dFromTitle.getTime();
+    }
+    // 3) キーワードに年があれば、タイトルの "M/D" などと合成
+    const kwYear = Array.isArray(ev.keywords) ? ev.keywords.find(k=>/^\d{4}$/.test(k)) : null;
+    if(kwYear && typeof ev.title === "string"){
+      const md = ev.title.match(/(\d{1,2})[\/\-月](\d{1,2})/); // "1/31" or "1-31" or "1月31"
+      if(md){
+        const y = Number(kwYear);
+        const m = Number(md[1]);
+        const d = Number(md[2]);
+        const dt = new Date(Date.UTC(y, m-1, d));
+        return dt.getTime();
+      }
+    }
+    // 4) それでもダメなら、その年の1月1日を仮置き
+    const y = Number(fallbackYear) || new Date().getUTCFullYear();
+    return new Date(Date.UTC(y,0,1)).getTime();
+  }
+
+  // "YYYY-MM-DD" / "YYYY/MM/DD" / "YYYY.MM.DD" 対応
+  function parseISOish(s){
+    const m = s.match(/^(\d{4})[\/\-.](\d{1,2})[\/\-.](\d{1,2})$/);
+    if(!m) return null;
+    const y = Number(m[1]), mo = Number(m[2]), d = Number(m[3]);
+    if(!y || !mo || !d) return null;
+    return new Date(Date.UTC(y, mo-1, d));
+  }
+
+  // 日本語表記なども含め緩めに拾う
+  function extractDateFromText(t){
+    // 例: 2025-02-15 / 2025/02/15 / 2025.2.15
+    const a = t.match(/(\d{4})[\/\-.](\d{1,2})[\/\-.](\d{1,2})/);
+    if(a){
+      return new Date(Date.UTC(+a[1], +a[2]-1, +a[3]));
+    }
+    // 例: 2025年2月15日 / 2025年2月
+    const b = t.match(/(\d{4})\s*年\s*(\d{1,2})\s*月(?:\s*(\d{1,2})\s*日)?/);
+    if(b){
+      const y = +b[1], m = +b[2], d = b[3]? +b[3] : 1;
+      return new Date(Date.UTC(y, m-1, d));
+    }
+    return null;
+    // （必要ならパターン追加可）
+  }
+
+  // ====== 年タブ ======
   function initYearTabs() {
     const tabContainer = document.getElementById("yearTabs");
     const years = Object.keys(data).sort((a, b) => b - a);
@@ -164,7 +322,7 @@
     allBtn.className = currentYear === "all" ? "active" : "";
     allBtn.addEventListener("click", () => {
       currentYear = "all";
-      document.querySelectorAll("#yearTabs button").forEach(b => b.classList.remove("active"));
+      tabContainer.querySelectorAll("button").forEach(b => b.classList.remove("active"));
       allBtn.classList.add("active");
       renderEvents();
     });
@@ -176,7 +334,7 @@
       btn.className = year === currentYear ? "active" : "";
       btn.addEventListener("click", () => {
         currentYear = year;
-        document.querySelectorAll("#yearTabs button").forEach(b => b.classList.remove("active"));
+        tabContainer.querySelectorAll("button").forEach(b => b.classList.remove("active"));
         btn.classList.add("active");
         renderEvents();
       });
@@ -184,80 +342,152 @@
     });
   }
 
-  document.getElementById("search").addEventListener("input", renderEvents);
-  document.getElementById("sortSelect").addEventListener("change", renderEvents);
-  document.getElementById("filterSelect").addEventListener("change", renderEvents);
+  // ====== コントロール（AND/OR・ソート・カテゴリ・ダーク） ======
+  function initControls(){
+    const $and = document.getElementById("andBtn");
+    const $or = document.getElementById("orBtn");
+    const $sort = document.getElementById("sortSelect");
+    const $filter = document.getElementById("filterSelect");
+    const $search = document.getElementById("search");
+    const $suggest = document.getElementById("suggestions");
+    const $theme = document.getElementById("themeToggle");
 
-  document.getElementById("andBtn").addEventListener("click", () => {
-    if (searchMode === "AND") {
-      searchMode = "";
-      document.getElementById("andBtn").classList.remove("active");
-    } else {
-      searchMode = "AND";
-      document.getElementById("andBtn").classList.add("active");
-      document.getElementById("orBtn").classList.remove("active");
+    // AND/OR（トグル&排他・もう一度押すと解除）
+    $and.addEventListener("click", ()=>{
+      searchMode = (searchMode==="AND") ? "" : "AND";
+      $and.classList.toggle("active", searchMode==="AND");
+      $or.classList.remove("active");
+      renderEvents();
+    });
+    $or.addEventListener("click", ()=>{
+      searchMode = (searchMode==="OR") ? "" : "OR";
+      $or.classList.toggle("active", searchMode==="OR");
+      $and.classList.remove("active");
+      renderEvents();
+    });
+
+    // ソート・カテゴリ
+    $sort.addEventListener("change", renderEvents);
+    $filter.addEventListener("change", renderEvents);
+
+    // 検索入力（タイプ中に即時絞り込み）
+    $search.addEventListener("input", ()=>{
+      showSuggestions($search.value);
+      renderEvents();
+    });
+    $search.addEventListener("focus", ()=>{
+      // 予備検索：未入力なら人気キーワードを表示
+      if(!$search.value.trim()) showSuggestions("");
+    });
+    document.addEventListener("click", (e)=>{
+      if(!e.target.closest(".search-wrap")) $suggest.style.display = "none";
+    });
+
+    // ダークモード切替
+    $theme.addEventListener("click", ()=>{
+      document.body.classList.toggle("dark");
+      const isDark = document.body.classList.contains("dark");
+      localStorage.setItem("emomo_theme", isDark ? "dark" : "light");
+      $theme.textContent = isDark ? "☀️ ライト" : "🌙 ダーク";
+    });
+    // 初期ボタン表記
+    document.getElementById("themeToggle").textContent =
+      document.body.classList.contains("dark") ? "☀️ ライト" : "🌙 ダーク";
+  }
+
+  // ====== 検索候補（予備検索） ======
+  function showSuggestions(input){
+    const box = document.getElementById("suggestions");
+    const q = input.trim().toLowerCase();
+    let items = [];
+
+    if(q){
+      // 入力中：キーワード & タイトルから部分一致で候補
+      const kw = Array.from(allKeywords).filter(k=>k.toLowerCase().includes(q));
+      const tt = Array.from(allTitles).filter(t=>t.toLowerCase().includes(q));
+      items = [...kw.slice(0,10), ...tt.slice(0,10)];
+    }else{
+      // 予備検索：頻出キーワード上位を表示（ざっくり頻度カウント）
+      const freq = {};
+      allEvents.forEach(ev=>{
+        (ev.keywords||[]).forEach(k=>{ freq[k]=(freq[k]||0)+1; });
+      });
+      items = Object.entries(freq)
+        .sort((a,b)=>b[1]-a[1])
+        .slice(0,10)
+        .map(([k])=>k);
     }
-    renderEvents();
-  });
 
-  document.getElementById("orBtn").addEventListener("click", () => {
-    if (searchMode === "OR") {
-      searchMode = "";
-      document.getElementById("orBtn").classList.remove("active");
-    } else {
-      searchMode = "OR";
-      document.getElementById("orBtn").classList.add("active");
-      document.getElementById("andBtn").classList.remove("active");
+    if(items.length===0){
+      box.style.display = "none";
+      box.innerHTML = "";
+      return;
     }
-    renderEvents();
-  });
+    box.innerHTML = items.map(txt => `<button type="button">${escapeHtml(txt)}</button>`).join("");
+    box.style.display = "block";
 
+    // 候補クリックで検索欄に反映（スペースで複数語に繋げられる）
+    box.querySelectorAll("button").forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        const $search = document.getElementById("search");
+        const cur = $search.value.trim();
+        $search.value = cur ? (cur + " " + btn.textContent) : btn.textContent;
+        $search.dispatchEvent(new Event("input"));
+        box.style.display = "none";
+      });
+    });
+  }
+
+  function escapeHtml(s){
+    return s.replace(/[&<>"']/g, m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m]));
+  }
+
+  // ====== 描画 ======
   function renderEvents() {
     const list = document.getElementById("eventList");
-    const searchWords = document.getElementById("search").value.trim().toLowerCase().split(/\s+/);
-    const sortBy = document.getElementById("sortSelect").value;
-    const category = document.getElementById("filterSelect").value;
+    const hint = document.getElementById("hint");
 
-    let allEvents = [];
-    for (const y in data) {
-      allEvents = allEvents.concat(data[y].map(ev => ({...ev, year: y})));
-    }
+    const searchWords = document.getElementById("search").value
+      .trim().toLowerCase().split(/\s+/).filter(Boolean);
+    const sortBy = document.getElementById("sortSelect").value; // newest|oldest
+    const category = document.getElementById("filterSelect").value.toLowerCase();
 
+    // 検索 & フィルタ
     let filtered = allEvents.filter(ev => {
-      const title = ev.title.toLowerCase();
-      const keys = ev.keywords?.map(k => k.toLowerCase()) || [];
+      const title = (ev.title||"").toLowerCase();
+      const keys = (ev.keywords||[]).map(k=>k.toLowerCase());
 
-      const keywordMatch = searchWords.length === 0 || (
-        searchMode === "AND"
-          ? searchWords.every(w => title.includes(w) || keys.some(k => k.includes(w)))
-          : searchWords.some(w => title.includes(w) || keys.some(k => k.includes(w)))
-      );
+      const keywordMatch =
+        searchWords.length === 0 || (
+          searchMode === "AND"
+            ? searchWords.every(w => title.includes(w) || keys.some(k => k.includes(w)))
+            : searchMode === "OR"
+              ? searchWords.some(w => title.includes(w) || keys.some(k => k.includes(w)))
+              : true
+        );
 
-      const categoryMatch = !category || keys.some(k => k.includes(category.toLowerCase()));
+      const categoryMatch = !category || keys.includes(category);
 
-      return keywordMatch && categoryMatch;
+      const yearMatch = (currentYear==="all") ? true : (ev.year === currentYear);
+
+      return keywordMatch && categoryMatch && yearMatch;
     });
 
-    // 並び替え
-    filtered.sort((a, b) => {
-      const dA = new Date(a.date || a.title);
-      const dB = new Date(b.date || b.title);
-      return sortBy === "newest" ? dB - dA : dA - dB;
-    });
+    // 並び替え（事前計算した ts を使用：正確＆高速）
+    filtered.sort((a,b)=> sortBy==="newest" ? (b.ts - a.ts) : (a.ts - b.ts));
 
-    // 年で絞る（"all" 以外のときのみ）
-    const yearFiltered = currentYear === "all"
-      ? filtered
-      : filtered.filter(ev => ev.year === currentYear);
+    // ヒント表示
+    hint.textContent = `${filtered.length}件ヒット / 並び: ${sortBy==="newest"?"新しい順":"古い順"} / 年: ${currentYear==="all"?"すべて":currentYear}`;
 
-    if (yearFiltered.length === 0) {
+    // 描画
+    if (filtered.length === 0) {
       list.innerHTML = "<p>該当イベントがありません。</p>";
     } else {
-      list.innerHTML = yearFiltered.map(ev => `
+      list.innerHTML = filtered.map(ev => `
         <div class="event-card">
-          <a href="${ev.link}" target="_blank" title="${ev.title}">
-            <img src="${ev.img}" alt="${ev.title}">
-            <div>${ev.title}</div>
+          <a href="${ev.link}" target="_blank" title="${escapeHtml(ev.title||"")}">
+            <img src="${ev.img}" alt="${escapeHtml(ev.title||"")}">
+            <div>${escapeHtml(ev.title||"")}</div>
           </a>
         </div>
       `).join('');
