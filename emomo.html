@@ -9,7 +9,7 @@
   --bg:#f5f5f5; --card:#fff; --text:#222; --muted:#666; --border:#ccc; --accent:#333; --btn:#eee; --shadow:0 2px 8px rgba(0,0,0,0.1);
 }
 body.dark{ --bg:#0f1115; --card:#151922; --text:#e6e6e6; --muted:#a3a3a3; --border:#2b2f3a; --accent:#7aa2f7; --btn:#1b2030; --shadow:0 2px 10px rgba(0,0,0,0.35);}
-body{ font-family:sans-serif; margin:0; background:var(--bg); color:var(--text); transition: .2s;}
+body{ font-family:sans-serif; margin:0; background:var(--bg); color:var(--text); transition:.2s;}
 header{background:var(--accent); padding:12px; text-align:center; color:#fff; font-size:1.3em;}
 nav{text-align:center; margin:10px 0;}
 nav a{color:var(--accent); font-weight:bold; text-decoration:none; font-size:1.1em;}
@@ -29,6 +29,7 @@ main{max-width:960px; margin:0 auto; background:var(--card); padding:20px; borde
 #suggestions button{width:100%; text-align:left; background:transparent; border:none; border-bottom:1px solid var(--border); padding:8px 10px; cursor:pointer; color:var(--text);}
 #suggestions button:hover{background:var(--btn);}
 .muted{color:var(--muted); font-size:12px;}
+#scrollTopBtn{position:fixed;bottom:20px;right:20px;display:none;padding:10px;border-radius:50%;border:none;background:var(--accent);color:#fff;cursor:pointer;z-index:50;}
 @media (max-width:600px){.controls{flex-direction:column; align-items:center;} .search-wrap{width:100%;}}
 </style>
 </head>
@@ -64,6 +65,8 @@ main{max-width:960px; margin:0 auto; background:var(--card); padding:20px; borde
 <p class="muted" id="hint"></p>
 </main>
 
+<button id="scrollTopBtn">↑</button>
+
 <script>
 let data={}, currentYear="2025", searchMode="", allEvents=[], allKeywords=new Set(), allTitles=new Set();
 
@@ -75,8 +78,9 @@ function normalizeForSearch(s){
   if(!s) return "";
   s=s.toLowerCase();
   s=s.replace(/[Ａ-Ｚａ-ｚ０-９]/g,c=>String.fromCharCode(c.charCodeAt(0)-0xFEE0));
-  s=s.replace(/[ァ-ン]/g,c=>String.fromCharCode(c.charCodeAt(0)-0x60)); // カタカナ→ひらがな
+  s=s.replace(/[ァ-ン]/g,c=>String.fromCharCode(c.charCodeAt(0)-0x60));
   s=s.normalize("NFKC");
+  // 簡易漢字→ひらがな（代表例のみ）
   s=s.replace(/一/,"い").replace(/二/,"に").replace(/三/,"さん").replace(/四/,"よん").replace(/五/,"ご");
   s=s.replace(/六/,"ろく").replace(/七/,"なな").replace(/八/,"はち").replace(/九/,"きゅう").replace(/十/,"じゅう");
   return s;
@@ -110,21 +114,11 @@ function flattenAndNormalize(){
 }
 
 function normalizeDateToTs(ev,fallbackYear){
-  if(typeof ev.date==="string"){
-    const d=parseISOish(ev.date);
-    if(d) return d.getTime();
-  }
-  if(typeof ev.title==="string"){
-    const dFromTitle=extractDateFromText(ev.title);
-    if(dFromTitle) return dFromTitle.getTime();
-  }
+  if(typeof ev.date==="string"){const d=parseISOish(ev.date); if(d) return d.getTime();}
+  if(typeof ev.title==="string"){const dFromTitle=extractDateFromText(ev.title); if(dFromTitle) return dFromTitle.getTime();}
   const kwYear=Array.isArray(ev.keywords)?ev.keywords.find(k=>/^\d{4}$/.test(k)):null;
-  if(kwYear&&typeof ev.title==="string"){
-    const md=ev.title.match(/(\d{1,2})[\/\-月](\d{1,2})/);
-    if(md){ const y=+kwYear,m=+md[1],d=+md[2]; return new Date(Date.UTC(y,m-1,d)).getTime(); }
-  }
-  const y=+fallbackYear||new Date().getUTCFullYear();
-  return new Date(Date.UTC(y,0,1)).getTime();
+  if(kwYear&&typeof ev.title==="string"){const md=ev.title.match(/(\d{1,2})[\/\-月](\d{1,2})/); if(md){ const y=+kwYear,m=+md[1],d=+md[2]; return new Date(Date.UTC(y,m-1,d)).getTime(); }}
+  const y=+fallbackYear||new Date().getUTCFullYear(); return new Date(Date.UTC(y,0,1)).getTime();
 }
 
 function parseISOish(s){const m=s.match(/^(\d{4})[\/\-.](\d{1,2})[\/\-.](\d{1,2})$/); if(!m) return null; return new Date(Date.UTC(+m[1],+m[2]-1,+m[3]));}
@@ -138,13 +132,13 @@ function initYearTabs(){
   allBtn.textContent="すべて";
   allBtn.className=currentYear==="all"?"active":"";
   allBtn.addEventListener("click",()=>{
-    currentYear="all"; tabContainer.querySelectorAll("button").forEach(b=>b.classList.remove("active")); allBtn.classList.add("active"); renderEvents();
+    currentYear="all"; tabContainer.querySelectorAll("button").forEach(b=>b.classList.remove("active")); allBtn.classList.add("active"); renderEvents(); scrollToEvents();
   });
   tabContainer.appendChild(allBtn);
   years.forEach(y=>{
     const btn=document.createElement("button");
     btn.textContent=y+"年"; btn.className=y===currentYear?"active":"";
-    btn.addEventListener("click",()=>{ currentYear=y; tabContainer.querySelectorAll("button").forEach(b=>b.classList.remove("active")); btn.classList.add("active"); renderEvents(); });
+    btn.addEventListener("click",()=>{ currentYear=y; tabContainer.querySelectorAll("button").forEach(b=>b.classList.remove("active")); btn.classList.add("active"); renderEvents(); scrollToEvents(); });
     tabContainer.appendChild(btn);
   });
 }
@@ -153,11 +147,12 @@ function initControls(){
   const $and=document.getElementById("andBtn"), $or=document.getElementById("orBtn"), $sort=document.getElementById("sortSelect"),
         $filter=document.getElementById("filterSelect"), $search=document.getElementById("search"), $suggest=document.getElementById("suggestions"),
         $theme=document.getElementById("themeToggle");
-  $and.addEventListener("click",()=>{ searchMode=(searchMode==="AND")?"":"AND"; $and.classList.toggle("active",searchMode==="AND"); $or.classList.remove("active"); renderEvents(); });
-  $or.addEventListener("click",()=>{ searchMode=(searchMode==="OR")?"":"OR"; $or.classList.toggle("active",searchMode==="OR"); $and.classList.remove("active"); renderEvents(); });
-  $sort.addEventListener("change",renderEvents);
-  $filter.addEventListener("change",renderEvents);
-  $search.addEventListener("input",()=>{ showSuggestions($search.value); renderEvents(); });
+
+  $and.addEventListener("click",()=>{ searchMode=(searchMode==="AND")?"":"AND"; $and.classList.toggle("active",searchMode==="AND"); $or.classList.remove("active"); renderEvents(); scrollToEvents(); });
+  $or.addEventListener("click",()=>{ searchMode=(searchMode==="OR")?"":"OR"; $or.classList.toggle("active",searchMode==="OR"); $and.classList.remove("active"); renderEvents(); scrollToEvents(); });
+  $sort.addEventListener("change",()=>{ renderEvents(); scrollToEvents(); });
+  $filter.addEventListener("change",()=>{ renderEvents(); scrollToEvents(); });
+  $search.addEventListener("input",()=>{ showSuggestions($search.value); renderEvents(); scrollToEvents(); });
   $search.addEventListener("focus",()=>{ if(!$search.value.trim()) showSuggestions(""); });
   document.addEventListener("click",e=>{if(!e.target.closest(".search-wrap"))$suggest.style.display="none";});
   $theme.addEventListener("click",()=>{document.body.classList.toggle("dark"); const isDark=document.body.classList.contains("dark"); localStorage.setItem("emomo_theme",isDark?"dark":"light"); $theme.textContent=isDark?"☀️ ライト":"🌙 ダーク";});
@@ -193,12 +188,10 @@ function renderEvents(){
   const filtered=allEvents.filter(ev=>{
     const title=normalizeForSearch(ev.title||"");
     const keys=(ev.keywords||[]).map(normalizeForSearch);
-
     const keywordMatch=searchWords.length===0 ? true :
       searchMode==="AND" ? searchWords.every(w=>title.includes(w)||keys.some(k=>k.includes(w))) :
       searchMode==="OR" ? searchWords.some(w=>title.includes(w)||keys.some(k=>k.includes(w))) : true;
-
-    const categoryMatch=!category || keys.some(k=>k.includes(catNorm));
+    const categoryMatch=!category||keys.includes(catNorm);
     const yearMatch=currentYear==="all"?true:ev.year===currentYear;
     return keywordMatch && categoryMatch && yearMatch;
   });
@@ -206,18 +199,16 @@ function renderEvents(){
   filtered.sort((a,b)=>sortBy==="newest"?b.ts-a.ts:a.ts-b.ts);
   hint.textContent=`${filtered.length}件ヒット / 並び: ${sortBy==="newest"?"新しい順":"古い順"} / 年: ${currentYear==="all"?"すべて":currentYear}`;
 
-  if(filtered.length===0){ 
-    list.innerHTML="<p>該当イベントがありません。</p>"; 
-  } else { 
-    list.innerHTML=filtered.map(ev=>`
-      <div class="event-card">
-        <a href="${ev.link}" target="_blank" title="${ev.title}">
-          <img src="${ev.img}" alt="${ev.title}">
-        </a>
-      </div>
-    `).join('');
-  }
+  if(filtered.length===0){ list.innerHTML="<p>該当イベントがありません。</p>"; }
+  else{ list.innerHTML=filtered.map(ev=>`<div class="event-card"><a href="${ev.link}" target="_blank" title="${ev.title}"><img src="${ev.img}" alt="${ev.title}"></a></div>`).join(''); }
 }
+
+// スクロール／ジャンプ機能
+const scrollBtn = document.getElementById("scrollTopBtn");
+window.addEventListener("scroll", ()=>{ scrollBtn.style.display = window.scrollY>200?"block":"none"; });
+scrollBtn.addEventListener("click", ()=>{ window.scrollTo({ top:0, behavior:'smooth' }); });
+
+function scrollToEvents(){document.getElementById("eventList").scrollIntoView({behavior:'smooth'});}
 </script>
 
 </body>
