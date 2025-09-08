@@ -5,116 +5,172 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>エモモイベント</title>
   <style>
-    /* === 省略（前のCSSと同じ） === */
-
-    /* 🔎 検索バー拡張 */
-    #search {
-      font-size: 18px;
-      padding: 12px 14px;
-      min-width: 280px;
-      border-radius: 8px;
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      background: #f9f9f9;
+      color: #333;
     }
-    @media (max-width: 600px) {
-      #search {
-        width: 100%;
-        font-size: 16px;
-      }
+    header {
+      text-align: center;
+      padding: 1rem;
+      font-size: 1.5rem;
+      font-weight: bold;
+      background: #4a90e2;
+      color: #fff;
+    }
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+    }
+    #search {
+      flex: 1;
+      min-width: 280px;
+      max-width: 600px;
+      padding: 14px 16px;
+      font-size: 18px;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    #suggestions {
+      position: absolute;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      max-height: 200px;
+      overflow-y: auto;
+      z-index: 999;
+      width: calc(100% - 40px);
+      margin-top: -5px;
+    }
+    #suggestions div {
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+    #suggestions div:hover {
+      background: #f0f0f0;
+    }
+    .toggle {
+      padding: 10px 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background: #fff;
+      cursor: pointer;
+    }
+    .toggle.active {
+      background: #4a90e2;
+      color: #fff;
+      border-color: #4a90e2;
+    }
+    select {
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+    .event-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 12px;
+      padding: 1rem;
+    }
+    .event-card img {
+      width: 100%;
+      border-radius: 6px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    .tab-buttons {
+      text-align: center;
+      margin: 1rem;
+    }
+    .tab-buttons button {
+      margin: 4px;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .tab-buttons button.active {
+      background: #4a90e2;
+      color: #fff;
     }
   </style>
 </head>
 <body>
 
 <header>エモモイベント一覧</header>
-<nav><a href="index.html">← ホームに戻る</a></nav>
 
-<main>
-  <div class="controls">
-    <div class="search-wrap">
-      <input type="text" id="search" placeholder="キーワードで検索 (スペース区切り)">
-      <div id="suggestions"></div>
-    </div>
-
-    <!-- 初期状態: AND を選択済み -->
-    <button id="andBtn" class="toggle active">AND</button>
-    <button id="orBtn" class="toggle">OR</button>
-
-    <select id="sortSelect" title="並び替え">
-      <option value="newest">新しい順</option>
-      <option value="oldest">古い順</option>
-    </select>
-
-    <select id="filterSelect" title="カテゴリ絞り込み">
-      <option value="">全てのカテゴリ</option>
-      <option value="ルレ">ルレだけ</option>
-      <option value="ギフガチャ">ギフガチャだけ</option>
-      <option value="エモバト">エモバトだけ</option>
-      <option value="エモラン">エモランだけ</option>
-    </select>
-
-    <button id="themeToggle" title="ダークモード切替">🌙 ダーク</button>
+<div class="controls">
+  <div style="position:relative; flex:1; max-width:600px;">
+    <input type="text" id="search" placeholder="キーワードで検索 (スペース区切り)">
+    <div id="suggestions"></div>
   </div>
+  <button id="andBtn" class="toggle active">AND</button>
+  <button id="orBtn" class="toggle">OR</button>
+  <select id="sortSelect">
+    <option value="newest">新しい順</option>
+    <option value="oldest">古い順</option>
+  </select>
+  <select id="filterSelect">
+    <option value="">全カテゴリ</option>
+    <option value="ルレ">ルレ</option>
+    <option value="ギフガチャ">ギフガチャ</option>
+    <option value="エモバト">エモバト</option>
+    <option value="エモラン">エモラン</option>
+  </select>
+</div>
 
-  <div class="tab-buttons" id="yearTabs"></div>
-  <div class="event-grid" id="eventList">読み込み中...</div>
-  <p class="muted" id="hint"></p>
-</main>
+<div class="tab-buttons" id="yearTabs"></div>
+<div class="event-grid" id="eventList">読み込み中...</div>
 
 <script>
   let data = {};
-  let currentYear = "2025";
-  let searchMode = "AND"; // 初期状態で AND
   let allEvents = [];
+  let searchMode = "AND";
+  let currentYear = "2025";
   let allKeywords = new Set();
   let allTitles = new Set();
 
-  // === 簡易ひらがな正規化関数 ===
   function normalizeForSearch(str) {
     if (!str) return "";
-    // カタカナ → ひらがな
     str = str.replace(/[\u30A1-\u30F6]/g, ch =>
       String.fromCharCode(ch.charCodeAt(0) - 0x60)
     );
-    // アルファベット → 小文字
     str = str.toLowerCase();
-    // 全角英数 → 半角
     str = str.replace(/[Ａ-Ｚａ-ｚ０-９]/g, s =>
       String.fromCharCode(s.charCodeAt(0) - 0xFEE0)
     );
     return str;
   }
 
-  // ====== ダークモード初期化 ======
-  (function initTheme(){
-    const saved = localStorage.getItem("emomo_theme");
-    if(saved === "dark"){ document.body.classList.add("dark"); }
-  })();
-
-  // ====== データ読み込み ======
   fetch("data/events.json")
     .then(res => res.json())
     .then(json => {
       data = json;
-      flattenAndNormalize();
-      initYearTabs();
+      flattenData();
+      initTabs();
       initControls();
       renderEvents();
     });
 
-  function flattenAndNormalize(){
-    allEvents = [];
-    for(const y in data){
-      (data[y]||[]).forEach(ev=>{
-        const copy = {...ev};
+  function flattenData() {
+    for (const y in data) {
+      (data[y] || []).forEach(ev => {
+        const copy = { ...ev };
         copy.year = y;
         copy.ts = new Date(ev.date || `${y}-01-01`).getTime();
         if (copy.title) allTitles.add(copy.title);
-        if (Array.isArray(copy.keywords)) copy.keywords.forEach(k=>allKeywords.add(k));
+        if (Array.isArray(copy.keywords)) copy.keywords.forEach(k => allKeywords.add(k));
         allEvents.push(copy);
       });
     }
   }
 
-  function initYearTabs() {
+  function initTabs() {
     const tabContainer = document.getElementById("yearTabs");
     const years = Object.keys(data).sort((a, b) => b - a);
     tabContainer.innerHTML = "";
@@ -144,36 +200,49 @@
     });
   }
 
-  function initControls(){
+  function initControls() {
     const $and = document.getElementById("andBtn");
     const $or = document.getElementById("orBtn");
     const $search = document.getElementById("search");
-    const $theme = document.getElementById("themeToggle");
+    const $suggest = document.getElementById("suggestions");
 
-    $and.addEventListener("click", ()=>{
-      searchMode = (searchMode==="AND") ? "" : "AND";
-      $and.classList.toggle("active", searchMode==="AND");
+    $and.addEventListener("click", () => {
+      searchMode = "AND";
+      $and.classList.add("active");
       $or.classList.remove("active");
       renderEvents();
     });
-    $or.addEventListener("click", ()=>{
-      searchMode = (searchMode==="OR") ? "" : "OR";
-      $or.classList.toggle("active", searchMode==="OR");
+    $or.addEventListener("click", () => {
+      searchMode = "OR";
+      $or.classList.add("active");
       $and.classList.remove("active");
       renderEvents();
     });
 
     document.getElementById("sortSelect").addEventListener("change", renderEvents);
     document.getElementById("filterSelect").addEventListener("change", renderEvents);
-    $search.addEventListener("input", renderEvents);
-
-    $theme.addEventListener("click", ()=>{
-      document.body.classList.toggle("dark");
-      const isDark = document.body.classList.contains("dark");
-      localStorage.setItem("emomo_theme", isDark ? "dark" : "light");
-      $theme.textContent = isDark ? "☀️ ライト" : "🌙 ダーク";
+    $search.addEventListener("input", () => {
+      showSuggestions($search.value, $suggest);
+      renderEvents();
     });
-    $theme.textContent = document.body.classList.contains("dark") ? "☀️ ライト" : "🌙 ダーク";
+  }
+
+  function showSuggestions(query, container) {
+    container.innerHTML = "";
+    const q = normalizeForSearch(query);
+    if (!q) return;
+    const candidates = [...allTitles, ...allKeywords];
+    const matches = candidates.filter(c => normalizeForSearch(c).includes(q)).slice(0, 10);
+    matches.forEach(m => {
+      const div = document.createElement("div");
+      div.textContent = m;
+      div.addEventListener("click", () => {
+        document.getElementById("search").value = m;
+        container.innerHTML = "";
+        renderEvents();
+      });
+      container.appendChild(div);
+    });
   }
 
   function renderEvents() {
@@ -184,25 +253,23 @@
     const category = document.getElementById("filterSelect").value;
 
     let filtered = allEvents.filter(ev => {
-      const title = normalizeForSearch(ev.title||"");
-      const keys = (ev.keywords||[]).map(normalizeForSearch);
+      const title = normalizeForSearch(ev.title || "");
+      const keys = (ev.keywords || []).map(normalizeForSearch);
 
       const keywordMatch =
         searchWords.length === 0 || (
           searchMode === "AND"
             ? searchWords.every(w => title.includes(w) || keys.some(k => k.includes(w)))
-            : searchMode === "OR"
-              ? searchWords.some(w => title.includes(w) || keys.some(k => k.includes(w)))
-              : true
+            : searchWords.some(w => title.includes(w) || keys.some(k => k.includes(w)))
         );
 
-      const categoryMatch = !category || (ev.keywords||[]).includes(category);
-      const yearMatch = (currentYear==="all") ? true : (ev.year === currentYear);
+      const categoryMatch = !category || (ev.keywords || []).includes(category);
+      const yearMatch = (currentYear === "all") ? true : (ev.year === currentYear);
 
       return keywordMatch && categoryMatch && yearMatch;
     });
 
-    filtered.sort((a,b)=> sortBy==="newest" ? (b.ts - a.ts) : (a.ts - b.ts));
+    filtered.sort((a, b) => sortBy === "newest" ? (b.ts - a.ts) : (a.ts - b.ts));
 
     if (filtered.length === 0) {
       list.innerHTML = "<p>該当イベントがありません。</p>";
