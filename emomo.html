@@ -15,22 +15,26 @@ nav{text-align:center; margin:10px 0;}
 nav a{color:var(--accent); font-weight:bold; text-decoration:none; font-size:1.1em;}
 main{max-width:960px; margin:0 auto; background:var(--card); padding:20px; border-radius:8px; box-shadow:var(--shadow);}
 .controls{display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-bottom:15px;}
-.controls input,.controls select,.controls button{padding:8px; font-size:14px; border:1px solid var(--border); border-radius:6px; background:var(--card); color:var(--text);}
+.controls input,.controls select,.controls button{padding:10px; font-size:16px; border:1px solid var(--border); border-radius:6px; background:var(--card); color:var(--text); flex:1 1 120px;}
 .toggle.active{background:var(--accent); color:#fff; border-color:var(--accent);}
 .tab-buttons{display:flex; flex-wrap:wrap; justify-content:center; gap:6px; margin-bottom:15px;}
-.tab-buttons button{padding:6px 12px; border-radius:6px; border:1px solid var(--border); background:var(--btn); color:var(--text); cursor:pointer;}
+.tab-buttons button{padding:6px 12px; border-radius:6px; border:1px solid var(--border); background:var(--btn); color:var(--text); cursor:pointer; flex:1 1 70px;}
 .tab-buttons button.active{background:var(--accent); color:#fff; border-color:var(--accent);}
-.event-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px;}
+.event-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:12px;}
 .event-card{border-radius:8px; overflow:hidden; text-align:center;}
 .event-card img{width:100%; border:1px solid var(--border); border-radius:6px; display:block;}
 .event-card div{display:none;}
-.search-wrap{position:relative; min-width:260px;}
+.search-wrap{position:relative; width:100%;}
 #suggestions{position:absolute; top:100%; left:0; right:0; background:var(--card); border:1px solid var(--border); border-top:none; max-height:220px; overflow-y:auto; z-index:20; display:none;}
 #suggestions button{width:100%; text-align:left; background:transparent; border:none; border-bottom:1px solid var(--border); padding:8px 10px; cursor:pointer; color:var(--text);}
 #suggestions button:hover{background:var(--btn);}
 .muted{color:var(--muted); font-size:12px;}
 #scrollTopBtn{position:fixed;bottom:20px;right:20px;display:none;padding:10px;border-radius:50%;border:none;background:var(--accent);color:#fff;cursor:pointer;z-index:50;}
-@media (max-width:600px){.controls{flex-direction:column; align-items:center;} .search-wrap{width:100%;}}
+@media (max-width:600px){
+  .controls{flex-direction:column; align-items:center;}
+  .controls input,.controls select,.controls button{width:90%;}
+  .tab-buttons button{flex:1 1 40%;}
+}
 </style>
 </head>
 <body>
@@ -70,9 +74,7 @@ main{max-width:960px; margin:0 auto; background:var(--card); padding:20px; borde
 <script>
 let data={}, currentYear="2025", searchMode="", allEvents=[], allKeywords=new Set(), allTitles=new Set();
 
-(function initTheme(){
-  if(localStorage.getItem("emomo_theme")==="dark") document.body.classList.add("dark");
-})();
+(function initTheme(){ if(localStorage.getItem("emomo_theme")==="dark") document.body.classList.add("dark"); })();
 
 function normalizeForSearch(s){
   if(!s) return "";
@@ -80,7 +82,6 @@ function normalizeForSearch(s){
   s=s.replace(/[Ａ-Ｚａ-ｚ０-９]/g,c=>String.fromCharCode(c.charCodeAt(0)-0xFEE0));
   s=s.replace(/[ァ-ン]/g,c=>String.fromCharCode(c.charCodeAt(0)-0x60));
   s=s.normalize("NFKC");
-  // 簡易漢字→ひらがな（代表例のみ）
   s=s.replace(/一/,"い").replace(/二/,"に").replace(/三/,"さん").replace(/四/,"よん").replace(/五/,"ご");
   s=s.replace(/六/,"ろく").replace(/七/,"なな").replace(/八/,"はち").replace(/九/,"きゅう").replace(/十/,"じゅう");
   return s;
@@ -88,17 +89,8 @@ function normalizeForSearch(s){
 
 fetch("data/events.json")
 .then(res=>res.json())
-.then(json=>{
-  data=json;
-  flattenAndNormalize();
-  initYearTabs();
-  initControls();
-  renderEvents();
-})
-.catch(err=>{
-  console.error(err);
-  document.getElementById("eventList").innerHTML="<p>データの読み込みに失敗しました。</p>";
-});
+.then(json=>{ data=json; flattenAndNormalize(); initYearTabs(); initControls(); renderEvents(); })
+.catch(err=>{ console.error(err); document.getElementById("eventList").innerHTML="<p>データの読み込みに失敗しました。</p>"; });
 
 function flattenAndNormalize(){
   allEvents=[];
@@ -129,25 +121,16 @@ function initYearTabs(){
   const years=Object.keys(data).sort((a,b)=>b-a);
   tabContainer.innerHTML="";
   const allBtn=document.createElement("button");
-  allBtn.textContent="すべて";
-  allBtn.className=currentYear==="all"?"active":"";
-  allBtn.addEventListener("click",()=>{
-    currentYear="all"; tabContainer.querySelectorAll("button").forEach(b=>b.classList.remove("active")); allBtn.classList.add("active"); renderEvents(); scrollToEvents();
-  });
+  allBtn.textContent="すべて"; allBtn.className=currentYear==="all"?"active":"";
+  allBtn.addEventListener("click",()=>{ currentYear="all"; tabContainer.querySelectorAll("button").forEach(b=>b.classList.remove("active")); allBtn.classList.add("active"); renderEvents(); scrollToEvents(); });
   tabContainer.appendChild(allBtn);
-  years.forEach(y=>{
-    const btn=document.createElement("button");
-    btn.textContent=y+"年"; btn.className=y===currentYear?"active":"";
-    btn.addEventListener("click",()=>{ currentYear=y; tabContainer.querySelectorAll("button").forEach(b=>b.classList.remove("active")); btn.classList.add("active"); renderEvents(); scrollToEvents(); });
-    tabContainer.appendChild(btn);
-  });
+  years.forEach(y=>{ const btn=document.createElement("button"); btn.textContent=y+"年"; btn.className=y===currentYear?"active":""; btn.addEventListener("click",()=>{ currentYear=y; tabContainer.querySelectorAll("button").forEach(b=>b.classList.remove("active")); btn.classList.add("active"); renderEvents(); scrollToEvents(); }); tabContainer.appendChild(btn); });
 }
 
 function initControls(){
   const $and=document.getElementById("andBtn"), $or=document.getElementById("orBtn"), $sort=document.getElementById("sortSelect"),
         $filter=document.getElementById("filterSelect"), $search=document.getElementById("search"), $suggest=document.getElementById("suggestions"),
         $theme=document.getElementById("themeToggle");
-
   $and.addEventListener("click",()=>{ searchMode=(searchMode==="AND")?"":"AND"; $and.classList.toggle("active",searchMode==="AND"); $or.classList.remove("active"); renderEvents(); scrollToEvents(); });
   $or.addEventListener("click",()=>{ searchMode=(searchMode==="OR")?"":"OR"; $or.classList.toggle("active",searchMode==="OR"); $and.classList.remove("active"); renderEvents(); scrollToEvents(); });
   $sort.addEventListener("change",()=>{ renderEvents(); scrollToEvents(); });
@@ -163,15 +146,8 @@ function showSuggestions(input){
   const box=document.getElementById("suggestions");
   const q=normalizeForSearch(input.trim());
   let items=[];
-  if(q){
-    const kw=Array.from(allKeywords).filter(k=>normalizeForSearch(k).includes(q));
-    const tt=Array.from(allTitles).filter(t=>normalizeForSearch(t).includes(q));
-    items=[...kw.slice(0,10),...tt.slice(0,10)];
-  }else{
-    const freq={};
-    allEvents.forEach(ev=>{ (ev.keywords||[]).forEach(k=>{ freq[k]=(freq[k]||0)+1; }); });
-    items=Object.entries(freq).sort((a,b)=>b[1]-a[1]).slice(0,10).map(([k])=>k);
-  }
+  if(q){ const kw=Array.from(allKeywords).filter(k=>normalizeForSearch(k).includes(q)); const tt=Array.from(allTitles).filter(t=>normalizeForSearch(t).includes(q)); items=[...kw.slice(0,10),...tt.slice(0,10)]; }
+  else{ const freq={}; allEvents.forEach(ev=>{ (ev.keywords||[]).forEach(k=>{ freq[k]=(freq[k]||0)+1; }); }); items=Object.entries(freq).sort((a,b)=>b[1]-a[1]).slice(0,10).map(([k])=>k); }
   if(items.length===0){ box.style.display="none"; box.innerHTML=""; return; }
   box.innerHTML=items.map(txt=>`<button type="button">${txt}</button>`).join("");
   box.style.display="block";
@@ -191,7 +167,7 @@ function renderEvents(){
     const keywordMatch=searchWords.length===0 ? true :
       searchMode==="AND" ? searchWords.every(w=>title.includes(w)||keys.some(k=>k.includes(w))) :
       searchMode==="OR" ? searchWords.some(w=>title.includes(w)||keys.some(k=>k.includes(w))) : true;
-    const categoryMatch=!category||keys.includes(catNorm);
+    const categoryMatch=!category ? true : keys.includes(catNorm);
     const yearMatch=currentYear==="all"?true:ev.year===currentYear;
     return keywordMatch && categoryMatch && yearMatch;
   });
@@ -204,11 +180,11 @@ function renderEvents(){
 }
 
 // スクロール／ジャンプ機能
-const scrollBtn = document.getElementById("scrollTopBtn");
-window.addEventListener("scroll", ()=>{ scrollBtn.style.display = window.scrollY>200?"block":"none"; });
-scrollBtn.addEventListener("click", ()=>{ window.scrollTo({ top:0, behavior:'smooth' }); });
+const scrollBtn=document.getElementById("scrollTopBtn");
+window.addEventListener("scroll",()=>{ scrollBtn.style.display = window.scrollY>200 ? "block" : "none"; });
+scrollBtn.addEventListener("click",()=>{ window.scrollTo({ top:0, behavior:'smooth' }); });
 
-function scrollToEvents(){document.getElementById("eventList").scrollIntoView({behavior:'smooth'});}
+function scrollToEvents(){ document.getElementById("eventList").scrollIntoView({behavior:'smooth'}); }
 </script>
 
 </body>
