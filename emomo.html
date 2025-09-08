@@ -77,7 +77,6 @@ function normalizeForSearch(s){
   s=s.replace(/[Ａ-Ｚａ-ｚ０-９]/g,c=>String.fromCharCode(c.charCodeAt(0)-0xFEE0));
   s=s.replace(/[ァ-ン]/g,c=>String.fromCharCode(c.charCodeAt(0)-0x60)); // カタカナ→ひらがな
   s=s.normalize("NFKC");
-  // 簡易 漢字→ひらがな（代表例のみ）
   s=s.replace(/一/,"い").replace(/二/,"に").replace(/三/,"さん").replace(/四/,"よん").replace(/五/,"ご");
   s=s.replace(/六/,"ろく").replace(/七/,"なな").replace(/八/,"はち").replace(/九/,"きゅう").replace(/十/,"じゅう");
   return s;
@@ -199,7 +198,7 @@ function renderEvents(){
       searchMode==="AND" ? searchWords.every(w=>title.includes(w)||keys.some(k=>k.includes(w))) :
       searchMode==="OR" ? searchWords.some(w=>title.includes(w)||keys.some(k=>k.includes(w))) : true;
 
-    const categoryMatch=!category||keys.includes(catNorm);
+    const categoryMatch=!category || keys.some(k=>k.includes(catNorm));
     const yearMatch=currentYear==="all"?true:ev.year===currentYear;
     return keywordMatch && categoryMatch && yearMatch;
   });
@@ -207,8 +206,17 @@ function renderEvents(){
   filtered.sort((a,b)=>sortBy==="newest"?b.ts-a.ts:a.ts-b.ts);
   hint.textContent=`${filtered.length}件ヒット / 並び: ${sortBy==="newest"?"新しい順":"古い順"} / 年: ${currentYear==="all"?"すべて":currentYear}`;
 
-  if(filtered.length===0){ list.innerHTML="<p>該当イベントがありません。</p>"; }
-  else{ list.innerHTML=filtered.map(ev=>`<div class="event-card"><a href="${ev.link}" target="_blank" title="${ev.title}"><img src="${ev.img}" alt="${ev.title}"></a></div>`).join(''); }
+  if(filtered.length===0){ 
+    list.innerHTML="<p>該当イベントがありません。</p>"; 
+  } else { 
+    list.innerHTML=filtered.map(ev=>`
+      <div class="event-card">
+        <a href="${ev.link}" target="_blank" title="${ev.title}">
+          <img src="${ev.img}" alt="${ev.title}">
+        </a>
+      </div>
+    `).join('');
+  }
 }
 </script>
 
