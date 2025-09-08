@@ -1,162 +1,89 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
+  <title>エモモイベント一覧</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>エモモイベント</title>
   <style>
-    body {
-      font-family: sans-serif;
-      margin: 0;
-      background-color: #f5f5f5;
-    }
-
-    header {
-      background-color: #333;
-      padding: 12px;
-      text-align: center;
-      color: white;
-      font-size: 1.3em;
-    }
-
-    nav {
-      text-align: center;
-      margin: 10px 0;
-    }
-
-    nav a {
-      color: #333;
-      font-weight: bold;
-      text-decoration: none;
-      font-size: 1.1em;
-    }
-
-    main {
-      max-width: 960px;
-      margin: 0 auto;
-      background-color: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-
-    .controls {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      justify-content: center;
-      margin-bottom: 15px;
-    }
-
-    .controls input,
-    .controls select,
-    .controls button {
-      padding: 8px;
-      font-size: 14px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-    }
-
-    .toggle.active {
-      background-color: #333;
-      color: white;
-    }
-
-    .tab-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 6px;
-      margin-bottom: 15px;
-    }
-
-    .tab-buttons button {
-      padding: 6px 12px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      background-color: #eee;
-      cursor: pointer;
-    }
-
-    .tab-buttons button.active {
-      background-color: #333;
-      color: white;
-      border-color: #333;
-    }
-
-    .event-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 12px;
-    }
-
-    .event-card {
-      border-radius: 8px;
-      overflow: hidden;
-      text-align: center;
-    }
-
-    .event-card img {
-      width: 100%;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-    }
-
-    .event-card div {
-      display: none; /* タイトル非表示 */
-    }
-
-    @media (max-width: 600px) {
-      .controls {
-        flex-direction: column;
-        align-items: center;
-      }
-    }
+    body { font-family: sans-serif; margin: 0; background: #f8f8f8; }
+    header { background: #4CAF50; color: #fff; padding: 10px; text-align: center; }
+    #controls { padding: 10px; background: #fff; position: sticky; top: 0; z-index: 100; }
+    #yearTabs { margin: 10px 0; }
+    #yearTabs button { margin: 2px; padding: 6px 12px; border: none; cursor: pointer; }
+    #yearTabs button.active { background: #4CAF50; color: white; }
+    #eventList { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; padding: 10px; }
+    .event-card { width: 150px; text-align: center; background: #fff; border-radius: 6px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .event-card img { width: 100%; height: auto; cursor: pointer; }
+    .event-card div { padding: 5px; font-size: 14px; }
+    .and-or-btn { margin: 0 5px; padding: 5px 10px; border: 1px solid #ccc; cursor: pointer; }
+    .and-or-btn.active { background: #4CAF50; color: white; }
+    /* 🔍 ドロップダウン候補 */
+    #suggestions { position: absolute; background: #fff; border: 1px solid #ccc; max-height: 150px; overflow-y: auto; width: 90%; z-index: 200; }
+    #suggestions div { padding: 5px; cursor: pointer; }
+    #suggestions div:hover { background: #eee; }
+    /* 🔍 モーダル */
+    #modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); justify-content:center; align-items:center; z-index:1000; }
+    #modal img { max-width: 90%; max-height: 90%; border: 4px solid #fff; border-radius: 6px; }
+    /* ⬆ ページ上部へ戻る */
+    #backToTop { position: fixed; bottom: 20px; right: 20px; padding: 10px; background: #4CAF50; color: white; border: none; border-radius: 50%; cursor: pointer; display: none; }
   </style>
 </head>
 <body>
+<header><h1>📅 エモモイベント一覧</h1></header>
 
-<header>エモモイベント一覧</header>
-<nav><a href="index.html">← ホームに戻る</a></nav>
+<div id="controls">
+  <input type="text" id="search" placeholder="キーワード検索">
+  <div id="suggestions"></div>
+  <button id="andBtn" class="and-or-btn">AND検索</button>
+  <button id="orBtn" class="and-or-btn">OR検索</button>
+  <select id="sortSelect">
+    <option value="newest">新しい順</option>
+    <option value="oldest">古い順</option>
+  </select>
+  <select id="filterSelect">
+    <option value="">すべてのカテゴリ</option>
+    <option value="エモラン">エモラン</option>
+    <option value="エモバト">エモバト</option>
+    <option value="ギフガチャ">ギフガチャ</option>
+    <option value="ルレ">ルレ</option>
+  </select>
+  <div id="yearTabs"></div>
+</div>
 
-<main>
-  <div class="controls">
-    <input type="text" id="search" placeholder="キーワードで検索 (スペース区切り)">
-    <button id="andBtn" class="toggle active">AND</button>
-    <button id="orBtn" class="toggle">OR</button>
-    <select id="sortSelect">
-      <option value="newest">新しい順</option>
-      <option value="oldest">古い順</option>
-    </select>
-    <select id="filterSelect">
-      <option value="">全てのカテゴリ</option>
-      <option value="ルレ">ルレだけ</option>
-      <option value="ギフガチャ">ギフガチャだけ</option>
-      <option value="エモバト">エモバトだけ</option>
-      <option value="エモラン">エモランだけ</option>
-    </select>
-  </div>
+<div id="eventList"></div>
 
-  <div class="tab-buttons" id="yearTabs"></div>
-  <div class="event-grid" id="eventList">読み込み中...</div>
-</main>
+<!-- 画像モーダル -->
+<div id="modal"><img src=""></div>
+
+<!-- 上部に戻るボタン -->
+<button id="backToTop">⬆</button>
 
 <script>
   let data = {};
   let currentYear = "2025";
-  let searchMode = "AND";
+  let searchMode = "";
+  let allKeywords = [];
 
-  fetch("data/events.json")
-    .then(res => res.json())
-    .then(json => {
-      data = json;
-      initYearTabs();
+  const years = ["2025", "2024", "2023"]; // 追加したい年があればここに追記
+
+  initYearTabs();
+  loadAllYears();
+
+  function loadAllYears() {
+    let promises = years.map(year =>
+      fetch(`data/events_${year}.json`)
+        .then(res => res.json())
+        .then(json => { data[year] = json; })
+    );
+
+    Promise.all(promises).then(() => {
+      collectKeywords();
       renderEvents();
     });
+  }
 
   function initYearTabs() {
     const tabContainer = document.getElementById("yearTabs");
-    const years = Object.keys(data).sort((a, b) => b - a);
     tabContainer.innerHTML = "";
 
     const allBtn = document.createElement("button");
@@ -184,37 +111,55 @@
     });
   }
 
-  document.getElementById("search").addEventListener("input", renderEvents);
+  function collectKeywords() {
+    allKeywords = [];
+    for (const y in data) {
+      data[y].forEach(ev => {
+        if (ev.keywords) allKeywords.push(...ev.keywords);
+      });
+    }
+    allKeywords = [...new Set(allKeywords)];
+  }
+
+  // 検索補助候補
+  const searchInput = document.getElementById("search");
+  const suggestionsBox = document.getElementById("suggestions");
+  searchInput.addEventListener("input", () => {
+    const val = searchInput.value.toLowerCase();
+    if (!val) { suggestionsBox.innerHTML = ""; return; }
+    const matched = allKeywords.filter(k => k.toLowerCase().includes(val));
+    suggestionsBox.innerHTML = matched.map(k => `<div>${k}</div>`).join("");
+  });
+  suggestionsBox.addEventListener("click", e => {
+    if (e.target.tagName === "DIV") {
+      searchInput.value = e.target.textContent;
+      suggestionsBox.innerHTML = "";
+      renderEvents();
+    }
+  });
+
+  // AND/OR切替
+  document.getElementById("andBtn").addEventListener("click", () => {
+    if (searchMode === "AND") { searchMode = ""; } else { searchMode = "AND"; }
+    toggleAndOr();
+  });
+  document.getElementById("orBtn").addEventListener("click", () => {
+    if (searchMode === "OR") { searchMode = ""; } else { searchMode = "OR"; }
+    toggleAndOr();
+  });
+  function toggleAndOr() {
+    document.getElementById("andBtn").classList.toggle("active", searchMode === "AND");
+    document.getElementById("orBtn").classList.toggle("active", searchMode === "OR");
+    renderEvents();
+  }
+
   document.getElementById("sortSelect").addEventListener("change", renderEvents);
   document.getElementById("filterSelect").addEventListener("change", renderEvents);
-
-  document.getElementById("andBtn").addEventListener("click", () => {
-    if (searchMode === "AND") {
-      searchMode = "";
-      document.getElementById("andBtn").classList.remove("active");
-    } else {
-      searchMode = "AND";
-      document.getElementById("andBtn").classList.add("active");
-      document.getElementById("orBtn").classList.remove("active");
-    }
-    renderEvents();
-  });
-
-  document.getElementById("orBtn").addEventListener("click", () => {
-    if (searchMode === "OR") {
-      searchMode = "";
-      document.getElementById("orBtn").classList.remove("active");
-    } else {
-      searchMode = "OR";
-      document.getElementById("orBtn").classList.add("active");
-      document.getElementById("andBtn").classList.remove("active");
-    }
-    renderEvents();
-  });
+  searchInput.addEventListener("input", renderEvents);
 
   function renderEvents() {
     const list = document.getElementById("eventList");
-    const searchWords = document.getElementById("search").value.trim().toLowerCase().split(/\s+/);
+    const searchWords = searchInput.value.trim().toLowerCase().split(/\s+/).filter(w => w);
     const sortBy = document.getElementById("sortSelect").value;
     const category = document.getElementById("filterSelect").value;
 
@@ -230,40 +175,51 @@
       const keywordMatch = searchWords.length === 0 || (
         searchMode === "AND"
           ? searchWords.every(w => title.includes(w) || keys.some(k => k.includes(w)))
-          : searchWords.some(w => title.includes(w) || keys.some(k => k.includes(w)))
+          : searchMode === "OR"
+            ? searchWords.some(w => title.includes(w) || keys.some(k => k.includes(w)))
+            : true
       );
 
-      const categoryMatch = !category || keys.some(k => k.includes(category.toLowerCase()));
-
+      const categoryMatch = !category || keys.includes(category.toLowerCase());
       return keywordMatch && categoryMatch;
     });
 
-    // 並び替え
     filtered.sort((a, b) => {
-      const dA = new Date(a.date || a.title);
-      const dB = new Date(b.date || b.title);
+      const dA = new Date(a.date);
+      const dB = new Date(b.date);
       return sortBy === "newest" ? dB - dA : dA - dB;
     });
 
-    // 年で絞る（"all" 以外のときのみ）
-    const yearFiltered = currentYear === "all"
-      ? filtered
-      : filtered.filter(ev => ev.year === currentYear);
+    const yearFiltered = currentYear === "all" ? filtered : filtered.filter(ev => ev.year === currentYear);
 
     if (yearFiltered.length === 0) {
       list.innerHTML = "<p>該当イベントがありません。</p>";
     } else {
       list.innerHTML = yearFiltered.map(ev => `
         <div class="event-card">
-          <a href="${ev.link}" target="_blank" title="${ev.title}">
-            <img src="${ev.img}" alt="${ev.title}">
-            <div>${ev.title}</div>
-          </a>
+          <img src="${ev.img}" alt="${ev.title}" title="${ev.title}" onclick="openModal('${ev.img}')">
+          <div>${ev.title}</div>
         </div>
       `).join('');
     }
   }
-</script>
 
+  // 画像モーダル
+  function openModal(src) {
+    const modal = document.getElementById("modal");
+    modal.style.display = "flex";
+    modal.querySelector("img").src = src;
+  }
+  document.getElementById("modal").addEventListener("click", () => {
+    document.getElementById("modal").style.display = "none";
+  });
+
+  // ⬆ページ上部に戻る
+  const backToTop = document.getElementById("backToTop");
+  window.addEventListener("scroll", () => {
+    backToTop.style.display = window.scrollY > 200 ? "block" : "none";
+  });
+  backToTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+</script>
 </body>
 </html>
