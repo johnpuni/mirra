@@ -10,6 +10,11 @@
       margin: 0;
       background: #f9f9f9;
       color: #333;
+      transition: background 0.3s, color 0.3s;
+    }
+    body.dark {
+      background: #1e1e1e;
+      color: #f5f5f5;
     }
     header {
       text-align: center;
@@ -18,6 +23,20 @@
       font-weight: bold;
       background: #4a90e2;
       color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+    #darkToggle {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      background: transparent;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: inherit;
     }
     .controls {
       display: flex;
@@ -37,6 +56,11 @@
       border-radius: 10px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
+    body.dark #search {
+      background: #333;
+      color: #fff;
+      border-color: #666;
+    }
     #suggestions {
       position: absolute;
       background: #fff;
@@ -48,12 +72,20 @@
       width: calc(100% - 40px);
       margin-top: -5px;
     }
+    body.dark #suggestions {
+      background: #2a2a2a;
+      border-color: #555;
+      color: #fff;
+    }
     #suggestions div {
       padding: 8px 12px;
       cursor: pointer;
     }
     #suggestions div:hover {
       background: #f0f0f0;
+    }
+    body.dark #suggestions div:hover {
+      background: #444;
     }
     .toggle {
       padding: 10px 16px;
@@ -67,10 +99,20 @@
       color: #fff;
       border-color: #4a90e2;
     }
+    body.dark .toggle {
+      background: #333;
+      color: #fff;
+      border-color: #555;
+    }
     select {
       padding: 10px;
       border-radius: 8px;
       font-size: 14px;
+    }
+    body.dark select {
+      background: #333;
+      color: #fff;
+      border-color: #555;
     }
     .event-grid {
       display: grid;
@@ -102,7 +144,10 @@
 </head>
 <body>
 
-<header>エモモイベント一覧</header>
+<header>
+  エモモイベント一覧
+  <button id="darkToggle">🌙</button>
+</header>
 
 <div class="controls">
   <div style="position:relative; flex:1; max-width:600px;">
@@ -114,6 +159,8 @@
   <select id="sortSelect">
     <option value="newest">新しい順</option>
     <option value="oldest">古い順</option>
+    <option value="エモバト">エモバト優先</option>
+    <option value="エモラン">エモラン優先</option>
   </select>
   <select id="filterSelect">
     <option value="">全カテゴリ</option>
@@ -205,6 +252,7 @@
     const $or = document.getElementById("orBtn");
     const $search = document.getElementById("search");
     const $suggest = document.getElementById("suggestions");
+    const $dark = document.getElementById("darkToggle");
 
     $and.addEventListener("click", () => {
       searchMode = "AND";
@@ -224,6 +272,11 @@
     $search.addEventListener("input", () => {
       showSuggestions($search.value, $suggest);
       renderEvents();
+    });
+
+    $dark.addEventListener("click", () => {
+      document.body.classList.toggle("dark");
+      $dark.textContent = document.body.classList.contains("dark") ? "☀️" : "🌙";
     });
   }
 
@@ -269,7 +322,26 @@
       return keywordMatch && categoryMatch && yearMatch;
     });
 
-    filtered.sort((a, b) => sortBy === "newest" ? (b.ts - a.ts) : (a.ts - b.ts));
+    // 並び替え処理
+    if (sortBy === "newest" || sortBy === "oldest") {
+      filtered.sort((a, b) => sortBy === "newest" ? (b.ts - a.ts) : (a.ts - b.ts));
+    } else if (sortBy === "エモバト") {
+      filtered.sort((a, b) => {
+        const aHas = (a.keywords || []).includes("エモバト");
+        const bHas = (b.keywords || []).includes("エモバト");
+        if (aHas && !bHas) return -1;
+        if (!aHas && bHas) return 1;
+        return b.ts - a.ts; // 同カテゴリ内は新しい順
+      });
+    } else if (sortBy === "エモラン") {
+      filtered.sort((a, b) => {
+        const aHas = (a.keywords || []).includes("エモラン");
+        const bHas = (b.keywords || []).includes("エモラン");
+        if (aHas && !bHas) return -1;
+        if (!aHas && bHas) return 1;
+        return b.ts - a.ts;
+      });
+    }
 
     if (filtered.length === 0) {
       list.innerHTML = "<p>該当イベントがありません。</p>";
