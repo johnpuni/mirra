@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>エモバト図鑑</title>
+<link rel="stylesheet" href="css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<header>
+  <h1>エモバト情報ページ</h1>
+</header>
+
+<nav class="tabs">
+  <button class="tab-btn active" data-tab="units">機体図鑑</button>
+  <button class="tab-btn" data-tab="rate">レート累計</button>
+  <button class="tab-btn" data-tab="events">イベント</button>
+</nav>
+
+<main>
+  <!-- 機体図鑑 -->
+  <section id="units" class="tab-content active">
+    <div id="unitGrid" class="grid"></div>
+    <!-- 詳細モーダル -->
+    <div id="unitModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <div id="unitDetail"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- レート累計 -->
+  <section id="rate" class="tab-content">
+    <canvas id="rateChart"></canvas>
+    <table id="rateTable">
+      <thead><tr><th>プレイヤー</th><th>ポイント</th><th>勝率</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </section>
+
+  <!-- イベント -->
+  <section id="events" class="tab-content">
+    <div id="eventList">読み込み中...</div>
+  </section>
+</main>
+
+<script>
+// ===== タブ切り替え =====
+document.querySelectorAll(".tab-btn").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
+    document.querySelectorAll(".tab-content").forEach(sec=>sec.classList.remove("active"));
+    btn.classList.add("active");
+    document.getElementById(btn.dataset.tab).classList.add("active");
+  });
+});
+
+// ===== 機体データ（units.jsonから読み込み） =====
+fetch("data/units.json")
+.then(res=>res.json())
+.then(units=>{
+  const grid=document.getElementById("unitGrid");
+  grid.innerHTML=units.map(u=>`
+    <div class="unit-card" data-id="${u.id}">
+      <img src="${u.img}" alt="${u.name}">
+      <p>${u.name}</p>
+    </div>`).join("");
+  
+  grid.querySelectorAll(".unit-card").forEach(card=>{
+    card.addEventListener("click",()=>{
+      const unit=units.find(u=>u.id==card.dataset.id);
+      showUnitDetail(unit);
+    });
+  });
+});
+
+function showUnitDetail(unit){
+  document.getElementById("unitDetail").innerHTML=`
+    <h2>${unit.name}</h2>
+    <img src="${unit.img}" alt="${unit.name}">
+    <p><b>HP:</b> ${unit.hp}</p>
+    <p><b>攻撃:</b> ${unit.attack}</p>
+    <p><b>スピード:</b> ${unit.speed}</p>
+    <p><b>スキル:</b> ${unit.skill}</p>`;
+  document.getElementById("unitModal").style.display="block";
+}
+document.querySelector("#unitModal .close").onclick=()=>{ document.getElementById("unitModal").style.display="none"; };
+
+// ===== レート累計（rate.jsonから） =====
+fetch("data/rate.json")
+.then(res=>res.json())
+.then(rateData=>{
+  const labels=rateData.map(r=>r.player);
+  const points=rateData.map(r=>r.points);
+  new Chart(document.getElementById("rateChart"),{
+    type:"bar",
+    data:{ labels, datasets:[{ label:"ポイント", data:points }] }
+  });
+
+  const tbody=document.querySelector("#rateTable tbody");
+  tbody.innerHTML=rateData.map(r=>`<tr><td>${r.player}</td><td>${r.points}</td><td>${r.winrate}%</td></tr>`).join("");
+});
+
+// ===== イベント（events.jsonから、エモバト限定） =====
+fetch("data/events.json")
+.then(res=>res.json())
+.then(events=>{
+  const list=document.getElementById("eventList");
+  const filtered=events.filter(ev=>ev.keywords.some(k=>k.includes("エモバト")));
+  list.innerHTML=filtered.map(ev=>`
+    <div class="event-card">
+      <a href="${ev.link}" target="_blank">
+        <img src="${ev.img}" alt="${ev.title}">
+        <p>${ev.title}</p>
+      </a>
+    </div>`).join("");
+});
+</script>
+
+</body>
+</html>
