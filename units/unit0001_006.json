@@ -1,0 +1,49 @@
+{
+  "machine": {
+    "m_Name": "accessory_machines_c_0001_06",
+    "aircraftName": "エモカーX・ドリル型",
+    "description": "武器: ドリル",
+    "img": "images/accessory/unit0001_06.PNG",
+    "moveSpeed": 13.0,
+    "moveAccel": 21.0,
+    "moveResistPower": 30.0,
+    "moveBrake": 35.0,
+    "rotationSpeed": 360.0,
+    "respawnPositionSelectMoveSpeed": 80.0,
+    "defense": 3.0,
+    "searchHitRadius": 1.0,
+    "weaponPositionOffset": { "x": 0.0, "y": 1.75, "z": 5.2 },
+    "pilotPositionOffset": { "x": 0.0, "y": 0.0, "z": 0.0 },
+    "pilotScale": { "x": 3.0, "y": 3.0, "z": 3.0 },
+    "avatarNeckPositionOffset": { "x": 0.0, "y": 3.1, "z": -0.75 },
+    "avatarScale": { "x": 14.0, "y": 14.0, "z": 14.0 },
+    "passiveSkillsRefs": [
+      "ps_maxLife_speedUp_L"
+    ]
+  },
+  "weapon": {
+    "m_Name": "wp_drill_00",
+    "memo": "ドリル",
+    "weaponCategry": 1,
+    "enemySearchRadius": 7.0,
+    "enemySearchOffset": 6.0,
+    "attackPower": 45.0,
+    "attackStopPower": 10000.0,
+    "attackIgnoreDefense": 30.0,
+    "attackDisableBrakeTime": 1.0,
+    "attackHitRadius": 4.5,
+    "attackDuration": 0.35,
+    "attackTimeSpan": 1.0,
+    "attackMoveRange": 0.0,
+    "frontMoveForce": 35.0,
+    "frontMoveStopPower": 13.0,
+    "isDrill": 1
+  },
+  "passiveSkills": [
+    {
+      "m_Name": "ps_maxLife_speedUp_L",
+      "memo": "ライフMAXのとき、速度+3",
+      "speedUp": 3.0
+    }
+  ]
+}
