@@ -14,19 +14,18 @@ header{background:var(--accent); padding:12px; text-align:center; color:#fff; fo
 nav{text-align:center; margin:10px 0;}
 nav a{color:var(--accent); font-weight:bold; text-decoration:none; font-size:1.1em;}
 main{max-width:960px; margin:0 auto; background:var(--card); padding:20px; border-radius:8px; box-shadow:var(--shadow);}
-.controls{display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-bottom:15px;}
-.controls input,.controls select,.controls button{padding:10px; font-size:16px; border:1px solid var(--border); border-radius:6px; background:var(--card); color:var(--text); flex:1 1 120px;}
+.controls{display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-bottom:15px;}
+.controls input,.controls select,.controls button{padding:6px 8px; font-size:14px; border:1px solid var(--border); border-radius:6px; background:var(--card); color:var(--text);}
 .toggle.active{background:var(--accent); color:#fff; border-color:var(--accent);}
 .tab-buttons{display:flex; flex-wrap:wrap; justify-content:center; gap:6px; margin-bottom:15px;}
-.tab-buttons button{padding:6px 12px; border-radius:6px; border:1px solid var(--border); background:var(--btn); color:var(--text); cursor:pointer; flex:1 1 70px;}
+.tab-buttons button{padding:4px 8px; border-radius:6px; border:1px solid var(--border); background:var(--btn); color:var(--text); cursor:pointer;}
 .tab-buttons button.active{background:var(--accent); color:#fff; border-color:var(--accent);}
 .event-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:12px;}
 .event-card{border-radius:8px; overflow:hidden; text-align:center;}
 .event-card img{width:100%; border:1px solid var(--border); border-radius:6px; display:block;}
-.event-card div{display:none;}
-.search-wrap{position:relative; width:100%;}
+.search-wrap{position:relative; width:100%; max-width:220px;}
 #suggestions{position:absolute; top:100%; left:0; right:0; background:var(--card); border:1px solid var(--border); border-top:none; max-height:220px; overflow-y:auto; z-index:20; display:none;}
-#suggestions button{width:100%; text-align:left; background:transparent; border:none; border-bottom:1px solid var(--border); padding:8px 10px; cursor:pointer; color:var(--text);}
+#suggestions button{width:100%; text-align:left; background:transparent; border:none; border-bottom:1px solid var(--border); padding:6px 8px; cursor:pointer; color:var(--text);}
 #suggestions button:hover{background:var(--btn);}
 .muted{color:var(--muted); font-size:12px;}
 #scrollTopBtn{position:fixed;bottom:20px;right:20px;display:none;padding:10px;border-radius:50%;border:none;background:var(--accent);color:#fff;cursor:pointer;z-index:50;}
@@ -45,10 +44,10 @@ main{max-width:960px; margin:0 auto; background:var(--card); padding:20px; borde
 <main>
 <div class="controls">
   <div class="search-wrap">
-    <input type="text" id="search" placeholder="キーワードで検索 (スペース区切り)">
+    <input type="text" id="search" placeholder="キーワード検索 (スペース区切り)">
     <div id="suggestions"></div>
   </div>
-  <button id="andBtn" class="toggle">AND</button>
+  <button id="andBtn" class="toggle active">AND</button>
   <button id="orBtn" class="toggle">OR</button>
   <select id="sortSelect" title="並び替え">
     <option value="newest">新しい順</option>
@@ -72,7 +71,7 @@ main{max-width:960px; margin:0 auto; background:var(--card); padding:20px; borde
 <button id="scrollTopBtn">↑</button>
 
 <script>
-let data={}, currentYear="2025", searchMode="", allEvents=[], allKeywords=new Set(), allTitles=new Set();
+let data={}, currentYear="2025", searchMode="AND", allEvents=[], allKeywords=new Set(), allTitles=new Set();
 
 (function initTheme(){ if(localStorage.getItem("emomo_theme")==="dark") document.body.classList.add("dark"); })();
 
@@ -131,8 +130,9 @@ function initControls(){
   const $and=document.getElementById("andBtn"), $or=document.getElementById("orBtn"), $sort=document.getElementById("sortSelect"),
         $filter=document.getElementById("filterSelect"), $search=document.getElementById("search"), $suggest=document.getElementById("suggestions"),
         $theme=document.getElementById("themeToggle");
-  $and.addEventListener("click",()=>{ searchMode=(searchMode==="AND")?"":"AND"; $and.classList.toggle("active",searchMode==="AND"); $or.classList.remove("active"); renderEvents(); scrollToEvents(); });
-  $or.addEventListener("click",()=>{ searchMode=(searchMode==="OR")?"":"OR"; $or.classList.toggle("active",searchMode==="OR"); $and.classList.remove("active"); renderEvents(); scrollToEvents(); });
+  
+  $and.addEventListener("click",()=>{ searchMode="AND"; $and.classList.add("active"); $or.classList.remove("active"); renderEvents(); scrollToEvents(); });
+  $or.addEventListener("click",()=>{ searchMode="OR"; $or.classList.add("active"); $and.classList.remove("active"); renderEvents(); scrollToEvents(); });
   $sort.addEventListener("change",()=>{ renderEvents(); scrollToEvents(); });
   $filter.addEventListener("change",()=>{ renderEvents(); scrollToEvents(); });
   $search.addEventListener("input",()=>{ showSuggestions($search.value); renderEvents(); scrollToEvents(); });
@@ -151,7 +151,7 @@ function showSuggestions(input){
   if(items.length===0){ box.style.display="none"; box.innerHTML=""; return; }
   box.innerHTML=items.map(txt=>`<button type="button">${txt}</button>`).join("");
   box.style.display="block";
-  box.querySelectorAll("button").forEach(btn=>{ btn.addEventListener("click",()=>{ const cur=$search.value.trim(); $search.value=cur?cur+" "+btn.textContent:btn.textContent; $search.dispatchEvent(new Event("input")); box.style.display="none"; }); });
+  box.querySelectorAll("button").forEach(btn=>{ btn.addEventListener("click",()=>{ const cur=document.getElementById("search").value.trim(); document.getElementById("search").value=cur?cur+" "+btn.textContent:btn.textContent; document.getElementById("search").dispatchEvent(new Event("input")); box.style.display="none"; }); });
 }
 
 function renderEvents(){
@@ -179,13 +179,11 @@ function renderEvents(){
   else{ list.innerHTML=filtered.map(ev=>`<div class="event-card"><a href="${ev.link}" target="_blank" title="${ev.title}"><img src="${ev.img}" alt="${ev.title}"></a></div>`).join(''); }
 }
 
-// スクロール／ジャンプ機能
+function scrollToEvents(){ document.getElementById("eventList").scrollIntoView({behavior:'smooth'}); }
+
 const scrollBtn=document.getElementById("scrollTopBtn");
 window.addEventListener("scroll",()=>{ scrollBtn.style.display = window.scrollY>200 ? "block" : "none"; });
 scrollBtn.addEventListener("click",()=>{ window.scrollTo({ top:0, behavior:'smooth' }); });
-
-function scrollToEvents(){ document.getElementById("eventList").scrollIntoView({behavior:'smooth'}); }
 </script>
-
 </body>
 </html>
