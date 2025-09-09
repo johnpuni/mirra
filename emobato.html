@@ -16,12 +16,15 @@ nav a{color:var(--accent); font-weight:bold; text-decoration:none; font-size:1.1
 main{max-width:960px; margin:0 auto; padding:20px;}
 .controls{display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-bottom:15px;}
 .controls input,.controls select,.controls button{padding:6px 8px; font-size:14px; border:1px solid var(--border); border-radius:6px; background:var(--card); color:var(--text);}
+.tab-buttons{display:flex; justify-content:center; gap:6px; margin-bottom:15px;}
+.tab-buttons button{padding:6px 10px; border-radius:6px; border:1px solid var(--border); background:var(--btn); color:var(--text); cursor:pointer;}
+.tab-buttons button.active{background:var(--accent); color:#fff; border-color:var(--accent);}
 .event-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:12px;}
 .event-card{border-radius:8px; overflow:hidden; text-align:center; background:var(--card); box-shadow:var(--shadow); padding:8px; cursor:pointer;}
 .event-card img{width:100%; border-radius:6px; display:block;}
 .event-card div{margin-top:4px; font-size:13px; color:var(--muted);}
 .muted{color:var(--muted); font-size:12px;}
-@media(max-width:600px){.controls{flex-direction:column; align-items:center;} .controls input,.controls select,.controls button{width:90%;}}
+@media(max-width:600px){.controls{flex-direction:column; align-items:center;} .controls input,.controls select,.controls button{width:90%;} .tab-buttons{flex-wrap:wrap;}}
 </style>
 </head>
 <body>
@@ -34,15 +37,27 @@ main{max-width:960px; margin:0 auto; padding:20px;}
   <button id="themeToggle">🌙 ダーク</button>
 </div>
 
+<div class="tab-buttons">
+  <button data-tab="units" class="active">機体</button>
+  <button data-tab="rates">レート</button>
+  <button data-tab="events">イベント</button>
+</div>
+
 <div class="event-grid" id="unitList">読み込み中...</div>
 <p class="muted" id="hint"></p>
 </main>
 
 <script>
-let units=[], searchMode="AND";
+let units=[];
+
+// 仮のJSONデータ
+units=[
+  {"id":"u001","name":"S01 レオ","img":"images/unit1.webp","rate":1200,"events":3,"keywords":["高速","近距離"]},
+  {"id":"u002","name":"S02 タイガー","img":"images/unit2.webp","rate":950,"events":2,"keywords":["遠距離","防御"]},
+  {"id":"u003","name":"S03 ライトニング","img":"images/unit3.webp","rate":1500,"events":4,"keywords":["高速","支援"]}
+];
 
 (function initTheme(){if(localStorage.getItem("emomo_theme")==="dark") document.body.classList.add("dark");})();
-
 document.getElementById("themeToggle").addEventListener("click",()=>{
   document.body.classList.toggle("dark");
   localStorage.setItem("emomo_theme",document.body.classList.contains("dark")?"dark":"light");
@@ -50,25 +65,16 @@ document.getElementById("themeToggle").addEventListener("click",()=>{
 });
 document.getElementById("themeToggle").textContent=document.body.classList.contains("dark")?"☀️ ライト":"🌙 ダーク";
 
-// 仮のJSON読み込み
-units=[
-  {
-    "id":"u001",
-    "name":"S01 レオ",
-    "img":"images/unit1.webp",
-    "rate":1200,
-    "events":3,
-    "keywords":["高速","近距離"]
-  },
-  {
-    "id":"u002",
-    "name":"S02 タイガー",
-    "img":"images/unit2.webp",
-    "rate":950,
-    "events":2,
-    "keywords":["遠距離","防御"]
-  }
-];
+// タブ切り替え
+let currentTab="units";
+document.querySelectorAll(".tab-buttons button").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    currentTab=btn.dataset.tab;
+    document.querySelectorAll(".tab-buttons button").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    renderUnits();
+  });
+});
 
 function normalize(s){ return s.toLowerCase().replace(/[Ａ-Ｚａ-ｚ０-９]/g,c=>String.fromCharCode(c.charCodeAt(0)-0xFEE0)); }
 
@@ -79,14 +85,32 @@ function renderUnits(){
     if(q.length===0) return true;
     return q.every(word=>normalize(u.name).includes(word) || (u.keywords||[]).some(k=>normalize(k).includes(word)));
   });
-  list.innerHTML=filtered.map(u=>`
-    <div class="event-card" onclick="location.href='unit_detail.html?id=${u.id}'">
-      <img src="${u.img}" alt="${u.name}">
-      <div>${u.name}</div>
-      <div>レート累計: ${u.rate}</div>
-      <div>関連イベント: ${u.events}</div>
-    </div>
-  `).join("");
+
+  let html="";
+  if(currentTab==="units"){
+    html=filtered.map(u=>`
+      <div class="event-card" onclick="location.href='unit_detail.html?id=${u.id}'">
+        <img src="${u.img}" alt="${u.name}">
+        <div>${u.name}</div>
+      </div>
+    `).join("");
+  } else if(currentTab==="rates"){
+    html=filtered.map(u=>`
+      <div class="event-card">
+        <div>${u.name}</div>
+        <div>レート累計: ${u.rate}</div>
+      </div>
+    `).join("");
+  } else if(currentTab==="events"){
+    html=filtered.map(u=>`
+      <div class="event-card">
+        <div>${u.name}</div>
+        <div>関連イベント: ${u.events}</div>
+      </div>
+    `).join("");
+  }
+
+  list.innerHTML=html;
   document.getElementById("hint").textContent=`${filtered.length}件ヒット`;
 }
 
