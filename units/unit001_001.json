@@ -1,0 +1,51 @@
+{
+  "machine": {
+    "m_Name": "accessory_machines_c_0001_01",
+    "aircraftName": "エモカー・レッド",
+    "description": "武器: パンチ",
+    "moveSpeed": 22.0,
+    "moveAccel": 29.0,
+    "moveResistPower": 30.0,
+    "moveBrake": 35.0,
+    "rotationSpeed": 720.0,
+    "respawnPositionSelectMoveSpeed": 80.0,
+    "defense": 10.0,
+    "searchHitRadius": 1.0,
+    "weaponPositionOffset": { "x": 0.0, "y": 1.75, "z": 5.2 },
+    "pilotPositionOffset": { "x": 0.0, "y": 0.0, "z": 0.0 },
+    "pilotScale": { "x": 3.0, "y": 3.0, "z": 3.0 },
+    "avatarNeckPositionOffset": { "x": 0.0, "y": 3.1, "z": -0.75 },
+    "avatarScale": { "x": 14.0, "y": 14.0, "z": 14.0 },
+    "passiveSkillsRefs": [
+      "ps_maxLife_attackUp_S",
+      "ps_maxLife_defenseUp_S"
+    ]
+  },
+  "weapon": {
+    "m_Name": "wp_punch_00",
+    "memo": "パンチ",
+    "weaponCategry": 1,
+    "enemySearchRadius": 14.0,
+    "enemySearchOffset": 10.0,
+    "attackPower": 30.0,
+    "attackStopPower": 10000.0,
+    "attackIgnoreDefense": 0.0,
+    "attackDisableBrakeTime": 1.0,
+    "attackHitRadius": 3.0,
+    "attackDuration": 0.1,
+    "attackTimeSpan": 0.45,
+    "attackMoveRange": 9.0
+  },
+  "passiveSkills": [
+    {
+      "m_Name": "ps_maxLife_attackUp_S",
+      "memo": "ライフMAXのとき、攻撃力+2",
+      "attackPower": 2.0
+    },
+    {
+      "m_Name": "ps_maxLife_defenseUp_S",
+      "memo": "ライフMAXのとき、防御力+2",
+      "attackPower": 2.0
+    }
+  ]
+}
