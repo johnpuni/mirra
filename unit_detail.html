@@ -5,18 +5,62 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ユニット詳細</title>
 <style>
-body{font-family:sans-serif; padding:20px; background:#f5f5f5; color:#222;}
-img{max-width:100%; border-radius:8px;}
+:root{
+  --bg:#f5f5f5; --card:#fff; --text:#222; --muted:#666; --border:#ccc; --accent:#333; --btn:#eee; --shadow:0 2px 8px rgba(0,0,0,0.1);
+}
+body.dark{--bg:#0f1115;--card:#151922;--text:#e6e6e6;--muted:#a3a3a3;--border:#2b2f3a;--accent:#7aa2f7;--btn:#1b2030;--shadow:0 2px 10px rgba(0,0,0,0.35);}
+body{margin:0; font-family:sans-serif; background:var(--bg); color:var(--text); transition:.2s; padding:20px;}
+h1,h2{margin-top:0;}
+img{max-width:100%; border-radius:8px; margin:10px 0;}
+table{width:100%; border-collapse:collapse; margin-bottom:15px;}
+th,td{border:1px solid var(--border); padding:8px; text-align:left;}
+th{background:var(--btn);}
+.controls{display:flex; justify-content:flex-end; margin-bottom:10px;}
+button{padding:6px 10px; border:none; border-radius:5px; cursor:pointer; background:var(--btn);}
+a{color:var(--accent); text-decoration:none;}
 </style>
 </head>
 <body>
 
+<div class="controls">
+  <button id="themeToggle">🌙 ダーク切替</button>
+</div>
+
 <h1 id="unitName">読み込み中…</h1>
 <img id="unitImg" src="" alt="">
 <p id="unitDesc"></p>
+
+<h2>性能</h2>
+<table id="unitStats">
+  <thead><tr><th>項目</th><th>値</th></tr></thead>
+  <tbody></tbody>
+</table>
+
+<h2>武器</h2>
+<table id="weaponStats">
+  <thead><tr><th>項目</th><th>値</th></tr></thead>
+  <tbody></tbody>
+</table>
+
+<h2>パッシブスキル</h2>
+<table id="passiveSkills">
+  <thead><tr><th>スキル名</th><th>効果</th></tr></thead>
+  <tbody></tbody>
+</table>
+
 <a href="unit_list.html">← 一覧に戻る</a>
 
 <script>
+// ダークモード初期化
+(function initTheme(){
+  if(localStorage.getItem("emobo_theme")==="dark") document.body.classList.add("dark");
+})();
+
+document.getElementById("themeToggle").addEventListener("click",()=>{
+  document.body.classList.toggle("dark");
+  localStorage.setItem("emobo_theme",document.body.classList.contains("dark")?"dark":"light");
+});
+
 // URLからユニットID取得
 const params = new URLSearchParams(location.search);
 const id = params.get('id');
@@ -25,10 +69,60 @@ if(id){
   fetch(`units/${id}.json`)
     .then(res=>res.json())
     .then(data=>{
-      document.getElementById("unitName").textContent = data.name;
-      document.getElementById("unitImg").src = data.img;
-      document.getElementById("unitImg").alt = data.name;
-      document.getElementById("unitDesc").textContent = data.desc || "";
+      const m = data.machine;
+      const w = data.weapon;
+      const p = data.passiveSkills;
+
+      // 機体名・説明
+      document.getElementById("unitName").textContent = m.aircraftName;
+      document.getElementById("unitDesc").textContent = m.description;
+      document.getElementById("unitImg").src = m.img || ""; // 画像があれば表示
+      document.getElementById("unitImg").alt = m.aircraftName;
+
+      // 性能
+      const statsTbody = document.getElementById("unitStats").querySelector("tbody");
+      statsTbody.innerHTML = "";
+      const performance = {
+        "移動速度": m.moveSpeed,
+        "加速度": m.moveAccel,
+        "慣性抵抗": m.moveResistPower,
+        "ブレーキ": m.moveBrake,
+        "回転速度": m.rotationSpeed,
+        "防御力": m.defense,
+        "リスポーン速度": m.respawnPositionSelectMoveSpeed,
+        "索敵範囲": m.searchHitRadius
+      };
+      for(const key in performance){
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td>${key}</td><td>${performance[key]}</td>`;
+        statsTbody.appendChild(tr);
+      }
+
+      // 武器
+      const weaponTbody = document.getElementById("weaponStats").querySelector("tbody");
+      weaponTbody.innerHTML = "";
+      const weaponStats = {
+        "武器名": w.memo,
+        "攻撃力": w.attackPower,
+        "攻撃範囲": w.attackMoveRange,
+        "ヒット半径": w.attackHitRadius,
+        "攻撃時間": w.attackDuration
+      };
+      for(const key in weaponStats){
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td>${key}</td><td>${weaponStats[key]}</td>`;
+        weaponTbody.appendChild(tr);
+      }
+
+      // パッシブスキル
+      const passiveTbody = document.getElementById("passiveSkills").querySelector("tbody");
+      passiveTbody.innerHTML = "";
+      p.forEach(skill=>{
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td>${skill.memo}</td><td>効果値: ${skill.attackPower}</td>`;
+        passiveTbody.appendChild(tr);
+      });
+
     })
     .catch(err=>{
       console.error(err);
