@@ -3,73 +3,40 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>エモバト機体一覧</title>
+<title>ユニット詳細</title>
 <style>
-:root{
-  --bg:#f5f5f5; --card:#fff; --text:#222; --muted:#666; --border:#ccc; --accent:#333; --btn:#eee; --shadow:0 2px 8px rgba(0,0,0,0.1);
-}
-body.dark{--bg:#0f1115;--card:#151922;--text:#e6e6e6;--muted:#a3a3a3;--border:#2b2f3a;--accent:#7aa2f7;--btn:#1b2030;--shadow:0 2px 10px rgba(0,0,0,0.35);}
-body{margin:0; font-family:sans-serif; background:var(--bg); color:var(--text); transition:.2s;}
-header{background:var(--accent); color:#fff; text-align:center; padding:12px; font-size:1.3em;}
-main{max-width:960px; margin:0 auto; padding:20px;}
-.unit-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:12px;}
-.unit-card{background:var(--card); border-radius:8px; box-shadow:var(--shadow); text-align:center; padding:6px; cursor:pointer; transition:.2s;}
-.unit-card:hover{transform:scale(1.03);}
-.unit-card img{width:100%; border-radius:6px; border:1px solid var(--border);}
-.unit-card div{margin-top:6px; font-weight:bold;}
-.controls{display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-bottom:15px;}
-.controls input{padding:6px 8px; border-radius:6px; border:1px solid var(--border);}
+body{font-family:sans-serif; padding:20px; background:#f5f5f5; color:#222;}
+img{max-width:100%; border-radius:8px;}
 </style>
 </head>
 <body>
 
-<header>エモバト機体一覧</header>
-
-<div class="controls">
-  <input type="text" id="search" placeholder="機体名で検索">
-  <button id="themeToggle">🌙 ダーク</button>
-</div>
-
-<main>
-  <div class="unit-grid" id="unitGrid">読み込み中...</div>
-</main>
+<h1 id="unitName">読み込み中…</h1>
+<img id="unitImg" src="" alt="">
+<p id="unitDesc"></p>
+<a href="unit_list.html">← 一覧に戻る</a>
 
 <script>
-let units=[];
+// URLからユニットID取得
+const params = new URLSearchParams(location.search);
+const id = params.get('id');
 
-(function initTheme(){
-  if(localStorage.getItem("emobo_theme")==="dark") document.body.classList.add("dark");
-})();
-
-document.getElementById("themeToggle").addEventListener("click",()=>{
-  document.body.classList.toggle("dark");
-  localStorage.setItem("emobo_theme",document.body.classList.contains("dark")?"dark":"light");
-});
-
-fetch("data/units.json")
-.then(res=>res.json())
-.then(json=>{
-  units=json;
-  renderUnits(units);
-})
-.catch(err=>{ console.error(err); document.getElementById("unitGrid").innerHTML="<p>データ読み込み失敗</p>"; });
-
-function renderUnits(list){
-  const container=document.getElementById("unitGrid");
-  if(list.length===0){ container.innerHTML="<p>該当なし</p>"; return; }
-  container.innerHTML=list.map(u=>`
-    <div class="unit-card" onclick="location.href='unit_detail.html?id=${u.id}'">
-      <img src="${u.img}" alt="${u.name}">
-      <div>${u.name}</div>
-    </div>
-  `).join('');
+if(id){
+  fetch(`units/${id}.json`)
+    .then(res=>res.json())
+    .then(data=>{
+      document.getElementById("unitName").textContent = data.name;
+      document.getElementById("unitImg").src = data.img;
+      document.getElementById("unitImg").alt = data.name;
+      document.getElementById("unitDesc").textContent = data.desc || "";
+    })
+    .catch(err=>{
+      console.error(err);
+      document.getElementById("unitName").textContent = "データ読み込み失敗";
+    });
+}else{
+  document.getElementById("unitName").textContent = "IDが指定されていません";
 }
-
-document.getElementById("search").addEventListener("input",(e)=>{
-  const q=e.target.value.toLowerCase();
-  const filtered=units.filter(u=>u.name.toLowerCase().includes(q));
-  renderUnits(filtered);
-});
 </script>
 
 </body>
