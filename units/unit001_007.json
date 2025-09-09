@@ -1,0 +1,47 @@
+{
+  "machine": {
+    "m_Name": "accessory_machines_c_0001_07",
+    "aircraftName": "エモカーX・ワイド型",
+    "description": "武器: ローラー",
+    "img": "images/accessory/unit0001_07.PNG",
+    "moveSpeed": 11.0,
+    "moveAccel": 17.0,
+    "moveResistPower": 30.0,
+    "moveBrake": 35.0,
+    "rotationSpeed": 720.0,
+    "respawnPositionSelectMoveSpeed": 80.0,
+    "defense": 13.0,
+    "searchHitRadius": 1.0,
+    "weaponPositionOffset": { "x": 0.0, "y": 1.83, "z": 4.93 },
+    "pilotPositionOffset": { "x": 0.0, "y": 0.0, "z": 0.0 },
+    "pilotScale": { "x": 3.0, "y": 3.0, "z": 3.0 },
+    "avatarNeckPositionOffset": { "x": 0.0, "y": 3.1, "z": -0.75 },
+    "avatarScale": { "x": 14.0, "y": 14.0, "z": 14.0 },
+    "passiveSkillsRefs": [
+      "ps_maxLife_decreaseOil"
+    ]
+  },
+  "weapon": {
+    "m_Name": "wp_lint_roller_00",
+    "memo": "ローラー",
+    "weaponCategry": 1,
+    "enemySearchOffset": 7.0,
+    "attackPower": 50.0,
+    "attackStopPower": 10000.0,
+    "attackIgnoreDefense": 0.0,
+    "attackDisableBrakeTime": 1.0,
+    "attackHitShape": 1,
+    "attackHitRadius": 3.0,
+    "attackHitSize": { "x": 20.0, "y": 3.0, "z": 3.0 },
+    "attackDuration": 0.1,
+    "attackTimeSpan": 0.6,
+    "attackMoveRange": 8.0
+  },
+  "passiveSkills": [
+    {
+      "m_Name": "ps_maxLife_decreaseOil",
+      "memo": "ライフMAXのとき、オイルの影響を50%軽減",
+      "oilResistance": 0.5
+    }
+  ]
+}
