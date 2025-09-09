@@ -65,34 +65,29 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
   });
 });
 
-// --- ユニット表示 ---
+// --- ユニット表示（画像＋名前） ---
 fetch('data/emobato_units.json').then(r=>r.json()).then(json=>{
   unitsData=json;
   const container=document.getElementById('unitGrid');
-  container.innerHTML='';
+  container.innerHTML=''; // 初期化
+
   unitsData.forEach(u=>{
     const a=document.createElement('a');
     a.href='unit_detail.html?unit='+u.id;
+
     const card=document.createElement('div');
     card.className='unit-card';
+
     const img=document.createElement('img');
     img.src=u.img;
+    img.alt=u.aircraftName;
+
     const name=document.createElement('div');
     name.className='name';
     name.textContent=u.aircraftName;
-    const desc=document.createElement('div');
-    desc.className='desc';
-    desc.textContent=u.description;
-    const stats=document.createElement('div');
-    stats.className='stats';
-    stats.innerHTML=
-      `移動:${u.moveSpeed}, 加速:${u.moveAccel}, 抵抗:${u.moveResistPower}, ブレーキ:${u.moveBrake}<br>
-       攻撃:${u.weapon?.attackPower || 0}, 防御:${u.defense}, カテゴリ:${u.weapon?.weaponCategry || '-'}<br>
-       パッシブスキル:${u.passiveSkills?.length || 0}`;
+
     card.appendChild(img);
     card.appendChild(name);
-    card.appendChild(desc);
-    card.appendChild(stats);
     a.appendChild(card);
     container.appendChild(a);
   });
