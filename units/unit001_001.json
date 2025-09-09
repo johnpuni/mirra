@@ -3,6 +3,7 @@
     "m_Name": "accessory_machines_c_0001_01",
     "aircraftName": "エモカー・レッド",
     "description": "武器: パンチ",
+    "img": "images/accessory/unit0001_0001.PNG",
     "moveSpeed": 22.0,
     "moveAccel": 29.0,
     "moveResistPower": 30.0,
