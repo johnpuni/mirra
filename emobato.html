@@ -3,120 +3,97 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>エモバト機体一覧</title>
+<title>エモバト情報</title>
 <style>
 :root{
   --bg:#f5f5f5; --card:#fff; --text:#222; --muted:#666; --border:#ccc; --accent:#333; --btn:#eee; --shadow:0 2px 8px rgba(0,0,0,0.1);
 }
 body.dark{ --bg:#0f1115; --card:#151922; --text:#e6e6e6; --muted:#a3a3a3; --border:#2b2f3a; --accent:#7aa2f7; --btn:#1b2030; --shadow:0 2px 10px rgba(0,0,0,0.35);}
-body{font-family:sans-serif; margin:0; background:var(--bg); color:var(--text); transition:.2s;}
-header{background:var(--accent); padding:12px; text-align:center; color:#fff; font-size:1.3em;}
-nav{text-align:center; margin:10px 0;}
-nav a{color:var(--accent); font-weight:bold; text-decoration:none; font-size:1.1em;}
-main{max-width:960px; margin:0 auto; padding:20px;}
-.controls{display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-bottom:15px;}
-.controls input,.controls select,.controls button{padding:6px 8px; font-size:14px; border:1px solid var(--border); border-radius:6px; background:var(--card); color:var(--text);}
-.tab-buttons{display:flex; justify-content:center; gap:6px; margin-bottom:15px;}
-.tab-buttons button{padding:6px 10px; border-radius:6px; border:1px solid var(--border); background:var(--btn); color:var(--text); cursor:pointer;}
-.tab-buttons button.active{background:var(--accent); color:#fff; border-color:var(--accent);}
-.event-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:12px;}
-.event-card{border-radius:8px; overflow:hidden; text-align:center; background:var(--card); box-shadow:var(--shadow); padding:8px; cursor:pointer;}
-.event-card img{width:100%; border-radius:6px; display:block;}
-.event-card div{margin-top:4px; font-size:13px; color:var(--muted);}
-.muted{color:var(--muted); font-size:12px;}
-@media(max-width:600px){.controls{flex-direction:column; align-items:center;} .controls input,.controls select,.controls button{width:90%;} .tab-buttons{flex-wrap:wrap;}}
+body{font-family:sans-serif;margin:0;background:var(--bg);color:var(--text);transition:.2s;}
+header{background:var(--accent);padding:12px;text-align:center;color:#fff;font-size:1.3em;}
+nav{text-align:center;margin:10px 0;}
+nav a{color:var(--accent);font-weight:bold;text-decoration:none;font-size:1.1em;}
+main{max-width:960px;margin:0 auto;background:var(--card);padding:20px;border-radius:8px;box-shadow:var(--shadow);}
+.tabs{display:flex;gap:6px;justify-content:center;margin-bottom:15px;}
+.tabs button{padding:6px 12px;border-radius:6px;border:1px solid var(--border);background:var(--btn);color:var(--text);cursor:pointer;}
+.tabs button.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+.tab-content{display:none;}
+.tab-content.active{display:block;}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;}
+.grid img{width:100%;border-radius:6px;border:1px solid var(--border);}
+.muted{color:var(--muted);font-size:12px;}
 </style>
 </head>
 <body>
-<header>エモバト機体一覧</header>
+
+<header>エモバト情報</header>
 <nav><a href="index.html">← ホームに戻る</a></nav>
 
 <main>
-<div class="controls">
-  <input type="text" id="search" placeholder="機体名・キーワード検索">
-  <button id="themeToggle">🌙 ダーク</button>
+<div class="tabs">
+  <button class="tab-btn active" data-tab="units">機体</button>
+  <button class="tab-btn" data-tab="rate">レート</button>
+  <button class="tab-btn" data-tab="events">イベント</button>
 </div>
 
-<div class="tab-buttons">
-  <button data-tab="units" class="active">機体</button>
-  <button data-tab="rates">レート</button>
-  <button data-tab="events">イベント</button>
+<div id="units" class="tab-content active">
+  <div class="grid" id="unitGrid">読み込み中...</div>
 </div>
 
-<div class="event-grid" id="unitList">読み込み中...</div>
-<p class="muted" id="hint"></p>
+<div id="rate" class="tab-content">
+  <p id="rateContent">読み込み中...</p>
+</div>
+
+<div id="events" class="tab-content">
+  <ul id="eventList">読み込み中...</ul>
+</div>
+
 </main>
 
 <script>
-let units=[];
+let unitsData=[], rateData={}, eventsData=[];
 
-// 仮のJSONデータ
-units=[
-  {"id":"u001","name":"S01 レオ","img":"images/unit1.webp","rate":1200,"events":3,"keywords":["高速","近距離"]},
-  {"id":"u002","name":"S02 タイガー","img":"images/unit2.webp","rate":950,"events":2,"keywords":["遠距離","防御"]},
-  {"id":"u003","name":"S03 ライトニング","img":"images/unit3.webp","rate":1500,"events":4,"keywords":["高速","支援"]}
-];
-
-(function initTheme(){if(localStorage.getItem("emomo_theme")==="dark") document.body.classList.add("dark");})();
-document.getElementById("themeToggle").addEventListener("click",()=>{
-  document.body.classList.toggle("dark");
-  localStorage.setItem("emomo_theme",document.body.classList.contains("dark")?"dark":"light");
-  document.getElementById("themeToggle").textContent=document.body.classList.contains("dark")?"☀️ ライト":"🌙 ダーク";
-});
-document.getElementById("themeToggle").textContent=document.body.classList.contains("dark")?"☀️ ライト":"🌙 ダーク";
-
-// タブ切り替え
-let currentTab="units";
-document.querySelectorAll(".tab-buttons button").forEach(btn=>{
-  btn.addEventListener("click",()=>{
-    currentTab=btn.dataset.tab;
-    document.querySelectorAll(".tab-buttons button").forEach(b=>b.classList.remove("active"));
-    btn.classList.add("active");
-    renderUnits();
+// --- タブ切替 ---
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
   });
 });
 
-function normalize(s){ return s.toLowerCase().replace(/[Ａ-Ｚａ-ｚ０-９]/g,c=>String.fromCharCode(c.charCodeAt(0)-0xFEE0)); }
-
-function renderUnits(){
-  const list=document.getElementById("unitList");
-  const q=document.getElementById("search").value.trim().split(/\s+/).map(normalize).filter(Boolean);
-  const filtered=units.filter(u=>{
-    if(q.length===0) return true;
-    return q.every(word=>normalize(u.name).includes(word) || (u.keywords||[]).some(k=>normalize(k).includes(word)));
+// --- JSON読み込み例（後で差し替え可能） ---
+fetch('data/emobato_units.json').then(r=>r.json()).then(json=>{
+  unitsData=json;
+  const container=document.getElementById('unitGrid');
+  container.innerHTML='';
+  unitsData.forEach(u=>{
+    const a=document.createElement('a');
+    a.href='unit_detail.html?unit='+u.id; // 詳細ページに飛ぶ
+    const img=document.createElement('img');
+    img.src=u.img;
+    a.appendChild(img);
+    container.appendChild(a);
   });
+});
 
-  let html="";
-  if(currentTab==="units"){
-    html=filtered.map(u=>`
-      <div class="event-card" onclick="location.href='unit_detail.html?id=${u.id}'">
-        <img src="${u.img}" alt="${u.name}">
-        <div>${u.name}</div>
-      </div>
-    `).join("");
-  } else if(currentTab==="rates"){
-    html=filtered.map(u=>`
-      <div class="event-card">
-        <div>${u.name}</div>
-        <div>レート累計: ${u.rate}</div>
-      </div>
-    `).join("");
-  } else if(currentTab==="events"){
-    html=filtered.map(u=>`
-      <div class="event-card">
-        <div>${u.name}</div>
-        <div>関連イベント: ${u.events}</div>
-      </div>
-    `).join("");
-  }
+fetch('data/emobato_rate.json').then(r=>r.json()).then(json=>{
+  rateData=json;
+  document.getElementById('rateContent').textContent='平均レート: '+rateData.avg+' / 総戦績: '+rateData.total;
+});
 
-  list.innerHTML=html;
-  document.getElementById("hint").textContent=`${filtered.length}件ヒット`;
-}
-
-document.getElementById("search").addEventListener("input",renderUnits);
-
-renderUnits();
+fetch('data/emobato_events.json').then(r=>r.json()).then(json=>{
+  eventsData=json;
+  const ul=document.getElementById('eventList');
+  ul.innerHTML='';
+  eventsData.forEach(ev=>{
+    const li=document.createElement('li');
+    li.textContent=ev.title+' ('+ev.date+')';
+    ul.appendChild(li);
+  });
+});
 </script>
+
 </body>
 </html>
