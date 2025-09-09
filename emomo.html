@@ -1,189 +1,252 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>エモモイベント</title>
-<style>
-:root{
-  --bg:#f5f5f5; --card:#fff; --text:#222; --muted:#666; --border:#ccc; --accent:#333; --btn:#eee; --shadow:0 2px 8px rgba(0,0,0,0.1);
-}
-body.dark{ --bg:#0f1115; --card:#151922; --text:#e6e6e6; --muted:#a3a3a3; --border:#2b2f3a; --accent:#7aa2f7; --btn:#1b2030; --shadow:0 2px 10px rgba(0,0,0,0.35);}
-body{ font-family:sans-serif; margin:0; background:var(--bg); color:var(--text); transition:.2s;}
-header{background:var(--accent); padding:12px; text-align:center; color:#fff; font-size:1.3em;}
-nav{text-align:center; margin:10px 0;}
-nav a{color:var(--accent); font-weight:bold; text-decoration:none; font-size:1.1em;}
-main{max-width:960px; margin:0 auto; background:var(--card); padding:20px; border-radius:8px; box-shadow:var(--shadow);}
-.controls{display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-bottom:15px;}
-.controls input,.controls select,.controls button{padding:6px 8px; font-size:14px; border:1px solid var(--border); border-radius:6px; background:var(--card); color:var(--text);}
-.toggle.active{background:var(--accent); color:#fff; border-color:var(--accent);}
-.tab-buttons{display:flex; flex-wrap:wrap; justify-content:center; gap:6px; margin-bottom:15px;}
-.tab-buttons button{padding:4px 8px; border-radius:6px; border:1px solid var(--border); background:var(--btn); color:var(--text); cursor:pointer;}
-.tab-buttons button.active{background:var(--accent); color:#fff; border-color:var(--accent);}
-.event-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:12px;}
-.event-card{border-radius:8px; overflow:hidden; text-align:center;}
-.event-card img{width:100%; border:1px solid var(--border); border-radius:6px; display:block;}
-.search-wrap{position:relative; width:100%; max-width:220px;}
-#suggestions{position:absolute; top:100%; left:0; right:0; background:var(--card); border:1px solid var(--border); border-top:none; max-height:220px; overflow-y:auto; z-index:20; display:none;}
-#suggestions button{width:100%; text-align:left; background:transparent; border:none; border-bottom:1px solid var(--border); padding:6px 8px; cursor:pointer; color:var(--text);}
-#suggestions button:hover{background:var(--btn);}
-.muted{color:var(--muted); font-size:12px;}
-#scrollTopBtn{position:fixed;bottom:20px;right:20px;display:none;padding:10px;border-radius:50%;border:none;background:var(--accent);color:#fff;cursor:pointer;z-index:50;}
-@media (max-width:600px){
-  .controls{flex-direction:column; align-items:center;}
-  .controls input,.controls select,.controls button{width:90%;}
-  .tab-buttons button{flex:1 1 40%;}
-}
-</style>
+  <meta charset="UTF-8">
+  <title>エモモイベント検索</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --bg: #fff;
+      --text: #222;
+      --accent: #4CAF50;
+      --card-bg: #f9f9f9;
+    }
+    body.dark {
+      --bg: #121212;
+      --text: #eee;
+      --accent: #81C784;
+      --card-bg: #1e1e1e;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      padding: 10px;
+      background: var(--accent);
+      color: #fff;
+      text-align: center;
+      font-size: 1.2em;
+    }
+    .controls {
+      padding: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+    }
+    .controls input[type="text"] {
+      flex: 1 1 200px;
+      padding: 8px;
+      font-size: 1em;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .controls select, .controls button {
+      padding: 6px 10px;
+      font-size: 0.9em;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background: var(--card-bg);
+      color: var(--text);
+      cursor: pointer;
+    }
+    .toggle-group button {
+      border: 1px solid var(--accent);
+      background: var(--bg);
+      color: var(--text);
+    }
+    .toggle-group button.active {
+      background: var(--accent);
+      color: #fff;
+    }
+    .year-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      justify-content: center;
+      margin: 10px 0;
+    }
+    .year-tabs button {
+      padding: 6px 12px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background: var(--card-bg);
+      cursor: pointer;
+    }
+    .year-tabs button.active {
+      background: var(--accent);
+      color: #fff;
+    }
+    .event-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(120px,1fr));
+      gap: 10px;
+      padding: 10px;
+    }
+    .event-card {
+      background: var(--card-bg);
+      border-radius: 6px;
+      overflow: hidden;
+      text-align: center;
+    }
+    .event-card img {
+      width: 100%;
+      display: block;
+    }
+    #scrollTopBtn {
+      position: fixed;
+      bottom: 15px;
+      right: 15px;
+      display: none;
+      padding: 10px;
+      border-radius: 50%;
+      border: none;
+      background: var(--accent);
+      color: #fff;
+      font-size: 1.2em;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
+<header>🎉 エモモイベント検索</header>
 
-<header>エモモイベント一覧</header>
-<nav><a href="index.html">← ホームに戻る</a></nav>
-
-<main>
 <div class="controls">
-  <div class="search-wrap">
-    <input type="text" id="search" placeholder="キーワード検索 (スペース区切り)">
-    <div id="suggestions"></div>
+  <input type="text" id="searchBox" placeholder="キーワード検索">
+  <div class="toggle-group">
+    <button id="andBtn" class="active">AND</button>
+    <button id="orBtn">OR</button>
   </div>
-  <button id="andBtn" class="toggle active">AND</button>
-  <button id="orBtn" class="toggle">OR</button>
-  <select id="sortSelect" title="並び替え">
-    <option value="newest">新しい順</option>
-    <option value="oldest">古い順</option>
+  <select id="categoryFilter">
+    <option value="all">全カテゴリ</option>
+    <option value="エモバト">エモバト</option>
+    <option value="エモラン">エモラン</option>
+    <option value="ギフガチャ">ギフガチャ</option>
+    <option value="ルレ">ルレ</option>
   </select>
-  <select id="filterSelect" title="カテゴリ絞り込み">
-    <option value="">全てのカテゴリ</option>
-    <option value="ルレ">ルレだけ</option>
-    <option value="ギフガチャ">ギフガチャだけ</option>
-    <option value="エモバト">エモバトだけ</option>
-    <option value="エモラン">エモランだけ</option>
-  </select>
-  <button id="themeToggle" title="ダークモード切替">🌙 ダーク</button>
+  <button id="darkModeBtn">🌙</button>
 </div>
 
-<div class="tab-buttons" id="yearTabs"></div>
-<div class="event-grid" id="eventList">読み込み中...</div>
-<p class="muted" id="hint"></p>
-</main>
+<div class="year-tabs" id="yearTabs"></div>
+
+<div id="eventList" class="event-list"></div>
 
 <button id="scrollTopBtn">↑</button>
 
 <script>
-let data={}, currentYear="2025", searchMode="AND", allEvents=[], allKeywords=new Set(), allTitles=new Set();
+const eventData = {
+  "2025": [
+    { title: "エモバト（S001）スペシャル", img: "images/emo1.webp", link: "#", date: "2025-01-10", keywords: ["2025","エモバト（S001）","ギフガチャ"] },
+    { title: "エモラン（S002）チャレンジ", img: "images/emo2.webp", link: "#", date: "2025-02-15", keywords: ["2025","エモラン（S002）","ルレ"] },
+    { title: "ギフトガチャ限定", img: "images/emo3.webp", link: "#", date: "2025-03-01", keywords: ["2025","ギフガチャ"] }
+  ],
+  "2024": [
+    { title: "エモラン（S010）復刻", img: "images/emo4.webp", link: "#", date: "2024-12-20", keywords: ["2024","エモラン（S010）"] },
+    { title: "ルーレットフェス", img: "images/emo5.webp", link: "#", date: "2024-11-05", keywords: ["2024","ルレ"] }
+  ]
+};
 
-(function initTheme(){ if(localStorage.getItem("emomo_theme")==="dark") document.body.classList.add("dark"); })();
+let currentYear = "all";
+let currentQuery = "";
+let searchMode = "AND";
+let currentCategory = "all";
 
-function normalizeForSearch(s){
-  if(!s) return "";
-  s=s.toLowerCase();
-  s=s.replace(/[Ａ-Ｚａ-ｚ０-９]/g,c=>String.fromCharCode(c.charCodeAt(0)-0xFEE0));
-  s=s.replace(/[ァ-ン]/g,c=>String.fromCharCode(c.charCodeAt(0)-0x60));
-  s=s.normalize("NFKC");
-  s=s.replace(/一/,"い").replace(/二/,"に").replace(/三/,"さん").replace(/四/,"よん").replace(/五/,"ご");
-  s=s.replace(/六/,"ろく").replace(/七/,"なな").replace(/八/,"はち").replace(/九/,"きゅう").replace(/十/,"じゅう");
-  return s;
-}
-
-fetch("data/events.json")
-.then(res=>res.json())
-.then(json=>{ data=json; flattenAndNormalize(); initYearTabs(); initControls(); renderEvents(); })
-.catch(err=>{ console.error(err); document.getElementById("eventList").innerHTML="<p>データの読み込みに失敗しました。</p>"; });
-
-function flattenAndNormalize(){
-  allEvents=[];
-  for(const y in data){
-    (data[y]||[]).forEach(ev=>{
-      const copy={...ev,year:y};
-      copy.ts=normalizeDateToTs(copy,y);
-      if(copy.title) allTitles.add(copy.title);
-      if(Array.isArray(copy.keywords)) copy.keywords.forEach(k=>allKeywords.add(k));
-      allEvents.push(copy);
-    });
-  }
-}
-
-function normalizeDateToTs(ev,fallbackYear){
-  if(typeof ev.date==="string"){const d=parseISOish(ev.date); if(d) return d.getTime();}
-  if(typeof ev.title==="string"){const dFromTitle=extractDateFromText(ev.title); if(dFromTitle) return dFromTitle.getTime();}
-  const kwYear=Array.isArray(ev.keywords)?ev.keywords.find(k=>/^\d{4}$/.test(k)):null;
-  if(kwYear&&typeof ev.title==="string"){const md=ev.title.match(/(\d{1,2})[\/\-月](\d{1,2})/); if(md){ const y=+kwYear,m=+md[1],d=+md[2]; return new Date(Date.UTC(y,m-1,d)).getTime(); }}
-  const y=+fallbackYear||new Date().getUTCFullYear(); return new Date(Date.UTC(y,0,1)).getTime();
-}
-
-function parseISOish(s){const m=s.match(/^(\d{4})[\/\-.](\d{1,2})[\/\-.](\d{1,2})$/); if(!m) return null; return new Date(Date.UTC(+m[1],+m[2]-1,+m[3]));}
-function extractDateFromText(t){const a=t.match(/(\d{4})[\/\-.](\d{1,2})[\/\-.](\d{1,2})/); if(a) return new Date(Date.UTC(+a[1],+a[2]-1,+a[3])); const b=t.match(/(\d{4})\s*年\s*(\d{1,2})\s*月(?:\s*(\d{1,2})\s*日)?/); if(b){ return new Date(Date.UTC(+b[1],+b[2]-1,b[3]?+b[3]:1)); } return null;}
-
-function initYearTabs(){
-  const tabContainer=document.getElementById("yearTabs");
-  const years=Object.keys(data).sort((a,b)=>b-a);
-  tabContainer.innerHTML="";
-  const allBtn=document.createElement("button");
-  allBtn.textContent="すべて"; allBtn.className=currentYear==="all"?"active":"";
-  allBtn.addEventListener("click",()=>{ currentYear="all"; tabContainer.querySelectorAll("button").forEach(b=>b.classList.remove("active")); allBtn.classList.add("active"); renderEvents(); scrollToEvents(); });
-  tabContainer.appendChild(allBtn);
-  years.forEach(y=>{ const btn=document.createElement("button"); btn.textContent=y+"年"; btn.className=y===currentYear?"active":""; btn.addEventListener("click",()=>{ currentYear=y; tabContainer.querySelectorAll("button").forEach(b=>b.classList.remove("active")); btn.classList.add("active"); renderEvents(); scrollToEvents(); }); tabContainer.appendChild(btn); });
-}
-
-function initControls(){
-  const $and=document.getElementById("andBtn"), $or=document.getElementById("orBtn"), $sort=document.getElementById("sortSelect"),
-        $filter=document.getElementById("filterSelect"), $search=document.getElementById("search"), $suggest=document.getElementById("suggestions"),
-        $theme=document.getElementById("themeToggle");
-  
-  $and.addEventListener("click",()=>{ searchMode="AND"; $and.classList.add("active"); $or.classList.remove("active"); renderEvents(); scrollToEvents(); });
-  $or.addEventListener("click",()=>{ searchMode="OR"; $or.classList.add("active"); $and.classList.remove("active"); renderEvents(); scrollToEvents(); });
-  $sort.addEventListener("change",()=>{ renderEvents(); scrollToEvents(); });
-  $filter.addEventListener("change",()=>{ renderEvents(); scrollToEvents(); });
-  $search.addEventListener("input",()=>{ showSuggestions($search.value); renderEvents(); scrollToEvents(); });
-  $search.addEventListener("focus",()=>{ if(!$search.value.trim()) showSuggestions(""); });
-  document.addEventListener("click",e=>{if(!e.target.closest(".search-wrap"))$suggest.style.display="none";});
-  $theme.addEventListener("click",()=>{document.body.classList.toggle("dark"); const isDark=document.body.classList.contains("dark"); localStorage.setItem("emomo_theme",isDark?"dark":"light"); $theme.textContent=isDark?"☀️ ライト":"🌙 ダーク";});
-  $theme.textContent=document.body.classList.contains("dark")?"☀️ ライト":"🌙 ダーク";
-}
-
-function showSuggestions(input){
-  const box=document.getElementById("suggestions");
-  const q=normalizeForSearch(input.trim());
-  let items=[];
-  if(q){ const kw=Array.from(allKeywords).filter(k=>normalizeForSearch(k).includes(q)); const tt=Array.from(allTitles).filter(t=>normalizeForSearch(t).includes(q)); items=[...kw.slice(0,10),...tt.slice(0,10)]; }
-  else{ const freq={}; allEvents.forEach(ev=>{ (ev.keywords||[]).forEach(k=>{ freq[k]=(freq[k]||0)+1; }); }); items=Object.entries(freq).sort((a,b)=>b[1]-a[1]).slice(0,10).map(([k])=>k); }
-  if(items.length===0){ box.style.display="none"; box.innerHTML=""; return; }
-  box.innerHTML=items.map(txt=>`<button type="button">${txt}</button>`).join("");
-  box.style.display="block";
-  box.querySelectorAll("button").forEach(btn=>{ btn.addEventListener("click",()=>{ const cur=document.getElementById("search").value.trim(); document.getElementById("search").value=cur?cur+" "+btn.textContent:btn.textContent; document.getElementById("search").dispatchEvent(new Event("input")); box.style.display="none"; }); });
+function normalize(str){
+  return str.toLowerCase()
+    .replace(/[Ａ-Ｚａ-ｚ０-９]/g,s=>String.fromCharCode(s.charCodeAt(0)-0xFEE0))
+    .replace(/[ぁ-ん]/g,s=>String.fromCharCode(s.charCodeAt(0)+0x60));
 }
 
 function renderEvents(){
-  const list=document.getElementById("eventList"), hint=document.getElementById("hint");
-  const searchWords=document.getElementById("search").value.trim().split(/\s+/).filter(Boolean).map(normalizeForSearch);
-  const sortBy=document.getElementById("sortSelect").value;
-  const category=document.getElementById("filterSelect").value;
-  const catNorm=normalizeForSearch(category);
+  const list=document.getElementById("eventList");
+  list.innerHTML="";
+  let events=[];
+  Object.values(eventData).forEach(arr=>events=events.concat(arr));
 
-  const filtered=allEvents.filter(ev=>{
-    const title=normalizeForSearch(ev.title||"");
-    const keys=(ev.keywords||[]).map(normalizeForSearch);
-    const keywordMatch=searchWords.length===0 ? true :
-      searchMode==="AND" ? searchWords.every(w=>title.includes(w)||keys.some(k=>k.includes(w))) :
-      searchMode==="OR" ? searchWords.some(w=>title.includes(w)||keys.some(k=>k.includes(w))) : true;
-    const categoryMatch=!category ? true : keys.includes(catNorm);
-    const yearMatch=currentYear==="all"?true:ev.year===currentYear;
-    return keywordMatch && categoryMatch && yearMatch;
-  });
+  if(currentYear!=="all"){
+    events=events.filter(ev=>ev.date.startsWith(currentYear));
+  }
 
-  filtered.sort((a,b)=>sortBy==="newest"?b.ts-a.ts:a.ts-b.ts);
-  hint.textContent=`${filtered.length}件ヒット / 並び: ${sortBy==="newest"?"新しい順":"古い順"} / 年: ${currentYear==="all"?"すべて":currentYear}`;
+  if(currentQuery){
+    const query=normalize(currentQuery);
+    events=events.filter(ev=>{
+      const haystack=normalize(ev.title+" "+ev.keywords.join(" "));
+      if(searchMode==="AND"){
+        return query.split(" ").every(q=>haystack.includes(q));
+      }else{
+        return query.split(" ").some(q=>haystack.includes(q));
+      }
+    });
+  }
 
-  if(filtered.length===0){ list.innerHTML="<p>該当イベントがありません。</p>"; }
-  else{ list.innerHTML=filtered.map(ev=>`<div class="event-card"><a href="${ev.link}" target="_blank" title="${ev.title}"><img src="${ev.img}" alt="${ev.title}"></a></div>`).join(''); }
+  if(currentCategory!=="all"){
+    events=events.filter(ev=>
+      ev.keywords.some(k=>k.includes(currentCategory))
+    );
+  }
+
+  list.innerHTML=events.map(ev=>
+    `<div class="event-card">
+      <a href="${ev.link}">
+        <img src="${ev.img}" alt="${ev.title}">
+      </a>
+    </div>`
+  ).join('');
 }
 
-function scrollToEvents(){ document.getElementById("eventList").scrollIntoView({behavior:'smooth'}); }
+function renderYearTabs(){
+  const tabs=document.getElementById("yearTabs");
+  const years=Object.keys(eventData).sort((a,b)=>b-a);
+  tabs.innerHTML=`<button data-year="all" class="active">全て</button>`+
+    years.map(y=>`<button data-year="${y}">${y}</button>`).join("");
+  tabs.querySelectorAll("button").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      tabs.querySelectorAll("button").forEach(b=>b.classList.remove("active"));
+      btn.classList.add("active");
+      currentYear=btn.dataset.year;
+      renderEvents();
+    });
+  });
+}
+
+document.getElementById("searchBox").addEventListener("input",e=>{
+  currentQuery=e.target.value;
+  renderEvents();
+});
+document.getElementById("andBtn").addEventListener("click",()=>{
+  searchMode="AND";
+  document.getElementById("andBtn").classList.add("active");
+  document.getElementById("orBtn").classList.remove("active");
+  renderEvents();
+});
+document.getElementById("orBtn").addEventListener("click",()=>{
+  searchMode="OR";
+  document.getElementById("orBtn").classList.add("active");
+  document.getElementById("andBtn").classList.remove("active");
+  renderEvents();
+});
+document.getElementById("categoryFilter").addEventListener("change",e=>{
+  currentCategory=e.target.value;
+  renderEvents();
+});
+document.getElementById("darkModeBtn").addEventListener("click",()=>{
+  document.body.classList.toggle("dark");
+});
 
 const scrollBtn=document.getElementById("scrollTopBtn");
-window.addEventListener("scroll",()=>{ scrollBtn.style.display = window.scrollY>200 ? "block" : "none"; });
-scrollBtn.addEventListener("click",()=>{ window.scrollTo({ top:0, behavior:'smooth' }); });
+window.addEventListener("scroll",()=>{
+  scrollBtn.style.display=window.scrollY>200?"block":"none";
+});
+scrollBtn.addEventListener("click",()=>{
+  window.scrollTo({top:0,behavior:"smooth"});
+});
+
+renderYearTabs();
+renderEvents();
 </script>
 </body>
 </html>
