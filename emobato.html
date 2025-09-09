@@ -19,9 +19,11 @@ main{max-width:960px;margin:0 auto;background:var(--card);padding:20px;border-ra
 .tabs button.active{background:var(--accent);color:#fff;border-color:var(--accent);}
 .tab-content{display:none;}
 .tab-content.active{display:block;}
+.unit-card{display:flex;flex-direction:column;align-items:center;padding:10px;border:1px solid var(--border);border-radius:6px;background:var(--card);}
+.unit-card img{width:100px;height:100px;border-radius:6px;margin-bottom:6px;}
+.unit-card .name{font-weight:bold;margin-bottom:4px;}
+.unit-card .desc,.unit-card .stats{font-size:12px;color:var(--muted);margin-bottom:2px;text-align:center;}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;}
-.grid img{width:100%;border-radius:6px;border:1px solid var(--border);}
-.muted{color:var(--muted);font-size:12px;}
 </style>
 </head>
 <body>
@@ -63,26 +65,46 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
   });
 });
 
-// --- JSON読み込み例（後で差し替え可能） ---
+// --- ユニット表示 ---
 fetch('data/emobato_units.json').then(r=>r.json()).then(json=>{
   unitsData=json;
   const container=document.getElementById('unitGrid');
   container.innerHTML='';
   unitsData.forEach(u=>{
     const a=document.createElement('a');
-    a.href='unit_detail.html?unit='+u.id; // 詳細ページに飛ぶ
+    a.href='unit_detail.html?unit='+u.id;
+    const card=document.createElement('div');
+    card.className='unit-card';
     const img=document.createElement('img');
     img.src=u.img;
-    a.appendChild(img);
+    const name=document.createElement('div');
+    name.className='name';
+    name.textContent=u.aircraftName;
+    const desc=document.createElement('div');
+    desc.className='desc';
+    desc.textContent=u.description;
+    const stats=document.createElement('div');
+    stats.className='stats';
+    stats.innerHTML=
+      `移動:${u.moveSpeed}, 加速:${u.moveAccel}, 抵抗:${u.moveResistPower}, ブレーキ:${u.moveBrake}<br>
+       攻撃:${u.weapon?.attackPower || 0}, 防御:${u.defense}, カテゴリ:${u.weapon?.weaponCategry || '-'}<br>
+       パッシブスキル:${u.passiveSkills?.length || 0}`;
+    card.appendChild(img);
+    card.appendChild(name);
+    card.appendChild(desc);
+    card.appendChild(stats);
+    a.appendChild(card);
     container.appendChild(a);
   });
 });
 
+// --- レート表示 ---
 fetch('data/emobato_rate.json').then(r=>r.json()).then(json=>{
   rateData=json;
   document.getElementById('rateContent').textContent='平均レート: '+rateData.avg+' / 総戦績: '+rateData.total;
 });
 
+// --- イベント表示 ---
 fetch('data/emobato_events.json').then(r=>r.json()).then(json=>{
   eventsData=json;
   const ul=document.getElementById('eventList');
