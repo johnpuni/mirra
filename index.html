@@ -173,61 +173,25 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
 
-    /* --- ミラティブ横スクロールグリッド --- */
-    .mirrativ-gallery {
-      margin-top: 50px;
-      padding: 20px 0;
-    }
-
-    .mirrativ-gallery h3 {
-      font-size: 1.4em;
-      color: #222;
-      margin-bottom: 15px;
-      padding-left: 10px;
-      border-left: 5px solid #ff3b3b;
-      display: inline-block;
-    }
-
-    .gallery-row {
-      display: flex;
-      overflow-x: auto;
-      gap: 15px;
-      padding: 10px;
-    }
-
-    .gallery-row::-webkit-scrollbar {
-      height: 8px;
-    }
-
-    .gallery-row::-webkit-scrollbar-thumb {
-      background: rgba(0,0,0,0.2);
-      border-radius: 4px;
-    }
-
-    .card {
-      min-width: 220px;
-      flex: 0 0 auto;
-      background: #fff;
-      border-radius: 10px;
-      padding: 10px;
-      text-align: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      transition: transform 0.2s;
-    }
-
-    .card:hover {
-      transform: translateY(-5px) scale(1.03);
-    }
-
-    .card img {
-      width: 100%;
-      border-radius: 8px;
-    }
-
-    .card p {
-      margin-top: 8px;
-      font-size: 1em;
-      color: #555;
+    /* --- スマホ対応 --- */
+    @media (max-width: 600px) {
+      main {
+        padding: 20px;
+      }
+      section.contact {
+        padding: 15px;
+      }
+      section.contact iframe {
+        min-height: 500px;
+      }
+      ul.menu > li > a {
+        padding: 20px 25px;
+        font-size: 1.2em;
+      }
+      ul.menu {
+        flex-direction: column;
+        align-items: stretch;
+      }
     }
   </style>
 </head>
@@ -259,26 +223,6 @@
       <li>あるぴ情報サイト</li>
       <li>エモラン情報サイト</li>
     </ul>
-  </section>
-
-  <!-- ミラティブ横スクロールグリッド -->
-  <section class="mirrativ-gallery">
-    <h3>🎮 Mirrativ 関連イメージ</h3>
-    <div class="gallery-row">
-      <div class="card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/8/86/Mirrativ_logo.png" alt="Mirrativ ロゴ">
-        <p>公式ロゴ</p>
-      </div>
-      <div class="card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Mirrativ_screenshot.png" alt="配信画面">
-        <p>配信イメージ</p>
-      </div>
-      <div class="card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/2/24/Mirrativ_app.png" alt="アプリ画面">
-        <p>アプリ画面</p>
-      </div>
-      <!-- 必要に応じて追加可能 -->
-    </div>
   </section>
 
   <!-- お問い合わせフォーム -->
