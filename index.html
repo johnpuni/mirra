@@ -11,9 +11,13 @@
       line-height: 1.6;
     }
 
+    /* --- ヘッダー --- */
     header {
       background-color: #333;
       padding: 10px 0;
+      position: sticky;   /* ←固定 */
+      top: 0;
+      z-index: 100;
     }
 
     nav {
@@ -40,13 +44,32 @@
       text-decoration: none;
       font-weight: bold;
       cursor: pointer;
-      transition: background 0.2s;
+      transition: color 0.3s;
+      position: relative;
+    }
+
+    /* 下線アニメーション */
+    ul.menu > li > a::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 8px;
+      width: 0;
+      height: 2px;
+      background: #ffd700;
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
     }
 
     ul.menu > li > a:hover {
-      background-color: #555;
+      color: #ffd700;
     }
 
+    ul.menu > li > a:hover::after {
+      width: 60%;
+    }
+
+    /* サブメニュー */
     ul.submenu {
       display: none;
       position: absolute;
@@ -75,6 +98,7 @@
       display: block;
     }
 
+    /* --- 本文 --- */
     main {
       max-width: 900px;
       margin: 40px auto;
@@ -89,13 +113,24 @@
       color: #333;
     }
 
+    main p {
+      margin-bottom: 20px;
+      color: #444;
+    }
+
     main ul.recent-item {
       text-align: left;
-      padding-left: 20px;
+      padding-left: 0;
+      display: grid;
+      gap: 12px;
     }
 
     main ul.recent-item li {
-      margin-bottom: 8px;
+      background: #fafafa;
+      padding: 12px 16px;
+      border-radius: 6px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+      list-style: none;
     }
 
     /* --- お問い合わせフォームカード --- */
@@ -146,6 +181,10 @@
       }
       section.contact iframe {
         min-height: 500px;
+      }
+      ul.menu {
+        flex-direction: column;
+        align-items: center;
       }
     }
   </style>
