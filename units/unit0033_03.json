@@ -1,0 +1,144 @@
+{
+  "aircraftName": "フィルハーラパン ガワガエ:03",
+  "description": "武器: LRピアノ",
+  "moveSpeed": 24,
+  "moveAccel": 35,
+  "moveResistPower": 30,
+  "moveBrake": 30,
+  "rotationSpeed": 270,
+  "respawnPositionSelectMoveSpeed": 80,
+  "defense": 11,
+  "searchHitRadius": 1,
+  "weaponPositionOffset": {
+    "x": 0,
+    "y": 0,
+    "z": 7.5
+  },
+  "pilotPositionOffset": {
+    "x": 0,
+    "y": 2,
+    "z": -0.457
+  },
+  "pilotScale": {
+    "x": 3,
+    "y": 3,
+    "z": 3
+  },
+  "avatarNeckPositionOffset": {
+    "x": 0,
+    "y": 5.194,
+    "z": -1.321
+  },
+  "avatarScale": {
+    "x": 14,
+    "y": 14,
+    "z": 14
+  },
+  "ForceShowFlyGauge": 0,
+  "weaponSettings": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "b640b5a25cf8c966f4142e5c101eaf9e",
+      "type": 3
+    },
+    "m_Name": "wp_piano_01_cv03",
+    "m_EditorClassIdentifier": null,
+    "memo": "ピアノ",
+    "weaponCategry": 0,
+    "enemySearchRadius": 42.9,
+    "enemySearchOffset": 52.9,
+    "attackPower": 0,
+    "attackStopPower": 10000,
+    "attackIgnoreDefense": 30,
+    "attackDisableBrakeTime": 0,
+    "additionalPower": 0,
+    "attackHitShape": 0,
+    "attackHitRadius": 5,
+    "attackHitSize": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "hitGrowingTimeRate": 0,
+    "attackHitPositionOffset": {
+      "x": 0,
+      "y": -0.54,
+      "z": 6.25
+    },
+    "attackMoveSpeed": 0,
+    "attackMoveAccel": 75,
+    "attackMoveSpeedY": 0,
+    "attackMoveAccelY": 0,
+    "attackDuration": 1.2,
+    "attackTimeSpan": 0.1,
+    "isBackCritical": 0,
+    "isSideCritical": 0,
+    "shieldBreak": 0,
+    "isReflector": 0,
+    "refrectionRate": 0,
+    "reflectionAddSpeedRate": 0,
+    "invalidRefrection": 0,
+    "isSelfRefrection": 0,
+    "selfRefrectionNum": 0,
+    "refrectionRandomRot": {
+      "x": 0,
+      "y": 0
+    },
+    "isHideHitEffect": 0,
+    "killComboRate": 0,
+    "useLimitMax": -1,
+    "spriteButtonIcon": {
+      "fileID": 0
+    },
+    "useClickWhenFire": 1,
+    "useChargeWhenFire": 1,
+    "useChargeWithoutFire": 0,
+    "weaponAutoChargeSettings": {
+      "fileID": 0
+    },
+    "maxChargeTime": 2,
+    "inChargeDeceleratingRate": 1,
+    "inChargeMoveSpeedRate": 0.1,
+    "inChargeSe": 63,
+    "chargeMaxFx": "Fx/Battle/fx_charge_dash_attack_max",
+    "inChargeFx": "Fx/Battle/fx_charge_dash_attack",
+    "disableChargeEffectWhenMax": 0,
+    "isChargeBuffContext": {
+      "type": 0,
+      "power": 0,
+      "duration": 0,
+      "tag": null,
+      "isRemoveOnTargetDie": 1,
+      "customSatelliteFxName": null
+    },
+    "buffContexts": [],
+    "normalWeapon": {
+      "fileID": 11400000,
+      "guid": "84e149030536cf243b3593b47811121f",
+      "type": 2
+    },
+    "chargingWeapon": {
+      "fileID": 11400000,
+      "guid": "cd2389662d942be4ba0370b2d77aa6ef",
+      "type": 2
+    }
+  },
+  "passiveSkills": [],
+  "flickDashSettings": null,
+  "img": "images/accessory/unit0033_03.PNG"
+}
