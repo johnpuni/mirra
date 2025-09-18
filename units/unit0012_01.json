@@ -1,0 +1,219 @@
+{
+  "aircraftName": "祝祭フォックステイル",
+  "description": "吹き戻し",
+  "moveSpeed": 22,
+  "moveAccel": 28,
+  "moveResistPower": 35,
+  "moveBrake": 30,
+  "rotationSpeed": 360,
+  "respawnPositionSelectMoveSpeed": 80,
+  "defense": 20,
+  "searchHitRadius": 1,
+  "weaponPositionOffset": {
+    "x": 0,
+    "y": 2.38,
+    "z": 4.72
+  },
+  "pilotPositionOffset": {
+    "x": 0,
+    "y": 1.2,
+    "z": -0.04
+  },
+  "pilotScale": {
+    "x": 3,
+    "y": 3,
+    "z": 3
+  },
+  "avatarNeckPositionOffset": {
+    "x": 0,
+    "y": 4.5,
+    "z": -0.6
+  },
+  "avatarScale": {
+    "x": 12,
+    "y": 12,
+    "z": 12
+  },
+  "ForceShowFlyGauge": 0,
+  "weaponSettings": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "28f0f82c9d93d4d70576ceecdb0c4a51",
+      "type": 3
+    },
+    "m_Name": "wp_party_horn_00",
+    "m_EditorClassIdentifier": null,
+    "memo": "吹き戻し",
+    "weaponCategry": 1,
+    "enemySearchRadius": 0,
+    "enemySearchOffset": 0,
+    "attackPower": 30,
+    "attackStopPower": 10000,
+    "attackIgnoreDefense": 0,
+    "attackDisableBrakeTime": 1,
+    "additionalPower": 0,
+    "attackHitShape": 0,
+    "attackHitRadius": 3,
+    "attackHitSize": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "hitGrowingTimeRate": 0,
+    "attackHitPositionOffset": {
+      "x": 0,
+      "y": 0,
+      "z": 1
+    },
+    "attackMoveSpeed": 0,
+    "attackMoveAccel": 0,
+    "attackMoveSpeedY": 0,
+    "attackMoveAccelY": 0,
+    "attackDuration": 0.25,
+    "attackTimeSpan": 0.9,
+    "isBackCritical": 0,
+    "isSideCritical": 0,
+    "shieldBreak": 0,
+    "isReflector": 0,
+    "refrectionRate": 0,
+    "reflectionAddSpeedRate": 0,
+    "invalidRefrection": 0,
+    "isSelfRefrection": 0,
+    "selfRefrectionNum": 0,
+    "refrectionRandomRot": {
+      "x": 0,
+      "y": 0
+    },
+    "isHideHitEffect": 0,
+    "killComboRate": 0,
+    "useLimitMax": -1,
+    "spriteButtonIcon": {
+      "fileID": 0
+    },
+    "useClickWhenFire": 1,
+    "useChargeWhenFire": 0,
+    "useChargeWithoutFire": 0,
+    "weaponAutoChargeSettings": {
+      "fileID": 0
+    },
+    "prefabWeapon": {
+      "fileID": 1182936212082635,
+      "guid": "86e188344a2f9c047ae442f0f5a38807",
+      "type": 2
+    },
+    "prefabWeaponBase": {
+      "fileID": 1940980269755920,
+      "guid": "590441930d2ee914ebd9210c3ae8d1c7",
+      "type": 2
+    },
+    "prefabSpring": {
+      "fileID": 1822209378746968,
+      "guid": "dd96584810f8631459966dfaa23936f5",
+      "type": 2
+    },
+    "weaponObjectRotate": {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "w": 0
+    },
+    "attackMoveRange": 18.5,
+    "curveTimeToPosition": {
+      "serializedVersion": 2,
+      "m_Curve": [
+        {
+          "serializedVersion": 3,
+          "time": 0,
+          "value": 0,
+          "inSlope": 1.3529001,
+          "outSlope": 1.3529001,
+          "weightedMode": 0,
+          "inWeight": 0,
+          "outWeight": 0.05578512
+        },
+        {
+          "serializedVersion": 3,
+          "time": 1,
+          "value": 1,
+          "inSlope": 0.39704615,
+          "outSlope": 0.39704615,
+          "weightedMode": 0,
+          "inWeight": 0.047520697,
+          "outWeight": 0
+        }
+      ],
+      "m_PreInfinity": 2,
+      "m_PostInfinity": 2,
+      "m_RotationOrder": 4
+    },
+    "frontMoveForce": 0,
+    "frontMoveStopPower": 0,
+    "defense": 0,
+    "defensiveAngle": 0,
+    "shootSeType": 37,
+    "isDrill": 0,
+    "canGrabItem": 1,
+    "isPenguin": 0,
+    "hideWeaponWhenIdleForPuppet": 0,
+    "hideWeaponDelay": 0,
+    "useReturnHandDurationLimit": 0,
+    "returnHandDurationLimit": 0,
+    "itemDestroyTime": 0,
+    "itemDuplicationLimit": -1,
+    "itemBaseBuffTagName": null,
+    "dropItems": []
+  },
+  "passiveSkills": [],
+  "flickDashSettings": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "fd6d21e32245f8670158d47df2369f83",
+      "type": 3
+    },
+    "m_Name": "FlickDash_002",
+    "m_EditorClassIdentifier": null,
+    "Memo": "九尾のきつねのフリックダッシュ",
+    "Interval": 1,
+    "FrontMoveStopPower": 10,
+    "FrontMoveForce": 100,
+    "MutekiTime": 0,
+    "StunTime": 0.5,
+    "seType": 67,
+    "FlyAfter": 0,
+    "FlyAnimation": 0,
+    "FlyDuration": 0,
+    "ContinuousNum": 1,
+    "CanContinuousDuration": 1
+  },
+  "img": "images/accessory/unit0012_01.PNG"
+}
