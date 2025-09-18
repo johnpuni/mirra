@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ユニット詳細（ギャラリー風）</title>
+<title>ユニット詳細（ギャラリー風・フル版）</title>
 <style>
 :root{
   --bg:#f5f5f5; --card:#fff; --text:#222; --muted:#666; --border:#ccc; --accent:#333;
@@ -28,7 +28,7 @@ button:hover{opacity:.8;}
 a{color:var(--accent); text-decoration:none; font-weight:bold; display:inline-block; margin-top:15px;}
 a:hover{text-decoration:underline;}
 .card-container{display:flex; flex-wrap:wrap; gap:15px; justify-content:center; margin-bottom:20px;}
-.card{background:var(--card); border-radius:10px; box-shadow:var(--shadow); padding:15px; width:260px; transition:.2s;}
+.card{background:var(--card); border-radius:10px; box-shadow:var(--shadow); padding:15px; width:320px; transition:.2s;}
 .card:hover{transform:scale(1.03);}
 .card h3{margin-top:0; margin-bottom:10px; font-size:1.1em;}
 .card ul{list-style:none; padding:0; margin:0;}
@@ -50,16 +50,15 @@ a:hover{text-decoration:underline;}
 
 <h1 id="unitName">読み込み中…</h1>
 <img id="unitImg" src="" alt="">
-
 <p id="unitDesc"></p>
 
 <div class="card-container">
   <div class="card movement">
-    <h3>性能</h3>
+    <h3>機体パラメータ</h3>
     <ul id="unitStats"></ul>
   </div>
   <div class="card attack">
-    <h3>武器</h3>
+    <h3>武器設定</h3>
     <ul id="weaponStats"></ul>
   </div>
   <div class="card defense">
@@ -89,86 +88,131 @@ document.getElementById("themeToggle").addEventListener("click",()=>{
 const params = new URLSearchParams(location.search);
 const id = params.get('id');
 
+// 翻訳マップ
+const translations = {
+  // 機体
+  aircraftName:"機体名", description:"説明",
+  moveSpeed:"移動速度", moveAccel:"加速度", moveResistPower:"慣性抵抗",
+  moveBrake:"ブレーキ", rotationSpeed:"旋回速度", respawnPositionSelectMoveSpeed:"リスポーン選択速度",
+  defense:"防御力", searchHitRadius:"索敵範囲",
+  weaponPositionOffset:"武器位置オフセット", pilotPositionOffset:"パイロット位置オフセット",
+  pilotScale:"パイロットサイズ", avatarNeckPositionOffset:"アバターネック位置",
+  avatarScale:"アバターサイズ", ForceShowFlyGauge:"飛行ゲージ強制表示", img:"画像",
+
+  // 武器共通
+  memo:"武器名", weaponCategry:"武器カテゴリ",
+  enemySearchRadius:"索敵半径", enemySearchOffset:"索敵オフセット",
+  attackPower:"攻撃力", attackStopPower:"停止力", attackIgnoreDefense:"防御無視",
+  attackDisableBrakeTime:"ブレーキ無効時間", additionalPower:"追加ダメージ",
+  attackHitShape:"当たり判定形状", attackHitRadius:"ヒット半径", attackHitSize:"ヒットサイズ",
+  hitGrowingTimeRate:"ヒット成長率", attackHitPositionOffset:"ヒット位置オフセット",
+  attackMoveSpeed:"攻撃移動速度X", attackMoveAccel:"攻撃加速度X",
+  attackMoveSpeedY:"攻撃移動速度Y", attackMoveAccelY:"攻撃加速度Y",
+  attackDuration:"攻撃時間", attackTimeSpan:"攻撃間隔",
+  isBackCritical:"背面クリティカル", isSideCritical:"側面クリティカル",
+  shieldBreak:"シールドブレイク", isReflector:"反射",
+  refrectionRate:"反射率", reflectionAddSpeedRate:"反射加速率",
+  invalidRefrection:"反射無効", isSelfRefrection:"自己反射", selfRefrectionNum:"自己反射回数",
+  refrectionRandomRot:"反射ランダム回転", isHideHitEffect:"ヒットエフェクト非表示",
+  killComboRate:"キルコンボ倍率", useLimitMax:"使用回数上限",
+  spriteButtonIcon:"アイコン", useClickWhenFire:"クリック発射",
+  useChargeWhenFire:"チャージ発射", useChargeWithoutFire:"チャージのみ",
+  weaponAutoChargeSettings:"自動チャージ設定", maxChargeTime:"最大チャージ時間",
+  inChargeDeceleratingRate:"チャージ減速率", inChargeMoveSpeedRate:"チャージ中移動速度率",
+  inChargeSe:"チャージ音", chargeMaxFx:"最大チャージFX", inChargeFx:"チャージ中FX",
+  disableChargeEffectWhenMax:"最大時エフェクト無効", isChargeBuffContext:"チャージバフ有効",
+  buffContexts:"バフ内容", attackPowerRateCurve:"攻撃力カーブ",
+  frontMoveForce:"前進力", frontMoveForceRateCurve:"前進力カーブ",
+  bulletFx:"弾丸FX", shootSeType:"射撃音",
+  buffType:"バフ種類", buffPower:"バフ効果", buffDuration:"バフ時間",
+  buffProbability:"バフ発動率", bufftag:"バフタグ", buffUpdateOnManyHit:"多段バフ更新",
+  isRemoveOnTargetDie:"対象死亡で削除", buffManyHitShowFx:"多段ヒットFX", buffEnemyOnly:"敵専用バフ",
+
+  // パッシブ専用
+  targetType:"対象タイプ", tag:"タグ", powerScaleType:"効果スケール種類",
+  shootAnimName:"発射アニメ名", shootFx:"発射FX",
+  triggerType:"発動条件タイプ", triggerValue:"発動条件値", triggerString:"発動条件文字列",
+  gradeType:"ランクタイプ", maxGradeNum:"最大ランク数",
+  remainingLifeBuffSettings:"残ライフバフ設定", shouldPlayParticleWhenEmitBuff:"バフ時パーティクル"
+};
+
+// 値を整形
+function formatValue(val){
+  if(val==null) return "-";
+  if(typeof val==="number"){
+    return (Math.abs(val)%1===0) ? val : val.toFixed(2);
+  }
+  if(Array.isArray(val)) return JSON.stringify(val);
+  if(typeof val==="object") return JSON.stringify(val);
+  return val;
+}
+
 if(id){
   fetch(`units/${id}.json`)
     .then(res=>res.json())
     .then(data=>{
-      const m = data.machine;
-      const w = data.weapon;
-      const p = data.passiveSkills;
+      const m = data.machine || {};
+      const w = data.weaponSettings || {};
+      const p = data.passiveSkills || [];
 
-      // 機体名・説明・画像
-      document.getElementById("unitName").textContent = m.aircraftName;
-      document.getElementById("unitDesc").textContent = m.description;
-      const unitImg = document.getElementById("unitImg");
-      unitImg.src = m.img || "images/default.png";
-      unitImg.alt = m.aircraftName;
+      // タイトル部
+      document.getElementById("unitName").textContent = m.aircraftName || "名称不明";
+      document.getElementById("unitDesc").textContent = m.description || "";
+      const unitImg=document.getElementById("unitImg");
+      unitImg.src=m.img||"images/default.png";
+      unitImg.alt=m.aircraftName||"no name";
 
-      // 性能
-      const statsUl = document.getElementById("unitStats");
-      statsUl.innerHTML = "";
-      const performance = {
-        "移動速度": m.moveSpeed,
-        "加速度": m.moveAccel,
-        "慣性抵抗": m.moveResistPower,
-        "ブレーキ": m.moveBrake,
-        "防御力": m.defense,
-        "リスポーン速度": m.respawnPositionSelectMoveSpeed,
-        "索敵範囲": m.searchHitRadius
-      };
-      for(const key in performance){
-        const li = document.createElement("li");
-        li.textContent = `${key}: ${performance[key] != null ? performance[key].toFixed(1) : "-"}`;
+      // 機体パラメータ
+      const statsUl=document.getElementById("unitStats");
+      statsUl.innerHTML="";
+      Object.keys(m).forEach(key=>{
+        if(["aircraftName","description","img"].includes(key)) return;
+        const li=document.createElement("li");
+        li.textContent=`${translations[key]||key}: ${formatValue(m[key])}`;
         statsUl.appendChild(li);
-      }
-
-      // 武器
-      const weaponUl = document.getElementById("weaponStats");
-      weaponUl.innerHTML = "";
-      const weaponStats = {
-        "武器名": w.memo,
-        "攻撃力": w.attackPower,
-        "攻撃範囲": w.attackMoveRange,
-        "ヒット半径": w.attackHitRadius,
-        "攻撃時間": w.attackDuration,
-        "攻撃間隔": w.attackTimeSpan
-      };
-      for(const key in weaponStats){
-        const li = document.createElement("li");
-        const value = weaponStats[key] != null && typeof weaponStats[key] === "number" ? weaponStats[key].toFixed(2) : weaponStats[key];
-        li.textContent = `${key}: ${value}`;
-        weaponUl.appendChild(li);
-      }
-
-      // パッシブスキル
-      const passiveUl = document.getElementById("passiveSkills");
-      passiveUl.innerHTML = "";
-      p.forEach(skill=>{
-        const li = document.createElement("li");
-        const effect = skill.attackPower != null ? `効果値: ${skill.attackPower.toFixed(1)}` : "-";
-        li.textContent = `${skill.memo} (${effect})`;
-        passiveUl.appendChild(li);
       });
 
+      // 武器設定
+      const weaponUl=document.getElementById("weaponStats");
+      weaponUl.innerHTML="";
+      Object.keys(w).forEach(key=>{
+        const li=document.createElement("li");
+        li.textContent=`${translations[key]||key}: ${formatValue(w[key])}`;
+        weaponUl.appendChild(li);
+      });
+
+      // パッシブスキル
+      const passiveUl=document.getElementById("passiveSkills");
+      passiveUl.innerHTML="";
+      p.forEach(skill=>{
+        const subUl=document.createElement("ul");
+        Object.keys(skill).forEach(key=>{
+          const li=document.createElement("li");
+          li.textContent=`${translations[key]||key}: ${formatValue(skill[key])}`;
+          subUl.appendChild(li);
+        });
+        const wrapper=document.createElement("li");
+        wrapper.appendChild(subUl);
+        passiveUl.appendChild(wrapper);
+      });
     })
     .catch(err=>{
       console.error(err);
-      document.getElementById("unitName").textContent = "データ読み込み失敗";
+      document.getElementById("unitName").textContent="データ読み込み失敗";
     });
 }else{
-  document.getElementById("unitName").textContent = "IDが指定されていません";
+  document.getElementById("unitName").textContent="IDが指定されていません";
 }
 
-// 画像クリックでモーダル表示
-const modal = document.getElementById("imgModal");
-const modalImg = document.getElementById("modalImg");
-unitImg.addEventListener("click", ()=>{
-  modal.style.display = "flex";
-  modalImg.src = unitImg.src;
+// 画像モーダル
+const modal=document.getElementById("imgModal");
+const modalImg=document.getElementById("modalImg");
+const unitImg=document.getElementById("unitImg");
+unitImg.addEventListener("click",()=>{
+  modal.style.display="flex";
+  modalImg.src=unitImg.src;
 });
-modal.addEventListener("click", ()=>{
-  modal.style.display = "none";
-});
+modal.addEventListener("click",()=>modal.style.display="none");
 </script>
 
 </body>
