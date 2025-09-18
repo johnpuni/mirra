@@ -1,0 +1,250 @@
+{
+  "aircraftName": "s43二丁拳銃の鳩 ガワガエ:02",
+  "description": "二丁拳銃と要塞構築",
+  "moveSpeed": 31,
+  "moveAccel": 20,
+  "moveResistPower": 35,
+  "moveBrake": 45,
+  "rotationSpeed": 360,
+  "respawnPositionSelectMoveSpeed": 80,
+  "defense": 22,
+  "searchHitRadius": 1,
+  "weaponPositionOffset": {
+    "x": 0,
+    "y": 2,
+    "z": 4.7
+  },
+  "pilotPositionOffset": {
+    "x": -4.543419e-13,
+    "y": 1.0333239,
+    "z": -0.75913405
+  },
+  "pilotScale": {
+    "x": 3,
+    "y": 3,
+    "z": 3
+  },
+  "avatarNeckPositionOffset": {
+    "x": 0.0032000002,
+    "y": 4.421228,
+    "z": -1.6001129
+  },
+  "avatarScale": {
+    "x": 14,
+    "y": 14,
+    "z": 14
+  },
+  "ForceShowFlyGauge": 1,
+  "weaponSettings": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "d05eb46655283eebc51ace8e7a8bbb87",
+      "type": 3
+    },
+    "m_Name": "wp_pigeon_cv02",
+    "m_EditorClassIdentifier": null,
+    "memo": "s43スパイ鳩",
+    "weaponCategry": 2,
+    "enemySearchRadius": 20,
+    "enemySearchOffset": 24,
+    "attackPower": 61,
+    "attackStopPower": 10000,
+    "attackIgnoreDefense": 0,
+    "attackDisableBrakeTime": 0,
+    "additionalPower": 0,
+    "attackHitShape": 0,
+    "attackHitRadius": 5,
+    "attackHitSize": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "hitGrowingTimeRate": 0,
+    "attackHitPositionOffset": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "attackMoveSpeed": 60,
+    "attackMoveAccel": 0,
+    "attackMoveSpeedY": 0,
+    "attackMoveAccelY": 0,
+    "attackDuration": 1,
+    "attackTimeSpan": 1.5,
+    "isBackCritical": 0,
+    "isSideCritical": 0,
+    "shieldBreak": 0,
+    "isReflector": 0,
+    "refrectionRate": 0,
+    "reflectionAddSpeedRate": 0,
+    "invalidRefrection": 0,
+    "isSelfRefrection": 0,
+    "selfRefrectionNum": 0,
+    "refrectionRandomRot": {
+      "x": 0,
+      "y": 0
+    },
+    "isHideHitEffect": 0,
+    "killComboRate": 0,
+    "useLimitMax": -1,
+    "spriteButtonIcon": {
+      "fileID": 0
+    },
+    "useClickWhenFire": 1,
+    "useChargeWhenFire": 1,
+    "useChargeWithoutFire": 0,
+    "weaponAutoChargeSettings": {
+      "fileID": 0
+    },
+    "maxChargeTime": 1.5,
+    "inChargeDeceleratingRate": 1,
+    "inChargeMoveSpeedRate": 0,
+    "inChargeSe": 63,
+    "chargeMaxFx": "Fx/Battle/fx_charge_dash_attack_max",
+    "inChargeFx": "Fx/Battle/fx_charge_dash_attack3",
+    "disableChargeEffectWhenMax": 0,
+    "isChargeBuffContext": {
+      "type": 0,
+      "power": 0,
+      "duration": 0,
+      "tag": null,
+      "isRemoveOnTargetDie": 1,
+      "customSatelliteFxName": null
+    },
+    "buffContexts": [],
+    "DualGuns": {
+      "BuffTag": "PigeonDualGuns",
+      "Prefab": {
+        "fileID": 1031618816166071,
+        "guid": "dad7a31f8c29a40498041fb99b858717",
+        "type": 2
+      },
+      "ShootDuration": 0.4,
+      "DualSideOffset": 2,
+      "ShootSeType": 71,
+      "IsWallPenetrate": 1,
+      "PlayerPenetrateNum": -1,
+      "HitPartyType": 0,
+      "FriendlyFireRate": 1,
+      "BuffData": {
+        "Type": 10,
+        "Power": -5,
+        "Duration": 2
+      },
+      "Levels": [
+        {
+          "ShootNum": 1
+        },
+        {
+          "ShootNum": 3
+        },
+        {
+          "ShootNum": 5
+        }
+      ]
+    },
+    "ChargeFly": {
+      "SeType": 81,
+      "DashForce": 50,
+      "Duration": 4
+    },
+    "Fortress": {
+      "Enabled": 1,
+      "BuffTag": "PigeonFortress",
+      "Prefab": {
+        "fileID": 1946994036643598,
+        "guid": "15aadb24d007e6e40a50edab36eb580e",
+        "type": 2
+      },
+      "EnemyPrefab": {
+        "fileID": 0
+      },
+      "FirstInstantiateInterval": 40,
+      "InstantiateInterval": 30,
+      "InstantiateStepNum": 3,
+      "InstantiateStepInterval": 5,
+      "GridSize": {
+        "x": 2,
+        "y": 2
+      },
+      "LifeTime": 5,
+      "HitInterval": 1,
+      "TouchSeType": 66,
+      "ItemRecastSpeedScale": 0,
+      "ItemRecastSpeedScaleWithUseLimit": 0,
+      "BuffDatas": [
+        {
+          "Type": 8,
+          "Power": 10,
+          "Duration": 15,
+          "MultiplexLimit": 3
+        },
+        {
+          "Type": 9,
+          "Power": 10,
+          "Duration": 15,
+          "MultiplexLimit": 3
+        },
+        {
+          "Type": 10,
+          "Power": 5,
+          "Duration": 15,
+          "MultiplexLimit": 3
+        }
+      ]
+    }
+  },
+  "passiveSkills": [],
+  "flickDashSettings": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "fd6d21e32245f8670158d47df2369f83",
+      "type": 3
+    },
+    "m_Name": "FlickDash_0045",
+    "m_EditorClassIdentifier": null,
+    "Memo": "s43二丁拳銃鳩のフリックダッシュ",
+    "Interval": 2,
+    "FrontMoveStopPower": 10,
+    "FrontMoveForce": 45,
+    "MutekiTime": 0,
+    "StunTime": 0.25,
+    "seType": 81,
+    "FlyAfter": 0,
+    "FlyAnimation": 1,
+    "FlyDuration": 0,
+    "ContinuousNum": 2,
+    "CanContinuousDuration": 1
+  },
+  "img": "images/accessory/unit0045_02.PNG"
+}

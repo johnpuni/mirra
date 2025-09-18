@@ -1,0 +1,182 @@
+{
+  "aircraftName": "イリュージョンハット ガワガエ:02",
+  "description": "武器: トランプカッター",
+  "moveSpeed": 34,
+  "moveAccel": 28,
+  "moveResistPower": 30,
+  "moveBrake": 50,
+  "rotationSpeed": 720,
+  "respawnPositionSelectMoveSpeed": 80,
+  "defense": 21,
+  "searchHitRadius": 1,
+  "weaponPositionOffset": {
+    "x": 0,
+    "y": 0,
+    "z": 5.1275
+  },
+  "pilotPositionOffset": {
+    "x": -4.543419e-13,
+    "y": 1.0233241,
+    "z": 0.4108659
+  },
+  "pilotScale": {
+    "x": 3.2,
+    "y": 3.2,
+    "z": 3.2
+  },
+  "avatarNeckPositionOffset": {
+    "x": 0.0032000002,
+    "y": 4.411228,
+    "z": -0.43011308
+  },
+  "avatarScale": {
+    "x": 14,
+    "y": 14,
+    "z": 14
+  },
+  "ForceShowFlyGauge": 1,
+  "weaponSettings": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "27778445fa27fe22b32f8882d3bd50d5",
+      "type": 3
+    },
+    "m_Name": "wp_trumpcutter_cv02",
+    "m_EditorClassIdentifier": null,
+    "memo": "トランプカッター",
+    "weaponCategry": 2,
+    "enemySearchRadius": 30,
+    "enemySearchOffset": 24,
+    "attackPower": 54,
+    "attackStopPower": 10000,
+    "attackIgnoreDefense": 60,
+    "attackDisableBrakeTime": 0,
+    "additionalPower": 0,
+    "attackHitShape": 0,
+    "attackHitRadius": 5,
+    "attackHitSize": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "hitGrowingTimeRate": 0,
+    "attackHitPositionOffset": {
+      "x": 0,
+      "y": 5.1,
+      "z": 5
+    },
+    "attackMoveSpeed": 50,
+    "attackMoveAccel": 0,
+    "attackMoveSpeedY": 0,
+    "attackMoveAccelY": 0,
+    "attackDuration": 0.75,
+    "attackTimeSpan": 1.5,
+    "isBackCritical": 0,
+    "isSideCritical": 0,
+    "shieldBreak": 0,
+    "isReflector": 0,
+    "refrectionRate": 0,
+    "reflectionAddSpeedRate": 0,
+    "invalidRefrection": 0,
+    "isSelfRefrection": 0,
+    "selfRefrectionNum": 0,
+    "refrectionRandomRot": {
+      "x": 0,
+      "y": 0
+    },
+    "isHideHitEffect": 0,
+    "killComboRate": 0,
+    "useLimitMax": -1,
+    "spriteButtonIcon": {
+      "fileID": 0
+    },
+    "useClickWhenFire": 1,
+    "useChargeWhenFire": 1,
+    "useChargeWithoutFire": 0,
+    "weaponAutoChargeSettings": {
+      "fileID": 0
+    },
+    "maxChargeTime": 1.5,
+    "inChargeDeceleratingRate": 1,
+    "inChargeMoveSpeedRate": 0,
+    "inChargeSe": 63,
+    "chargeMaxFx": "Fx/Battle/fx_charge_dash_attack_max",
+    "inChargeFx": "Fx/Battle/fx_charge_dash_attack3",
+    "disableChargeEffectWhenMax": 0,
+    "isChargeBuffContext": {
+      "type": 0,
+      "power": 0,
+      "duration": 0,
+      "tag": null,
+      "isRemoveOnTargetDie": 1,
+      "customSatelliteFxName": null
+    },
+    "buffContexts": [],
+    "trumpPrefabs": [
+      {
+        "fileID": 1097964314116086,
+        "guid": "5a42b3abfca241e4b9b04388e2e93287",
+        "type": 2
+      }
+    ],
+    "shootSeType": 79,
+    "criticalRatio": 40,
+    "isWallPenetrate": 0,
+    "isInfinitePenetrate": 0,
+    "playerPenetrateNum": 0,
+    "hitPartyType": 0,
+    "friendlyFireRate": 1,
+    "TrumpDeckPrefab": {
+      "fileID": 1826559927355502,
+      "guid": "806d5e52344d7964b9253a8a4d716e91",
+      "type": 2
+    },
+    "TrumpDeckLocalPos": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "buffType": 76,
+    "buffDuration": 10,
+    "buffRatio": 25,
+    "isRemoveBuffOnTargetDie": 1,
+    "buffEnemyOnly": 1,
+    "chargeFly": {
+      "SeType": 81,
+      "DashForce": 60,
+      "Duration": 3
+    },
+    "defaultBulletNum": 3,
+    "defaultRangeDegY": 90,
+    "bulletInfos": [
+      {
+        "LifePoint": 2,
+        "BulletNum": 4,
+        "RangeDegY": 120
+      },
+      {
+        "LifePoint": 1,
+        "BulletNum": 5,
+        "RangeDegY": 150
+      }
+    ]
+  },
+  "passiveSkills": [],
+  "flickDashSettings": null,
+  "img": "images/accessory/unit0040_02.PNG"
+}

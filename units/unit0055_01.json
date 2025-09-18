@@ -1,0 +1,633 @@
+{
+  "aircraftName": "カメレ･オ･マキナ",
+  "description": "武器:ゼンマイショット",
+  "moveSpeed": 30,
+  "moveAccel": 30,
+  "moveResistPower": 35,
+  "moveBrake": 60,
+  "rotationSpeed": 1080,
+  "respawnPositionSelectMoveSpeed": 80,
+  "defense": 30,
+  "searchHitRadius": 1,
+  "weaponPositionOffset": {
+    "x": 0,
+    "y": 1.58,
+    "z": 6.8
+  },
+  "pilotPositionOffset": {
+    "x": -0.03,
+    "y": 0.8633238,
+    "z": -0.58913404
+  },
+  "pilotScale": {
+    "x": 3,
+    "y": 3,
+    "z": 3
+  },
+  "avatarNeckPositionOffset": {
+    "x": -0.0268,
+    "y": 4.251228,
+    "z": -1.4301131
+  },
+  "avatarScale": {
+    "x": 14,
+    "y": 14,
+    "z": 14
+  },
+  "ForceShowFlyGauge": 0,
+  "weaponSettings": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "f3680f5820b4f2b145aa4fb490f3e759",
+      "type": 3
+    },
+    "m_Name": "wp_chameleon_01",
+    "m_EditorClassIdentifier": null,
+    "memo": "ゼンマイショット",
+    "weaponCategry": 2,
+    "enemySearchRadius": 30,
+    "enemySearchOffset": 24,
+    "attackPower": 65,
+    "attackStopPower": 10000,
+    "attackIgnoreDefense": 0,
+    "attackDisableBrakeTime": 0,
+    "additionalPower": 0,
+    "attackHitShape": 0,
+    "attackHitRadius": 5,
+    "attackHitSize": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "hitGrowingTimeRate": 0,
+    "attackHitPositionOffset": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "attackMoveSpeed": 35,
+    "attackMoveAccel": 0,
+    "attackMoveSpeedY": 0,
+    "attackMoveAccelY": 0,
+    "attackDuration": 2,
+    "attackTimeSpan": 1.25,
+    "isBackCritical": 0,
+    "isSideCritical": 0,
+    "shieldBreak": 0,
+    "isReflector": 0,
+    "refrectionRate": 0,
+    "reflectionAddSpeedRate": 0,
+    "invalidRefrection": 0,
+    "isSelfRefrection": 0,
+    "selfRefrectionNum": 0,
+    "refrectionRandomRot": {
+      "x": 0,
+      "y": 0
+    },
+    "isHideHitEffect": 0,
+    "killComboRate": 0,
+    "useLimitMax": -1,
+    "spriteButtonIcon": {
+      "fileID": 0
+    },
+    "useClickWhenFire": 1,
+    "useChargeWhenFire": 0,
+    "useChargeWithoutFire": 0,
+    "weaponAutoChargeSettings": {
+      "fileID": 0
+    },
+    "attackRotationSpeed": 0,
+    "bulletFx": null,
+    "shootSeType": 69,
+    "shootAnimName": null,
+    "shootFx": null,
+    "hitSeType": 59,
+    "hitJudgeType": 3,
+    "canFireFx": null,
+    "canEffectHomingBuff": 0,
+    "isInfinitePenetrate": 1,
+    "isHitManyTime": 0,
+    "viewTargetMarker": 0,
+    "playerPenetrateNum": -1,
+    "isWallPenetrate": 1,
+    "bulletGeneratePositionOffset": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "shootingRecoil": 0,
+    "isChild": 0,
+    "isOverwriteDirection": 0,
+    "IsLookAtY": 0,
+    "IsWoofer": 0,
+    "IsFriendlyFireInvalid": 0,
+    "friendlyFireRate": 0.1,
+    "reflectionFx": null,
+    "bulletTeamColorSwitch": 0,
+    "bulletPowerZero": 0,
+    "bulletMoveStop": 0,
+    "overwriteDirectionType": 0,
+    "onGround": 0,
+    "onGroundOffsetY": 0.1,
+    "addPowerPerSec": 0,
+    "addPowerMin": 0,
+    "addPowerMax": 9999,
+    "yourselfBuffs": [],
+    "buffType": 0,
+    "buffPower": 0,
+    "buffDuration": 0,
+    "buffProbability": 0,
+    "bufftag": null,
+    "buffUpdateOnManyHit": 0,
+    "isRemoveOnTargetDie": 1,
+    "buffManyHitShowFx": 0,
+    "buffDuplicationMax": 0,
+    "explosionTriggerType": 0,
+    "explosionPower": 0,
+    "explosionStopPower": 0,
+    "explosionDisableBrakeTime": 0,
+    "explosionHitShape": 0,
+    "explosionHitRadius": 0,
+    "explosionHitSize": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "explosionAttackMoveSpeed": 0,
+    "explosionAttackMoveAccel": 0,
+    "explosionHitGrowingTimeRate": 0,
+    "explosionDuration": 0,
+    "explosionSeType": 0,
+    "hitFx": null,
+    "explosionFx": null,
+    "enemyOtherExplosionFx": null,
+    "explosionGrowingFx": null,
+    "disableExplosionFx": null,
+    "withOutSelfFX": 0,
+    "explosionHitJudgeType": 1,
+    "hitPartyType": 2,
+    "explosionDirectionType": 2,
+    "IsExplosionFxPosY": 0,
+    "explosionFxPosY": 0,
+    "switchToAngers": [],
+    "buffBulletPrefab": {
+      "fileID": 1194766555861563,
+      "guid": "93207d8405e5ef245a52a1ba9b46497e",
+      "type": 2
+    },
+    "debuffBulletPrefab": {
+      "fileID": 1752631401099814,
+      "guid": "21681f89fb53b0449b2e7dc0daafbccc",
+      "type": 2
+    },
+    "modeChangeTime": 90,
+    "modeChangeFx": "Fx/Battle/fx_punch_kuma_1",
+    "randomBuffToFriend": [
+      {
+        "pickRate": 30,
+        "duration": 30,
+        "typeSettings": [
+          {
+            "type": 6,
+            "power": 0.1
+          }
+        ]
+      },
+      {
+        "pickRate": 30,
+        "duration": 30,
+        "typeSettings": [
+          {
+            "type": 10,
+            "power": 5
+          }
+        ]
+      },
+      {
+        "pickRate": 40,
+        "duration": 30,
+        "typeSettings": [
+          {
+            "type": 8,
+            "power": 5
+          },
+          {
+            "type": 78,
+            "power": 10
+          }
+        ]
+      }
+    ],
+    "friendBuffTag": "ChameleonFriendBuff",
+    "debuffToOpponent": {
+      "pickRate": 50,
+      "duration": 8,
+      "typeSettings": [
+        {
+          "type": 24,
+          "power": 10
+        }
+      ]
+    },
+    "opponentDebuffTag": "ChameleonOponentDebuff"
+  },
+  "passiveSkills": [
+    {
+      "m_ObjectHideFlags": 0,
+      "m_CorrespondingSourceObject": {
+        "fileID": 0
+      },
+      "m_PrefabInstance": {
+        "fileID": 0
+      },
+      "m_PrefabAsset": {
+        "fileID": 0
+      },
+      "m_GameObject": {
+        "fileID": 0
+      },
+      "m_Enabled": 1,
+      "m_EditorHideFlags": 0,
+      "m_Script": {
+        "fileID": 11500000,
+        "guid": "c5b52ff9f8d7db766ccee58c9e65b8e1",
+        "type": 3
+      },
+      "m_Name": "ps_remainTime_defenseUp_chameleon",
+      "m_EditorClassIdentifier": null,
+      "memo": "3:00~1:31の間重さ+X",
+      "weaponCategry": 0,
+      "enemySearchRadius": 0,
+      "enemySearchOffset": 0,
+      "attackPower": 20,
+      "attackStopPower": 0,
+      "attackIgnoreDefense": 0,
+      "attackDisableBrakeTime": 0,
+      "additionalPower": 0,
+      "attackHitShape": 0,
+      "attackHitRadius": 0,
+      "attackHitSize": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "hitGrowingTimeRate": 0,
+      "attackHitPositionOffset": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "attackMoveSpeed": 0,
+      "attackMoveAccel": 0,
+      "attackMoveSpeedY": 0,
+      "attackMoveAccelY": 0,
+      "attackDuration": -1,
+      "attackTimeSpan": 0,
+      "isBackCritical": 0,
+      "isSideCritical": 0,
+      "shieldBreak": 0,
+      "isReflector": 0,
+      "refrectionRate": 0,
+      "reflectionAddSpeedRate": 0,
+      "invalidRefrection": 0,
+      "isSelfRefrection": 0,
+      "selfRefrectionNum": 0,
+      "refrectionRandomRot": {
+        "x": 0,
+        "y": 0
+      },
+      "isHideHitEffect": 0,
+      "killComboRate": 0,
+      "useLimitMax": -1,
+      "spriteButtonIcon": {
+        "fileID": 0
+      },
+      "useClickWhenFire": 1,
+      "useChargeWhenFire": 0,
+      "useChargeWithoutFire": 0,
+      "weaponAutoChargeSettings": {
+        "fileID": 0
+      },
+      "buffType": 10,
+      "targetType": 0,
+      "tag": null,
+      "powerScaleType": 0,
+      "shootSeType": 0,
+      "shootAnimName": null,
+      "shootFx": null,
+      "triggerType": 7,
+      "triggerValue": 91,
+      "triggerString": null,
+      "gradeType": 0,
+      "maxGradeNum": 0,
+      "remainingLifeBuffSettings": {
+        "RemainLife3Power": 0,
+        "RemainLife2Power": 0,
+        "RemainLife1Power": 0
+      },
+      "shouldPlayParticleWhenEmitBuff": 1
+    },
+    {
+      "m_ObjectHideFlags": 0,
+      "m_CorrespondingSourceObject": {
+        "fileID": 0
+      },
+      "m_PrefabInstance": {
+        "fileID": 0
+      },
+      "m_PrefabAsset": {
+        "fileID": 0
+      },
+      "m_GameObject": {
+        "fileID": 0
+      },
+      "m_Enabled": 1,
+      "m_EditorHideFlags": 0,
+      "m_Script": {
+        "fileID": 11500000,
+        "guid": "c5b52ff9f8d7db766ccee58c9e65b8e1",
+        "type": 3
+      },
+      "m_Name": "ps_remainTime_attackDown_chameleon",
+      "m_EditorClassIdentifier": null,
+      "memo": "3:00~1:31の間攻撃力-X",
+      "weaponCategry": 0,
+      "enemySearchRadius": 0,
+      "enemySearchOffset": 0,
+      "attackPower": -20,
+      "attackStopPower": 0,
+      "attackIgnoreDefense": 0,
+      "attackDisableBrakeTime": 0,
+      "additionalPower": 0,
+      "attackHitShape": 0,
+      "attackHitRadius": 0,
+      "attackHitSize": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "hitGrowingTimeRate": 0,
+      "attackHitPositionOffset": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "attackMoveSpeed": 0,
+      "attackMoveAccel": 0,
+      "attackMoveSpeedY": 0,
+      "attackMoveAccelY": 0,
+      "attackDuration": -1,
+      "attackTimeSpan": 0,
+      "isBackCritical": 0,
+      "isSideCritical": 0,
+      "shieldBreak": 0,
+      "isReflector": 0,
+      "refrectionRate": 0,
+      "reflectionAddSpeedRate": 0,
+      "invalidRefrection": 0,
+      "isSelfRefrection": 0,
+      "selfRefrectionNum": 0,
+      "refrectionRandomRot": {
+        "x": 0,
+        "y": 0
+      },
+      "isHideHitEffect": 0,
+      "killComboRate": 0,
+      "useLimitMax": -1,
+      "spriteButtonIcon": {
+        "fileID": 0
+      },
+      "useClickWhenFire": 1,
+      "useChargeWhenFire": 0,
+      "useChargeWithoutFire": 0,
+      "weaponAutoChargeSettings": {
+        "fileID": 0
+      },
+      "buffType": 9,
+      "targetType": 0,
+      "tag": null,
+      "powerScaleType": 0,
+      "shootSeType": 0,
+      "shootAnimName": null,
+      "shootFx": null,
+      "triggerType": 7,
+      "triggerValue": 91,
+      "triggerString": null,
+      "gradeType": 0,
+      "maxGradeNum": 0,
+      "remainingLifeBuffSettings": {
+        "RemainLife3Power": 0,
+        "RemainLife2Power": 0,
+        "RemainLife1Power": 0
+      },
+      "shouldPlayParticleWhenEmitBuff": 0
+    },
+    {
+      "m_ObjectHideFlags": 0,
+      "m_CorrespondingSourceObject": {
+        "fileID": 0
+      },
+      "m_PrefabInstance": {
+        "fileID": 0
+      },
+      "m_PrefabAsset": {
+        "fileID": 0
+      },
+      "m_GameObject": {
+        "fileID": 0
+      },
+      "m_Enabled": 1,
+      "m_EditorHideFlags": 0,
+      "m_Script": {
+        "fileID": 11500000,
+        "guid": "c5b52ff9f8d7db766ccee58c9e65b8e1",
+        "type": 3
+      },
+      "m_Name": "ps_remainTime_defenseDown_chameleon",
+      "m_EditorClassIdentifier": null,
+      "memo": "1:30~0:00の間重さ-X",
+      "weaponCategry": 0,
+      "enemySearchRadius": 0,
+      "enemySearchOffset": 0,
+      "attackPower": -20,
+      "attackStopPower": 0,
+      "attackIgnoreDefense": 0,
+      "attackDisableBrakeTime": 0,
+      "additionalPower": 0,
+      "attackHitShape": 0,
+      "attackHitRadius": 0,
+      "attackHitSize": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "hitGrowingTimeRate": 0,
+      "attackHitPositionOffset": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "attackMoveSpeed": 0,
+      "attackMoveAccel": 0,
+      "attackMoveSpeedY": 0,
+      "attackMoveAccelY": 0,
+      "attackDuration": -1,
+      "attackTimeSpan": 0,
+      "isBackCritical": 0,
+      "isSideCritical": 0,
+      "shieldBreak": 0,
+      "isReflector": 0,
+      "refrectionRate": 0,
+      "reflectionAddSpeedRate": 0,
+      "invalidRefrection": 0,
+      "isSelfRefrection": 0,
+      "selfRefrectionNum": 0,
+      "refrectionRandomRot": {
+        "x": 0,
+        "y": 0
+      },
+      "isHideHitEffect": 0,
+      "killComboRate": 0,
+      "useLimitMax": -1,
+      "spriteButtonIcon": {
+        "fileID": 0
+      },
+      "useClickWhenFire": 1,
+      "useChargeWhenFire": 0,
+      "useChargeWithoutFire": 0,
+      "weaponAutoChargeSettings": {
+        "fileID": 0
+      },
+      "buffType": 10,
+      "targetType": 0,
+      "tag": null,
+      "powerScaleType": 0,
+      "shootSeType": 0,
+      "shootAnimName": null,
+      "shootFx": null,
+      "triggerType": 8,
+      "triggerValue": 90,
+      "triggerString": null,
+      "gradeType": 0,
+      "maxGradeNum": 0,
+      "remainingLifeBuffSettings": {
+        "RemainLife3Power": 0,
+        "RemainLife2Power": 0,
+        "RemainLife1Power": 0
+      },
+      "shouldPlayParticleWhenEmitBuff": 0
+    },
+    {
+      "m_ObjectHideFlags": 0,
+      "m_CorrespondingSourceObject": {
+        "fileID": 0
+      },
+      "m_PrefabInstance": {
+        "fileID": 0
+      },
+      "m_PrefabAsset": {
+        "fileID": 0
+      },
+      "m_GameObject": {
+        "fileID": 0
+      },
+      "m_Enabled": 1,
+      "m_EditorHideFlags": 0,
+      "m_Script": {
+        "fileID": 11500000,
+        "guid": "c5b52ff9f8d7db766ccee58c9e65b8e1",
+        "type": 3
+      },
+      "m_Name": "ps_remainTime_attackUp_chameleon",
+      "m_EditorClassIdentifier": null,
+      "memo": "1:30~0:00の間攻撃力+X",
+      "weaponCategry": 0,
+      "enemySearchRadius": 0,
+      "enemySearchOffset": 0,
+      "attackPower": 20,
+      "attackStopPower": 0,
+      "attackIgnoreDefense": 0,
+      "attackDisableBrakeTime": 0,
+      "additionalPower": 0,
+      "attackHitShape": 0,
+      "attackHitRadius": 0,
+      "attackHitSize": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "hitGrowingTimeRate": 0,
+      "attackHitPositionOffset": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "attackMoveSpeed": 0,
+      "attackMoveAccel": 0,
+      "attackMoveSpeedY": 0,
+      "attackMoveAccelY": 0,
+      "attackDuration": -1,
+      "attackTimeSpan": 0,
+      "isBackCritical": 0,
+      "isSideCritical": 0,
+      "shieldBreak": 0,
+      "isReflector": 0,
+      "refrectionRate": 0,
+      "reflectionAddSpeedRate": 0,
+      "invalidRefrection": 0,
+      "isSelfRefrection": 0,
+      "selfRefrectionNum": 0,
+      "refrectionRandomRot": {
+        "x": 0,
+        "y": 0
+      },
+      "isHideHitEffect": 0,
+      "killComboRate": 0,
+      "useLimitMax": -1,
+      "spriteButtonIcon": {
+        "fileID": 0
+      },
+      "useClickWhenFire": 1,
+      "useChargeWhenFire": 0,
+      "useChargeWithoutFire": 0,
+      "weaponAutoChargeSettings": {
+        "fileID": 0
+      },
+      "buffType": 9,
+      "targetType": 0,
+      "tag": null,
+      "powerScaleType": 0,
+      "shootSeType": 0,
+      "shootAnimName": null,
+      "shootFx": null,
+      "triggerType": 8,
+      "triggerValue": 90,
+      "triggerString": null,
+      "gradeType": 0,
+      "maxGradeNum": 0,
+      "remainingLifeBuffSettings": {
+        "RemainLife3Power": 0,
+        "RemainLife2Power": 0,
+        "RemainLife1Power": 0
+      },
+      "shouldPlayParticleWhenEmitBuff": 1
+    }
+  ],
+  "flickDashSettings": null,
+  "img": "images/accessory/unit0055_01.PNG"
+}

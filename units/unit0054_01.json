@@ -1,0 +1,411 @@
+{
+  "aircraftName": "ふわふわクラゲ",
+  "description": "武器:クリオネミサイル",
+  "moveSpeed": 37,
+  "moveAccel": 30,
+  "moveResistPower": 30,
+  "moveBrake": 60,
+  "rotationSpeed": 1080,
+  "respawnPositionSelectMoveSpeed": 80,
+  "defense": 19,
+  "searchHitRadius": 1,
+  "weaponPositionOffset": {
+    "x": 0,
+    "y": 1.58,
+    "z": 6.4275
+  },
+  "pilotPositionOffset": {
+    "x": -4.543419e-13,
+    "y": 3.9033241,
+    "z": 0.19086593
+  },
+  "pilotScale": {
+    "x": 3,
+    "y": 3,
+    "z": 3
+  },
+  "avatarNeckPositionOffset": {
+    "x": 0.0032000002,
+    "y": 7.291229,
+    "z": -0.65011305
+  },
+  "avatarScale": {
+    "x": 14,
+    "y": 14,
+    "z": 14
+  },
+  "ForceShowFlyGauge": 1,
+  "weaponSettings": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "e7b8d5cdae815afd210c0828c4cf61db",
+      "type": 3
+    },
+    "m_Name": "wp_fluffy_jellyfish_01",
+    "m_EditorClassIdentifier": null,
+    "memo": "S52ふわふわクラゲ",
+    "weaponCategry": 2,
+    "enemySearchRadius": 30.8,
+    "enemySearchOffset": 24.2,
+    "attackPower": 49,
+    "attackStopPower": 10000,
+    "attackIgnoreDefense": 0,
+    "attackDisableBrakeTime": 1,
+    "additionalPower": 17,
+    "attackHitShape": 0,
+    "attackHitRadius": 3,
+    "attackHitSize": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "hitGrowingTimeRate": 0,
+    "attackHitPositionOffset": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "attackMoveSpeed": 34.9,
+    "attackMoveAccel": 0,
+    "attackMoveSpeedY": 0,
+    "attackMoveAccelY": 0,
+    "attackDuration": 10,
+    "attackTimeSpan": 1.5,
+    "isBackCritical": 0,
+    "isSideCritical": 0,
+    "shieldBreak": 0,
+    "isReflector": 0,
+    "refrectionRate": 0,
+    "reflectionAddSpeedRate": 0,
+    "invalidRefrection": 0,
+    "isSelfRefrection": 0,
+    "selfRefrectionNum": 0,
+    "refrectionRandomRot": {
+      "x": 0,
+      "y": 0
+    },
+    "isHideHitEffect": 0,
+    "killComboRate": 0,
+    "useLimitMax": -1,
+    "spriteButtonIcon": {
+      "fileID": 0
+    },
+    "useClickWhenFire": 1,
+    "useChargeWhenFire": 0,
+    "useChargeWithoutFire": 0,
+    "weaponAutoChargeSettings": {
+      "fileID": 0
+    },
+    "maxChargeTime": 1.5,
+    "inChargeDeceleratingRate": 1,
+    "inChargeMoveSpeedRate": 0,
+    "inChargeSe": 63,
+    "chargeMaxFx": "Fx/Battle/fx_charge_dash_attack_max",
+    "inChargeFx": "Fx/Battle/fx_charge_dash_attack3",
+    "disableChargeEffectWhenMax": 0,
+    "isChargeBuffContext": {
+      "type": 0,
+      "power": 0,
+      "duration": 0,
+      "tag": null,
+      "isRemoveOnTargetDie": 1,
+      "customSatelliteFxName": null
+    },
+    "buffContexts": [],
+    "bulletSettings": {
+      "rotationSpeed": 0,
+      "isWallPenetrate": 0,
+      "playerPenetrateNum": 0,
+      "shootIntervalSec": 0.4
+    },
+    "satelliteBulletSettings": {
+      "bulletPrefab": {
+        "fileID": 1280407968754841,
+        "guid": "9d058ffddc54ffa4396954d426c56bc6",
+        "type": 2
+      },
+      "orbitRadius": 7,
+      "moveSpeed": 10,
+      "isWallPenetrate": 0,
+      "playerPenetrateNum": 0
+    },
+    "bulletBuffByLevelSettings": [
+      {
+        "materials": [
+          {
+            "fileID": 2100000,
+            "guid": "465b70d579a49484db29cba3182e6365",
+            "type": 2
+          },
+          {
+            "fileID": 2100000,
+            "guid": "f702d10d27710d64bb75ba766079de7e",
+            "type": 2
+          }
+        ],
+        "buffData": {
+          "Ratio": 0,
+          "Type": 0,
+          "Power": 0,
+          "Duration": 0,
+          "EnemyOnly": 1
+        }
+      },
+      {
+        "materials": [
+          {
+            "fileID": 2100000,
+            "guid": "77af6bc9dea98f04c919433dc4be03de",
+            "type": 2
+          },
+          {
+            "fileID": 2100000,
+            "guid": "f702d10d27710d64bb75ba766079de7e",
+            "type": 2
+          }
+        ],
+        "buffData": {
+          "Ratio": 45,
+          "Type": 24,
+          "Power": 10,
+          "Duration": 8,
+          "EnemyOnly": 1
+        }
+      },
+      {
+        "materials": [
+          {
+            "fileID": 2100000,
+            "guid": "77af6bc9dea98f04c919433dc4be03de",
+            "type": 2
+          },
+          {
+            "fileID": 2100000,
+            "guid": "f702d10d27710d64bb75ba766079de7e",
+            "type": 2
+          }
+        ],
+        "buffData": {
+          "Ratio": 45,
+          "Type": 24,
+          "Power": 10,
+          "Duration": 8,
+          "EnemyOnly": 1
+        }
+      },
+      {
+        "materials": [
+          {
+            "fileID": 2100000,
+            "guid": "428f135a121f4c549a21f3fbf6132d9b",
+            "type": 2
+          },
+          {
+            "fileID": 2100000,
+            "guid": "f702d10d27710d64bb75ba766079de7e",
+            "type": 2
+          }
+        ],
+        "buffData": {
+          "Ratio": 45,
+          "Type": 5,
+          "Power": 10,
+          "Duration": 8,
+          "EnemyOnly": 1
+        }
+      },
+      {
+        "materials": [
+          {
+            "fileID": 2100000,
+            "guid": "428f135a121f4c549a21f3fbf6132d9b",
+            "type": 2
+          },
+          {
+            "fileID": 2100000,
+            "guid": "f702d10d27710d64bb75ba766079de7e",
+            "type": 2
+          }
+        ],
+        "buffData": {
+          "Ratio": 45,
+          "Type": 5,
+          "Power": 10,
+          "Duration": 8,
+          "EnemyOnly": 1
+        }
+      }
+    ],
+    "moveChargeSettings": {
+      "StartBulletNum": 0,
+      "MaxBulletNum": 5,
+      "AngerAmountOnMaxBulletNum": 5,
+      "FirstBulletReloadSec": 2.2,
+      "FxOnMaxBulletNum": "Fx/Bullet/bl_electric_missile_explosion",
+      "SeOnMaxBulletNum": 50,
+      "SwitchLocatorTarget": 2
+    },
+    "flySettings": {
+      "chargeFlySettings": {
+        "SeType": 81,
+        "DashForce": 60,
+        "Duration": 6
+      },
+      "buffSettings": [
+        {
+          "type": 8,
+          "power": -5
+        }
+      ]
+    }
+  },
+  "passiveSkills": [
+    {
+      "m_ObjectHideFlags": 0,
+      "m_CorrespondingSourceObject": {
+        "fileID": 0
+      },
+      "m_PrefabInstance": {
+        "fileID": 0
+      },
+      "m_PrefabAsset": {
+        "fileID": 0
+      },
+      "m_GameObject": {
+        "fileID": 0
+      },
+      "m_Enabled": 1,
+      "m_EditorHideFlags": 0,
+      "m_Script": {
+        "fileID": 11500000,
+        "guid": "c5b52ff9f8d7db766ccee58c9e65b8e1",
+        "type": 3
+      },
+      "m_Name": "ps_move_accumulate_fluffyJellyfish",
+      "m_EditorClassIdentifier": null,
+      "memo": "移動により強化されていく（2.2秒毎）",
+      "weaponCategry": 0,
+      "enemySearchRadius": 0,
+      "enemySearchOffset": 0,
+      "attackPower": 2.2,
+      "attackStopPower": 0,
+      "attackIgnoreDefense": 0,
+      "attackDisableBrakeTime": 0,
+      "additionalPower": 0,
+      "attackHitShape": 0,
+      "attackHitRadius": 0,
+      "attackHitSize": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "hitGrowingTimeRate": 0,
+      "attackHitPositionOffset": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "attackMoveSpeed": 0,
+      "attackMoveAccel": 0,
+      "attackMoveSpeedY": 0,
+      "attackMoveAccelY": 0,
+      "attackDuration": -1,
+      "attackTimeSpan": 0,
+      "isBackCritical": 0,
+      "isSideCritical": 0,
+      "shieldBreak": 0,
+      "isReflector": 0,
+      "refrectionRate": 0,
+      "reflectionAddSpeedRate": 0,
+      "invalidRefrection": 0,
+      "isSelfRefrection": 0,
+      "selfRefrectionNum": 0,
+      "refrectionRandomRot": {
+        "x": 0,
+        "y": 0
+      },
+      "isHideHitEffect": 0,
+      "killComboRate": 0,
+      "useLimitMax": -1,
+      "spriteButtonIcon": {
+        "fileID": 0
+      },
+      "useClickWhenFire": 1,
+      "useChargeWhenFire": 0,
+      "useChargeWithoutFire": 0,
+      "weaponAutoChargeSettings": {
+        "fileID": 0
+      },
+      "buffType": 37,
+      "targetType": 0,
+      "tag": null,
+      "powerScaleType": 0,
+      "shootSeType": 0,
+      "shootAnimName": null,
+      "shootFx": null,
+      "triggerType": 0,
+      "triggerValue": 0,
+      "triggerString": null,
+      "gradeType": 0,
+      "maxGradeNum": 0,
+      "remainingLifeBuffSettings": {
+        "RemainLife3Power": 0,
+        "RemainLife2Power": 0,
+        "RemainLife1Power": 0
+      },
+      "shouldPlayParticleWhenEmitBuff": 1
+    }
+  ],
+  "flickDashSettings": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "fd6d21e32245f8670158d47df2369f83",
+      "type": 3
+    },
+    "m_Name": "FlickDash_0054",
+    "m_EditorClassIdentifier": null,
+    "Memo": "S52ふわふわクラゲフリックダッシュ",
+    "Interval": 13,
+    "FrontMoveStopPower": 10,
+    "FrontMoveForce": 60,
+    "MutekiTime": 0,
+    "StunTime": 0.25,
+    "seType": 81,
+    "FlyAfter": 1,
+    "FlyAnimation": 1,
+    "FlyDuration": 6.5,
+    "ContinuousNum": 1,
+    "CanContinuousDuration": 13
+  },
+  "img": "images/accessory/unit0054_01.PNG"
+}
