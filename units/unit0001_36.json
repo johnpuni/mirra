@@ -1,0 +1,277 @@
+{
+  "aircraftName": "エモカーX・スピーカー型",
+  "description": "武器: ウーハー",
+  "moveSpeed": 25,
+  "moveAccel": 24,
+  "moveResistPower": 20,
+  "moveBrake": 35,
+  "rotationSpeed": 540,
+  "respawnPositionSelectMoveSpeed": 80,
+  "defense": 2,
+  "searchHitRadius": 1,
+  "weaponPositionOffset": {
+    "x": 0,
+    "y": 2.28,
+    "z": 1
+  },
+  "pilotPositionOffset": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "pilotScale": {
+    "x": 3,
+    "y": 3,
+    "z": 3
+  },
+  "avatarNeckPositionOffset": {
+    "x": 0,
+    "y": 3.1,
+    "z": -0.75
+  },
+  "avatarScale": {
+    "x": 14,
+    "y": 14,
+    "z": 14
+  },
+  "ForceShowFlyGauge": 0,
+  "weaponSettings": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "f5ce8deb71a6fbc16cc6a776a8b3983d",
+      "type": 3
+    },
+    "m_Name": "wp_woofer_02",
+    "m_EditorClassIdentifier": null,
+    "memo": "エモカーウーハー",
+    "weaponCategry": 2,
+    "enemySearchRadius": 32,
+    "enemySearchOffset": 32,
+    "attackPower": 48,
+    "attackStopPower": 10000,
+    "attackIgnoreDefense": 0,
+    "attackDisableBrakeTime": 0.7,
+    "additionalPower": 0,
+    "attackHitShape": 0,
+    "attackHitRadius": 0,
+    "attackHitSize": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "hitGrowingTimeRate": 0,
+    "attackHitPositionOffset": {
+      "x": 0,
+      "y": -0.54,
+      "z": 7
+    },
+    "attackMoveSpeed": 0,
+    "attackMoveAccel": 0,
+    "attackMoveSpeedY": 0,
+    "attackMoveAccelY": 0,
+    "attackDuration": 0,
+    "attackTimeSpan": 0.1,
+    "isBackCritical": 0,
+    "isSideCritical": 0,
+    "shieldBreak": 0,
+    "isReflector": 0,
+    "refrectionRate": 0,
+    "reflectionAddSpeedRate": 0,
+    "invalidRefrection": 0,
+    "isSelfRefrection": 0,
+    "selfRefrectionNum": 0,
+    "refrectionRandomRot": {
+      "x": 0,
+      "y": 0
+    },
+    "isHideHitEffect": 0,
+    "killComboRate": 0,
+    "useLimitMax": -1,
+    "spriteButtonIcon": {
+      "fileID": 0
+    },
+    "useClickWhenFire": 1,
+    "useChargeWhenFire": 0,
+    "useChargeWithoutFire": 0,
+    "weaponAutoChargeSettings": {
+      "fileID": 0
+    },
+    "missileReloadTime": 5,
+    "multiMissiles": [
+      {
+        "offset": {
+          "x": 0,
+          "y": -1.3,
+          "z": 6
+        }
+      }
+    ],
+    "attackRotationSpeed": 10,
+    "bulletFx": null,
+    "shootSeType": 59,
+    "shootAnimName": "chr_hit",
+    "shootFx": null,
+    "hitSeType": 59,
+    "hitJudgeType": 3,
+    "canFireFx": "Fx/Bullet/bl_woofer_can_fireS",
+    "canEffectHomingBuff": 0,
+    "isInfinitePenetrate": 0,
+    "viewTargetMarker": 0,
+    "playerPenetrateNum": 0,
+    "isWallPenetrate": 1,
+    "bulletGeneratePositionOffset": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "shootingRecoil": 0,
+    "isChild": 0,
+    "isOverwriteDirection": 0,
+    "IsLookAtY": 0,
+    "IsFriendlyFireInvalid": 0,
+    "friendlyFireRate": 1,
+    "overwriteDirectionType": 0,
+    "waveTriggerType": 2,
+    "wavePower": 48,
+    "waveStopPower": 10000,
+    "waveDisableBrakeTime": 0.7,
+    "waveHitShape": 0,
+    "waveHitRadius": 1,
+    "waveHitSize": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "waveAttackMoveSpeed": 12,
+    "waveAttackMoveAccel": 15,
+    "waveHitGrowingTimeRate": 22,
+    "waveDuration": 0.85,
+    "waveSeType": 60,
+    "waveFx": null,
+    "waveGrowingFx": "Fx/Bullet/bl_woofer_01",
+    "waveHitJudgeType": 3,
+    "waveDirectionType": 3,
+    "buffType": 46,
+    "buffPower": 2,
+    "buffDuration": 1,
+    "buffProbability": 0,
+    "bufftag": null,
+    "buffUpdateOnManyHit": 0,
+    "isRemoveOnTargetDie": 1,
+    "buffManyHitShowFx": 0
+  },
+  "passiveSkills": [
+    {
+      "m_ObjectHideFlags": 0,
+      "m_CorrespondingSourceObject": {
+        "fileID": 0
+      },
+      "m_PrefabInstance": {
+        "fileID": 0
+      },
+      "m_PrefabAsset": {
+        "fileID": 0
+      },
+      "m_GameObject": {
+        "fileID": 0
+      },
+      "m_Enabled": 1,
+      "m_EditorHideFlags": 0,
+      "m_Script": {
+        "fileID": 11500000,
+        "guid": "c5b52ff9f8d7db766ccee58c9e65b8e1",
+        "type": 3
+      },
+      "m_Name": "ps_killCombo_rangeUp",
+      "m_EditorClassIdentifier": null,
+      "memo": "キルコンボによる攻撃範囲アップ",
+      "weaponCategry": 0,
+      "enemySearchRadius": 0,
+      "enemySearchOffset": 0,
+      "attackPower": 0.07,
+      "attackStopPower": 0,
+      "attackIgnoreDefense": 0,
+      "attackDisableBrakeTime": 0,
+      "additionalPower": 0,
+      "attackHitShape": 0,
+      "attackHitRadius": 0,
+      "attackHitSize": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "hitGrowingTimeRate": 0,
+      "attackHitPositionOffset": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "attackMoveSpeed": 0,
+      "attackMoveAccel": 0,
+      "attackMoveSpeedY": 0,
+      "attackMoveAccelY": 0,
+      "attackDuration": -1,
+      "attackTimeSpan": 0,
+      "isBackCritical": 0,
+      "isSideCritical": 0,
+      "shieldBreak": 0,
+      "isReflector": 0,
+      "refrectionRate": 0,
+      "reflectionAddSpeedRate": 0,
+      "invalidRefrection": 0,
+      "isSelfRefrection": 0,
+      "selfRefrectionNum": 0,
+      "refrectionRandomRot": {
+        "x": 0,
+        "y": 0
+      },
+      "isHideHitEffect": 0,
+      "killComboRate": 0,
+      "useLimitMax": -1,
+      "spriteButtonIcon": {
+        "fileID": 0
+      },
+      "useClickWhenFire": 0,
+      "useChargeWhenFire": 0,
+      "useChargeWithoutFire": 0,
+      "weaponAutoChargeSettings": {
+        "fileID": 0
+      },
+      "buffType": 45,
+      "targetType": 0,
+      "tag": null,
+      "powerScaleType": 0,
+      "shootSeType": 0,
+      "shootAnimName": null,
+      "shootFx": null,
+      "triggerType": 0,
+      "triggerValue": 0,
+      "triggerString": null,
+      "gradeType": 0,
+      "maxGradeNum": 0,
+      "remainingLifeBuffSettings": {
+        "RemainLife3Power": 0,
+        "RemainLife2Power": 0,
+        "RemainLife1Power": 0
+      },
+      "shouldPlayParticleWhenEmitBuff": 1
+    }
+  ],
+  "flickDashSettings": null,
+  "img": "images/accessory/unit0001_36.PNG"
+}

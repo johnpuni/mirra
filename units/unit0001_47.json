@@ -1,0 +1,290 @@
+{
+  "aircraftName": "エモカーX・招き猫型",
+  "description": "武器: ",
+  "moveSpeed": 18,
+  "moveAccel": 24,
+  "moveResistPower": 20,
+  "moveBrake": 35,
+  "rotationSpeed": 720,
+  "respawnPositionSelectMoveSpeed": 80,
+  "defense": 5,
+  "searchHitRadius": 1,
+  "weaponPositionOffset": {
+    "x": 0,
+    "y": 0.2,
+    "z": 8
+  },
+  "pilotPositionOffset": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "pilotScale": {
+    "x": 3,
+    "y": 3,
+    "z": 3
+  },
+  "avatarNeckPositionOffset": {
+    "x": 0,
+    "y": 3.1,
+    "z": -0.75
+  },
+  "avatarScale": {
+    "x": 14,
+    "y": 14,
+    "z": 14
+  },
+  "ForceShowFlyGauge": 0,
+  "weaponSettings": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "9fffef0c67dde8f81015f950cecb3c17",
+      "type": 3
+    },
+    "m_Name": "wp_koban_01_emo",
+    "m_EditorClassIdentifier": null,
+    "memo": "パンチ",
+    "weaponCategry": 1,
+    "enemySearchRadius": 14,
+    "enemySearchOffset": 10,
+    "attackPower": 48,
+    "attackStopPower": 10000,
+    "attackIgnoreDefense": 0,
+    "attackDisableBrakeTime": 1,
+    "additionalPower": 0,
+    "attackHitShape": 0,
+    "attackHitRadius": 3,
+    "attackHitSize": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "hitGrowingTimeRate": 0,
+    "attackHitPositionOffset": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "attackMoveSpeed": 0,
+    "attackMoveAccel": 0,
+    "attackMoveSpeedY": 0,
+    "attackMoveAccelY": 0,
+    "attackDuration": 0.5,
+    "attackTimeSpan": 0.45,
+    "isBackCritical": 1,
+    "isSideCritical": 0,
+    "shieldBreak": 0,
+    "isReflector": 0,
+    "refrectionRate": 0,
+    "reflectionAddSpeedRate": 0,
+    "invalidRefrection": 0,
+    "isSelfRefrection": 0,
+    "selfRefrectionNum": 0,
+    "refrectionRandomRot": {
+      "x": 0,
+      "y": 0
+    },
+    "isHideHitEffect": 0,
+    "killComboRate": 0,
+    "useLimitMax": -1,
+    "spriteButtonIcon": {
+      "fileID": 0
+    },
+    "useClickWhenFire": 1,
+    "useChargeWhenFire": 0,
+    "useChargeWithoutFire": 0,
+    "weaponAutoChargeSettings": {
+      "fileID": 0
+    },
+    "prefabWeapon": {
+      "fileID": 1721446700132487,
+      "guid": "c7b3ddcde0c12e84eb2f00d8de138ec6",
+      "type": 2
+    },
+    "prefabWeaponBase": {
+      "fileID": 1721446700132487,
+      "guid": "c7b3ddcde0c12e84eb2f00d8de138ec6",
+      "type": 2
+    },
+    "weaponObjectRotate": {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "w": 1
+    },
+    "shootAnimName": null,
+    "localShootAnim": 1,
+    "attackMoveRange": 9,
+    "curveTimeToPosition": {
+      "serializedVersion": 2,
+      "m_Curve": [
+        {
+          "serializedVersion": 3,
+          "time": 0,
+          "value": 0,
+          "inSlope": 0,
+          "outSlope": 0,
+          "weightedMode": 0,
+          "inWeight": 0,
+          "outWeight": 0
+        },
+        {
+          "serializedVersion": 3,
+          "time": 0.05,
+          "value": 1,
+          "inSlope": 0.09993771,
+          "outSlope": 0,
+          "weightedMode": 0,
+          "inWeight": 0.33333334,
+          "outWeight": 0.33333334
+        },
+        {
+          "serializedVersion": 3,
+          "time": 0.95,
+          "value": 1,
+          "inSlope": 0,
+          "outSlope": 1.9008005,
+          "weightedMode": 0,
+          "inWeight": 0.33333334,
+          "outWeight": 0.33333334
+        },
+        {
+          "serializedVersion": 3,
+          "time": 1,
+          "value": 0,
+          "inSlope": 2,
+          "outSlope": 2,
+          "weightedMode": 0,
+          "inWeight": 0,
+          "outWeight": 0
+        }
+      ],
+      "m_PreInfinity": 2,
+      "m_PostInfinity": 2,
+      "m_RotationOrder": 4
+    },
+    "shootSeType": 46,
+    "hitSeType": 54,
+    "hitTeamSeType": 69,
+    "buffCatchSeType": 68,
+    "handAnimName": "punch2",
+    "powerUpFx": "Fx/Battle/fx_aura_type_oneshot_1",
+    "buffCatchFx": "Fx/Battle/fx_aura_type_oneshot_2",
+    "kobanObjectPath": "car_01/ARM/Pivot",
+    "kobanObjectScale": 1,
+    "itemGigantic": {
+      "fileID": 0
+    },
+    "hideWeaponWhenIdleForPuppet": 0,
+    "hideWeaponDelay": 0,
+    "useReturnHandDurationLimit": 0,
+    "returnHandDurationLimit": 0,
+    "kobanCatchBuff": 0,
+    "hitJudgeType": 1,
+    "KobanBuffList": [
+      {
+        "buffType": 9,
+        "buffDuration": 9999,
+        "buffParam": 4,
+        "tag": "Koban_Attack",
+        "buffUpdateOnManyHit": 0,
+        "duplicationMax": 5,
+        "isRemoveOnTargetDie": 1,
+        "isRemoveOnDamage": 1
+      },
+      {
+        "buffType": 34,
+        "buffDuration": 9999,
+        "buffParam": 0.165,
+        "tag": "Koban_Gigantic",
+        "buffUpdateOnManyHit": 0,
+        "duplicationMax": 5,
+        "isRemoveOnTargetDie": 1,
+        "isRemoveOnDamage": 1
+      },
+      {
+        "buffType": 31,
+        "buffDuration": 9999,
+        "buffParam": 0,
+        "tag": "Koban_Extend",
+        "buffUpdateOnManyHit": 0,
+        "duplicationMax": 5,
+        "isRemoveOnTargetDie": 1,
+        "isRemoveOnDamage": 1
+      },
+      {
+        "buffType": 72,
+        "buffDuration": 9999,
+        "buffParam": 0.25,
+        "tag": "Koban_AttackSpeedUp",
+        "buffUpdateOnManyHit": 0,
+        "duplicationMax": 5,
+        "isRemoveOnTargetDie": 1,
+        "isRemoveOnDamage": 1
+      },
+      {
+        "buffType": 44,
+        "buffDuration": 9999,
+        "buffParam": 3,
+        "tag": "Koban_WeightUp",
+        "buffUpdateOnManyHit": 0,
+        "duplicationMax": 5,
+        "isRemoveOnTargetDie": 1,
+        "isRemoveOnDamage": 1
+      }
+    ]
+  },
+  "passiveSkills": [],
+  "flickDashSettings": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "fd6d21e32245f8670158d47df2369f83",
+      "type": 3
+    },
+    "m_Name": "FlickDash_008",
+    "m_EditorClassIdentifier": null,
+    "Memo": "エモカー(まねき猫)のフリックダッシュ",
+    "Interval": 2,
+    "FrontMoveStopPower": 10,
+    "FrontMoveForce": 70,
+    "MutekiTime": 0,
+    "StunTime": 0.25,
+    "seType": 67,
+    "FlyAfter": 0,
+    "FlyAnimation": 0,
+    "FlyDuration": 0,
+    "ContinuousNum": 1,
+    "CanContinuousDuration": 1
+  },
+  "img": "images/accessory/unit0001_47.PNG"
+}

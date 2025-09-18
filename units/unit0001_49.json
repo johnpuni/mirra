@@ -1,0 +1,654 @@
+{
+  "aircraftName": "エモカーX・s37仮",
+  "description": "武器: パステルベアファミリー",
+  "moveSpeed": 21,
+  "moveAccel": 22,
+  "moveResistPower": 20,
+  "moveBrake": 25,
+  "rotationSpeed": 720,
+  "respawnPositionSelectMoveSpeed": 80,
+  "defense": 7,
+  "searchHitRadius": 1,
+  "weaponPositionOffset": {
+    "x": 0,
+    "y": 1,
+    "z": 8
+  },
+  "pilotPositionOffset": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "pilotScale": {
+    "x": 3,
+    "y": 3,
+    "z": 3
+  },
+  "avatarNeckPositionOffset": {
+    "x": 0,
+    "y": 3.1,
+    "z": -0.75
+  },
+  "avatarScale": {
+    "x": 14,
+    "y": 14,
+    "z": 14
+  },
+  "ForceShowFlyGauge": 0,
+  "weaponSettings": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "8f848b9c810a90da1f5ec5b8f63d008a",
+      "type": 3
+    },
+    "m_Name": "wp_pastelbearfamily_emocarx",
+    "m_EditorClassIdentifier": null,
+    "memo": "わんぱくこぐま:エモカーX",
+    "weaponCategry": 1,
+    "enemySearchRadius": 14,
+    "enemySearchOffset": 10,
+    "attackPower": 48,
+    "attackStopPower": 10000,
+    "attackIgnoreDefense": 0,
+    "attackDisableBrakeTime": 1,
+    "additionalPower": 0,
+    "attackHitShape": 0,
+    "attackHitRadius": 3,
+    "attackHitSize": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "hitGrowingTimeRate": 0,
+    "attackHitPositionOffset": {
+      "x": 0,
+      "y": 0,
+      "z": 1
+    },
+    "attackMoveSpeed": 0,
+    "attackMoveAccel": 0,
+    "attackMoveSpeedY": 0,
+    "attackMoveAccelY": 0,
+    "attackDuration": 1.5,
+    "attackTimeSpan": 1.8,
+    "isBackCritical": 0,
+    "isSideCritical": 1,
+    "shieldBreak": 0,
+    "isReflector": 0,
+    "refrectionRate": 0,
+    "reflectionAddSpeedRate": 0,
+    "invalidRefrection": 0,
+    "isSelfRefrection": 0,
+    "selfRefrectionNum": 0,
+    "refrectionRandomRot": {
+      "x": 0,
+      "y": 0
+    },
+    "isHideHitEffect": 0,
+    "killComboRate": 0,
+    "useLimitMax": -1,
+    "spriteButtonIcon": {
+      "fileID": 0
+    },
+    "useClickWhenFire": 1,
+    "useChargeWhenFire": 0,
+    "useChargeWithoutFire": 0,
+    "weaponAutoChargeSettings": {
+      "fileID": 0
+    },
+    "combos": [
+      {
+        "punchSets": [
+          {
+            "punches": [
+              {
+                "weaponIndex": 0,
+                "weaponObjectRotate": {
+                  "x": 0,
+                  "y": 0,
+                  "z": 0,
+                  "w": 0
+                },
+                "attackMoveRange": 10
+              }
+            ]
+          }
+        ],
+        "weightAdd": 0,
+        "powerAdd": 0,
+        "scaleUpRate": 0,
+        "attackTimeSpanUpRate": 0,
+        "attackMoveRangeUpRate": 0,
+        "addBuffRate": 0.25
+      },
+      {
+        "punchSets": [
+          {
+            "punches": [
+              {
+                "weaponIndex": 0,
+                "weaponObjectRotate": {
+                  "x": 0,
+                  "y": 0,
+                  "z": 0,
+                  "w": 0
+                },
+                "attackMoveRange": 10
+              }
+            ]
+          }
+        ],
+        "weightAdd": 0,
+        "powerAdd": 0,
+        "scaleUpRate": 0,
+        "attackTimeSpanUpRate": 0,
+        "attackMoveRangeUpRate": 0,
+        "addBuffRate": 0.25
+      },
+      {
+        "punchSets": [
+          {
+            "punches": [
+              {
+                "weaponIndex": 0,
+                "weaponObjectRotate": {
+                  "x": 0,
+                  "y": 0,
+                  "z": 0,
+                  "w": 0
+                },
+                "attackMoveRange": 10
+              },
+              {
+                "weaponIndex": 1,
+                "weaponObjectRotate": {
+                  "x": 0,
+                  "y": 0.25881904,
+                  "z": 0,
+                  "w": 0.9659258
+                },
+                "attackMoveRange": 6
+              }
+            ]
+          },
+          {
+            "punches": [
+              {
+                "weaponIndex": 0,
+                "weaponObjectRotate": {
+                  "x": 0,
+                  "y": 0,
+                  "z": 0,
+                  "w": 0
+                },
+                "attackMoveRange": 10
+              },
+              {
+                "weaponIndex": 1,
+                "weaponObjectRotate": {
+                  "x": 0,
+                  "y": -0.25881904,
+                  "z": 0,
+                  "w": 0.9659258
+                },
+                "attackMoveRange": 6
+              }
+            ]
+          },
+          {
+            "punches": [
+              {
+                "weaponIndex": 1,
+                "weaponObjectRotate": {
+                  "x": 0,
+                  "y": 0,
+                  "z": 0,
+                  "w": 0
+                },
+                "attackMoveRange": 10
+              },
+              {
+                "weaponIndex": 0,
+                "weaponObjectRotate": {
+                  "x": 0,
+                  "y": 0.25881904,
+                  "z": 0,
+                  "w": 0.9659258
+                },
+                "attackMoveRange": 6
+              }
+            ]
+          },
+          {
+            "punches": [
+              {
+                "weaponIndex": 1,
+                "weaponObjectRotate": {
+                  "x": 0,
+                  "y": 0,
+                  "z": 0,
+                  "w": 0
+                },
+                "attackMoveRange": 10
+              },
+              {
+                "weaponIndex": 0,
+                "weaponObjectRotate": {
+                  "x": 0,
+                  "y": -0.25881904,
+                  "z": 0,
+                  "w": 0.9659258
+                },
+                "attackMoveRange": 6
+              }
+            ]
+          }
+        ],
+        "weightAdd": 0,
+        "powerAdd": 0,
+        "scaleUpRate": 0,
+        "attackTimeSpanUpRate": 0,
+        "attackMoveRangeUpRate": 0,
+        "addBuffRate": 0.25
+      },
+      {
+        "punchSets": [
+          {
+            "punches": [
+              {
+                "weaponIndex": 0,
+                "weaponObjectRotate": {
+                  "x": 0,
+                  "y": 0,
+                  "z": 0,
+                  "w": 0
+                },
+                "attackMoveRange": 10
+              },
+              {
+                "weaponIndex": 1,
+                "weaponObjectRotate": {
+                  "x": 0,
+                  "y": 0.25881904,
+                  "z": 0,
+                  "w": 0.9659258
+                },
+                "attackMoveRange": 6
+              }
+            ]
+          },
+          {
+            "punches": [
+              {
+                "weaponIndex": 0,
+                "weaponObjectRotate": {
+                  "x": 0,
+                  "y": 0,
+                  "z": 0,
+                  "w": 0
+                },
+                "attackMoveRange": 10
+              },
+              {
+                "weaponIndex": 1,
+                "weaponObjectRotate": {
+                  "x": 0,
+                  "y": -0.25881904,
+                  "z": 0,
+                  "w": 0.9659258
+                },
+                "attackMoveRange": 6
+              }
+            ]
+          },
+          {
+            "punches": [
+              {
+                "weaponIndex": 1,
+                "weaponObjectRotate": {
+                  "x": 0,
+                  "y": 0,
+                  "z": 0,
+                  "w": 0
+                },
+                "attackMoveRange": 10
+              },
+              {
+                "weaponIndex": 0,
+                "weaponObjectRotate": {
+                  "x": 0,
+                  "y": 0.25881904,
+                  "z": 0,
+                  "w": 0.9659258
+                },
+                "attackMoveRange": 6
+              }
+            ]
+          },
+          {
+            "punches": [
+              {
+                "weaponIndex": 1,
+                "weaponObjectRotate": {
+                  "x": 0,
+                  "y": 0,
+                  "z": 0,
+                  "w": 0
+                },
+                "attackMoveRange": 10
+              },
+              {
+                "weaponIndex": 0,
+                "weaponObjectRotate": {
+                  "x": 0,
+                  "y": -0.25881904,
+                  "z": 0,
+                  "w": 0.9659258
+                },
+                "attackMoveRange": 6
+              }
+            ]
+          }
+        ],
+        "weightAdd": 0,
+        "powerAdd": 0,
+        "scaleUpRate": 0,
+        "attackTimeSpanUpRate": 0,
+        "attackMoveRangeUpRate": 0,
+        "addBuffRate": 0.25
+      },
+      {
+        "punchSets": [
+          {
+            "punches": [
+              {
+                "weaponIndex": 0,
+                "weaponObjectRotate": {
+                  "x": 0,
+                  "y": 0,
+                  "z": 0,
+                  "w": 0
+                },
+                "attackMoveRange": 10
+              },
+              {
+                "weaponIndex": 1,
+                "weaponObjectRotate": {
+                  "x": 0,
+                  "y": 0.25881904,
+                  "z": 0,
+                  "w": 0.9659258
+                },
+                "attackMoveRange": 6
+              }
+            ]
+          },
+          {
+            "punches": [
+              {
+                "weaponIndex": 0,
+                "weaponObjectRotate": {
+                  "x": 0,
+                  "y": 0,
+                  "z": 0,
+                  "w": 0
+                },
+                "attackMoveRange": 10
+              },
+              {
+                "weaponIndex": 1,
+                "weaponObjectRotate": {
+                  "x": 0,
+                  "y": -0.25881904,
+                  "z": 0,
+                  "w": 0.9659258
+                },
+                "attackMoveRange": 6
+              }
+            ]
+          },
+          {
+            "punches": [
+              {
+                "weaponIndex": 1,
+                "weaponObjectRotate": {
+                  "x": 0,
+                  "y": 0,
+                  "z": 0,
+                  "w": 0
+                },
+                "attackMoveRange": 10
+              },
+              {
+                "weaponIndex": 0,
+                "weaponObjectRotate": {
+                  "x": 0,
+                  "y": 0.25881904,
+                  "z": 0,
+                  "w": 0.9659258
+                },
+                "attackMoveRange": 6
+              }
+            ]
+          },
+          {
+            "punches": [
+              {
+                "weaponIndex": 1,
+                "weaponObjectRotate": {
+                  "x": 0,
+                  "y": 0,
+                  "z": 0,
+                  "w": 0
+                },
+                "attackMoveRange": 10
+              },
+              {
+                "weaponIndex": 0,
+                "weaponObjectRotate": {
+                  "x": 0,
+                  "y": -0.25881904,
+                  "z": 0,
+                  "w": 0.9659258
+                },
+                "attackMoveRange": 6
+              }
+            ]
+          }
+        ],
+        "weightAdd": 0,
+        "powerAdd": 0,
+        "scaleUpRate": 0,
+        "attackTimeSpanUpRate": 0,
+        "attackMoveRangeUpRate": 0,
+        "addBuffRate": 0.25
+      },
+      {
+        "punchSets": [
+          {
+            "punches": [
+              {
+                "weaponIndex": 0,
+                "weaponObjectRotate": {
+                  "x": 0,
+                  "y": 0,
+                  "z": 0,
+                  "w": 0
+                },
+                "attackMoveRange": 10
+              },
+              {
+                "weaponIndex": 1,
+                "weaponObjectRotate": {
+                  "x": 0,
+                  "y": 0.25881904,
+                  "z": 0,
+                  "w": 0.9659258
+                },
+                "attackMoveRange": 6
+              }
+            ]
+          },
+          {
+            "punches": [
+              {
+                "weaponIndex": 0,
+                "weaponObjectRotate": {
+                  "x": 0,
+                  "y": 0,
+                  "z": 0,
+                  "w": 0
+                },
+                "attackMoveRange": 10
+              },
+              {
+                "weaponIndex": 1,
+                "weaponObjectRotate": {
+                  "x": 0,
+                  "y": -0.25881904,
+                  "z": 0,
+                  "w": 0.9659258
+                },
+                "attackMoveRange": 6
+              }
+            ]
+          },
+          {
+            "punches": [
+              {
+                "weaponIndex": 1,
+                "weaponObjectRotate": {
+                  "x": 0,
+                  "y": 0,
+                  "z": 0,
+                  "w": 0
+                },
+                "attackMoveRange": 10
+              },
+              {
+                "weaponIndex": 0,
+                "weaponObjectRotate": {
+                  "x": 0,
+                  "y": 0.25881904,
+                  "z": 0,
+                  "w": 0.9659258
+                },
+                "attackMoveRange": 6
+              }
+            ]
+          },
+          {
+            "punches": [
+              {
+                "weaponIndex": 1,
+                "weaponObjectRotate": {
+                  "x": 0,
+                  "y": 0,
+                  "z": 0,
+                  "w": 0
+                },
+                "attackMoveRange": 10
+              },
+              {
+                "weaponIndex": 0,
+                "weaponObjectRotate": {
+                  "x": 0,
+                  "y": -0.25881904,
+                  "z": 0,
+                  "w": 0.9659258
+                },
+                "attackMoveRange": 6
+              }
+            ]
+          }
+        ],
+        "weightAdd": 0,
+        "powerAdd": 0,
+        "scaleUpRate": 0,
+        "attackTimeSpanUpRate": 0,
+        "attackMoveRangeUpRate": 0,
+        "addBuffRate": 0.25
+      }
+    ],
+    "weapons": [
+      {
+        "prefabWeapon": {
+          "fileID": 1999727523358713,
+          "guid": "6c3b89283d0a0174fab97898aef98eff",
+          "type": 2
+        },
+        "buff": {
+          "buffType": 24,
+          "buffPower": 45,
+          "buffDuration": 8,
+          "isRemoveOnTargetDie": 1,
+          "isFriendOnly": 0,
+          "isEnemyOnly": 1
+        }
+      },
+      {
+        "prefabWeapon": {
+          "fileID": 1999727523358713,
+          "guid": "6c3b89283d0a0174fab97898aef98eff",
+          "type": 2
+        },
+        "buff": {
+          "buffType": 24,
+          "buffPower": 45,
+          "buffDuration": 8,
+          "isRemoveOnTargetDie": 1,
+          "isFriendOnly": 0,
+          "isEnemyOnly": 1
+        }
+      }
+    ],
+    "PunchData": {
+      "Enabled": 1,
+      "MoveRange": 0,
+      "AttackScaleAnimOffset": 0,
+      "Prefab_Spring": {
+        "fileID": 1012069106243627,
+        "guid": "afe884cb70057d649b3e09ba13c29b2c",
+        "type": 2
+      },
+      "SpringScaleXY": 0.6,
+      "SpringScaleZAdjuster": 0.1,
+      "ShootSeType": 55,
+      "ShootSeOctaRange": {
+        "x": 0,
+        "y": 2
+      },
+      "FireAnimDuration": 0.3,
+      "ReturnAnimDuration": 0.3,
+      "AnimatorStateName_Attack": "Attack",
+      "UseSameFireId": 1,
+      "DontReturn": 0
+    },
+    "animationIdle": "anim_wp_koguma_loop",
+    "animationFire": "anim_wp_koguma_standby",
+    "animationLoop": "anim_wp_koguma_standby",
+    "animationReturn": "anim_wp_koguma_loop",
+    "enableOverrideWeaponBuff": 1,
+    "playWeaponParticleCondition": 1,
+    "playWeaponParticleConditionWhenBuffOverrided": 1,
+    "initComboOnDie": 1
+  },
+  "passiveSkills": [],
+  "flickDashSettings": null,
+  "img": "images/accessory/unit0001_49.PNG"
+}

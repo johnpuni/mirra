@@ -1,0 +1,280 @@
+{
+  "aircraftName": "シールドタンク CⅣ",
+  "description": "武器: 盾",
+  "moveSpeed": 22,
+  "moveAccel": 28,
+  "moveResistPower": 35,
+  "moveBrake": 40,
+  "rotationSpeed": 160,
+  "respawnPositionSelectMoveSpeed": 80,
+  "defense": 20,
+  "searchHitRadius": 1,
+  "weaponPositionOffset": {
+    "x": 0,
+    "y": 3.45,
+    "z": 4.17
+  },
+  "pilotPositionOffset": {
+    "x": 0,
+    "y": 2.2,
+    "z": -0.2
+  },
+  "pilotScale": {
+    "x": 3,
+    "y": 3,
+    "z": 3
+  },
+  "avatarNeckPositionOffset": {
+    "x": 0,
+    "y": 5.5,
+    "z": -0.66
+  },
+  "avatarScale": {
+    "x": 14,
+    "y": 14,
+    "z": 14
+  },
+  "ForceShowFlyGauge": 0,
+  "weaponSettings": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "28f0f82c9d93d4d70576ceecdb0c4a51",
+      "type": 3
+    },
+    "m_Name": "wp_shield_06",
+    "m_EditorClassIdentifier": null,
+    "memo": "盾",
+    "weaponCategry": 1,
+    "enemySearchRadius": 12,
+    "enemySearchOffset": 7,
+    "attackPower": 40,
+    "attackStopPower": 10000,
+    "attackIgnoreDefense": 0,
+    "attackDisableBrakeTime": 1,
+    "additionalPower": 0,
+    "attackHitShape": 0,
+    "attackHitRadius": 3,
+    "attackHitSize": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "hitGrowingTimeRate": 0,
+    "attackHitPositionOffset": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "attackMoveSpeed": 0,
+    "attackMoveAccel": 0,
+    "attackMoveSpeedY": 0,
+    "attackMoveAccelY": 0,
+    "attackDuration": 0.1,
+    "attackTimeSpan": 0.6,
+    "isBackCritical": 0,
+    "isSideCritical": 0,
+    "shieldBreak": 0,
+    "isReflector": 0,
+    "refrectionRate": 0,
+    "reflectionAddSpeedRate": 0,
+    "invalidRefrection": 0,
+    "isSelfRefrection": 0,
+    "selfRefrectionNum": 0,
+    "refrectionRandomRot": {
+      "x": 0,
+      "y": 0
+    },
+    "isHideHitEffect": 0,
+    "killComboRate": 0,
+    "useLimitMax": -1,
+    "spriteButtonIcon": {
+      "fileID": 0
+    },
+    "useClickWhenFire": 1,
+    "useChargeWhenFire": 0,
+    "useChargeWithoutFire": 0,
+    "weaponAutoChargeSettings": {
+      "fileID": 0
+    },
+    "prefabWeapon": {
+      "fileID": 1711990530927866,
+      "guid": "5d890527b85bbde47967daa0e5ec481b",
+      "type": 2
+    },
+    "prefabWeaponBase": {
+      "fileID": 1721446700132487,
+      "guid": "c7b3ddcde0c12e84eb2f00d8de138ec6",
+      "type": 2
+    },
+    "prefabSpring": {
+      "fileID": 1235880386132114,
+      "guid": "f7e27b509ab024b40a92be73b5ccf1f7",
+      "type": 2
+    },
+    "weaponObjectRotate": {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "w": 0
+    },
+    "attackMoveRange": 6,
+    "curveTimeToPosition": {
+      "serializedVersion": 2,
+      "m_Curve": [
+        {
+          "serializedVersion": 3,
+          "time": 0,
+          "value": 0,
+          "inSlope": 0,
+          "outSlope": 0,
+          "weightedMode": 0,
+          "inWeight": 0,
+          "outWeight": 0
+        },
+        {
+          "serializedVersion": 3,
+          "time": 1,
+          "value": 1,
+          "inSlope": 2,
+          "outSlope": 2,
+          "weightedMode": 0,
+          "inWeight": 0,
+          "outWeight": 0
+        }
+      ],
+      "m_PreInfinity": 2,
+      "m_PostInfinity": 2,
+      "m_RotationOrder": 4
+    },
+    "frontMoveForce": 0,
+    "frontMoveStopPower": 0,
+    "defense": 30,
+    "defensiveAngle": 120,
+    "shootSeType": 39,
+    "isDrill": 0,
+    "canGrabItem": 0,
+    "isPenguin": 0,
+    "hideWeaponWhenIdleForPuppet": 0,
+    "hideWeaponDelay": 0,
+    "useReturnHandDurationLimit": 0,
+    "returnHandDurationLimit": 0,
+    "itemDestroyTime": 0,
+    "itemDuplicationLimit": -1,
+    "itemBaseBuffTagName": null,
+    "dropItems": []
+  },
+  "passiveSkills": [
+    {
+      "m_ObjectHideFlags": 0,
+      "m_CorrespondingSourceObject": {
+        "fileID": 0
+      },
+      "m_PrefabInstance": {
+        "fileID": 0
+      },
+      "m_PrefabAsset": {
+        "fileID": 0
+      },
+      "m_GameObject": {
+        "fileID": 0
+      },
+      "m_Enabled": 1,
+      "m_EditorHideFlags": 0,
+      "m_Script": {
+        "fileID": 11500000,
+        "guid": "c5b52ff9f8d7db766ccee58c9e65b8e1",
+        "type": 3
+      },
+      "m_Name": "ps_pinch_guard",
+      "m_EditorClassIdentifier": null,
+      "memo": "ライフ１になったとき、10秒間バリア状態になる",
+      "weaponCategry": 0,
+      "enemySearchRadius": 0,
+      "enemySearchOffset": 0,
+      "attackPower": 1,
+      "attackStopPower": 0,
+      "attackIgnoreDefense": 0,
+      "attackDisableBrakeTime": 0,
+      "additionalPower": 0,
+      "attackHitShape": 0,
+      "attackHitRadius": 0,
+      "attackHitSize": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "hitGrowingTimeRate": 0,
+      "attackHitPositionOffset": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "attackMoveSpeed": 0,
+      "attackMoveAccel": 0,
+      "attackMoveSpeedY": 0,
+      "attackMoveAccelY": 0,
+      "attackDuration": 10,
+      "attackTimeSpan": 0,
+      "isBackCritical": 0,
+      "isSideCritical": 0,
+      "shieldBreak": 0,
+      "isReflector": 0,
+      "refrectionRate": 0,
+      "reflectionAddSpeedRate": 0,
+      "invalidRefrection": 0,
+      "isSelfRefrection": 0,
+      "selfRefrectionNum": 0,
+      "refrectionRandomRot": {
+        "x": 0,
+        "y": 0
+      },
+      "isHideHitEffect": 0,
+      "killComboRate": 0,
+      "useLimitMax": -1,
+      "spriteButtonIcon": {
+        "fileID": 0
+      },
+      "useClickWhenFire": 1,
+      "useChargeWhenFire": 0,
+      "useChargeWithoutFire": 0,
+      "weaponAutoChargeSettings": {
+        "fileID": 0
+      },
+      "buffType": 2,
+      "targetType": 0,
+      "tag": null,
+      "powerScaleType": 0,
+      "shootSeType": 0,
+      "shootAnimName": null,
+      "shootFx": null,
+      "triggerType": 2,
+      "triggerValue": 1,
+      "triggerString": null,
+      "gradeType": 0,
+      "maxGradeNum": 0,
+      "remainingLifeBuffSettings": {
+        "RemainLife3Power": 0,
+        "RemainLife2Power": 0,
+        "RemainLife1Power": 0
+      },
+      "shouldPlayParticleWhenEmitBuff": 1
+    }
+  ],
+  "flickDashSettings": null,
+  "img": "images/accessory/unit0002_04.PNG"
+}

@@ -1,0 +1,198 @@
+{
+  "aircraftName": "エモカーX・S50",
+  "description": "武器: ホーミングどんぐり",
+  "moveSpeed": 20,
+  "moveAccel": 14,
+  "moveResistPower": 30,
+  "moveBrake": 35,
+  "rotationSpeed": 360,
+  "respawnPositionSelectMoveSpeed": 80,
+  "defense": 8,
+  "searchHitRadius": 1,
+  "weaponPositionOffset": {
+    "x": 0,
+    "y": 1.75,
+    "z": 5.2
+  },
+  "pilotPositionOffset": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "pilotScale": {
+    "x": 3,
+    "y": 3,
+    "z": 3
+  },
+  "avatarNeckPositionOffset": {
+    "x": 0,
+    "y": 3.1,
+    "z": -0.75
+  },
+  "avatarScale": {
+    "x": 14,
+    "y": 14,
+    "z": 14
+  },
+  "ForceShowFlyGauge": 0,
+  "weaponSettings": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "62ceabed200c7a869675e418a3cd0fa5",
+      "type": 3
+    },
+    "m_Name": "wp_squirrel_emocarx",
+    "m_EditorClassIdentifier": null,
+    "memo": "S50シマリス機体エモカーX",
+    "weaponCategry": 2,
+    "enemySearchRadius": 15,
+    "enemySearchOffset": 24,
+    "attackPower": 41,
+    "attackStopPower": 10000,
+    "attackIgnoreDefense": 0,
+    "attackDisableBrakeTime": 0,
+    "additionalPower": 0,
+    "attackHitShape": 0,
+    "attackHitRadius": 5,
+    "attackHitSize": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "hitGrowingTimeRate": 0.1,
+    "attackHitPositionOffset": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "attackMoveSpeed": 18,
+    "attackMoveAccel": 0,
+    "attackMoveSpeedY": 0,
+    "attackMoveAccelY": 0,
+    "attackDuration": 7,
+    "attackTimeSpan": 2.2,
+    "isBackCritical": 0,
+    "isSideCritical": 0,
+    "shieldBreak": 0,
+    "isReflector": 0,
+    "refrectionRate": 0,
+    "reflectionAddSpeedRate": 0,
+    "invalidRefrection": 0,
+    "isSelfRefrection": 0,
+    "selfRefrectionNum": 0,
+    "refrectionRandomRot": {
+      "x": 0,
+      "y": 0
+    },
+    "isHideHitEffect": 0,
+    "killComboRate": 0,
+    "useLimitMax": -1,
+    "spriteButtonIcon": {
+      "fileID": 0
+    },
+    "useClickWhenFire": 1,
+    "useChargeWhenFire": 1,
+    "useChargeWithoutFire": 0,
+    "weaponAutoChargeSettings": {
+      "fileID": 0
+    },
+    "maxChargeTime": 1.5,
+    "inChargeDeceleratingRate": 1,
+    "inChargeMoveSpeedRate": 0,
+    "inChargeSe": 63,
+    "chargeMaxFx": "Fx/Battle/fx_charge_dash_attack_max",
+    "inChargeFx": "Fx/Battle/fx_charge_dash_attack3",
+    "disableChargeEffectWhenMax": 0,
+    "isChargeBuffContext": {
+      "type": 0,
+      "power": 0,
+      "duration": 0,
+      "tag": null,
+      "isRemoveOnTargetDie": 1,
+      "customSatelliteFxName": null
+    },
+    "buffContexts": [],
+    "bulletSettings": {
+      "bulletPrefab": {
+        "fileID": 1513941909425291,
+        "guid": "5aaa39f60873f7d4cba1efa7f134d7de",
+        "type": 2
+      },
+      "shootSeType": 69,
+      "isInifinitePenetrate": 0,
+      "playerPenetrateNum": 0,
+      "isWallPenetrate": 0,
+      "attackRotationSpeed": 100,
+      "enemySearchAngle": 20
+    },
+    "dashSettings": {
+      "dashForce": 60,
+      "coolTime": 5,
+      "bombPlaceInterval": 0.5,
+      "placeAmount": 2
+    },
+    "placeBombSettings": {
+      "bombPrefab": {
+        "fileID": 1638005346181794,
+        "guid": "79936a741ce1f5541858b96a0d976f8a",
+        "type": 2
+      },
+      "shootSeType": 69,
+      "shootFx": null,
+      "shootAnimName": null,
+      "attackPower": 40,
+      "attackStopPower": 10000,
+      "attackMoveSpeed": 15,
+      "attackMoveAccel": 0,
+      "attackHitShape": 0,
+      "attackHitRadius": 5,
+      "attackHitSize": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "attackIgnoreDefence": 0,
+      "attackDisableBrakeTime": 0,
+      "attackDuration": 7,
+      "attackRotationSpeed": 360,
+      "searchAreaFloorScale": 2,
+      "forDebugSearchAreaPrefab": {
+        "fileID": 1981708340092860,
+        "guid": "e176c38439ce5d74cb85b382037b720f",
+        "type": 2
+      },
+      "searchAreaPrefab": {
+        "fileID": 1981708340092860,
+        "guid": "e176c38439ce5d74cb85b382037b720f",
+        "type": 2
+      },
+      "explosionPower": 40,
+      "explosionStopPower": 10000,
+      "explosionRadius": 15,
+      "explosionDuration": 0.2,
+      "explosionSeType": 60,
+      "explosionFx": "Fx/Bullet/bl_bomb_explosion",
+      "explosionHitJudgeType": 3,
+      "hitPartyType": 3,
+      "explosionDirectionType": 2
+    }
+  },
+  "passiveSkills": [],
+  "flickDashSettings": null,
+  "img": "images/accessory/unit0001_62.PNG"
+}

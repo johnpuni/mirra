@@ -1,0 +1,399 @@
+{
+  "aircraftName": "エモカーX・S51",
+  "description": "武器:キャロットスタンプ",
+  "moveSpeed": 20,
+  "moveAccel": 10,
+  "moveResistPower": 30,
+  "moveBrake": 35,
+  "rotationSpeed": 360,
+  "respawnPositionSelectMoveSpeed": 80,
+  "defense": 8,
+  "searchHitRadius": 1,
+  "weaponPositionOffset": {
+    "x": 0,
+    "y": 1.75,
+    "z": 5.2
+  },
+  "pilotPositionOffset": {
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "pilotScale": {
+    "x": 3,
+    "y": 3,
+    "z": 3
+  },
+  "avatarNeckPositionOffset": {
+    "x": 0,
+    "y": 3.1,
+    "z": -0.75
+  },
+  "avatarScale": {
+    "x": 14,
+    "y": 14,
+    "z": 14
+  },
+  "ForceShowFlyGauge": 0,
+  "weaponSettings": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "9047c388097594baecadce3ba0883c02",
+      "type": 3
+    },
+    "m_Name": "wp_polygonRabbit_emocarx",
+    "m_EditorClassIdentifier": null,
+    "memo": "キャロットスタンプ:エモカーX",
+    "weaponCategry": 1,
+    "enemySearchRadius": 50,
+    "enemySearchOffset": 50,
+    "attackPower": 41,
+    "attackStopPower": 0,
+    "attackIgnoreDefense": 0,
+    "attackDisableBrakeTime": 0,
+    "additionalPower": 0,
+    "attackHitShape": 0,
+    "attackHitRadius": 0,
+    "attackHitSize": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "hitGrowingTimeRate": 0,
+    "attackHitPositionOffset": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "attackMoveSpeed": 0,
+    "attackMoveAccel": 0,
+    "attackMoveSpeedY": 0,
+    "attackMoveAccelY": 0,
+    "attackDuration": 1,
+    "attackTimeSpan": 1.5,
+    "isBackCritical": 0,
+    "isSideCritical": 0,
+    "shieldBreak": 0,
+    "isReflector": 0,
+    "refrectionRate": 0,
+    "reflectionAddSpeedRate": 0,
+    "invalidRefrection": 0,
+    "isSelfRefrection": 0,
+    "selfRefrectionNum": 0,
+    "refrectionRandomRot": {
+      "x": 0,
+      "y": 0
+    },
+    "isHideHitEffect": 0,
+    "killComboRate": 0,
+    "useLimitMax": -1,
+    "spriteButtonIcon": {
+      "fileID": 0
+    },
+    "useClickWhenFire": 1,
+    "useChargeWhenFire": 0,
+    "useChargeWithoutFire": 0,
+    "weaponAutoChargeSettings": {
+      "fileID": 0
+    },
+    "punchPrefab": {
+      "fileID": 1324997144834509,
+      "guid": "1481de5516914c448a79c4e94610722a",
+      "type": 2
+    },
+    "spawnWeaponFx": "Fx/Bullet/bl_carrot_explosion",
+    "fxAdjustHeight": -2,
+    "punchData": {
+      "Enabled": 1,
+      "MoveRange": 5,
+      "AttackScaleAnimOffset": 0,
+      "Prefab_Spring": {
+        "fileID": 1012069106243627,
+        "guid": "afe884cb70057d649b3e09ba13c29b2c",
+        "type": 2
+      },
+      "SpringScaleXY": 0.6,
+      "SpringScaleZAdjuster": 0.1,
+      "ShootSeType": 55,
+      "ShootSeOctaRange": {
+        "x": 0,
+        "y": 2
+      },
+      "FireAnimDuration": 0.3,
+      "ReturnAnimDuration": 0.3,
+      "AnimatorStateName_Attack": "Attack",
+      "UseSameFireId": 0,
+      "DontReturn": 0
+    },
+    "carrots": [
+      {
+        "punchBaseAngle": 0
+      },
+      {
+        "punchBaseAngle": 90
+      },
+      {
+        "punchBaseAngle": 180
+      },
+      {
+        "punchBaseAngle": 270
+      }
+    ],
+    "tiltAngle": 45,
+    "debuffSettings": {
+      "buffData": {
+        "Ratio": 100,
+        "Type": 10,
+        "Power": -1,
+        "Duration": 9,
+        "EnemyOnly": 1
+      },
+      "buffTag": "PolygonRabbit",
+      "maxDuplication": 5
+    }
+  },
+  "passiveSkills": [
+    {
+      "m_ObjectHideFlags": 0,
+      "m_CorrespondingSourceObject": {
+        "fileID": 0
+      },
+      "m_PrefabInstance": {
+        "fileID": 0
+      },
+      "m_PrefabAsset": {
+        "fileID": 0
+      },
+      "m_GameObject": {
+        "fileID": 0
+      },
+      "m_Enabled": 1,
+      "m_EditorHideFlags": 0,
+      "m_Script": {
+        "fileID": 11500000,
+        "guid": "c5b52ff9f8d7db766ccee58c9e65b8e1",
+        "type": 3
+      },
+      "m_Name": "ps_Life_speedUp_PolygonRabbit_emocarx",
+      "m_EditorClassIdentifier": null,
+      "memo": "残ライフ数に応じて、速度+X",
+      "weaponCategry": 0,
+      "enemySearchRadius": 0,
+      "enemySearchOffset": 0,
+      "attackPower": 0,
+      "attackStopPower": 0,
+      "attackIgnoreDefense": 0,
+      "attackDisableBrakeTime": 0,
+      "additionalPower": 0,
+      "attackHitShape": 0,
+      "attackHitRadius": 0,
+      "attackHitSize": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "hitGrowingTimeRate": 0,
+      "attackHitPositionOffset": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "attackMoveSpeed": 0,
+      "attackMoveAccel": 0,
+      "attackMoveSpeedY": 0,
+      "attackMoveAccelY": 0,
+      "attackDuration": -1,
+      "attackTimeSpan": 0,
+      "isBackCritical": 0,
+      "isSideCritical": 0,
+      "shieldBreak": 0,
+      "isReflector": 0,
+      "refrectionRate": 0,
+      "reflectionAddSpeedRate": 0,
+      "invalidRefrection": 0,
+      "isSelfRefrection": 0,
+      "selfRefrectionNum": 0,
+      "refrectionRandomRot": {
+        "x": 0,
+        "y": 0
+      },
+      "isHideHitEffect": 0,
+      "killComboRate": 0,
+      "useLimitMax": -1,
+      "spriteButtonIcon": {
+        "fileID": 0
+      },
+      "useClickWhenFire": 1,
+      "useChargeWhenFire": 0,
+      "useChargeWithoutFire": 0,
+      "weaponAutoChargeSettings": {
+        "fileID": 0
+      },
+      "buffType": 8,
+      "targetType": 0,
+      "tag": null,
+      "powerScaleType": 0,
+      "shootSeType": 0,
+      "shootAnimName": null,
+      "shootFx": null,
+      "triggerType": 6,
+      "triggerValue": 0,
+      "triggerString": null,
+      "gradeType": 0,
+      "maxGradeNum": 0,
+      "remainingLifeBuffSettings": {
+        "RemainLife3Power": 0,
+        "RemainLife2Power": 10,
+        "RemainLife1Power": 20
+      },
+      "shouldPlayParticleWhenEmitBuff": 1
+    },
+    {
+      "m_ObjectHideFlags": 0,
+      "m_CorrespondingSourceObject": {
+        "fileID": 0
+      },
+      "m_PrefabInstance": {
+        "fileID": 0
+      },
+      "m_PrefabAsset": {
+        "fileID": 0
+      },
+      "m_GameObject": {
+        "fileID": 0
+      },
+      "m_Enabled": 1,
+      "m_EditorHideFlags": 0,
+      "m_Script": {
+        "fileID": 11500000,
+        "guid": "c5b52ff9f8d7db766ccee58c9e65b8e1",
+        "type": 3
+      },
+      "m_Name": "ps_Life_accelUp_PolygonRabbit_emocarx",
+      "m_EditorClassIdentifier": null,
+      "memo": "残ライフ数に応じて、加速度+X",
+      "weaponCategry": 0,
+      "enemySearchRadius": 0,
+      "enemySearchOffset": 0,
+      "attackPower": 0,
+      "attackStopPower": 0,
+      "attackIgnoreDefense": 0,
+      "attackDisableBrakeTime": 0,
+      "additionalPower": 0,
+      "attackHitShape": 0,
+      "attackHitRadius": 0,
+      "attackHitSize": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "hitGrowingTimeRate": 0,
+      "attackHitPositionOffset": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "attackMoveSpeed": 0,
+      "attackMoveAccel": 0,
+      "attackMoveSpeedY": 0,
+      "attackMoveAccelY": 0,
+      "attackDuration": -1,
+      "attackTimeSpan": 0,
+      "isBackCritical": 0,
+      "isSideCritical": 0,
+      "shieldBreak": 0,
+      "isReflector": 0,
+      "refrectionRate": 0,
+      "reflectionAddSpeedRate": 0,
+      "invalidRefrection": 0,
+      "isSelfRefrection": 0,
+      "selfRefrectionNum": 0,
+      "refrectionRandomRot": {
+        "x": 0,
+        "y": 0
+      },
+      "isHideHitEffect": 0,
+      "killComboRate": 0,
+      "useLimitMax": -1,
+      "spriteButtonIcon": {
+        "fileID": 0
+      },
+      "useClickWhenFire": 1,
+      "useChargeWhenFire": 0,
+      "useChargeWithoutFire": 0,
+      "weaponAutoChargeSettings": {
+        "fileID": 0
+      },
+      "buffType": 78,
+      "targetType": 0,
+      "tag": null,
+      "powerScaleType": 0,
+      "shootSeType": 0,
+      "shootAnimName": null,
+      "shootFx": null,
+      "triggerType": 6,
+      "triggerValue": 0,
+      "triggerString": null,
+      "gradeType": 0,
+      "maxGradeNum": 0,
+      "remainingLifeBuffSettings": {
+        "RemainLife3Power": 0,
+        "RemainLife2Power": 5,
+        "RemainLife1Power": 10
+      },
+      "shouldPlayParticleWhenEmitBuff": 1
+    }
+  ],
+  "flickDashSettings": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "fd6d21e32245f8670158d47df2369f83",
+      "type": 3
+    },
+    "m_Name": "FlickDash_0001_63",
+    "m_EditorClassIdentifier": null,
+    "Memo": "S51ポリゴンラビットエモカーＸフリックダッシュ",
+    "Interval": 3,
+    "FrontMoveStopPower": 10,
+    "FrontMoveForce": 30,
+    "MutekiTime": 0,
+    "StunTime": 0.25,
+    "seType": 81,
+    "FlyAfter": 0,
+    "FlyAnimation": 0,
+    "FlyDuration": 0,
+    "ContinuousNum": 1,
+    "CanContinuousDuration": 1
+  },
+  "img": "images/accessory/unit0001_63.PNG"
+}
