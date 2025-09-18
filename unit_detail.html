@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ユニット詳細（ギャラリー風・フル版）</title>
+<title>ユニット詳細（ギャラリー風・フル翻訳版）</title>
 <style>
 :root{
   --bg:#f5f5f5; --card:#fff; --text:#222; --muted:#666; --border:#ccc; --accent:#333;
@@ -88,27 +88,28 @@ document.getElementById("themeToggle").addEventListener("click",()=>{
 const params = new URLSearchParams(location.search);
 const id = params.get('id');
 
-// 翻訳マップ
+// 翻訳マップ（全キー対応）
 const translations = {
   // 機体
-  aircraftName:"機体名", description:"説明",
+  aircraftName:"機体名", description:"説明", img:"画像",
   moveSpeed:"移動速度", moveAccel:"加速度", moveResistPower:"慣性抵抗",
-  moveBrake:"ブレーキ", rotationSpeed:"旋回速度", respawnPositionSelectMoveSpeed:"リスポーン選択速度",
-  defense:"防御力", searchHitRadius:"索敵範囲",
-  weaponPositionOffset:"武器位置オフセット", pilotPositionOffset:"パイロット位置オフセット",
-  pilotScale:"パイロットサイズ", avatarNeckPositionOffset:"アバターネック位置",
-  avatarScale:"アバターサイズ", ForceShowFlyGauge:"飛行ゲージ強制表示", img:"画像",
+  moveBrake:"ブレーキ", rotationSpeed:"旋回速度",
+  respawnPositionSelectMoveSpeed:"リスポーン選択速度", defense:"防御力",
+  searchHitRadius:"索敵範囲", weaponPositionOffset:"武器位置オフセット",
+  pilotPositionOffset:"パイロット位置オフセット", pilotScale:"パイロットサイズ",
+  avatarNeckPositionOffset:"アバターネック位置", avatarScale:"アバターサイズ",
+  ForceShowFlyGauge:"飛行ゲージ強制表示",
 
-  // 武器共通
-  memo:"武器名", weaponCategry:"武器カテゴリ",
+  // 武器設定
+  m_Name:"オブジェクト名", memo:"武器名", weaponCategry:"武器カテゴリ",
   enemySearchRadius:"索敵半径", enemySearchOffset:"索敵オフセット",
   attackPower:"攻撃力", attackStopPower:"停止力", attackIgnoreDefense:"防御無視",
   attackDisableBrakeTime:"ブレーキ無効時間", additionalPower:"追加ダメージ",
-  attackHitShape:"当たり判定形状", attackHitRadius:"ヒット半径", attackHitSize:"ヒットサイズ",
-  hitGrowingTimeRate:"ヒット成長率", attackHitPositionOffset:"ヒット位置オフセット",
-  attackMoveSpeed:"攻撃移動速度X", attackMoveAccel:"攻撃加速度X",
-  attackMoveSpeedY:"攻撃移動速度Y", attackMoveAccelY:"攻撃加速度Y",
-  attackDuration:"攻撃時間", attackTimeSpan:"攻撃間隔",
+  attackHitShape:"当たり判定形状", attackHitRadius:"ヒット半径",
+  attackHitSize:"ヒットサイズ", hitGrowingTimeRate:"ヒット成長率",
+  attackHitPositionOffset:"ヒット位置オフセット", attackMoveSpeed:"攻撃移動速度X",
+  attackMoveAccel:"攻撃加速度X", attackMoveSpeedY:"攻撃移動速度Y",
+  attackMoveAccelY:"攻撃加速度Y", attackDuration:"攻撃時間", attackTimeSpan:"攻撃間隔",
   isBackCritical:"背面クリティカル", isSideCritical:"側面クリティカル",
   shieldBreak:"シールドブレイク", isReflector:"反射",
   refrectionRate:"反射率", reflectionAddSpeedRate:"反射加速率",
@@ -121,29 +122,23 @@ const translations = {
   inChargeDeceleratingRate:"チャージ減速率", inChargeMoveSpeedRate:"チャージ中移動速度率",
   inChargeSe:"チャージ音", chargeMaxFx:"最大チャージFX", inChargeFx:"チャージ中FX",
   disableChargeEffectWhenMax:"最大時エフェクト無効", isChargeBuffContext:"チャージバフ有効",
-  buffContexts:"バフ内容", attackPowerRateCurve:"攻撃力カーブ",
-  frontMoveForce:"前進力", frontMoveForceRateCurve:"前進力カーブ",
-  bulletFx:"弾丸FX", shootSeType:"射撃音",
-  buffType:"バフ種類", buffPower:"バフ効果", buffDuration:"バフ時間",
-  buffProbability:"バフ発動率", bufftag:"バフタグ", buffUpdateOnManyHit:"多段バフ更新",
-  isRemoveOnTargetDie:"対象死亡で削除", buffManyHitShowFx:"多段ヒットFX", buffEnemyOnly:"敵専用バフ",
+  buffContexts:"バフ内容", attackPowerRateCurve:"攻撃力カーブ", frontMoveForce:"前進力",
+  frontMoveForceRateCurve:"前進力カーブ", bulletFx:"弾丸FX", shootSeType:"射撃音",
 
-  // パッシブ専用
-  targetType:"対象タイプ", tag:"タグ", powerScaleType:"効果スケール種類",
-  shootAnimName:"発射アニメ名", shootFx:"発射FX",
-  triggerType:"発動条件タイプ", triggerValue:"発動条件値", triggerString:"発動条件文字列",
-  gradeType:"ランクタイプ", maxGradeNum:"最大ランク数",
-  remainingLifeBuffSettings:"残ライフバフ設定", shouldPlayParticleWhenEmitBuff:"バフ時パーティクル"
+  // パッシブスキル
+  buffType:"バフ種類", targetType:"対象タイプ", tag:"タグ", powerScaleType:"効果スケール種類",
+  shootAnimName:"発射アニメ名", shootFx:"発射FX", triggerType:"発動条件タイプ",
+  triggerValue:"発動条件値", triggerString:"発動条件文字列", gradeType:"ランクタイプ",
+  maxGradeNum:"最大ランク数", remainingLifeBuffSettings:"残ライフバフ設定",
+  shouldPlayParticleWhenEmitBuff:"バフ時パーティクル"
 };
 
 // 値を整形
 function formatValue(val){
   if(val==null) return "-";
-  if(typeof val==="number"){
-    return (Math.abs(val)%1===0) ? val : val.toFixed(2);
-  }
-  if(Array.isArray(val)) return JSON.stringify(val);
-  if(typeof val==="object") return JSON.stringify(val);
+  if(typeof val==="number") return (Math.abs(val)%1===0) ? val : val.toFixed(2);
+  if(Array.isArray(val)) return val.join(", ");
+  if(typeof val==="object") return Object.entries(val).map(([k,v])=>`${k}:${v}`).join(", ");
   return val;
 }
 
@@ -152,21 +147,21 @@ if(id){
     .then(res=>res.json())
     .then(data=>{
       const m = data.machine || {};
-      const w = data.weaponSettings || {};
+      const w = data.weaponSettings ? [data.weaponSettings] : []; // 配列化
       const p = data.passiveSkills || [];
 
       // タイトル部
-      document.getElementById("unitName").textContent = m.aircraftName || "名称不明";
+      document.getElementById("unitName").textContent = m.aircraftName || m.m_Name || "名称不明";
       document.getElementById("unitDesc").textContent = m.description || "";
       const unitImg=document.getElementById("unitImg");
       unitImg.src=m.img||"images/default.png";
-      unitImg.alt=m.aircraftName||"no name";
+      unitImg.alt=m.aircraftName||m.m_Name||"no name";
 
       // 機体パラメータ
       const statsUl=document.getElementById("unitStats");
       statsUl.innerHTML="";
       Object.keys(m).forEach(key=>{
-        if(["aircraftName","description","img"].includes(key)) return;
+        if(["aircraftName","description","img","m_Name"].includes(key)) return;
         const li=document.createElement("li");
         li.textContent=`${translations[key]||key}: ${formatValue(m[key])}`;
         statsUl.appendChild(li);
@@ -175,26 +170,33 @@ if(id){
       // 武器設定
       const weaponUl=document.getElementById("weaponStats");
       weaponUl.innerHTML="";
-      Object.keys(w).forEach(key=>{
-        const li=document.createElement("li");
-        li.textContent=`${translations[key]||key}: ${formatValue(w[key])}`;
-        weaponUl.appendChild(li);
+      if(w.length===0) weaponUl.innerHTML="<li>なし</li>";
+      else w.forEach((weapon,i)=>{
+        const title=document.createElement("li");
+        title.textContent=`--- 武器${i+1} ---`;
+        weaponUl.appendChild(title);
+        Object.keys(weapon).forEach(key=>{
+          const li=document.createElement("li");
+          li.textContent=`${translations[key]||key}: ${formatValue(weapon[key])}`;
+          weaponUl.appendChild(li);
+        });
       });
 
       // パッシブスキル
       const passiveUl=document.getElementById("passiveSkills");
       passiveUl.innerHTML="";
-      p.forEach(skill=>{
-        const subUl=document.createElement("ul");
+      if(p.length===0) passiveUl.innerHTML="<li>なし</li>";
+      else p.forEach((skill,i)=>{
+        const title=document.createElement("li");
+        title.textContent=`--- スキル${i+1} ---`;
+        passiveUl.appendChild(title);
         Object.keys(skill).forEach(key=>{
           const li=document.createElement("li");
           li.textContent=`${translations[key]||key}: ${formatValue(skill[key])}`;
-          subUl.appendChild(li);
+          passiveUl.appendChild(li);
         });
-        const wrapper=document.createElement("li");
-        wrapper.appendChild(subUl);
-        passiveUl.appendChild(wrapper);
       });
+
     })
     .catch(err=>{
       console.error(err);
