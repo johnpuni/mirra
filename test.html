@@ -1,51 +1,93 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <title>Mirrativ ランキング表示</title>
-  <style>
-    body { font-family: sans-serif; padding: 1em; }
-    h1 { font-size: 20px; }
-    ul { padding: 0; list-style: none; }
-    li { margin: 5px 0; padding: 8px; border: 1px solid #ccc; border-radius: 5px; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mirrativランキング</title>
+<style>
+body {
+  font-family: sans-serif;
+  background: #f0f2f5;
+  padding: 1em;
+}
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+#ranking-container {
+  max-width: 600px;
+  margin: auto;
+  background: #fff;
+  border-radius: 8px;
+  overflow-y: auto;
+  max-height: 80vh;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+.card {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-bottom: 1px solid #eee;
+}
+.rank {
+  width: 40px;
+  text-align: center;
+  font-weight: bold;
+}
+.name {
+  flex: 1;
+  margin-left: 10px;
+}
+.score {
+  width: 100px;
+  text-align: right;
+}
+.badge {
+  width: 20px;
+  height: 20px;
+  margin-left: 6px;
+}
+.rank1 { background: #fff8dc; }  /* 金 */
+.rank2 { background: #f0f0f0; }  /* 銀 */
+.rank3 { background: #fde3c0; }  /* 銅 */
+</style>
 </head>
 <body>
-  <h1>Mirrativ ランキング（イベントID:4063）</h1>
-  <div id="status">データ取得中...</div>
-  <ul id="ranking"></ul>
+<h1>Mirrativイベントランキング</h1>
+<div id="ranking-container">
+  <div id="ranking"></div>
+</div>
 
-  <script>
-    // CORSプロキシを経由
-    const proxy = "https://cors-anywhere.herokuapp.com/";
-    const target = "https://www.mirrativ.com/api/emomo_run/event?gift_event_id=4063";
-    const url = proxy + target;
+<script>
+const apiUrl = "https://あなたのサーバー.com/mirrativ?gift_event_id=4063";
 
-    fetch(url)
-      .then(res => {
-        if (!res.ok) throw new Error("HTTPエラー: " + res.status);
-        return res.json();
-      })
-      .then(data => {
-        console.log("APIレスポンス:", data); // デバッグ
-        document.getElementById("status").textContent = "取得成功！";
+fetch(apiUrl)
+  .then(res => res.json())
+  .then(data => {
+    const container = document.getElementById("ranking");
+    const users = data.users || [];
 
-        const list = document.getElementById("ranking");
+    users.forEach(user => {
+      const card = document.createElement("div");
+      card.classList.add("card");
+      if(user.rank === 1) card.classList.add("rank1");
+      else if(user.rank === 2) card.classList.add("rank2");
+      else if(user.rank === 3) card.classList.add("rank3");
 
-        if (data.ranking) {
-          data.ranking.forEach((user, i) => {
-            const li = document.createElement("li");
-            li.textContent = `${i + 1}位: ${user.user_name} (${user.score})`;
-            list.appendChild(li);
-          });
-        } else {
-          list.innerHTML = "<li>ランキングデータが見つかりませんでした</li>";
-        }
-      })
-      .catch(err => {
-        document.getElementById("status").textContent = "エラー: " + err;
-        console.error(err);
-      });
-  </script>
+      card.innerHTML = `
+        <div class="rank">${user.rank}</div>
+        <img src="${user.icon_url}" width="40" height="40">
+        <div class="name">${user.name}</div>
+        <div class="score">${user.score.toLocaleString()}</div>
+        <img src="${user.badge_image_url}" class="badge">
+      `;
+      container.appendChild(card);
+    });
+  })
+  .catch(err => {
+    document.getElementById("ranking").innerHTML = `<p style="text-align:center; color:red;">エラー: ${err}</p>`;
+    console.error(err);
+  });
+</script>
 </body>
 </html>
