@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Mirrativ ランキング表示</title>
+  <style>
+    body { font-family: sans-serif; padding: 1em; }
+    h1 { font-size: 20px; }
+    ul { padding: 0; list-style: none; }
+    li { margin: 5px 0; padding: 8px; border: 1px solid #ccc; border-radius: 5px; }
+  </style>
+</head>
+<body>
+  <h1>Mirrativ ランキング（イベントID:4063）</h1>
+  <div id="status">データ取得中...</div>
+  <ul id="ranking"></ul>
+
+  <script>
+    const url = "https://www.mirrativ.com/api/emomo_run/event?gift_event_id=4063";
+
+    fetch(url)
+      .then(res => {
+        if (!res.ok) throw new Error("HTTPエラー: " + res.status);
+        return res.json();
+      })
+      .then(data => {
+        console.log("APIレスポンス:", data); // デバッグ用
+        document.getElementById("status").textContent = "取得成功！";
+
+        // もし "ranking" データが入っていたら表示
+        const list = document.getElementById("ranking");
+        if (data.ranking) {
+          data.ranking.forEach((user, i) => {
+            const li = document.createElement("li");
+            li.textContent = `${i + 1}位: ${user.user_name} (${user.score})`;
+            list.appendChild(li);
+          });
+        } else {
+          list.innerHTML = "<li>ランキングデータが見つかりませんでした</li>";
+        }
+      })
+      .catch(err => {
+        document.getElementById("status").textContent = "エラー: " + err;
+        console.error(err);
+      });
+  </script>
+</body>
+</html>
