@@ -1,169 +1,40 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>MirrativイベントJSON自動作成テスト</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YouTubeランダム再生リスト</title>
 <style>
-  body { font-family: Arial, sans-serif; padding: 10px; max-width: 700px; margin: auto; }
-  textarea { width: 100%; height: 150px; }
-  table { border-collapse: collapse; width: 100%; margin-top: 10px; }
-  th, td { border: 1px solid #ccc; padding: 6px; }
-  input[type=text] { width: 100%; box-sizing: border-box; }
-  button { margin: 5px 0; }
+  body { font-family: sans-serif; text-align: center; margin-top: 50px; }
+  button { padding: 10px 20px; font-size: 16px; cursor: pointer; }
+  iframe { margin-top: 20px; width: 80%; height: 450px; }
 </style>
 </head>
 <body>
 
-<h2>MirrativイベントJSON自動作成テスト</h2>
-
-<p>ツイート本文を複数行で貼り付けて、「解析する」ボタンを押してください。</p>
-<textarea id="inputTweets" placeholder="ここにツイート本文を複数行でペースト"></textarea>
-<br />
-<button id="btnParse">解析する</button>
-
-<table id="resultTable">
-  <thead>
-    <tr>
-      <th>タイトル</th>
-      <th>リンク</th>
-      <th>イベントID</th>
-      <th>キーワード</th>
-      <th>操作</th>
-    </tr>
-  </thead>
-  <tbody></tbody>
-</table>
-
-<button id="btnAdd">追加</button>
-<button id="btnSave">JSON保存</button>
+<h1>YouTubeランダム再生リスト</h1>
+<button id="playButton">ランダム再生</button>
+<iframe id="player" src="" frameborder="0" allowfullscreen></iframe>
 
 <script>
-  const keywordsRules = [
-    { check: /ルーレット|Roulette/i, tag: "ルレ" },
-    { check: /エモラン|Emomo Run/i, tag: "エモラン(S72)" },
-    { check: /復刻/i, tag: "復刻" },
-    { check: /8月/i, tag: "8月" },
-    { check: /2025年/i, tag: "2025年" },
-    { check: /前半/i, tag: "前半" },
-    { check: /後半/i, tag: "後半" },
+  // 自分で整えた動画IDリスト
+  const videoList = [
+    "dQw4w9WgXcQ",
+    "3JZ_D3ELwOQ",
+    "L_jWHffIx5E",
+    // ここに好きな動画IDを追加
   ];
 
-  // 解析処理
-  async function parseTweets() {
-    const input = document.getElementById("inputTweets").value.trim();
-    if (!input) return alert("ツイート本文を入力してください");
+  const player = document.getElementById('player');
+  const button = document.getElementById('playButton');
 
-    const lines = input.split("\n").filter(line => line.trim() !== "");
-    const tbody = document.querySelector("#resultTable tbody");
-
-    for (const line of lines) {
-      // Mirrativ URL抽出
-      const urlMatch = line.match(/https:\/\/www\.mirrativ\.com\/roulette\/([a-z0-9]+)/i);
-      if (!urlMatch) {
-        alert("Mirrativ URLが見つかりません: " + line);
-        continue;
-      }
-      const url = urlMatch[0];
-      const hash_id = urlMatch[1];
-
-      // API呼び出し
-      let event_id = "";
-      try {
-        const res = await fetch(`https://www.mirrativ.com/api/roulette/status?hash_id=${hash_id}`);
-        if (!res.ok) throw new Error("API通信エラー");
-        const json = await res.json();
-        event_id = json.event_id || "";
-      } catch(e) {
-        alert("API取得エラー: " + e.message);
-      }
-
-      // キーワード判定
-      const kws = keywordsRules.filter(k => k.check.test(line)).map(k => k.tag);
-
-      // タイトルはURL手前まで
-      const title = line.split(" https")[0];
-
-      addRow({title, link: url, img: event_id, keywords: kws});
-    }
+  function playRandomVideo() {
+    const randomIndex = Math.floor(Math.random() * videoList.length);
+    const videoId = videoList[randomIndex];
+    player.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
   }
 
-  // 行追加処理
-  function addRow(data = {title:"", link:"", img:"", keywords: []}) {
-    const tbody = document.querySelector("#resultTable tbody");
-    const tr = document.createElement("tr");
-
-    // title
-    const tdTitle = document.createElement("td");
-    const inputTitle = document.createElement("input");
-    inputTitle.type = "text";
-    inputTitle.value = data.title;
-    tdTitle.appendChild(inputTitle);
-
-    // link
-    const tdLink = document.createElement("td");
-    const inputLink = document.createElement("input");
-    inputLink.type = "text";
-    inputLink.value = data.link;
-    tdLink.appendChild(inputLink);
-
-    // img (イベントID)
-    const tdImg = document.createElement("td");
-    const inputImg = document.createElement("input");
-    inputImg.type = "text";
-    inputImg.value = data.img;
-    tdImg.appendChild(inputImg);
-
-    // keywords (カンマ区切りテキストで編集可能)
-    const tdKeywords = document.createElement("td");
-    const inputKeywords = document.createElement("input");
-    inputKeywords.type = "text";
-    inputKeywords.value = data.keywords.join(", ");
-    tdKeywords.appendChild(inputKeywords);
-
-    // 操作（削除ボタン）
-    const tdOps = document.createElement("td");
-    const btnDel = document.createElement("button");
-    btnDel.textContent = "削除";
-    btnDel.onclick = () => {
-      tr.remove();
-    };
-    tdOps.appendChild(btnDel);
-
-    tr.appendChild(tdTitle);
-    tr.appendChild(tdLink);
-    tr.appendChild(tdImg);
-    tr.appendChild(tdKeywords);
-    tr.appendChild(tdOps);
-
-    tbody.appendChild(tr);
-  }
-
-  // JSON保存処理
-  function saveJSON() {
-    const tbody = document.querySelector("#resultTable tbody");
-    const data = [];
-    for (const tr of tbody.querySelectorAll("tr")) {
-      const tds = tr.querySelectorAll("input");
-      data.push({
-        title: tds[0].value.trim(),
-        link: tds[1].value.trim(),
-        img: tds[2].value.trim(),
-        keywords: tds[3].value.split(",").map(s => s.trim()).filter(s => s !== "")
-      });
-    }
-    const blob = new Blob([JSON.stringify(data, null, 2)], {type: "application/json"});
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "events.json";
-    a.click();
-    URL.revokeObjectURL(url);
-  }
-
-  document.getElementById("btnParse").onclick = parseTweets;
-  document.getElementById("btnAdd").onclick = () => addRow();
-  document.getElementById("btnSave").onclick = saveJSON;
+  button.addEventListener('click', playRandomVideo);
 </script>
 
 </body>
