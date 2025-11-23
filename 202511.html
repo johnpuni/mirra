@@ -1,0 +1,41 @@
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const banners = document.querySelectorAll("#event-banners .banner-item img");
+
+    banners.forEach(img => {
+        const start = img.dataset.start;
+        const end   = img.dataset.end;
+        const link  = img.dataset.url;
+        const parent = img.closest(".banner-item");
+
+        // --- aタグでラップ ---
+        const wrapper = document.createElement("a");
+        wrapper.href = link;
+        wrapper.target = "_blank";
+
+        // img を a の中に移動
+        parent.appendChild(wrapper);
+        wrapper.appendChild(img);
+
+        // --- 画像読み込み失敗時 no image に変更 ---
+        img.onerror = () => {
+            wrapper.remove();  // 画像リンクごと削除
+            const no = document.createElement("div");
+            no.className = "no-img";
+            no.textContent = "no image";
+            parent.prepend(no);
+        };
+
+        // --- 開催期間 ---
+        const date = document.createElement("div");
+        date.textContent = format(start) + " ～ " + format(end);
+        parent.appendChild(date);
+    });
+
+    // 日付フォーマット
+    function format(str) {
+        const d = new Date(str);
+        return `${d.getFullYear()}/${d.getMonth()+1}/${d.getDate()}`;
+    }
+});
+</script>
