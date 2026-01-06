@@ -1,50 +1,60 @@
-body {
+body{
+  margin:0;
   background:#0f111a;
   color:#fff;
   font-family:system-ui;
-  margin:0;
 }
 
 .title{
   text-align:center;
-  margin:20px 0;
+  margin:16px 0;
 }
 
 #month-tabs{
   display:flex;
-  gap:10px;
   justify-content:center;
+  gap:10px;
   flex-wrap:wrap;
+  margin-bottom:10px;
 }
 
 .tab{
-  padding:8px 14px;
+  padding:6px 14px;
   background:#222;
   border-radius:10px;
   cursor:pointer;
+  font-size:14px;
 }
 
 .tab.active{
-  background:#00bfff;
+  background:#00d0ff;
   color:#000;
 }
 
 #schedule{
   display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
-  gap:16px;
-  padding:20px;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+  padding:14px;
+}
+
+@media(max-width:1100px){
+  #schedule{ grid-template-columns:repeat(3,1fr); }
+}
+
+@media(max-width:700px){
+  #schedule{ grid-template-columns:repeat(2,1fr); }
 }
 
 .card{
   background:#1b1e2a;
-  border-radius:16px;
-  padding:10px;
+  border-radius:14px;
+  padding:8px;
   transition:.2s;
 }
 
 .card.active{
-  box-shadow:0 0 18px #00eaff;
+  box-shadow:0 0 12px #00eaff;
 }
 
 .card.ended{
@@ -53,10 +63,14 @@ body {
 
 .card img{
   width:100%;
-  border-radius:12px;
+  height:150px;
+  object-fit:cover;
+  border-radius:10px;
+  cursor:pointer;
 }
 
 .info{
-  margin-top:8px;
-  font-size:13px;
+  margin-top:6px;
+  font-size:12px;
+  line-height:1.4;
 }
