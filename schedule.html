@@ -2,217 +2,347 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>Mirrativ Event Schedule</title>
+<title>Mirrativ Event Schedule v1.0.3</title>
+
 <style>
-body{
+/* ----------------- 基本スタイル ----------------- */
+body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   background:#0e0e11;
   color:#fff;
   margin:0;
   padding:0;
+  user-select:none;
 }
-h1{
+h1 {
   text-align:center;
-  margin:20px 0;
+  margin:20px 0 0 0;
 }
-#schedule{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:14px;
-  padding:16px;
+#version {
+  text-align:center;
+  font-size:12px;
+  opacity:0.6;
+  margin-bottom:8px;
 }
-.card{
+
+/* ----------------- パスワード画面 ----------------- */
+#password-screen {
+  position:fixed;
+  top:0;left:0;width:100%;height:100%;
   background:#1a1b20;
-  border-radius:14px;
-  overflow:hidden;
-  box-shadow:0 6px 14px rgba(0,0,0,.4);
   display:flex;
   flex-direction:column;
   align-items:center;
+  justify-content:center;
+  z-index:9999;
 }
-.image-box{
-  width:100%;
-  aspect-ratio:1/1;
+#password-screen h2 {
+  font-size:24px;
+  margin-bottom:12px;
+  text-align:center;
+}
+#password-screen p {
+  font-size:14px;
+  opacity:0.7;
+  margin-bottom:20px;
+  text-align:center;
+  max-width:300px;
+}
+#password-screen input {
+  font-size:18px;
+  padding:8px 12px;
+  border-radius:6px;
+  border:none;
+  width:220px;
+  text-align:center;
+  margin-bottom:12px;
+}
+#password-screen button {
+  font-size:16px;
+  padding:8px 16px;
+  border:none;
+  border-radius:6px;
+  background:#4caf50;
+  color:#fff;
+  cursor:pointer;
+}
+#password-error {
+  color:#f55;
+  margin-top:8px;
+}
+
+/* ----------------- スケジュール ----------------- */
+#tabs {
+  display:flex;
+  justify-content:center;
+  margin:12px 0;
+  flex-wrap:wrap;
+  gap:6px;
+}
+.tab {
+  padding:6px 12px;
+  background:#1a1b20;
+  border-radius:6px;
+  cursor:pointer;
+  opacity:0.8;
+}
+.tab.active {
+  background:#4caf50;
+  opacity:1;
+}
+#schedule {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  padding:16px;
+}
+
+/* ----------------- カード ----------------- */
+.card {
+  background:#1a1b20;
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:0 4px 12px rgba(0,0,0,.4);
+  position:relative;
+}
+.image-box {
   background:#000;
   display:flex;
   align-items:center;
   justify-content:center;
   cursor:pointer;
-  position:relative;
-  border-radius:12px 12px 0 0;
-  overflow:hidden;
+  height:160px;
 }
-.image-box img{
+.image-box img {
   width:100%;
   height:100%;
-  object-fit:cover;
+  object-fit:contain;
 }
-.status{
-  position:absolute;
-  top:6px;
-  left:6px;
-  background:rgba(255,165,0,0.9);
-  padding:2px 6px;
-  border-radius:6px;
-  font-size:12px;
-  font-weight:bold;
-}
-.time{
-  padding:8px;
+.card .time {
+  padding:6px;
   font-size:12px;
   text-align:center;
-  opacity:.8;
-  width:100%;
+  opacity:0.8;
 }
-.open-btn{
-  margin:6px;
-  padding:8px 12px;
-  font-size:14px;
-  background:#ff9800;
-  border:none;
-  border-radius:8px;
-  cursor:pointer;
-  color:#000;
+.card .status {
+  position:absolute;
+  top:6px; right:6px;
+  padding:2px 6px;
+  border-radius:4px;
+  font-size:10px;
   font-weight:bold;
-  transition:0.2s;
+  color:#fff;
 }
-.open-btn:hover{
-  background:#ffc107;
+.card.active .status {
+  background:#4caf50;
+  animation: glow 1.5s infinite alternate;
+}
+.card.upcoming .status {
+  background:#2196f3;
+}
+.card.finished .status {
+  background:#888;
+  opacity:0.6;
+}
+@keyframes glow {
+  0% { box-shadow:0 0 4px #4caf50; }
+  100% { box-shadow:0 0 16px #4caf50; }
 }
 
-/* モーダル */
-#modal{
-  display:none;
+/* ----------------- モーダル ----------------- */
+#modal {
   position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
+  top:0;left:0;width:100%;height:100%;
   background:rgba(0,0,0,0.9);
+  display:none;
   align-items:center;
   justify-content:center;
-  z-index:1000;
+  z-index:10000;
 }
-#modal-img{
+#modal img {
   max-width:90%;
   max-height:90%;
+  object-fit:contain;
   border-radius:12px;
 }
-#modal-close{
+#modal button {
   position:absolute;
-  top:20px;
-  right:20px;
-  font-size:24px;
-  font-weight:bold;
-  cursor:pointer;
+  top:12px; right:12px;
+  padding:6px 12px;
+  border:none;
+  border-radius:6px;
+  background:#f55;
   color:#fff;
+  cursor:pointer;
+  font-size:14px;
+}
+.open-btn {
+  display:block;
+  margin:6px auto;
+  font-size:12px;
+  padding:4px 8px;
+  border-radius:4px;
+  background:#2196f3;
+  color:#fff;
+  text-align:center;
+  cursor:pointer;
+  width:60%;
 }
 </style>
 </head>
 <body>
+
+<div id="password-screen">
+  <h2>リーク情報閲覧のためパスワードが必要です</h2>
+  <p>このページには未公開情報・イベント内部情報が含まれています。関係者以外の閲覧は禁止されています。</p>
+  <input type="password" id="password-input" placeholder="パスワード">
+  <button id="password-btn">Enter</button>
+  <div id="password-error"></div>
+  <div id="version">v1.0.3</div>
+</div>
+
 <h1>イベントスケジュール</h1>
+<div id="tabs"></div>
 <div id="schedule"></div>
 
-<!-- モーダル -->
 <div id="modal">
-  <span id="modal-close">&times;</span>
-  <img id="modal-img" src="">
+  <button id="modal-close">× 閉じる</button>
+  <img src="">
 </div>
 
 <script>
-// 🔁 画像プロキシ（CORS対策）
-function proxyImage(url){
-  return "https://images.weserv.nl/?url=" + encodeURIComponent(url.replace(/^https?:\/\//,""));
+// ----------------- パスワード管理 -----------------
+const PASSWORD = "johnleak";
+const passwordScreen = document.getElementById("password-screen");
+const passwordInput = document.getElementById("password-input");
+const passwordBtn = document.getElementById("password-btn");
+const passwordError = document.getElementById("password-error");
+
+// 以前認証済みかチェック
+if(localStorage.getItem("mirraAuth") === PASSWORD){
+  passwordScreen.style.display="none";
 }
 
-// 🔗 Mirrativ直通リンク
-function directLink(url){
-  return "mirr://webview/window/open?url=" + encodeURIComponent(url);
+passwordBtn.onclick = ()=>{
+  if(passwordInput.value===PASSWORD){
+    passwordScreen.style.display="none";
+    localStorage.setItem("mirraAuth", PASSWORD);
+  }else{
+    passwordError.textContent="パスワードが違います";
+  }
 }
 
-// 📦 JSON読み込み
+// ----------------- スクショ防止 -----------------
+document.addEventListener('contextmenu', e=>e.preventDefault());
+document.addEventListener('copy', e=>e.preventDefault());
+document.addEventListener('keydown', e=>{
+  if(e.ctrlKey || e.metaKey) e.preventDefault();
+});
+
+// ----------------- JSON 読み込み -----------------
 async function loadSchedule(){
   const listRes = await fetch("schedule/index.json");
   const files = await listRes.json();
   let events = [];
-
   for(const file of files){
     const res = await fetch("schedule/"+file);
     const data = await res.json();
     events = events.concat(data);
   }
-
   render(events);
 }
 
-// 🖼 描画
+// ----------------- 描画 -----------------
 function render(events){
   const wrap = document.getElementById("schedule");
-  const now = new Date();
+  const tabsWrap = document.getElementById("tabs");
 
-  // 重複URL・画像・日付を除外
-  const seen = new Set();
-  const filtered = events.filter(e=>{
+  // 重複URL/画像/日付をまとめる
+  const unique = {};
+  events.forEach(e=>{
     const key = e.url+"|"+e.image+"|"+e.start+"|"+e.end;
-    if(seen.has(key)) return false;
-    seen.add(key);
-    return true;
+    if(!unique[key]) unique[key] = e;
+  });
+  events = Object.values(unique);
+
+  // 月タブ作成
+  const months = [...new Set(events.map(e=>{
+    const d = new Date(e.start);
+    return `${d.getFullYear()}-${('0'+(d.getMonth()+1)).slice(-2)}`;
+  }))].sort();
+  months.forEach((m,i)=>{
+    const tab = document.createElement("div");
+    tab.className="tab";
+    tab.textContent=m;
+    tab.onclick=()=>{showMonth(m);setActiveTab(i);}
+    tabsWrap.appendChild(tab);
   });
 
-  filtered.sort((a,b)=> new Date(a.start)-new Date(b.start));
+  function setActiveTab(idx){
+    const all = document.querySelectorAll(".tab");
+    all.forEach((t,i)=>t.classList.toggle("active",i===idx));
+  }
 
-  filtered.forEach(e=>{
-    const card = document.createElement("div");
-    card.className="card";
+  // 自動で最新月表示
+  const today = new Date();
+  const latestMonth = `${today.getFullYear()}-${('0'+(today.getMonth()+1)).slice(-2)}`;
+  showMonth(latestMonth);
+  const idx = months.indexOf(latestMonth);
+  if(idx>=0) setActiveTab(idx);
 
-    const box = document.createElement("div");
-    box.className="image-box";
+  function showMonth(month){
+    wrap.innerHTML="";
+    const filtered = events.filter(e=>{
+      const d = new Date(e.start);
+      return `${d.getFullYear()}-${('0'+(d.getMonth()+1)).slice(-2)}`===month;
+    });
 
-    // ステータス表示
-    const startDate = new Date(e.start);
-    const endDate = new Date(e.end);
-    let statusText="";
-    if(now < startDate) statusText="開始まで"+Math.ceil((startDate-now)/(1000*60*60*24))+"日";
-    else if(now > endDate) statusText="終了";
-    else statusText="開催中";
+    const now = new Date();
+    filtered.forEach(e=>{
+      const card = document.createElement("div");
+      const start = new Date(e.start);
+      const end = new Date(e.end);
+      let status="", cls="";
+      if(now<start){status="開始前"; cls="upcoming";}
+      else if(now>end){status="終了"; cls="finished";}
+      else{status="開催中"; cls="active";}
 
-    const statusDiv=document.createElement("div");
-    statusDiv.className="status";
-    statusDiv.textContent=statusText;
-    box.appendChild(statusDiv);
+      card.className="card "+cls;
 
-    // 画像表示（一覧: catalog_banner.png）
-    if(e.image){
-      const img=document.createElement("img");
-      img.src=e.image; // 一覧はbanner
+      const box = document.createElement("div");
+      box.className="image-box";
+      const img = document.createElement("img");
+      // サムネイル catalog_banner.png
+      img.src = e.image.replace("catalog_banner","catalog_banner"); 
       box.appendChild(img);
+      box.onclick=()=>{ showModal(e.image.replace("catalog_banner","hero")) };
 
-      // クリックでモーダル（hero.png）
-      box.onclick=()=>{
-        document.getElementById("modal-img").src=e.image.replace("catalog_banner.png","hero.png");
-        document.getElementById("modal").style.display="flex";
-      }
-    }else{
-      box.textContent="No Image";
-    }
+      const time = document.createElement("div");
+      time.className="time";
+      time.textContent = start.toLocaleDateString()+" ～ "+end.toLocaleDateString();
 
-    const time=document.createElement("div");
-    time.className="time";
-    time.textContent=startDate.toLocaleDateString()+" ～ "+endDate.toLocaleDateString();
+      const stat = document.createElement("div");
+      stat.className="status";
+      stat.textContent=status;
 
-    const openBtn=document.createElement("button");
-    openBtn.className="open-btn";
-    openBtn.textContent="開く";
-    openBtn.onclick=()=> location.href=directLink(e.url);
+      const openBtn = document.createElement("div");
+      openBtn.className="open-btn";
+      openBtn.textContent="開く";
+      openBtn.onclick=()=> location.href="mirr://webview/window/open?url="+encodeURIComponent(e.url);
 
-    card.append(box,time,openBtn);
-    wrap.appendChild(card);
-  });
+      card.append(box,time,stat,openBtn);
+      wrap.appendChild(card);
+    });
+  }
 }
 
-// モーダル閉じる
-document.getElementById("modal-close").onclick=()=>{
-  document.getElementById("modal").style.display="none";
+// ----------------- モーダル -----------------
+const modal = document.getElementById("modal");
+const modalImg = modal.querySelector("img");
+document.getElementById("modal-close").onclick=()=>{modal.style.display="none";};
+function showModal(url){
+  modalImg.src = url;
+  modal.style.display="flex";
 }
 
 loadSchedule();
