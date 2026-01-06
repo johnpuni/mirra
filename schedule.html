@@ -6,14 +6,20 @@
 
 <style>
 body {
-  font-family: system-ui, sans-serif;
-  background:#f2f2f2;
   margin:0;
+  font-family: system-ui, sans-serif;
+  background:#f1f3f5;
 }
 
-h1 {
-  text-align:center;
+header {
+  position:sticky;
+  top:0;
+  background:white;
   padding:12px;
+  text-align:center;
+  font-weight:700;
+  box-shadow:0 2px 6px rgba(0,0,0,.1);
+  z-index:10;
 }
 
 #schedule {
@@ -23,19 +29,27 @@ h1 {
   padding:14px;
 }
 
+.month-title {
+  grid-column:1/-1;
+  margin:12px 4px 2px;
+  font-weight:700;
+  color:#555;
+}
+
 .card {
   background:white;
-  border-radius:12px;
-  box-shadow:0 4px 10px rgba(0,0,0,.12);
+  border-radius:14px;
+  box-shadow:0 6px 12px rgba(0,0,0,.12);
   overflow:hidden;
   transition:.2s;
 }
 
-.card:hover {
-  transform:scale(1.03);
+.card:active {
+  transform:scale(.97);
 }
 
 .image-box {
+  position:relative;
   cursor:pointer;
 }
 
@@ -44,57 +58,94 @@ h1 {
   display:block;
 }
 
+.badge {
+  position:absolute;
+  top:8px;
+  left:8px;
+  padding:4px 8px;
+  border-radius:999px;
+  font-size:11px;
+  color:white;
+  font-weight:700;
+}
+
+.running { background:#28a745; }
+.future { background:#0d6efd; }
+.ended { background:#6c757d; }
+
 .time {
-  padding:8px;
-  font-size:13px;
+  padding:10px;
   text-align:center;
+  font-size:13px;
+}
+
+.time strong {
+  font-size:14px;
 }
 </style>
 </head>
 
 <body>
 
-<h1>イベントスケジュール</h1>
+<header>イベントスケジュール</header>
 <div id="schedule"></div>
 
 <script>
 fetch("data/schedule202601.json")
-  .then(r => r.json())
-  .then(events => {
+.then(r => r.json())
+.then(events => {
 
-    const list = document.getElementById("schedule");
+  const list = document.getElementById("schedule");
+  const now = new Date();
 
-    events
-      .map(e => ({
-        ...e,
-        start: new Date(e.start),
-        end: new Date(e.end),
-        directUrl: "mirr://webview/window/open?url=" + encodeURIComponent(e.url)
-      }))
-      .sort((a,b) => a.start - b.start)
-      .forEach(e => {
+  events = events.map(e => ({
+    ...e,
+    start:new Date(e.start),
+    end:new Date(e.end),
+    direct:"mirr://webview/window/open?url=" + encodeURIComponent(e.url)
+  })).sort((a,b)=>a.start-b.start);
 
-        const card = document.createElement("div");
-        card.className = "card";
+  let currentMonth = "";
 
-        const box = document.createElement("div");
-        box.className = "image-box";
-        box.onclick = () => location.href = e.directUrl;
+  events.forEach(e => {
 
-        const img = document.createElement("img");
-        img.src = e.image;
-        box.appendChild(img);
+    const monthLabel = `${e.start.getFullYear()}年 ${e.start.getMonth()+1}月`;
+    if(monthLabel !== currentMonth){
+      currentMonth = monthLabel;
+      const title = document.createElement("div");
+      title.className = "month-title";
+      title.textContent = monthLabel;
+      list.appendChild(title);
+    }
 
-        const time = document.createElement("div");
-        time.className = "time";
-        time.textContent =
-          e.start.toLocaleDateString() + " ～ " +
-          e.end.toLocaleDateString();
+    let status = "future";
+    let label = "予定";
+    if(now >= e.start && now <= e.end){ status="running"; label="開催中"; }
+    else if(now > e.end){ status="ended"; label="終了"; }
 
-        card.append(box, time);
-        list.appendChild(card);
-      });
+    const card = document.createElement("div");
+    card.className = "card";
+
+    const box = document.createElement("div");
+    box.className = "image-box";
+    box.onclick = () => location.href = e.direct;
+
+    const badge = document.createElement("div");
+    badge.className = `badge ${status}`;
+    badge.textContent = label;
+
+    const img = document.createElement("img");
+    img.src = e.image;
+
+    const time = document.createElement("div");
+    time.className = "time";
+    time.innerHTML = `<strong>${e.start.toLocaleDateString()}</strong> ～ ${e.end.toLocaleDateString()}`;
+
+    box.append(badge, img);
+    card.append(box, time);
+    list.appendChild(card);
   });
+});
 </script>
 
 </body>
