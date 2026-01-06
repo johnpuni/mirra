@@ -6,36 +6,37 @@
 
 <style>
 body{
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: system-ui, sans-serif;
   background:#0e0e11;
   color:#fff;
   margin:0;
 }
-h1{
-  text-align:center;
-  margin:20px 0;
-}
+h1{text-align:center;margin:20px 0}
 
-#monthTabs{
+#tabs{
   display:flex;
-  gap:8px;
   justify-content:center;
-  margin-bottom:12px;
   flex-wrap:wrap;
+  gap:10px;
+  margin-bottom:10px;
 }
 .tab{
   padding:6px 12px;
-  border-radius:10px;
   background:#1a1b20;
+  border-radius:999px;
   cursor:pointer;
+  font-size:14px;
 }
-.tab.active{ background:#00eaff; color:#000; }
+.tab.active{background:#3b82f6}
 
 #schedule{
   display:grid;
-  grid-template-columns:repeat(auto-fill, minmax(160px,1fr));
+  grid-template-columns:repeat(4,1fr);
   gap:14px;
   padding:16px;
+}
+@media(max-width:900px){
+  #schedule{grid-template-columns:repeat(3,1fr);}
 }
 
 .card{
@@ -44,141 +45,129 @@ h1{
   overflow:hidden;
   box-shadow:0 6px 14px rgba(0,0,0,.4);
 }
-.card.active{ box-shadow:0 0 14px rgba(0,234,255,.8); }
-.card.ended{ opacity:.45; }
 
 .image-box{
   aspect-ratio:1/1;
-  background:#000;
   display:flex;
   align-items:center;
   justify-content:center;
   cursor:pointer;
+  background:#000;
 }
 .image-box img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
+  max-width:100%;
+  max-height:100%;
+  object-fit:contain;
 }
 
 .time{
-  padding:8px;
-  font-size:12px;
   text-align:center;
+  padding:6px;
+  font-size:12px;
+  opacity:.85;
 }
 
 .status{
-  font-weight:bold;
-  margin-bottom:4px;
+  text-align:center;
+  font-size:12px;
+  padding-bottom:8px;
 }
-.status.active{ color:#00eaff; }
-.status.upcoming{ color:#ffd000; }
-.status.ended{ color:#888; }
+.running{color:#22c55e}
+.future{color:#38bdf8}
+.ended{color:#888}
 </style>
 </head>
-
 <body>
 
 <h1>イベントスケジュール</h1>
-<div id="monthTabs"></div>
+<div id="tabs"></div>
 <div id="schedule"></div>
 
 <script>
-function proxyImage(url){
-  return "https://images.weserv.nl/?url=" +
-         encodeURIComponent(url.replace(/^https?:\/\//, ""));
-}
+const proxy = u=>"https://images.weserv.nl/?url="+encodeURIComponent(u.replace(/^https?:\/\//,''));
+const direct = u=>"mirr://webview/window/open?url="+encodeURIComponent(u);
 
-function directLink(url){
-  return "mirr://webview/window/open?url=" + encodeURIComponent(url);
-}
+let allEvents=[], currentMonth="";
 
-let allEvents = [];
-
-async function loadSchedule(){
-  const listRes = await fetch("schedule/index.json");
-  const files = await listRes.json();
-
-  let events = [];
-
-  for(const file of files){
-    const res = await fetch("schedule/" + file);
-    const data = await res.json();
-    events = events.concat(data);
+async function load(){
+  const files=await fetch("schedule/index.json").then(r=>r.json());
+  for(const f of files){
+    const data=await fetch("schedule/"+f).then(r=>r.json());
+    allEvents.push(...data);
   }
 
-  // 重複除去
-  const map = new Map();
-  for(const e of events){
-    const key = `${e.url}|${e.image}|${e.start}|${e.end}`;
-    if(!map.has(key)) map.set(key, e);
-  }
-
-  allEvents = [...map.values()];
-  buildMonthTabs();
-}
-
-function buildMonthTabs(){
-  const months = [...new Set(allEvents.map(e=>e.start.slice(0,7)))].sort();
-  const wrap = document.getElementById("monthTabs");
-  wrap.innerHTML = "";
-
-  months.forEach((m,i)=>{
-    const tab = document.createElement("div");
-    tab.className = "tab";
-    tab.textContent = m;
-    tab.onclick = ()=>{
-      document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
-      tab.classList.add("active");
-      render(m);
-    };
-    if(i===0) tab.classList.add("active");
-    wrap.appendChild(tab);
+  // 重複排除
+  const seen=new Set();
+  allEvents=allEvents.filter(e=>{
+    const key=e.url+e.image+e.start+e.end;
+    if(seen.has(key))return false;
+    seen.add(key); return true;
   });
 
+  buildTabs();
+}
+
+function buildTabs(){
+  const months=[...new Set(allEvents.map(e=>e.start.slice(0,7)))].sort().reverse();
+  const tabs=document.getElementById("tabs");
+  tabs.innerHTML="";
+  months.forEach(m=>{
+    const t=document.createElement("div");
+    t.className="tab";
+    t.textContent=m;
+    t.onclick=()=>render(m);
+    tabs.appendChild(t);
+  });
   render(months[0]);
 }
 
 function render(month){
-  const wrap = document.getElementById("schedule");
-  wrap.innerHTML = "";
-  const now = new Date();
+  currentMonth=month;
+  [...document.querySelectorAll(".tab")].forEach(t=>{
+    t.classList.toggle("active",t.textContent===month);
+  });
 
-  const list = allEvents.filter(e=>e.start.startsWith(month))
-                        .sort((a,b)=>new Date(a.start)-new Date(b.start));
+  const list=document.getElementById("schedule");
+  list.innerHTML="";
+  const now=new Date();
 
-  for(const e of list){
-    const start = new Date(e.start);
-    const end = new Date(e.end);
+  allEvents.filter(e=>e.start.startsWith(month))
+  .sort((a,b)=>new Date(a.start)-new Date(b.start))
+  .forEach(e=>{
+    const s=new Date(e.start), end=new Date(e.end);
+    let status="future", label="開催予定";
+    if(now>=s && now<=end){status="running";label="開催中";}
+    if(now>end){status="ended";label="終了";}
 
-    let status="", cls="";
-    if(now < start){ status="開催予定"; cls="upcoming"; }
-    else if(now<=end){ status="開催中"; cls="active"; }
-    else{ status="開催終了"; cls="ended"; }
+    const card=document.createElement("div");
+    card.className="card";
 
-    const card = document.createElement("div");
-    card.className = `card ${cls}`;
+    const box=document.createElement("div");
+    box.className="image-box";
+    box.onclick=()=>location.href=direct(e.url);
 
-    const box = document.createElement("div");
-    box.className = "image-box";
-    box.onclick = ()=>location.href = directLink(e.url);
+    if(e.image){
+      const img=document.createElement("img");
+      img.src=proxy(e.image);
+      box.appendChild(img);
+    }else{
+      box.textContent="No Image";
+    }
 
-    const img = document.createElement("img");
-    img.src = proxyImage(e.image);
-    box.appendChild(img);
+    const time=document.createElement("div");
+    time.className="time";
+    time.textContent=s.toLocaleDateString()+" ～ "+end.toLocaleDateString();
 
-    const time = document.createElement("div");
-    time.className = "time";
-    time.innerHTML = `<div class="status ${cls}">${status}</div>
-      ${start.toLocaleDateString()} ～ ${end.toLocaleDateString()}`;
+    const st=document.createElement("div");
+    st.className="status "+status;
+    st.textContent=label;
 
-    card.append(box,time);
-    wrap.appendChild(card);
-  }
+    card.append(box,time,st);
+    list.appendChild(card);
+  });
 }
 
-loadSchedule();
+load();
 </script>
-
 </body>
 </html>
