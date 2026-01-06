@@ -15,17 +15,16 @@ h1{text-align:center;margin:20px 0;}
 .card{background:#1a1b20;border-radius:14px;overflow:hidden;box-shadow:0 6px 14px rgba(0,0,0,.4);position:relative;transition:transform .3s,box-shadow .3s;}
 .card:hover{transform:scale(1.05);box-shadow:0 12px 20px rgba(0,0,0,.5);}
 .image-box{position:relative;overflow:hidden;width:100%;height:200px;cursor:pointer;}
-.image-box img{width:100%;height:100%;object-fit:cover;display:block;}
-.time-circle{position:absolute;top:6px;right:6px;width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-align:center;font-family:'Comic Neue',cursive;font-weight:700;font-size:12px;text-shadow:1px 1px 3px #000,0 0 4px #ff0;animation:pop 1.2s infinite alternate, colorchange 3s infinite alternate, swing 1.5s infinite alternate;}
+.image-box img{width:100%;height:100%;object-fit:contain;display:block;} /* containで切り取りなし */
+.time-circle{position:absolute;top:6px;right:6px;width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-align:center;font-family:'Comic Neue',cursive;font-weight:700;font-size:12px;text-shadow:1px 1px 2px #000;animation:pop 1.2s infinite alternate,swing 1.5s infinite alternate;}
 @keyframes pop{0%{transform:scale(1);}50%{transform:scale(1.15);}100%{transform:scale(1);}}
-@keyframes colorchange{0%{background:#ff6;}50%{background:#ff9;}100%{background:#ff6;}}
-@keyframes swing{0%{transform:rotate(-3deg) scale(1);}50%{transform:rotate(3deg) scale(1.1);}100%{transform:rotate(-3deg) scale(1);}}
+@keyframes swing{0%{transform:rotate(-3deg) scale(1);}50%{transform:rotate(3deg) scale(1.05);}100%{transform:rotate(-3deg) scale(1);}}
 .past{opacity:0.4;}
 .open-btn{position:absolute;bottom:8px;right:8px;background:#ff6;color:#000;font-weight:bold;padding:6px 10px;border-radius:8px;cursor:pointer;z-index:2;font-size:14px;}
 .open-btn:hover{background:#ff8;}
 .overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:999;display:none;}
-.modal{position:relative;background:#000;border-radius:12px;max-width:90%;max-height:90%;overflow:hidden;}
-.modal img{width:100%;height:auto;object-fit:contain;display:block;}
+.modal{position:relative;background:#000;border-radius:12px;max-width:90%;max-height:90%;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+.modal img{max-width:100%;max-height:100%;object-fit:contain;display:block;}
 .close-btn{position:absolute;top:10px;right:10px;font-size:36px;font-weight:bold;color:#fff;background:rgba(0,0,0,.5);padding:6px 12px;border-radius:8px;cursor:pointer;}
 #pw-screen{position:fixed;top:0;left:0;width:100%;height:100%;background:#111;display:flex;align-items:center;justify-content:center;flex-direction:column;z-index:1000;}
 #pw-screen input{font-size:28px;padding:14px;margin:12px;border-radius:8px;border:none;text-align:center;width:260px;}
@@ -35,6 +34,8 @@ h1{text-align:center;margin:20px 0;}
 #pw-screen #pw-version{position:absolute;bottom:10px;font-size:14px;color:#888;}
 #screenshot-warning{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);color:#f00;display:flex;align-items:center;justify-content:center;text-align:center;font-size:24px;padding:20px;z-index:2000;display:none;}
 #version{position:fixed;bottom:4px;right:8px;font-size:12px;color:#888;}
+.start-circle{background:linear-gradient(135deg,#ff9a9e,#fad0c4);color:#000;}
+.end-circle{background:linear-gradient(135deg,#a1c4fd,#c2e9fb);color:#000;}
 </style>
 </head>
 <body>
@@ -46,7 +47,7 @@ h1{text-align:center;margin:20px 0;}
 <input type="password" id="pw" placeholder="Password">
 <button onclick="checkPassword()">Enter</button>
 <div class="info">このページには未公開情報・イベント内部情報が含まれています。<br>関係者以外の閲覧は禁止されています。</div>
-<div id="pw-version">Version 1.2.7</div>
+<div id="pw-version">Version 1.3.0</div>
 </div>
 
 <h1>イベントスケジュール</h1>
@@ -60,20 +61,15 @@ h1{text-align:center;margin:20px 0;}
   </div>
 </div>
 
-<div id="version">Version 1.2.7 / 更新日: 2026-01-06</div>
+<div id="version">Version 1.3.0 / 更新日: 2026-01-06</div>
 
 <script>
-const PASSWORD = "johnleak";
-const VERSION = "1.2.7";
-if(localStorage.getItem("pw_ok") !== PASSWORD+VERSION){
-  document.getElementById("pw-screen").style.display="flex";
-}
+const PASSWORD="johnleak",VERSION="1.3.0";
+if(localStorage.getItem("pw_ok")!==PASSWORD+VERSION){document.getElementById("pw-screen").style.display="flex";}
 function checkPassword(){
-  const val = document.getElementById("pw").value;
-  if(val===PASSWORD){
-    localStorage.setItem("pw_ok", PASSWORD+VERSION);
-    document.getElementById("pw-screen").style.display="none";
-  }else{alert("パスワードが違います");}
+  const val=document.getElementById("pw").value;
+  if(val===PASSWORD){localStorage.setItem("pw_ok",PASSWORD+VERSION);document.getElementById("pw-screen").style.display="none";}
+  else{alert("パスワードが違います");}
 }
 
 // 画像プロキシ
@@ -85,19 +81,17 @@ function openModal(src){
   const img=document.getElementById("modal-img");
   img.src="";
   document.getElementById("modal").style.display="flex";
-  const tmp=new Image();
-  tmp.src=proxyImage(src);
-  tmp.onload=()=>img.src=tmp.src;
+  const tmp=new Image(); tmp.src=proxyImage(src); tmp.onload=()=>img.src=tmp.src;
 }
 function closeModal(){document.getElementById("modal").style.display="none";}
 document.addEventListener("keydown",e=>{if(e.key==="Escape") closeModal();});
 
 // スクショ防止
-document.addEventListener('contextmenu', e => e.preventDefault());
-document.addEventListener('selectstart', e => e.preventDefault());
-document.addEventListener('copy', e => e.preventDefault());
-document.addEventListener('keydown', e => {
-  if(e.ctrlKey && ["c","C","s","S","p","P"].includes(e.key)){
+document.addEventListener('contextmenu', e=>e.preventDefault());
+document.addEventListener('selectstart', e=>e.preventDefault());
+document.addEventListener('copy', e=>e.preventDefault());
+document.addEventListener('keydown', e=>{
+  if(e.ctrlKey&&["c","C","s","S","p","P"].includes(e.key)){
     e.preventDefault();
     document.getElementById("screenshot-warning").style.display="flex";
     setTimeout(()=>document.getElementById("screenshot-warning").style.display="none",3000);
@@ -106,28 +100,17 @@ document.addEventListener('keydown', e => {
 
 // JSON読み込み
 async function loadSchedule(){
-  const listRes = await fetch("schedule/index.json");
-  const files = await listRes.json();
+  const listRes=await fetch("schedule/index.json");
+  const files=await listRes.json();
   let events=[];
-  for(const file of files){
-    const res=await fetch("schedule/"+file);
-    const data=await res.json();
-    events=events.concat(data);
-  }
+  for(const file of files){const res=await fetch("schedule/"+file);const data=await res.json();events=events.concat(data);}
   const seen={};
-  events=events.filter(e=>{
-    const key=e.url+"|"+e.start+"|"+e.end;
-    if(seen[key]) return false;
-    seen[key]=true;
-    return true;
-  });
-
+  events=events.filter(e=>{const key=e.url+"|"+e.start+"|"+e.end;if(seen[key]) return false;seen[key]=true;return true;});
   const months=[...new Set(events.map(e=>e.start.slice(0,7)))].sort().reverse();
   renderMonthTabs(months,events);
   render(events,months[0]);
 }
 
-// 月タブ
 function renderMonthTabs(months,events){
   const tabWrap=document.getElementById("month-tabs");
   tabWrap.innerHTML="";
@@ -135,44 +118,33 @@ function renderMonthTabs(months,events){
     const btn=document.createElement("div");
     btn.className="month-btn";
     btn.textContent=m;
-    btn.onclick=()=>{render(events,m); document.querySelectorAll(".month-btn").forEach(b=>b.classList.remove("active")); btn.classList.add("active");};
+    btn.onclick=()=>{render(events,m);document.querySelectorAll(".month-btn").forEach(b=>b.classList.remove("active"));btn.classList.add("active");};
     tabWrap.appendChild(btn);
   });
   document.querySelectorAll(".month-btn")[0].classList.add("active");
 }
 
-// 描画
 function render(events,month){
-  const wrap=document.getElementById("schedule");
-  wrap.innerHTML="";
+  const wrap=document.getElementById("schedule"); wrap.innerHTML="";
   const now=new Date();
   const filtered=events.filter(e=>e.start.startsWith(month));
   filtered.sort((a,b)=> new Date(a.start)-new Date(b.start));
   filtered.forEach(e=>{
     const start=new Date(e.start), end=new Date(e.end);
-    const card=document.createElement("div");
-    card.className="card";
-    if(now>end) card.classList.add("past");
-    else if(now>=start && now<=end) card.classList.add("glow");
+    const card=document.createElement("div"); card.className="card";
+    if(now>end) card.classList.add("past"); else if(now>=start&&now<=end) card.classList.add("glow");
 
-    const box=document.createElement("div");
-    box.className="image-box";
-    box.onclick=()=>openModal(e.image.replace("catalog_banner","hero"));
+    const box=document.createElement("div"); box.className="image-box"; box.onclick=()=>openModal(e.image.replace("catalog_banner","hero"));
     if(e.image){const img=document.createElement("img"); img.src=proxyImage(e.image); box.appendChild(img);}else box.textContent="No Image";
 
-    const circle=document.createElement("div");
-    circle.className="time-circle";
-    if(now<start){const days=Math.ceil((start-now)/86400000); circle.textContent="開始\nまで\n"+days+"日";}
-    else if(now>=start && now<=end){const days=Math.ceil((end-now)/86400000); circle.textContent="終了\nまで\n"+days+"日";}
+    const circle=document.createElement("div"); circle.className="time-circle";
+    if(now<start){const days=Math.ceil((start-now)/86400000); circle.textContent="開始\nまで\n"+days+"日"; circle.classList.add("start-circle");}
+    else if(now>=start&&now<=end){const days=Math.ceil((end-now)/86400000); circle.textContent="終了\nまで\n"+days+"日"; circle.classList.add("end-circle");}
     else circle.textContent="終了";
 
-    const btn=document.createElement("div");
-    btn.className="open-btn";
-    btn.textContent="開く";
-    btn.onclick=(ev)=>{ev.stopPropagation(); location.href=directLink(e.url);};
+    const btn=document.createElement("div"); btn.className="open-btn"; btn.textContent="開く"; btn.onclick=ev=>{ev.stopPropagation();location.href=directLink(e.url);};
 
-    card.append(box,circle,btn);
-    wrap.appendChild(card);
+    card.append(box,circle,btn); wrap.appendChild(card);
   });
 }
 
