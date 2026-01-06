@@ -45,7 +45,7 @@ h1{
 .image-box img{
   width:100%;
   height:100%;
-  object-fit:contain; /* cover → contain に変更で全体表示 */
+  object-fit:contain; /* 全体表示 */
 }
 .time{
   padding:8px;
@@ -67,24 +67,31 @@ h1{
 }
 #lock h2{
   color:#ff5555;
-  margin-bottom:20px;
-  font-size:24px;
+  margin-bottom:30px;
+  font-size:32px; /* 大きく */
 }
 #pw{
-  font-size:20px;
-  padding:8px;
-  width:220px;
+  font-size:28px; /* 大きく */
+  padding:12px;
+  width:300px;
   text-align:center;
+  border-radius:8px;
+  border:none;
 }
 #unlockBtn{
-  margin-top:12px;
-  padding:8px 16px;
-  font-size:16px;
+  margin-top:16px;
+  padding:12px 24px;
+  font-size:20px;
   cursor:pointer;
   background:#ff5555;
   border:none;
-  border-radius:8px;
+  border-radius:12px;
   color:#fff;
+}
+#version{
+  margin-top:20px;
+  font-size:14px;
+  color:#888;
 }
 </style>
 </head>
@@ -98,6 +105,7 @@ h1{
   <h2>Access Restricted</h2>
   <input type="password" id="pw" placeholder="Enter Password" />
   <button id="unlockBtn">Unlock</button>
+  <div id="version">v2026-01-06-v1</div>
 </div>
 
 <script>
