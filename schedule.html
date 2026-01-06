@@ -1,0 +1,51 @@
+<div id="schedule"></div>
+
+<script>
+fetch("data/schedule202601.json")
+  .then(r => r.json())
+  .then(data => {
+
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(data.source.html, "text/html");
+
+    const banners = doc.querySelectorAll("#event-banners img");
+    const now = new Date();
+
+    const events = [...banners].map(img => ({
+      start: new Date(img.dataset.start),
+      end: new Date(img.dataset.end),
+      url: img.dataset.url,
+      image: img.src
+    }));
+
+    const list = document.getElementById("schedule");
+
+    events
+      .filter(e => now >= e.start && now <= e.end)
+      .sort((a,b) => a.start - b.start)
+      .forEach(e => {
+        const card = document.createElement("div");
+        card.className = "card";
+
+        const box = document.createElement("div");
+        box.className = "image-box";
+        box.onclick = () => window.open(e.url, "_blank");
+
+        if (e.image) {
+          const img = document.createElement("img");
+          img.src = e.image;
+          box.appendChild(img);
+        } else {
+          box.textContent = "No image";
+        }
+
+        const time = document.createElement("div");
+        time.textContent =
+          e.start.toLocaleDateString() + " ～ " +
+          e.end.toLocaleDateString();
+
+        card.append(box, time);
+        list.appendChild(card);
+      });
+  });
+</script>
