@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 /* 基本 */
-body{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#0e0e11;color:#fff;margin:0;padding:0;}
+body{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#0e0e11;color:#fff;margin:0;padding:0;user-select:none;}
 h1{text-align:center;margin:20px 0;}
 #schedule{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;padding:16px;}
 .card{background:#1a1b20;border-radius:14px;overflow:hidden;box-shadow:0 6px 14px rgba(0,0,0,.4);transition:transform .3s,box-shadow .3s;position:relative;}
@@ -14,27 +14,33 @@ h1{text-align:center;margin:20px 0;}
 .image-box{aspect-ratio:1/1;background:#000;display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;overflow:hidden;}
 .image-box img{width:100%;height:100%;object-fit:cover;}
 .time{padding:8px;font-size:14px;text-align:center;opacity:.9;}
-.open-btn{position:absolute;bottom:8px;right:8px;background:#ff6;font-weight:bold;color:#000;padding:6px 10px;border-radius:8px;cursor:pointer;font-size:14px;z-index:2;}
+.open-btn{position:absolute;bottom:8px;right:8px;background:#ff6;font-weight:bold;color:#000;padding:8px 12px;border-radius:8px;cursor:pointer;font-size:16px;z-index:2;}
 .open-btn:hover{background:#ff8;}
 .overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);display:flex;align-items:center;justify-content:center;z-index:999;display:none;}
 .modal{position:relative;background:#000;border-radius:12px;max-width:90%;max-height:90%;overflow:hidden;}
 .modal img{width:100%;height:auto;object-fit:contain;display:block;}
-.close-btn{position:absolute;top:10px;right:10px;font-size:28px;font-weight:bold;color:#fff;background:rgba(0,0,0,.5);padding:6px 12px;border-radius:8px;cursor:pointer;}
+.close-btn{position:absolute;top:10px;right:10px;font-size:32px;font-weight:bold;color:#fff;background:rgba(0,0,0,.5);padding:6px 12px;border-radius:8px;cursor:pointer;}
 @keyframes glow{0%{box-shadow:0 0 8px #0f0;}50%{box-shadow:0 0 20px #0f0;}100%{box-shadow:0 0 8px #0f0;}}
 .glow{animation:glow 1.2s infinite;}
-/* 過去イベント */
 .past{opacity:0.4;}
+
 /* パスワード画面 */
 #pw-screen{position:fixed;top:0;left:0;width:100%;height:100%;background:#111;display:flex;align-items:center;justify-content:center;flex-direction:column;z-index:1000;}
-#pw-screen input{font-size:24px;padding:12px;margin:12px;border-radius:8px;border:none;text-align:center;width:240px;}
-#pw-screen button{font-size:22px;padding:10px 16px;margin-top:12px;border-radius:8px;border:none;background:#ff6;color:#000;cursor:pointer;}
+#pw-screen input{font-size:28px;padding:14px;margin:12px;border-radius:8px;border:none;text-align:center;width:260px;}
+#pw-screen button{font-size:24px;padding:12px 18px;margin-top:12px;border-radius:8px;border:none;background:#ff6;color:#000;cursor:pointer;}
 #pw-screen button:hover{background:#ff8;}
-#pw-screen .info{text-align:center;margin-top:20px;font-size:16px;line-height:1.5;}
-/* バージョン表示 */
+#pw-screen .info{text-align:center;margin-top:20px;font-size:16px;line-height:1.5;max-width:380px;}
+
+/* スクショ防止オーバーレイ */
+#screenshot-warning{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);color:#f00;display:flex;align-items:center;justify-content:center;text-align:center;font-size:24px;padding:20px;z-index:2000;display:none;}
 #version{position:fixed;bottom:4px;right:8px;font-size:12px;color:#888;}
 </style>
 </head>
 <body>
+
+<div id="screenshot-warning">
+スクリーンショットは許可されていません！
+</div>
 
 <div id="pw-screen">
 <h1>リーク情報閲覧のためパスワードが必要です</h1>
@@ -89,7 +95,6 @@ async function loadSchedule(){
     const data = await res.json();
     events = events.concat(data);
   }
-
   // 重複URLや同日付はまとめる
   const seen = {};
   events = events.filter(e=>{
@@ -98,7 +103,6 @@ async function loadSchedule(){
     seen[key]=true;
     return true;
   });
-
   render(events);
 }
 
@@ -162,6 +166,18 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape") closeModal();});
 
 // 🖥 スケジュールロード
 loadSchedule();
+
+// 🛑 スクショ防止
+document.addEventListener('contextmenu', e => e.preventDefault());
+document.addEventListener('selectstart', e => e.preventDefault());
+document.addEventListener('copy', e => e.preventDefault());
+document.addEventListener('keydown', e => {
+  if(e.ctrlKey && ["c","C","s","S","p","P"].includes(e.key)) {
+    e.preventDefault();
+    document.getElementById("screenshot-warning").style.display="flex";
+    setTimeout(()=>document.getElementById("screenshot-warning").style.display="none",3000);
+  }
+});
 </script>
 </body>
 </html>
