@@ -1,57 +1,104 @@
-        <div id="event-banners-container">
-            <h2 class="event-banners-heading">現在開催中のイベント</h2>
-            <div id="event-banners">
-                <div class="banner-item">
-                    <img src="https://cdn.mirrativ.com/mirrorman-prod/assets/avatar/img/etc/roulette/861740420c5effa43f96141dee68fec9/webview/catalog_banner.png" alt="イベントバナー" data-start="2025-12-23T00:00:00" data-end="2026-01-02T23:59:59" data-url="https://www.mirrativ.com/roulette/861740420c5effa43f96141dee68fec9">
-                </div>
-                <div class="banner-item">
-                    <img src="https://cdn.mirrativ.com/mirrorman-prod/assets/avatar/img/etc/roulette/09a8b6872d9ec8a307ff5462e2e7a164/webview/catalog_banner.png" alt="イベントバナー" data-start="2025-12-27T00:00:00" data-end="2026-01-04T23:59:59" data-url="https://www.mirrativ.com/roulette/09a8b6872d9ec8a307ff5462e2e7a164">
-                </div>
-                <div class="banner-item">
-                    <img src="https://cdn.mirrativ.com/mirrorman-prod/assets/avatar/img/etc/roulette/c20e2ee9d525fdd81114415ed19fef95/webview/catalog_banner.png" alt="イベントバナー" data-start="2026-01-02T00:00:00" data-end="2026-01-11T23:59:59" data-url="https://www.mirrativ.com/roulette/c20e2ee9d525fdd81114415ed19fef95">
-                </div>
-                <div class="banner-item">
-                    <img src="https://cdn.mirrativ.com/mirrorman-prod/assets/avatar/img/etc/roulette/3c77c2dc4259d02a18a88f1816e8bbf7/webview/catalog_banner.png" alt="イベントバナー" data-start="2026-01-03T00:00:00" data-end="2026-01-12T23:59:59" data-url="https://www.mirrativ.com/roulette/3c77c2dc4259d02a18a88f1816e8bbf7">
-                </div>
-                <div class="banner-item">
-                    <img src="https://cdn.mirrativ.com/mirrorman-prod/assets/avatar/img/etc/roulette/b8434307c4b57b25d80b74bdd0eaabba/webview/catalog_banner.png" alt="イベントバナー" data-start="2026-01-05T00:00:00" data-end="2026-01-10T23:59:59" data-url="https://www.mirrativ.com/roulette/b8434307c4b57b25d80b74bdd0eaabba">
-                </div>
-                <div class="banner-item">
-                    <img src="https://cdn.mirrativ.com/mirrorman-prod/assets/avatar/img/etc/roulette/ed8f679098b5b9f0b3148618da181e90/webview/catalog_banner.png" alt="イベントバナー" data-start="2026-01-08T00:00:00" data-end="2026-01-17T23:59:59" data-url="https://www.mirrativ.com/roulette/ed8f679098b5b9f0b3148618da181e90">
-                </div>
-                <div class="banner-item">
-                    <img src="https://cdn.mirrativ.com/mirrorman-prod/assets/avatar/img/etc/roulette/52c437e253e35c86917c376f40fd9f42/webview/catalog_banner.png" alt="イベントバナー" data-start="2026-01-11T00:00:00" data-end="2026-01-16T23:59:59" data-url="https://www.mirrativ.com/roulette/52c437e253e35c86917c376f40fd9f42">
-                </div>
-                <div class="banner-item">
-                    <img src="https://cdn.mirrativ.com/mirrorman-prod/assets/avatar/img/etc/roulette/d5aef9acfa47a44aa57134df7aebbea3/webview/catalog_banner.png" alt="イベントバナー" data-start="2026-01-13T00:00:00" data-end="2026-01-15T23:59:59" data-url="https://www.mirrativ.com/roulette/d5aef9acfa47a44aa57134df7aebbea3">
-                </div>
-                <div class="banner-item">
-                    <img src="https://cdn.mirrativ.com/mirrorman-prod/assets/avatar/img/etc/roulette/6877cbef44a68d149515a0cbbbe135ee/webview/catalog_banner.png" alt="イベントバナー" data-start="2026-01-13T00:00:00" data-end="2026-01-19T23:59:59" data-url="https://www.mirrativ.com/roulette/6877cbef44a68d149515a0cbbbe135ee">
-                </div>
-                <div class="banner-item">
-                    <img src="https://cdn.mirrativ.com/mirrorman-prod/assets/avatar/img/etc/roulette/918eb12f53b2bf340c1bd3bfeaa2eeec/webview/catalog_banner.png" alt="イベントバナー" data-start="2026-01-15T00:00:00" data-end="2026-01-21T23:59:59" data-url="https://www.mirrativ.com/roulette/918eb12f53b2bf340c1bd3bfeaa2eeec">
-                </div>
-                <div class="banner-item">
-                    <img src="https://cdn.mirrativ.com/mirrorman-prod/assets/avatar/img/etc/roulette/84cc8b7c5d83fb25cb5df1f72b690c35/webview/catalog_banner.png" alt="イベントバナー" data-start="2026-01-18T00:00:00" data-end="2026-01-27T23:59:59" data-url="https://www.mirrativ.com/roulette/84cc8b7c5d83fb25cb5df1f72b690c35">
-                </div>
-                <div class="banner-item">
-                    <img src="https://cdn.mirrativ.com/mirrorman-prod/assets/avatar/img/etc/roulette/c747f094ba2d2a69e7ac43113e46f6a7/webview/catalog_banner.png" alt="イベントバナー" data-start="2026-01-20T00:00:00" data-end="2026-01-25T23:59:59" data-url="https://www.mirrativ.com/roulette/c747f094ba2d2a69e7ac43113e46f6a7">
-                </div>
-                <div class="banner-item">
-                    <img src="https://cdn.mirrativ.com/mirrorman-prod/assets/avatar/img/etc/roulette/6bbfead0868a1fcbc0621a20de5d8548/webview/catalog_banner.png" alt="イベントバナー" data-start="2026-01-23T00:00:00" data-end="2026-02-02T23:59:59" data-url="https://www.mirrativ.com/roulette/6bbfead0868a1fcbc0621a20de5d8548">
-                </div>
-                <div class="banner-item">
-                    <img src="https://cdn.mirrativ.com/mirrorman-prod/assets/avatar/img/etc/roulette/ea411ed85cd00051d35ac86e3f232c7a/webview/catalog_banner.png" alt="イベントバナー" data-start="2026-01-23T00:00:00" data-end="2026-01-27T23:59:59" data-url="https://www.mirrativ.com/roulette/ea411ed85cd00051d35ac86e3f232c7a">
-                </div>
-                <div class="banner-item">
-                    <img src="https://cdn.mirrativ.com/mirrorman-prod/assets/avatar/img/etc/roulette/81109007d383efd2f9d9402a6597592a/webview/catalog_banner.png" alt="イベントバナー" data-start="2026-01-25T00:00:00" data-end="2026-01-30T23:59:59" data-url="https://www.mirrativ.com/roulette/81109007d383efd2f9d9402a6597592a">
-                </div>
-                <div class="banner-item">
-                    <img src="https://cdn.mirrativ.com/mirrorman-prod/assets/avatar/img/etc/roulette/de196cb0945885456d2ef4b762db2dca/webview/catalog_banner.png" alt="イベントバナー" data-start="2026-01-27T00:00:00" data-end="2026-02-05T23:59:59" data-url="https://www.mirrativ.com/roulette/de196cb0945885456d2ef4b762db2dca">
-                </div>
-                <div class="banner-item">
-                    <img src="https://cdn.mirrativ.com/mirrorman-prod/assets/avatar/img/etc/roulette/64b25a54887fbe392db208454906668a/webview/catalog_banner.png" alt="イベントバナー" data-start="2026-01-30T00:00:00" data-end="2026-02-06T23:59:59" data-url="https://www.mirrativ.com/roulette/64b25a54887fbe392db208454906668a">
-                </div>
-            </div>
-        </div>
-        <br />
+[
+  {
+    "start": "2025-12-23T00:00:00",
+    "end": "2026-01-02T23:59:59",
+    "url": "https://www.mirrativ.com/roulette/861740420c5effa43f96141dee68fec9",
+    "image": "https://cdn.mirrativ.com/mirrorman-prod/assets/avatar/img/etc/roulette/861740420c5effa43f96141dee68fec9/webview/catalog_banner.png"
+  },
+  {
+    "start": "2025-12-27T00:00:00",
+    "end": "2026-01-04T23:59:59",
+    "url": "https://www.mirrativ.com/roulette/09a8b6872d9ec8a307ff5462e2e7a164",
+    "image": "https://cdn.mirrativ.com/mirrorman-prod/assets/avatar/img/etc/roulette/09a8b6872d9ec8a307ff5462e2e7a164/webview/catalog_banner.png"
+  },
+  {
+    "start": "2026-01-02T00:00:00",
+    "end": "2026-01-11T23:59:59",
+    "url": "https://www.mirrativ.com/roulette/c20e2ee9d525fdd81114415ed19fef95",
+    "image": "https://cdn.mirrativ.com/mirrorman-prod/assets/avatar/img/etc/roulette/c20e2ee9d525fdd81114415ed19fef95/webview/catalog_banner.png"
+  },
+  {
+    "start": "2026-01-03T00:00:00",
+    "end": "2026-01-12T23:59:59",
+    "url": "https://www.mirrativ.com/roulette/3c77c2dc4259d02a18a88f1816e8bbf7",
+    "image": "https://cdn.mirrativ.com/mirrorman-prod/assets/avatar/img/etc/roulette/3c77c2dc4259d02a18a88f1816e8bbf7/webview/catalog_banner.png"
+  },
+  {
+    "start": "2026-01-05T00:00:00",
+    "end": "2026-01-10T23:59:59",
+    "url": "https://www.mirrativ.com/roulette/b8434307c4b57b25d80b74bdd0eaabba",
+    "image": "https://cdn.mirrativ.com/mirrorman-prod/assets/avatar/img/etc/roulette/b8434307c4b57b25d80b74bdd0eaabba/webview/catalog_banner.png"
+  },
+  {
+    "start": "2026-01-08T00:00:00",
+    "end": "2026-01-17T23:59:59",
+    "url": "https://www.mirrativ.com/roulette/ed8f679098b5b9f0b3148618da181e90",
+    "image": "https://cdn.mirrativ.com/mirrorman-prod/assets/avatar/img/etc/roulette/ed8f679098b5b9f0b3148618da181e90/webview/catalog_banner.png"
+  },
+  {
+    "start": "2026-01-11T00:00:00",
+    "end": "2026-01-16T23:59:59",
+    "url": "https://www.mirrativ.com/roulette/52c437e253e35c86917c376f40fd9f42",
+    "image": "https://cdn.mirrativ.com/mirrorman-prod/assets/avatar/img/etc/roulette/52c437e253e35c86917c376f40fd9f42/webview/catalog_banner.png"
+  },
+  {
+    "start": "2026-01-13T00:00:00",
+    "end": "2026-01-15T23:59:59",
+    "url": "https://www.mirrativ.com/roulette/d5aef9acfa47a44aa57134df7aebbea3",
+    "image": "https://cdn.mirrativ.com/mirrorman-prod/assets/avatar/img/etc/roulette/d5aef9acfa47a44aa57134df7aebbea3/webview/catalog_banner.png"
+  },
+  {
+    "start": "2026-01-13T00:00:00",
+    "end": "2026-01-19T23:59:59",
+    "url": "https://www.mirrativ.com/roulette/6877cbef44a68d149515a0cbbbe135ee",
+    "image": "https://cdn.mirrativ.com/mirrorman-prod/assets/avatar/img/etc/roulette/6877cbef44a68d149515a0cbbbe135ee/webview/catalog_banner.png"
+  },
+  {
+    "start": "2026-01-15T00:00:00",
+    "end": "2026-01-21T23:59:59",
+    "url": "https://www.mirrativ.com/roulette/918eb12f53b2bf340c1bd3bfeaa2eeec",
+    "image": "https://cdn.mirrativ.com/mirrorman-prod/assets/avatar/img/etc/roulette/918eb12f53b2bf340c1bd3bfeaa2eeec/webview/catalog_banner.png"
+  },
+  {
+    "start": "2026-01-18T00:00:00",
+    "end": "2026-01-27T23:59:59",
+    "url": "https://www.mirrativ.com/roulette/84cc8b7c5d83fb25cb5df1f72b690c35",
+    "image": "https://cdn.mirrativ.com/mirrorman-prod/assets/avatar/img/etc/roulette/84cc8b7c5d83fb25cb5df1f72b690c35/webview/catalog_banner.png"
+  },
+  {
+    "start": "2026-01-20T00:00:00",
+    "end": "2026-01-25T23:59:59",
+    "url": "https://www.mirrativ.com/roulette/c747f094ba2d2a69e7ac43113e46f6a7",
+    "image": "https://cdn.mirrativ.com/mirrorman-prod/assets/avatar/img/etc/roulette/c747f094ba2d2a69e7ac43113e46f6a7/webview/catalog_banner.png"
+  },
+  {
+    "start": "2026-01-23T00:00:00",
+    "end": "2026-02-02T23:59:59",
+    "url": "https://www.mirrativ.com/roulette/6bbfead0868a1fcbc0621a20de5d8548",
+    "image": "https://cdn.mirrativ.com/mirrorman-prod/assets/avatar/img/etc/roulette/6bbfead0868a1fcbc0621a20de5d8548/webview/catalog_banner.png"
+  },
+  {
+    "start": "2026-01-23T00:00:00",
+    "end": "2026-01-27T23:59:59",
+    "url": "https://www.mirrativ.com/roulette/ea411ed85cd00051d35ac86e3f232c7a",
+    "image": "https://cdn.mirrativ.com/mirrorman-prod/assets/avatar/img/etc/roulette/ea411ed85cd00051d35ac86e3f232c7a/webview/catalog_banner.png"
+  },
+  {
+    "start": "2026-01-25T00:00:00",
+    "end": "2026-01-30T23:59:59",
+    "url": "https://www.mirrativ.com/roulette/81109007d383efd2f9d9402a6597592a",
+    "image": "https://cdn.mirrativ.com/mirrorman-prod/assets/avatar/img/etc/roulette/81109007d383efd2f9d9402a6597592a/webview/catalog_banner.png"
+  },
+  {
+    "start": "2026-01-27T00:00:00",
+    "end": "2026-02-05T23:59:59",
+    "url": "https://www.mirrativ.com/roulette/de196cb0945885456d2ef4b762db2dca",
+    "image": "https://cdn.mirrativ.com/mirrorman-prod/assets/avatar/img/etc/roulette/de196cb0945885456d2ef4b762db2dca/webview/catalog_banner.png"
+  },
+  {
+    "start": "2026-01-30T00:00:00",
+    "end": "2026-02-06T23:59:59",
+    "url": "https://www.mirrativ.com/roulette/64b25a54887fbe392db208454906668a",
+    "image": "https://cdn.mirrativ.com/mirrorman-prod/assets/avatar/img/etc/roulette/64b25a54887fbe392db208454906668a/webview/catalog_banner.png"
+  }
+]
