@@ -1,22 +1,51 @@
-<textarea id="source" style="width:100%;height:200px"></textarea>
-<button onclick="run()">抽出</button>
-<pre id="out"></pre>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Schedule Extractor</title>
+<style>
+body{font-family:sans-serif;background:#111;color:#fff;padding:20px}
+textarea,input,button{width:100%;margin-top:10px;padding:10px;font-size:14px}
+button{background:#2ea44f;border:0;color:#fff;border-radius:5px}
+.card{border:1px solid #333;padding:10px;margin-top:10px;border-radius:8px}
+</style>
+</head>
+<body>
+
+<h2>🛠 スケジュール抽出ツール</h2>
+
+<input id="url" placeholder="抽出元URLを貼る">
+<button onclick="extract()">抽出開始</button>
+
+<div class="card">
+<h3>JSON 出力</h3>
+<textarea id="output" rows="15"></textarea>
+<button onclick="copy()">📋 コピー</button>
+</div>
 
 <script>
-function run(){
-  const html = document.getElementById("source").value;
-  const doc = new DOMParser().parseFromString(html, "text/html");
+async function extract(){
+ const url=document.getElementById("url").value;
+ const html=await fetch(url).then(r=>r.text());
+ const doc=new DOMParser().parseFromString(html,"text/html");
 
-  const banners = [...doc.querySelectorAll("#event-banners img")];
+ const events=[...doc.querySelectorAll("#event-banners img")].map(img=>({
+  start:img.dataset.start,
+  end:img.dataset.end,
+  url:"mirr://webview/window/open?url="+img.dataset.url,
+  image:img.src||null
+ }));
 
-  const data = banners.map(img => ({
-    start: img.dataset.start,
-    end: img.dataset.end,
-    url: img.dataset.url,
-    image: img.src || ""
-  }));
+ document.getElementById("output").value=
+  JSON.stringify(events,null,2);
+}
 
-  document.getElementById("out").textContent =
-    JSON.stringify(data, null, 2);
+function copy(){
+ navigator.clipboard.writeText(
+  document.getElementById("output").value
+ );
+ alert("コピーしました");
 }
 </script>
+</body>
+</html>
