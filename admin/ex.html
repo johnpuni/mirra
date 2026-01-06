@@ -1,0 +1,22 @@
+<textarea id="source" style="width:100%;height:200px"></textarea>
+<button onclick="run()">抽出</button>
+<pre id="out"></pre>
+
+<script>
+function run(){
+  const html = document.getElementById("source").value;
+  const doc = new DOMParser().parseFromString(html, "text/html");
+
+  const banners = [...doc.querySelectorAll("#event-banners img")];
+
+  const data = banners.map(img => ({
+    start: img.dataset.start,
+    end: img.dataset.end,
+    url: img.dataset.url,
+    image: img.src || ""
+  }));
+
+  document.getElementById("out").textContent =
+    JSON.stringify(data, null, 2);
+}
+</script>
