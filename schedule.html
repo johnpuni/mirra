@@ -5,38 +5,53 @@
 <title>Mirrativ Event Schedule</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-/* -------------------- 基本スタイル -------------------- */
 body{
   font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   background:#0e0e11;color:#fff;margin:0;padding:0;user-select:none;overflow-x:hidden;
 }
-h1{text-align:center;margin:20px 0;font-size:28px;}
-#tabs{display:flex;justify-content:center;flex-wrap:wrap;margin:10px 0;gap:6px;}
-.tab{padding:8px 16px;background:#222;border-radius:8px;cursor:pointer;transition:0.3s;font-size:16px;}
+h1{text-align:center;margin:16px 0;font-size:26px;}
+#tabs{display:flex;justify-content:center;flex-wrap:wrap;margin:8px 0;gap:4px;}
+.tab{padding:6px 12px;background:#222;border-radius:6px;cursor:pointer;font-size:14px;transition:0.3s;}
 .tab.active{background:#ff6;color:#000;font-weight:bold;}
-#schedule{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:16px;width:100%;max-width:1200px;margin:0 auto;opacity:0;transition:opacity 0.5s;}
+#schedule{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  padding:12px;
+  max-width:1200px;
+  margin:0 auto;
+  opacity:0;
+  transition:opacity 0.4s;
+}
 .card{
-  background:#1a1b20;border-radius:14px;overflow:hidden;box-shadow:0 6px 14px rgba(0,0,0,.4);
-  transition:transform .3s,box-shadow .3s;position:relative;display:flex;flex-direction:column;
+  background:#1a1b20;
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:0 6px 14px rgba(0,0,0,.4);
+  transition:transform .25s,box-shadow .25s;
+  display:flex;flex-direction:column;position:relative;
 }
 .card:hover{transform:scale(1.03);box-shadow:0 12px 20px rgba(0,0,0,.5);}
 .image-box{
-  width:100%;height:auto;display:flex;align-items:center;justify-content:center;cursor:pointer;
+  width:100%;display:flex;align-items:center;justify-content:center;
   position:relative;overflow:hidden;background:#000;
 }
 .image-box img{width:100%;height:auto;object-fit:contain;display:block;}
 .time{
-  padding:8px;font-size:14px;text-align:center;font-weight:bold;opacity:0.95;border-top:1px solid #333;
-  text-shadow:0 0 4px #000;border-radius:0 0 8px 8px;
+  padding:6px;font-size:13px;text-align:center;font-weight:bold;
+  border-top:1px solid #333;border-radius:0 0 8px 8px;
+  word-break:break-word;
 }
 .time.upcoming{background:#0f0;color:#000;}
 .time.ongoing{background:#ff0;color:#000;font-weight:bold;}
 .time.past{background:#888;color:#222;}
 .open-btn{
-  position:absolute;bottom:8px;right:8px;background:#ff6;font-weight:bold;color:#000;
-  padding:10px 16px;border-radius:8px;cursor:pointer;font-size:16px;z-index:2;
+  position:absolute;bottom:6px;right:6px;background:#ff6;font-weight:bold;color:#000;
+  padding:6px 10px;border-radius:6px;cursor:pointer;font-size:14px;z-index:2;
 }
 .open-btn:hover{background:#ff8;}
+
+/* モーダル */
 .overlay{
   position:fixed;top:0;left:0;width:100%;height:100%;
   background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;
@@ -46,43 +61,41 @@ h1{text-align:center;margin:20px 0;font-size:28px;}
   position:relative;background:#000;border-radius:12px;
   max-width:90%;max-height:90%;overflow:hidden;
 }
-.modal img{width:100%;height:auto;object-fit:contain;display:block;}
+.modal img{width:100%;height:auto;object-fit:contain;display:none;}
 .close-btn{
   position:absolute;top:10px;right:10px;font-size:36px;font-weight:bold;
   color:#fff;background:rgba(0,0,0,.5);padding:6px 12px;border-radius:8px;cursor:pointer;
 }
 .spinner{
-  border:6px solid #222;border-top:6px solid #ff6;border-radius:50%;
-  width:60px;height:60px;animation:spin 1s linear infinite;
+  border:5px solid #222;border-top:5px solid #ff6;border-radius:50%;
+  width:50px;height:50px;animation:spin 1s linear infinite;
   position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
 }
 @keyframes spin{0%{transform:translate(-50%,-50%) rotate(0deg);}100%{transform:translate(-50%,-50%) rotate(360deg);}}
-@keyframes glow{0%{box-shadow:0 0 8px #0f0;}50%{box-shadow:0 0 20px #0f0;}100%{box-shadow:0 0 8px #0f0;}}
+@keyframes glow{0%{box-shadow:0 0 8px #0f0;}50%{box-shadow:0 0 18px #0f0;}100%{box-shadow:0 0 8px #0f0;}}
 .glow{animation:glow 1.2s infinite;}
 
-/* -------------------- パスワード画面 -------------------- */
+/* パスワード */
 #pw-screen{
   position:fixed;top:0;left:0;width:100%;height:100%;background:#111;
   display:flex;align-items:center;justify-content:center;flex-direction:column;z-index:1000;
 }
-#pw-screen input{font-size:28px;padding:14px;margin:12px;border-radius:8px;border:none;text-align:center;width:280px;}
-#pw-screen button{font-size:24px;padding:12px 20px;margin-top:12px;border-radius:8px;border:none;background:#ff6;color:#000;cursor:pointer;}
+#pw-screen input{font-size:28px;padding:12px;margin:12px;border-radius:8px;border:none;text-align:center;width:260px;}
+#pw-screen button{font-size:24px;padding:10px 16px;margin-top:12px;border-radius:8px;border:none;background:#ff6;color:#000;cursor:pointer;}
 #pw-screen button:hover{background:#ff8;}
-#pw-screen .info{text-align:center;margin-top:20px;font-size:16px;line-height:1.5;max-width:400px;}
+#pw-screen .info{text-align:center;margin-top:16px;font-size:14px;line-height:1.4;max-width:380px;}
 #pw-screen #pw-version{position:absolute;bottom:10px;font-size:14px;color:#888;}
 
-/* -------------------- スクショ防止 -------------------- */
+/* スクショ防止 */
 #screenshot-warning{position:fixed;top:0;left:0;width:100%;height:100%;
-  background:rgba(0,0,0,0.9);color:#f00;display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,0.95);color:#f00;display:flex;align-items:center;justify-content:center;
   text-align:center;font-size:24px;padding:20px;z-index:2000;display:none;}
 #version{position:fixed;bottom:4px;right:8px;font-size:12px;color:#888;}
-@media(max-width:1100px){#schedule{grid-template-columns:repeat(3,1fr);}}
-@media(max-width:700px){#schedule{grid-template-columns:repeat(3,1fr);}}
 </style>
 </head>
 <body>
 
-<div id="screenshot-warning">スクリーンショットは許可されていません！</div>
+<div id="screenshot-warning">スクリーンショットは禁止されています！</div>
 
 <div id="pw-screen">
 <h1>リーク情報閲覧のためパスワードが必要です</h1>
@@ -92,7 +105,7 @@ h1{text-align:center;margin:20px 0;font-size:28px;}
 このページには未公開情報・イベント内部情報が含まれています。<br>
 関係者以外の閲覧は禁止されています。
 </div>
-<div id="pw-version">Version 1.1.0</div>
+<div id="pw-version">Version 1.1.1</div>
 </div>
 
 <h1>イベントスケジュール</h1>
@@ -107,59 +120,54 @@ h1{text-align:center;margin:20px 0;font-size:28px;}
   </div>
 </div>
 
-<div id="version">Version 1.1.0 / 更新日: 2026-01-06</div>
+<div id="version">Version 1.1.1 / 更新日: 2026-01-06</div>
 
 <script>
-// -------------------- パスワード --------------------
-const PASSWORD = "johnleak";
-const VERSION = "1.1.0";
+const PASSWORD="johnleak", VERSION="1.1.1";
 
+// パスワード
 function showPWScreen(){
   const stored = localStorage.getItem("pw_ok");
-  if(stored !== PASSWORD+"|"+VERSION){
-    document.getElementById("pw-screen").style.display="flex";
-  }else{
-    document.getElementById("pw-screen").style.display="none";
-  }
+  if(stored!==PASSWORD+"|"+VERSION) document.getElementById("pw-screen").style.display="flex";
+  else document.getElementById("pw-screen").style.display="none";
 }
 function checkPassword(){
   const val = document.getElementById("pw").value;
-  if(val === PASSWORD){
-    localStorage.setItem("pw_ok", PASSWORD+"|"+VERSION);
+  if(val===PASSWORD){
+    localStorage.setItem("pw_ok",PASSWORD+"|"+VERSION);
     document.getElementById("pw-screen").style.display="none";
   }else alert("パスワードが違います");
 }
 showPWScreen();
 
-// -------------------- 画像プロキシ & 直リンク --------------------
+// 画像プロキシ・直リンク
 function proxyImage(url){return "https://images.weserv.nl/?url="+encodeURIComponent(url.replace(/^https?:\/\//,""));}
 function directLink(url){return "mirr://webview/window/open?url="+encodeURIComponent(url);}
 
-// -------------------- スケジュール読み込み --------------------
+// スケジュール読み込み
 async function loadSchedule(){
   const listRes = await fetch("schedule/index.json");
   const files = await listRes.json();
   let events = [];
   for(const file of files){
-    const res = await fetch("schedule/"+file);
-    const data = await res.json();
+    const data = await (await fetch("schedule/"+file)).json();
     events = events.concat(data);
   }
-  const seen = {};
+  const seen={};
   events = events.filter(e=>{
-    const key = e.url+"|"+e.start+"|"+e.end;
+    const key=e.url+"|"+e.start+"|"+e.end;
     if(seen[key]) return false;
     seen[key]=true;
     return true;
   });
 
-  // 月タブ作成
-  const tabsWrap = document.getElementById("tabs");
-  const monthSet = new Set(events.map(e=>new Date(e.start).getFullYear()+"-"+("0"+(new Date(e.start).getMonth()+1)).slice(-2)));
-  const months = Array.from(monthSet).sort().reverse();
-  let activeMonth = months[0];
+  // 月タブ
+  const tabsWrap=document.getElementById("tabs");
+  const monthSet=new Set(events.map(e=>new Date(e.start).getFullYear()+"-"+("0"+(new Date(e.start).getMonth()+1)).slice(-2)));
+  const months=Array.from(monthSet).sort().reverse();
+  let activeMonth=months[0];
   months.forEach(m=>{
-    const t = document.createElement("div");
+    const t=document.createElement("div");
     t.className="tab"+(m===activeMonth?" active":"");
     t.textContent=m;
     t.onclick=()=>{document.querySelectorAll(".tab").forEach(tb=>tb.classList.remove("active"));t.classList.add("active");render(events,m);}
@@ -168,86 +176,66 @@ async function loadSchedule(){
   render(events,activeMonth);
 }
 
-// -------------------- 描画 --------------------
+// 描画
 function render(events,month){
-  const wrap = document.getElementById("schedule");
-  wrap.innerHTML="";
-  wrap.style.opacity="0";
-  const now = new Date();
+  const wrap=document.getElementById("schedule");
+  wrap.innerHTML="";wrap.style.opacity="0";
+  const now=new Date();
   setTimeout(()=>wrap.style.opacity="1",50);
 
-  events
-    .filter(e=>{
-      const m = new Date(e.start).getFullYear()+"-"+("0"+(new Date(e.start).getMonth()+1)).slice(-2);
-      return m===month;
-    })
-    .sort((a,b)=> new Date(a.start) - new Date(b.start))
+  events.filter(e=>{
+    const m=new Date(e.start).getFullYear()+"-"+("0"+(new Date(e.start).getMonth()+1)).slice(-2);
+    return m===month;
+  }).sort((a,b)=>new Date(a.start)-new Date(b.start))
     .forEach(e=>{
-      const start = new Date(e.start);
-      const end = new Date(e.end);
-      const card = document.createElement("div");
-      card.className="card";
+      const start=new Date(e.start), end=new Date(e.end);
+      const card=document.createElement("div"); card.className="card";
 
-      let timeClass="",timeText="";
-      if(now>end){
-        timeClass="past";
-        timeText="終了済み";
-      }else if(now>=start && now<=end){
-        card.classList.add("glow");
-        timeClass="ongoing";
-        const days = Math.ceil((end-now)/86400000);
-        timeText="終了まで "+days+"日";
-      }else{
-        timeClass="upcoming";
-        const days = Math.ceil((start-now)/86400000);
-        timeText="開始まで "+days+"日";
-      }
+      let timeClass="", timeText="";
+      if(now>end){timeClass="past"; timeText="終了済み";}
+      else if(now>=start && now<=end){card.classList.add("glow"); timeClass="ongoing"; const days=Math.ceil((end-now)/86400000); timeText="終了まで "+days+"日";}
+      else{timeClass="upcoming"; const days=Math.ceil((start-now)/86400000); timeText="開始まで "+days+"日";}
 
-      const box = document.createElement("div");
-      box.className="image-box";
-      box.onclick = ()=> openModal(e.image.replace("catalog_banner","hero"));
-      if(e.image){ const img = document.createElement("img"); img.src = proxyImage(e.image); box.appendChild(img);}
+      const box=document.createElement("div"); box.className="image-box";
+      box.onclick=()=>openModal(e.image.replace("catalog_banner","hero"));
+      if(e.image){const img=document.createElement("img"); img.src=proxyImage(e.image); box.appendChild(img);}
       else box.textContent="No Image";
 
-      const time = document.createElement("div");
-      time.className="time "+timeClass;
-      time.textContent=timeText;
+      const time=document.createElement("div"); time.className="time "+timeClass; time.textContent=timeText;
 
-      const btn = document.createElement("div");
-      btn.className="open-btn";
-      btn.textContent="開く";
-      btn.onclick = (ev)=>{ev.stopPropagation(); location.href = directLink(e.url);};
+      const btn=document.createElement("div"); btn.className="open-btn"; btn.textContent="開く";
+      btn.onclick=(ev)=>{ev.stopPropagation(); location.href=directLink(e.url);};
 
       card.append(box,time,btn);
       wrap.appendChild(card);
     });
 }
 
-// -------------------- モーダル --------------------
+// モーダル
 function openModal(src){
-  const spinner = document.getElementById("modal-spinner");
-  const img = document.getElementById("modal-img");
-  spinner.style.display="block";
-  img.style.display="none";
+  const spinner=document.getElementById("modal-spinner");
+  const img=document.getElementById("modal-img");
+  spinner.style.display="block"; img.style.display="none";
   document.getElementById("modal").style.display="flex";
-  img.onload = ()=>{spinner.style.display="none"; img.style.display="block";}
-  img.src = proxyImage(src);
+  img.onload=()=>{spinner.style.display="none"; img.style.display="block";}
+  img.src=proxyImage(src);
 }
 function closeModal(){document.getElementById("modal").style.display="none";}
 document.addEventListener("keydown",e=>{if(e.key==="Escape") closeModal();});
 
-// -------------------- スケジュールロード --------------------
+// スケジュールロード
 loadSchedule();
 
-// -------------------- スクショ防止 --------------------
+// スクショ防止
 document.addEventListener('contextmenu', e=>e.preventDefault());
 document.addEventListener('selectstart', e=>e.preventDefault());
 document.addEventListener('copy', e=>e.preventDefault());
 document.addEventListener('keydown', e=>{
   if(e.ctrlKey && ["c","C","s","S","p","P"].includes(e.key)){
     e.preventDefault();
-    document.getElementById("screenshot-warning").style.display="flex";
-    setTimeout(()=>document.getElementById("screenshot-warning").style.display="none",3000);
+    const warn=document.getElementById("screenshot-warning");
+    warn.style.display="flex";
+    setTimeout(()=>warn.style.display="none",3000);
   }
 });
 </script>
