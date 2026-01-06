@@ -89,6 +89,8 @@ h1{
   overflow:hidden;
   box-shadow:0 4px 10px rgba(0,0,0,.4);
   transition: transform .2s;
+  display:flex;
+  flex-direction:column;
 }
 .card:hover{ transform: scale(1.03);}
 .image-box{
@@ -131,7 +133,17 @@ h1{
   from{box-shadow:0 0 12px 4px #ff0 inset;}
   to{box-shadow:0 0 24px 8px #ff0 inset;}
 }
-/* モーダル */
+.open-btn{
+  margin:6px;
+  padding:4px 8px;
+  background:#ff6;
+  color:#000;
+  font-weight:bold;
+  text-align:center;
+  cursor:pointer;
+  border-radius:4px;
+  font-size:12px;
+}
 .modal{
   position:fixed; top:0; left:0;
   width:100%; height:100%;
@@ -139,8 +151,16 @@ h1{
   display:none;
   justify-content:center; align-items:center;
   z-index:1000;
+  flex-direction:column;
 }
-.modal img{ max-width:90%; max-height:90%; }
+.modal img{ max-width:90%; max-height:90%; margin-bottom:12px; }
+.modal .close{
+  font-size:2rem;
+  color:#fff;
+  cursor:pointer;
+  font-weight:bold;
+  margin-bottom:12px;
+}
 .modal:target{ display:flex; }
 </style>
 </head>
@@ -150,23 +170,24 @@ h1{
   <p>このページには未公開情報・イベント内部情報が含まれています。関係者以外の閲覧は禁止されています。</p>
   <input type="password" id="pw-input" placeholder="パスワード">
   <button onclick="checkPassword()">Enter</button>
-  <div class="version">Version 1.0.1</div>
+  <div class="version">Version 1.0.2</div>
 </div>
 
 <div id="schedule-screen" style="display:none;">
   <h1>イベントスケジュール</h1>
   <div class="tabs" id="month-tabs"></div>
   <div id="schedule" class="grid"></div>
-  <div class="version">Version 1.0.1</div>
+  <div class="version">Version 1.0.2</div>
 </div>
 
 <div id="modal" class="modal">
+  <div class="close" onclick="location.hash=''">×</div>
   <img id="modal-img">
 </div>
 
 <script>
 const PASSWORD="johnleak";
-const VERSION="1.0.1";
+const VERSION="1.0.2";
 
 // 🔒 パスワード管理
 function checkPassword(){
@@ -274,12 +295,13 @@ function render(events){
       stDiv.textContent=status;
       box.appendChild(stDiv);
 
-      // 画像
+      // 画像（heroに変換）
       if(e.image){
+        const heroImage = e.image.replace("catalog_banner.png","hero.png");
         const img=document.createElement("img");
-        img.src=e.image;
+        img.src=heroImage;
         img.onclick=()=> {
-          document.getElementById("modal-img").src=e.image;
+          document.getElementById("modal-img").src=heroImage;
           location.hash="modal";
         }
         box.appendChild(img);
@@ -291,7 +313,13 @@ function render(events){
       time.className="time";
       time.textContent=new Date(e.start).toLocaleDateString()+" ～ "+new Date(e.end).toLocaleDateString();
 
-      card.append(box,time);
+      // 開くボタン
+      const openBtn=document.createElement("div");
+      openBtn.className="open-btn";
+      openBtn.textContent="開く";
+      openBtn.onclick=()=> location.href="mirr://webview/window/open?url="+encodeURIComponent(e.url);
+
+      card.append(box,time,openBtn);
       wrap.appendChild(card);
     });
   }
