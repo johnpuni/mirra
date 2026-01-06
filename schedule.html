@@ -15,16 +15,22 @@ h1{text-align:center;margin:16px 0}
 #tabs{display:flex;gap:8px;justify-content:center;margin-bottom:10px;flex-wrap:wrap}
 .tab{padding:6px 14px;border-radius:20px;background:#1a1b20;cursor:pointer;font-size:13px}
 .tab.active{background:#3b82f6}
+
 #schedule{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:14px;
   padding:14px;
 }
+
 .card{background:#1a1b20;border-radius:14px;overflow:hidden}
 .image-box{
-  height:160px;display:flex;align-items:center;justify-content:center;
-  background:black;cursor:pointer
+  height:160px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:black;
+  cursor:pointer
 }
 .image-box img{
   max-width:100%;
@@ -36,10 +42,47 @@ h1{text-align:center;margin:16px 0}
 .running{color:#22c55e}
 .upcoming{color:#60a5fa}
 .ended{color:#9ca3af}
-#lock{position:fixed;inset:0;background:#0e0e11;display:flex;align-items:center;justify-content:center;z-index:9}
-#lockBox{background:#1a1b20;padding:26px;border-radius:16px;width:260px;text-align:center}
-#lockBox input,#lockBox button{width:100%;padding:10px;border-radius:8px;border:none;margin-top:10px}
-#lockBox button{background:#3b82f6;color:white}
+
+/* 🔐 Login */
+#lock{
+  position:fixed;
+  inset:0;
+  background:linear-gradient(135deg,#050508,#141423);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:9;
+}
+#lockBox{
+  background:#1a1b20;
+  padding:42px 38px;
+  border-radius:22px;
+  width:360px;
+  max-width:90%;
+  text-align:center;
+  box-shadow:0 20px 60px rgba(0,0,0,.6);
+}
+#lockBox h2{font-size:26px;margin-bottom:18px}
+#lockBox input{
+  width:100%;
+  padding:14px;
+  border-radius:10px;
+  border:none;
+  margin-top:10px;
+  font-size:16px;
+}
+#lockBox button{
+  width:100%;
+  padding:14px;
+  border-radius:10px;
+  border:none;
+  margin-top:16px;
+  background:#3b82f6;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+}
+#lockBox button:hover{opacity:.9}
 </style>
 </head>
 <body>
@@ -67,7 +110,9 @@ function unlock(){
   }else alert("違います");
 }
 
-function direct(url){location.href="mirr://webview/window/open?url="+encodeURIComponent(url)}
+function direct(url){
+  location.href="mirr://webview/window/open?url="+encodeURIComponent(url)
+}
 
 async function load(){
   const files=await (await fetch("schedule/index.json")).json();
@@ -96,10 +141,9 @@ async function load(){
 
     events.filter(e=>e.start.startsWith(month)).forEach(e=>{
       const s=new Date(e.start), en=new Date(e.end);
-      let status="ended",cls="ended";
+      let status="終了",cls="ended";
       if(now>=s && now<=en){status="開催中";cls="running"}
       else if(now<s){status="開催予定";cls="upcoming"}
-      else status="終了";
 
       const c=document.createElement("div");
       c.className="card";
