@@ -1,29 +1,80 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>イベントスケジュール</title>
+
+<style>
+body {
+  font-family: system-ui, sans-serif;
+  background:#f2f2f2;
+  margin:0;
+}
+
+h1 {
+  text-align:center;
+  padding:12px;
+}
+
+#schedule {
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap:14px;
+  padding:14px;
+}
+
+.card {
+  background:white;
+  border-radius:12px;
+  box-shadow:0 4px 10px rgba(0,0,0,.12);
+  overflow:hidden;
+  transition:.2s;
+}
+
+.card:hover {
+  transform:scale(1.03);
+}
+
+.image-box {
+  cursor:pointer;
+}
+
+.image-box img {
+  width:100%;
+  display:block;
+}
+
+.time {
+  padding:8px;
+  font-size:13px;
+  text-align:center;
+}
+</style>
+</head>
+
+<body>
+
+<h1>開催中イベント</h1>
 <div id="schedule"></div>
 
 <script>
 fetch("data/schedule202601.json")
   .then(r => r.json())
-  .then(data => {
+  .then(events => {
 
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(data.source.html, "text/html");
-
-    const banners = doc.querySelectorAll("#event-banners img");
     const now = new Date();
-
-    const events = [...banners].map(img => ({
-      start: new Date(img.dataset.start),
-      end: new Date(img.dataset.end),
-      url: img.dataset.url,
-      image: img.src
-    }));
-
     const list = document.getElementById("schedule");
 
     events
+      .map(e => ({
+        ...e,
+        start: new Date(e.start),
+        end: new Date(e.end)
+      }))
       .filter(e => now >= e.start && now <= e.end)
       .sort((a,b) => a.start - b.start)
       .forEach(e => {
+
         const card = document.createElement("div");
         card.className = "card";
 
@@ -31,15 +82,12 @@ fetch("data/schedule202601.json")
         box.className = "image-box";
         box.onclick = () => window.open(e.url, "_blank");
 
-        if (e.image) {
-          const img = document.createElement("img");
-          img.src = e.image;
-          box.appendChild(img);
-        } else {
-          box.textContent = "No image";
-        }
+        const img = document.createElement("img");
+        img.src = e.image;
+        box.appendChild(img);
 
         const time = document.createElement("div");
+        time.className = "time";
         time.textContent =
           e.start.toLocaleDateString() + " ～ " +
           e.end.toLocaleDateString();
@@ -49,3 +97,6 @@ fetch("data/schedule202601.json")
       });
   });
 </script>
+
+</body>
+</html>
