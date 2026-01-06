@@ -10,24 +10,43 @@ body{
   background:#0e0e11;
   color:#fff;
   margin:0;
-  padding:0;
 }
 h1{
   text-align:center;
   margin:20px 0;
 }
+
+#monthTabs{
+  display:flex;
+  gap:8px;
+  justify-content:center;
+  margin-bottom:12px;
+  flex-wrap:wrap;
+}
+.tab{
+  padding:6px 12px;
+  border-radius:10px;
+  background:#1a1b20;
+  cursor:pointer;
+}
+.tab.active{ background:#00eaff; color:#000; }
+
 #schedule{
   display:grid;
   grid-template-columns:repeat(auto-fill, minmax(160px,1fr));
   gap:14px;
   padding:16px;
 }
+
 .card{
   background:#1a1b20;
   border-radius:14px;
   overflow:hidden;
   box-shadow:0 6px 14px rgba(0,0,0,.4);
 }
+.card.active{ box-shadow:0 0 14px rgba(0,234,255,.8); }
+.card.ended{ opacity:.45; }
+
 .image-box{
   aspect-ratio:1/1;
   background:#000;
@@ -41,32 +60,41 @@ h1{
   height:100%;
   object-fit:cover;
 }
+
 .time{
   padding:8px;
   font-size:12px;
   text-align:center;
-  opacity:.8;
 }
+
+.status{
+  font-weight:bold;
+  margin-bottom:4px;
+}
+.status.active{ color:#00eaff; }
+.status.upcoming{ color:#ffd000; }
+.status.ended{ color:#888; }
 </style>
 </head>
+
 <body>
 
 <h1>イベントスケジュール</h1>
+<div id="monthTabs"></div>
 <div id="schedule"></div>
 
 <script>
-// 🔁 画像プロキシ（CORS対策）
 function proxyImage(url){
   return "https://images.weserv.nl/?url=" +
          encodeURIComponent(url.replace(/^https?:\/\//, ""));
 }
 
-// 🔗 Mirrativ直通リンク
 function directLink(url){
   return "mirr://webview/window/open?url=" + encodeURIComponent(url);
 }
 
-// 📦 JSON読み込み
+let allEvents = [];
+
 async function loadSchedule(){
   const listRes = await fetch("schedule/index.json");
   const files = await listRes.json();
@@ -79,44 +107,78 @@ async function loadSchedule(){
     events = events.concat(data);
   }
 
-  render(events);
+  // 重複除去
+  const map = new Map();
+  for(const e of events){
+    const key = `${e.url}|${e.image}|${e.start}|${e.end}`;
+    if(!map.has(key)) map.set(key, e);
+  }
+
+  allEvents = [...map.values()];
+  buildMonthTabs();
 }
 
-// 🖼 描画
-function render(events){
+function buildMonthTabs(){
+  const months = [...new Set(allEvents.map(e=>e.start.slice(0,7)))].sort();
+  const wrap = document.getElementById("monthTabs");
+  wrap.innerHTML = "";
+
+  months.forEach((m,i)=>{
+    const tab = document.createElement("div");
+    tab.className = "tab";
+    tab.textContent = m;
+    tab.onclick = ()=>{
+      document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+      tab.classList.add("active");
+      render(m);
+    };
+    if(i===0) tab.classList.add("active");
+    wrap.appendChild(tab);
+  });
+
+  render(months[0]);
+}
+
+function render(month){
   const wrap = document.getElementById("schedule");
+  wrap.innerHTML = "";
+  const now = new Date();
 
-  events.sort((a,b)=> new Date(a.start) - new Date(b.start));
+  const list = allEvents.filter(e=>e.start.startsWith(month))
+                        .sort((a,b)=>new Date(a.start)-new Date(b.start));
 
-  for(const e of events){
+  for(const e of list){
+    const start = new Date(e.start);
+    const end = new Date(e.end);
+
+    let status="", cls="";
+    if(now < start){ status="開催予定"; cls="upcoming"; }
+    else if(now<=end){ status="開催中"; cls="active"; }
+    else{ status="開催終了"; cls="ended"; }
+
     const card = document.createElement("div");
-    card.className = "card";
+    card.className = `card ${cls}`;
 
     const box = document.createElement("div");
     box.className = "image-box";
-    box.onclick = ()=> location.href = directLink(e.url);
+    box.onclick = ()=>location.href = directLink(e.url);
 
-    if(e.image){
-      const img = document.createElement("img");
-      img.src = proxyImage(e.image);
-      box.appendChild(img);
-    }else{
-      box.textContent = "No Image";
-    }
+    const img = document.createElement("img");
+    img.src = proxyImage(e.image);
+    box.appendChild(img);
 
     const time = document.createElement("div");
     time.className = "time";
-    time.textContent =
-      new Date(e.start).toLocaleDateString() + " ～ " +
-      new Date(e.end).toLocaleDateString();
+    time.innerHTML = `<div class="status ${cls}">${status}</div>
+      ${start.toLocaleDateString()} ～ ${end.toLocaleDateString()}`;
 
-    card.append(box, time);
+    card.append(box,time);
     wrap.appendChild(card);
   }
 }
 
 loadSchedule();
 </script>
+
 </body>
 </html>
-
