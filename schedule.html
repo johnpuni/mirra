@@ -68,9 +68,10 @@ fetch("data/schedule202601.json")
       .map(e => ({
         ...e,
         start: new Date(e.start),
-        end: new Date(e.end)
+        end: new Date(e.end),
+        directUrl: "mirr://webview/window/open?url=" + encodeURIComponent(e.url)
       }))
-      .sort((a,b) => a.start - b.start)   // 日付順に並び替え
+      .sort((a,b) => a.start - b.start)
       .forEach(e => {
 
         const card = document.createElement("div");
@@ -78,7 +79,7 @@ fetch("data/schedule202601.json")
 
         const box = document.createElement("div");
         box.className = "image-box";
-        box.onclick = () => window.open(e.url, "_blank");
+        box.onclick = () => location.href = e.directUrl;
 
         const img = document.createElement("img");
         img.src = e.image;
