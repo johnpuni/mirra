@@ -43,7 +43,7 @@ h1{text-align:center;margin:16px 0}
 .upcoming{color:#60a5fa}
 .ended{color:#9ca3af}
 
-/* 🔐 Login */
+/* 🔐 Lock */
 #lock{
   position:fixed;
   inset:0;
@@ -57,12 +57,13 @@ h1{text-align:center;margin:16px 0}
   background:#1a1b20;
   padding:42px 38px;
   border-radius:22px;
-  width:360px;
+  width:380px;
   max-width:90%;
   text-align:center;
   box-shadow:0 20px 60px rgba(0,0,0,.6);
 }
-#lockBox h2{font-size:26px;margin-bottom:18px}
+#lockBox h2{font-size:24px;margin-bottom:10px}
+#lockBox p{font-size:13px;opacity:.8;margin-bottom:18px}
 #lockBox input{
   width:100%;
   padding:14px;
@@ -89,9 +90,11 @@ h1{text-align:center;margin:16px 0}
 
 <div id="lock">
   <div id="lockBox">
-    <h2>Access</h2>
+    <h2>リーク情報閲覧のためパスワードが必要です</h2>
+    <p>このページには未公開情報・イベント内部情報が含まれています。<br>
+    関係者以外の閲覧は禁止されています。</p>
     <input id="pw" type="password" placeholder="Password">
-    <button onclick="unlock()">Enter</button>
+    <button onclick="unlock()">Access</button>
   </div>
 </div>
 
@@ -101,13 +104,17 @@ h1{text-align:center;margin:16px 0}
 
 <script>
 const PASSWORD="johnleak";
-if(localStorage.getItem("mirra_access")==="1")lock.style.display="none";
+const SITE_VERSION="2026-01-06"; // ← 更新したらこの日付を変える
+
+if(localStorage.getItem("mirra_auth")!==SITE_VERSION){
+  document.getElementById("lock").style.display="flex";
+}
 
 function unlock(){
   if(pw.value===PASSWORD){
-    localStorage.setItem("mirra_access","1");
-    lock.style.display="none";
-  }else alert("違います");
+    localStorage.setItem("mirra_auth",SITE_VERSION);
+    document.getElementById("lock").style.display="none";
+  }else alert("パスワードが違います");
 }
 
 function direct(url){
