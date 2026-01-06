@@ -54,7 +54,7 @@ h1 {
 
 <body>
 
-<h1>開催中イベント</h1>
+<h1>イベントスケジュール</h1>
 <div id="schedule"></div>
 
 <script>
@@ -62,7 +62,6 @@ fetch("data/schedule202601.json")
   .then(r => r.json())
   .then(events => {
 
-    const now = new Date();
     const list = document.getElementById("schedule");
 
     events
@@ -71,8 +70,7 @@ fetch("data/schedule202601.json")
         start: new Date(e.start),
         end: new Date(e.end)
       }))
-      .filter(e => now >= e.start && now <= e.end)
-      .sort((a,b) => a.start - b.start)
+      .sort((a,b) => a.start - b.start)   // 日付順に並び替え
       .forEach(e => {
 
         const card = document.createElement("div");
