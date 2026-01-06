@@ -10,175 +10,219 @@ body{
   background:#0e0e11;
   color:#fff;
   margin:0;
+  padding:0;
+  transition: filter 0.3s;
 }
-h1{text-align:center;margin:16px 0}
-#tabs{display:flex;gap:8px;justify-content:center;margin-bottom:10px;flex-wrap:wrap}
-.tab{padding:6px 14px;border-radius:20px;background:#1a1b20;cursor:pointer;font-size:13px}
-.tab.active{background:#3b82f6}
-
+.locked body{
+  filter: blur(12px);
+  pointer-events: none;
+  user-select: none;
+}
+h1{
+  text-align:center;
+  margin:20px 0;
+}
 #schedule{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
+  grid-template-columns:repeat(auto-fill, minmax(180px,1fr));
   gap:14px;
-  padding:14px;
+  padding:16px;
 }
-
-.card{background:#1a1b20;border-radius:14px;overflow:hidden}
-.image-box{
-  height:160px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:black;
-  cursor:pointer
-}
-.image-box img{
-  max-width:100%;
-  max-height:100%;
-  object-fit:contain;
-}
-.time{text-align:center;font-size:12px;padding:6px}
-.badge{text-align:center;font-size:12px;margin-bottom:6px}
-.running{color:#22c55e}
-.upcoming{color:#60a5fa}
-.ended{color:#9ca3af}
-
-/* 🔐 Lock */
-#lock{
-  position:fixed;
-  inset:0;
-  background:linear-gradient(135deg,#050508,#141423);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:9;
-}
-#lockBox{
+.card{
   background:#1a1b20;
-  padding:42px 38px;
-  border-radius:22px;
-  width:380px;
-  max-width:90%;
-  text-align:center;
-  box-shadow:0 20px 60px rgba(0,0,0,.6);
+  border-radius:14px;
+  overflow:hidden;
+  box-shadow:0 6px 14px rgba(0,0,0,.4);
 }
-#lockBox h2{font-size:24px;margin-bottom:10px}
-#lockBox p{font-size:13px;opacity:.8;margin-bottom:18px}
-#lockBox input{
-  width:100%;
-  padding:14px;
-  border-radius:10px;
-  border:none;
-  margin-top:10px;
-  font-size:16px;
-}
-#lockBox button{
-  width:100%;
-  padding:14px;
-  border-radius:10px;
-  border:none;
-  margin-top:16px;
-  background:#3b82f6;
-  color:white;
-  font-size:16px;
+.image-box{
+  aspect-ratio:1/1;
+  background:#000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   cursor:pointer;
 }
-#lockBox button:hover{opacity:.9}
+.image-box img{
+  width:100%;
+  height:100%;
+  object-fit:contain; /* cover → contain に変更で全体表示 */
+}
+.time{
+  padding:8px;
+  font-size:12px;
+  text-align:center;
+  opacity:.8;
+}
+
+/* 🔒 パスワード画面 */
+#lock{
+  position:fixed;
+  top:0; left:0; width:100%; height:100%;
+  background:#000;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+}
+#lock h2{
+  color:#ff5555;
+  margin-bottom:20px;
+  font-size:24px;
+}
+#pw{
+  font-size:20px;
+  padding:8px;
+  width:220px;
+  text-align:center;
+}
+#unlockBtn{
+  margin-top:12px;
+  padding:8px 16px;
+  font-size:16px;
+  cursor:pointer;
+  background:#ff5555;
+  border:none;
+  border-radius:8px;
+  color:#fff;
+}
 </style>
 </head>
 <body>
 
-<div id="lock">
-  <div id="lockBox">
-    <h2>リーク情報閲覧のためパスワードが必要です</h2>
-    <p>このページには未公開情報・イベント内部情報が含まれています。<br>
-    関係者以外の閲覧は禁止されています。</p>
-    <input id="pw" type="password" placeholder="Password">
-    <button onclick="unlock()">Access</button>
-  </div>
-</div>
-
 <h1>イベントスケジュール</h1>
-<div id="tabs"></div>
 <div id="schedule"></div>
 
+<!-- 🔒 パスワードロック -->
+<div id="lock" style="display:none;">
+  <h2>Access Restricted</h2>
+  <input type="password" id="pw" placeholder="Enter Password" />
+  <button id="unlockBtn">Unlock</button>
+</div>
+
 <script>
-const PASSWORD="johnleak";
-const SITE_VERSION="2026-01-06"; // ← 更新したらこの日付を変える
+// === 設定 ===
+const SITE_VERSION = "2026-01-06-v1"; // 更新ごとに書き換え
+const PASSWORD = "johnleak";
 
-if(localStorage.getItem("mirra_auth")!==SITE_VERSION){
-  document.getElementById("lock").style.display="flex";
+// 🔁 画像プロキシ（CORS対策）
+function proxyImage(url){
+  return "https://images.weserv.nl/?url=" +
+         encodeURIComponent(url.replace(/^https?:\/\//, ""));
 }
 
+// 🔗 Mirrativ直通リンク
+function directLink(url){
+  return "mirr://webview/window/open?url=" + encodeURIComponent(url);
+}
+
+// === 認証 ===
+function checkAuth() {
+  const auth = localStorage.getItem("mirra_auth");
+  if(auth !== SITE_VERSION){
+    showLock();
+  }
+}
+function showLock(){
+  const lock = document.getElementById("lock");
+  lock.style.display = "flex";
+  document.body.classList.add("locked");
+}
 function unlock(){
-  if(pw.value===PASSWORD){
-    localStorage.setItem("mirra_auth",SITE_VERSION);
+  const pw = document.getElementById("pw");
+  if(pw.value === PASSWORD){
+    localStorage.setItem("mirra_auth", SITE_VERSION);
     document.getElementById("lock").style.display="none";
-  }else alert("パスワードが違います");
+    document.body.classList.remove("locked");
+  } else {
+    alert("パスワードが違います");
+  }
 }
+document.getElementById("unlockBtn").addEventListener("click", unlock);
+document.getElementById("pw").addEventListener("keyup",(e)=>{if(e.key==="Enter") unlock();});
 
-function direct(url){
-  location.href="mirr://webview/window/open?url="+encodeURIComponent(url)
-}
+// === スクショ抑止 ===
+document.addEventListener("keydown", (e)=>{
+  if(e.key === "PrintScreen" || (e.ctrlKey && e.key.toLowerCase() === "p")){
+    e.preventDefault();
+    alert("スクリーンショットや印刷は禁止です");
+  }
+});
+window.addEventListener("blur", ()=>{document.body.style.filter="blur(12px)";});
+window.addEventListener("focus", ()=>{document.body.style.filter="none";});
 
-async function load(){
-  const files=await (await fetch("schedule/index.json")).json();
-  let events=[];
-  for(const f of files){
-    const d=await (await fetch("schedule/"+f)).json();
-    events.push(...d);
+// === JSON読み込み ===
+async function loadSchedule(){
+  const listRes = await fetch("schedule/index.json");
+  const files = await listRes.json();
+
+  let events = [];
+
+  for(const file of files){
+    const res = await fetch("schedule/" + file);
+    const data = await res.json();
+    events = events.concat(data);
   }
 
-  const map=new Map();
-  events.forEach(e=>{
-    const k=e.url+e.image+e.start+e.end;
-    if(!map.has(k))map.set(k,e);
-  });
-  events=[...map.values()].sort((a,b)=>new Date(a.start)-new Date(b.start));
-
-  const now=new Date();
-  const months=[...new Set(events.map(e=>e.start.slice(0,7)))];
-  const tabs=document.getElementById("tabs");
-  const wrap=document.getElementById("schedule");
-
-  function draw(month){
-    wrap.innerHTML="";
-    document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
-    document.getElementById("tab_"+month).classList.add("active");
-
-    events.filter(e=>e.start.startsWith(month)).forEach(e=>{
-      const s=new Date(e.start), en=new Date(e.end);
-      let status="終了",cls="ended";
-      if(now>=s && now<=en){status="開催中";cls="running"}
-      else if(now<s){status="開催予定";cls="upcoming"}
-
-      const c=document.createElement("div");
-      c.className="card";
-      c.innerHTML=`
-        <div class="image-box" onclick="direct('${e.url}')">
-          <img src="${e.image}">
-        </div>
-        <div class="badge ${cls}">${status}</div>
-        <div class="time">${s.toLocaleDateString()} ～ ${en.toLocaleDateString()}</div>
-      `;
-      wrap.appendChild(c);
-    });
-  }
-
-  months.forEach(m=>{
-    const t=document.createElement("div");
-    t.className="tab";
-    t.id="tab_"+m;
-    t.textContent=m;
-    t.onclick=()=>draw(m);
-    tabs.appendChild(t);
-  });
-
-  const latest=months.sort().reverse()[0];
-  draw(latest);
+  render(events);
 }
 
-load();
+// === 描画 ===
+function render(events){
+  const wrap = document.getElementById("schedule");
+
+  // 重複削除（同URL、同画像URL、同日付）
+  const seen = new Set();
+  events = events.filter(e=>{
+    const key = e.url + e.image + e.start + e.end;
+    if(seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+
+  const now = new Date();
+
+  events.sort((a,b)=> new Date(a.start) - new Date(b.start));
+
+  for(const e of events){
+    const card = document.createElement("div");
+    card.className = "card";
+
+    // 開催中/予定/終了
+    const start = new Date(e.start);
+    const end = new Date(e.end);
+    let status = "";
+    if(now >= start && now <= end) status = "🟢"; // 開催中
+    else if(now < start) status = "🕓";           // 開催予定
+    else status = "🗑️";                         // 終了
+
+    const box = document.createElement("div");
+    box.className = "image-box";
+    box.onclick = ()=> location.href = directLink(e.url);
+
+    if(e.image){
+      const img = document.createElement("img");
+      img.src = proxyImage(e.image);
+      box.appendChild(img);
+    }else{
+      box.textContent = "No Image";
+    }
+
+    const time = document.createElement("div");
+    time.className = "time";
+    time.textContent = `${status} ${start.toLocaleDateString()} ～ ${end.toLocaleDateString()}`;
+
+    card.append(box, time);
+    wrap.appendChild(card);
+  }
+}
+
+// === 初期化 ===
+window.addEventListener("load", ()=>{
+  checkAuth();
+  loadSchedule();
+});
 </script>
+
 </body>
 </html>
