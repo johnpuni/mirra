@@ -15,32 +15,9 @@ h1{
   text-align:center;
   margin:20px 0;
 }
-.version{
-  text-align:center;
-  font-size:12px;
-  opacity:.6;
-  margin-bottom:10px;
-}
-.tabs{
-  display:flex;
-  justify-content:center;
-  gap:10px;
-  margin-bottom:10px;
-  flex-wrap:wrap;
-}
-.tab{
-  padding:6px 12px;
-  border-radius:6px;
-  cursor:pointer;
-  background:#222;
-  transition:0.2s;
-}
-.tab.active{
-  background:#ff9800;
-}
 #schedule{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
   gap:14px;
   padding:16px;
 }
@@ -51,50 +28,49 @@ h1{
   box-shadow:0 6px 14px rgba(0,0,0,.4);
   display:flex;
   flex-direction:column;
+  align-items:center;
 }
 .image-box{
-  position:relative;
+  width:100%;
   aspect-ratio:1/1;
   background:#000;
   display:flex;
   align-items:center;
   justify-content:center;
   cursor:pointer;
+  position:relative;
+  border-radius:12px 12px 0 0;
   overflow:hidden;
 }
 .image-box img{
   width:100%;
   height:100%;
   object-fit:cover;
-  transition: transform 0.2s;
-}
-.image-box:hover img{
-  transform: scale(1.05);
 }
 .status{
   position:absolute;
   top:6px;
   left:6px;
+  background:rgba(255,165,0,0.9);
   padding:2px 6px;
-  border-radius:4px;
-  font-size:11px;
-  color:#fff;
-  background:rgba(0,0,0,0.6);
+  border-radius:6px;
+  font-size:12px;
   font-weight:bold;
 }
 .time{
-  padding:6px;
+  padding:8px;
   font-size:12px;
   text-align:center;
   opacity:.8;
+  width:100%;
 }
 .open-btn{
   margin:6px;
-  padding:4px 6px;
-  font-size:12px;
+  padding:8px 12px;
+  font-size:14px;
   background:#ff9800;
   border:none;
-  border-radius:6px;
+  border-radius:8px;
   cursor:pointer;
   color:#000;
   font-weight:bold;
@@ -103,60 +79,51 @@ h1{
 .open-btn:hover{
   background:#ffc107;
 }
-.modal{
+
+/* モーダル */
+#modal{
+  display:none;
   position:fixed;
   top:0;
   left:0;
   width:100%;
   height:100%;
-  display:none;
+  background:rgba(0,0,0,0.9);
   align-items:center;
   justify-content:center;
-  background:rgba(0,0,0,0.8);
-  z-index:999;
+  z-index:1000;
 }
-.modal-content{
-  position:relative;
+#modal-img{
   max-width:90%;
   max-height:90%;
-}
-.modal-content img{
-  width:100%;
-  height:auto;
   border-radius:12px;
 }
-.close-btn{
+#modal-close{
   position:absolute;
-  top:-10px;
-  right:-10px;
-  background:#ff9800;
-  border:none;
-  border-radius:50%;
-  width:28px;
-  height:28px;
-  cursor:pointer;
+  top:20px;
+  right:20px;
+  font-size:24px;
   font-weight:bold;
-  font-size:16px;
+  cursor:pointer;
+  color:#fff;
 }
 </style>
 </head>
 <body>
 <h1>イベントスケジュール</h1>
-<div class="version">バージョン 1.0.2</div>
-<div class="tabs" id="month-tabs"></div>
 <div id="schedule"></div>
 
 <!-- モーダル -->
-<div class="modal" id="modal">
-  <div class="modal-content">
-    <button class="close-btn" id="close-modal">×</button>
-    <img id="modal-img" src="">
-  </div>
+<div id="modal">
+  <span id="modal-close">&times;</span>
+  <img id="modal-img" src="">
 </div>
 
 <script>
 // 🔁 画像プロキシ（CORS対策）
-function proxyImage(url){ return url; } // 必要ならプロキシ使う
+function proxyImage(url){
+  return "https://images.weserv.nl/?url=" + encodeURIComponent(url.replace(/^https?:\/\//,""));
+}
 
 // 🔗 Mirrativ直通リンク
 function directLink(url){
@@ -167,23 +134,13 @@ function directLink(url){
 async function loadSchedule(){
   const listRes = await fetch("schedule/index.json");
   const files = await listRes.json();
-
   let events = [];
 
   for(const file of files){
-    const res = await fetch("schedule/" + file);
+    const res = await fetch("schedule/"+file);
     const data = await res.json();
     events = events.concat(data);
   }
-
-  // 同URL・同日付・同画像の重複排除
-  const uniqueMap = {};
-  events = events.filter(e=>{
-    const key = e.url+"|"+e.start+"|"+e.image;
-    if(uniqueMap[key]) return false;
-    uniqueMap[key]=true;
-    return true;
-  });
 
   render(events);
 }
@@ -191,44 +148,15 @@ async function loadSchedule(){
 // 🖼 描画
 function render(events){
   const wrap = document.getElementById("schedule");
-  wrap.innerHTML="";
-
-  const now = new Date();
-  const monthSet = new Set();
-  events.forEach(e=>{
-    const d = new Date(e.start);
-    monthSet.add(d.getFullYear()+"-"+(d.getMonth()+1));
-  });
-  const months = Array.from(monthSet).sort((a,b)=> a.localeCompare(b));
-
-  const tabWrap = document.getElementById("month-tabs");
-  tabWrap.innerHTML="";
-  months.forEach((m,i)=>{
-    const tab = document.createElement("div");
-    tab.className="tab";
-    tab.textContent=m;
-    if(i===months.length-1) tab.classList.add("active"); // 最新月を初期表示
-    tab.onclick=()=> {
-      document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
-      tab.classList.add("active");
-      displayMonth(events, m);
-    }
-    tabWrap.appendChild(tab);
-  });
-
-  displayMonth(events, months[months.length-1]); // 初期表示最新月
-}
-
-// 月ごと表示
-function displayMonth(events, month){
-  const wrap = document.getElementById("schedule");
-  wrap.innerHTML="";
   const now = new Date();
 
+  // 重複URL・画像・日付を除外
+  const seen = new Set();
   const filtered = events.filter(e=>{
-    const d = new Date(e.start);
-    const key = d.getFullYear()+"-"+(d.getMonth()+1);
-    return key===month;
+    const key = e.url+"|"+e.image+"|"+e.start+"|"+e.end;
+    if(seen.has(key)) return false;
+    seen.add(key);
+    return true;
   });
 
   filtered.sort((a,b)=> new Date(a.start)-new Date(b.start));
@@ -255,8 +183,8 @@ function displayMonth(events, month){
 
     // 画像表示（一覧: catalog_banner.png）
     if(e.image){
-      const img = document.createElement("img");
-      img.src=e.image.replace("catalog_banner.png","catalog_hero.png"); // hero.pngを別名に
+      const img=document.createElement("img");
+      img.src=e.image; // 一覧はbanner
       box.appendChild(img);
 
       // クリックでモーダル（hero.png）
@@ -264,9 +192,11 @@ function displayMonth(events, month){
         document.getElementById("modal-img").src=e.image.replace("catalog_banner.png","hero.png");
         document.getElementById("modal").style.display="flex";
       }
+    }else{
+      box.textContent="No Image";
     }
 
-    const time = document.createElement("div");
+    const time=document.createElement("div");
     time.className="time";
     time.textContent=startDate.toLocaleDateString()+" ～ "+endDate.toLocaleDateString();
 
@@ -281,8 +211,9 @@ function displayMonth(events, month){
 }
 
 // モーダル閉じる
-document.getElementById("close-modal").onclick=()=> document.getElementById("modal").style.display="none";
-document.getElementById("modal").onclick=(e)=>{if(e.target.id==="modal") document.getElementById("modal").style.display="none";}
+document.getElementById("modal-close").onclick=()=>{
+  document.getElementById("modal").style.display="none";
+}
 
 loadSchedule();
 </script>
