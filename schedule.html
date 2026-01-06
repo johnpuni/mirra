@@ -19,7 +19,7 @@ h1{text-align:center;margin:20px 0;}
 .overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);display:flex;align-items:center;justify-content:center;z-index:999;display:none;}
 .modal{position:relative;background:#000;border-radius:12px;max-width:90%;max-height:90%;overflow:hidden;}
 .modal img{width:100%;height:auto;object-fit:contain;display:block;}
-.close-btn{position:absolute;top:10px;right:10px;font-size:32px;font-weight:bold;color:#fff;background:rgba(0,0,0,.5);padding:6px 12px;border-radius:8px;cursor:pointer;}
+.close-btn{position:absolute;top:10px;right:10px;font-size:36px;font-weight:bold;color:#fff;background:rgba(0,0,0,.5);padding:6px 12px;border-radius:8px;cursor:pointer;}
 @keyframes glow{0%{box-shadow:0 0 8px #0f0;}50%{box-shadow:0 0 20px #0f0;}100%{box-shadow:0 0 8px #0f0;}}
 .glow{animation:glow 1.2s infinite;}
 .past{opacity:0.4;}
@@ -30,6 +30,7 @@ h1{text-align:center;margin:20px 0;}
 #pw-screen button{font-size:24px;padding:12px 18px;margin-top:12px;border-radius:8px;border:none;background:#ff6;color:#000;cursor:pointer;}
 #pw-screen button:hover{background:#ff8;}
 #pw-screen .info{text-align:center;margin-top:20px;font-size:16px;line-height:1.5;max-width:380px;}
+#pw-screen #pw-version{position:absolute;bottom:10px;font-size:14px;color:#888;}
 
 /* スクショ防止オーバーレイ */
 #screenshot-warning{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);color:#f00;display:flex;align-items:center;justify-content:center;text-align:center;font-size:24px;padding:20px;z-index:2000;display:none;}
@@ -50,6 +51,7 @@ h1{text-align:center;margin:20px 0;}
 このページには未公開情報・イベント内部情報が含まれています。<br>
 関係者以外の閲覧は禁止されています。
 </div>
+<div id="pw-version">Version 1.0.6</div>
 </div>
 
 <h1>イベントスケジュール</h1>
