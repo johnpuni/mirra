@@ -6,36 +6,227 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 /* 基本 */
-body{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#0e0e11;color:#fff;margin:0;padding:0;user-select:none;}
+body{
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:#0e0e11;
+  color:#fff;
+  margin:0;
+  padding:0;
+  user-select:none;
+}
 h1{text-align:center;margin:20px 0;}
-#schedule{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;padding:14px;}
-.card{background:#1a1b20;border-radius:14px;overflow:hidden;box-shadow:0 6px 14px rgba(0,0,0,.4);position:relative;transition:transform .3s,box-shadow .3s;}
-.card:hover{transform:scale(1.03);box-shadow:0 12px 20px rgba(0,0,0,.5);}
-.image-box{aspect-ratio:1/1;background:#000;display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;overflow:hidden;border-radius:12px;}
-.image-box img{width:100%;height:100%;object-fit:cover;}
-.time-circle{position:absolute;top:8px;right:8px;width:48px;height:48px;background:#ff6;color:#000;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:bold;text-align:center;line-height:1.2;box-shadow:0 0 6px rgba(255,255,0,0.7);}
-.time-circle.glow{animation:glow 1.2s infinite;}
-.time{padding:8px;font-size:14px;text-align:center;opacity:.9;}
-.open-btn{position:absolute;bottom:8px;right:8px;background:#ff6;font-weight:bold;color:#000;padding:6px 12px;border-radius:8px;cursor:pointer;font-size:14px;z-index:2;}
+
+/* スケジュールグリッド */
+#schedule{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+  padding:12px;
+}
+.card{
+  background:#1a1b20;
+  border-radius:16px;
+  overflow:hidden;
+  box-shadow:0 6px 14px rgba(0,0,0,.4);
+  position:relative;
+  transition:transform .3s,box-shadow .3s;
+}
+.card:hover{
+  transform:scale(1.03);
+  box-shadow:0 14px 24px rgba(0,0,0,.5);
+}
+.image-box{
+  aspect-ratio:1/1;
+  background:#000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  position:relative;
+  overflow:hidden;
+  border-radius:12px;
+}
+.image-box img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition: transform .3s;
+}
+.image-box:hover img{
+  transform:scale(1.05);
+}
+.time-circle{
+  position:absolute;
+  top:8px;
+  right:8px;
+  width:52px;
+  height:52px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:11px;
+  font-weight:bold;
+  text-align:center;
+  line-height:1.2;
+  color:#fff;
+  box-shadow:0 0 8px rgba(255,255,255,0.3);
+  background:linear-gradient(135deg,#ff6,#f90);
+}
+.time-circle.glow{
+  animation:glow 1.2s infinite;
+}
+@keyframes glow{
+  0%{box-shadow:0 0 8px #0f0;}
+  50%{box-shadow:0 0 18px #0f0;}
+  100%{box-shadow:0 0 8px #0f0;}
+}
+.past{opacity:0.5;}
+
+/* 開くボタン */
+.open-btn{
+  position:absolute;
+  bottom:10px;
+  right:10px;
+  background:#ff6;
+  color:#000;
+  font-weight:bold;
+  padding:8px 14px;
+  border-radius:10px;
+  cursor:pointer;
+  font-size:14px;
+  z-index:2;
+  text-align:center;
+  transition: background .2s;
+}
 .open-btn:hover{background:#ff8;}
-.overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);display:flex;align-items:center;justify-content:center;z-index:999;display:none;}
-.modal{position:relative;background:#000;border-radius:12px;max-width:90%;max-height:90%;overflow:hidden;display:flex;align-items:center;justify-content:center;}
-.modal img{max-width:100%;max-height:100%;object-fit:contain;display:block;}
-.close-btn{position:absolute;top:10px;right:10px;font-size:36px;font-weight:bold;color:#fff;background:rgba(0,0,0,.5);padding:6px 12px;border-radius:8px;cursor:pointer;}
-@keyframes glow{0%{box-shadow:0 0 6px #0f0;}50%{box-shadow:0 0 16px #0f0;}100%{box-shadow:0 0 6px #0f0;}}
-.past{opacity:0.4;}
+
+/* モーダル */
+.overlay{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,.85);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:999;
+  display:none;
+  flex-direction:column;
+}
+.modal{
+  position:relative;
+  background:#000;
+  border-radius:14px;
+  max-width:90%;
+  max-height:90%;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.modal img{
+  max-width:100%;
+  max-height:100%;
+  object-fit:contain;
+}
+.close-btn{
+  position:absolute;
+  top:10px;
+  right:10px;
+  font-size:40px;
+  font-weight:bold;
+  color:#fff;
+  background:rgba(0,0,0,.5);
+  padding:6px 12px;
+  border-radius:8px;
+  cursor:pointer;
+}
+#modal-loader{
+  color:#fff;
+  font-size:18px;
+  text-align:center;
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+}
 
 /* パスワード画面 */
-#pw-screen{position:fixed;top:0;left:0;width:100%;height:100%;background:#111;display:flex;align-items:center;justify-content:center;flex-direction:column;z-index:1000;}
-#pw-screen input{font-size:28px;padding:14px;margin:12px;border-radius:8px;border:none;text-align:center;width:260px;}
-#pw-screen button{font-size:24px;padding:12px 18px;margin-top:12px;border-radius:8px;border:none;background:#ff6;color:#000;cursor:pointer;}
+#pw-screen{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:#111;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  z-index:1000;
+}
+#pw-screen input{
+  font-size:28px;
+  padding:14px;
+  margin:12px;
+  border-radius:8px;
+  border:none;
+  text-align:center;
+  width:280px;
+}
+#pw-screen button{
+  font-size:24px;
+  padding:12px 18px;
+  margin-top:12px;
+  border-radius:8px;
+  border:none;
+  background:#ff6;
+  color:#000;
+  cursor:pointer;
+}
 #pw-screen button:hover{background:#ff8;}
-#pw-screen .info{text-align:center;margin-top:20px;font-size:16px;line-height:1.5;max-width:380px;}
-#pw-screen #pw-version{position:absolute;bottom:10px;font-size:14px;color:#888;}
+#pw-screen .info{
+  text-align:center;
+  margin-top:20px;
+  font-size:16px;
+  line-height:1.5;
+  max-width:400px;
+}
+#pw-screen #pw-version{
+  position:absolute;
+  bottom:10px;
+  font-size:14px;
+  color:#888;
+}
 
 /* スクショ防止オーバーレイ */
-#screenshot-warning{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);color:#f00;display:flex;align-items:center;justify-content:center;text-align:center;font-size:24px;padding:20px;z-index:2000;display:none;}
-#version{position:fixed;bottom:4px;right:8px;font-size:12px;color:#888;}
+#screenshot-warning{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.9);
+  color:#f00;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  font-size:24px;
+  padding:20px;
+  z-index:2000;
+  display:none;
+}
+#version{
+  position:fixed;
+  bottom:4px;
+  right:8px;
+  font-size:12px;
+  color:#888;
+}
 </style>
 </head>
 <body>
@@ -52,7 +243,7 @@ h1{text-align:center;margin:20px 0;}
 このページには未公開情報・イベント内部情報が含まれています。<br>
 関係者以外の閲覧は禁止されています。
 </div>
-<div id="pw-version">Version 1.1.2</div>
+<div id="pw-version">Version 1.1.3</div>
 </div>
 
 <h1>イベントスケジュール</h1>
@@ -62,15 +253,16 @@ h1{text-align:center;margin:20px 0;}
   <div class="modal">
     <span class="close-btn" onclick="closeModal()">×</span>
     <img id="modal-img" src="">
+    <div id="modal-loader">読み込み中...</div>
   </div>
 </div>
 
-<div id="version">Version 1.1.2 / 更新日: 2026-01-06</div>
+<div id="version">Version 1.1.3 / 更新日: 2026-01-06</div>
 
 <script>
-// 🔑 パスワード管理
+// パスワード管理
 const PASSWORD = "johnleak";
-const CURRENT_VERSION = "1.1.2";
+const CURRENT_VERSION = "1.1.3";
 if(localStorage.getItem("pw_ok") !== PASSWORD+"_"+CURRENT_VERSION){
   document.getElementById("pw-screen").style.display = "flex";
 }
@@ -84,12 +276,12 @@ function checkPassword(){
   }
 }
 
-// 🔁 画像プロキシ
+// 画像プロキシ
 function proxyImage(url){return "https://images.weserv.nl/?url="+encodeURIComponent(url.replace(/^https?:\/\//,""));}
-// 🔗 Mirrativ直通リンク
+// 直リンク
 function directLink(url){return "mirr://webview/window/open?url="+encodeURIComponent(url);}
 
-// 📦 JSON読み込み
+// JSON読み込み
 async function loadSchedule(){
   const listRes = await fetch("schedule/index.json");
   const files = await listRes.json();
@@ -99,7 +291,6 @@ async function loadSchedule(){
     const data = await res.json();
     events = events.concat(data);
   }
-  // 重複URLや同日付はまとめる
   const seen = {};
   events = events.filter(e=>{
     const key = e.url+"|"+e.start+"|"+e.end;
@@ -110,11 +301,11 @@ async function loadSchedule(){
   render(events);
 }
 
-// 🖼 描画
+// 描画
 function render(events){
   const wrap = document.getElementById("schedule");
   wrap.innerHTML="";
-  events.sort((a,b)=> new Date(a.start) - new Date(b.start));
+  events.sort((a,b)=> new Date(a.start)-new Date(b.start));
   const now = new Date();
 
   for(const e of events){
@@ -126,7 +317,6 @@ function render(events){
     const box = document.createElement("div");
     box.className="image-box";
 
-    // 過去・開催中・開催前
     let text="";
     if(now<start){
       const days = Math.ceil((start-now)/86400000);
@@ -134,7 +324,7 @@ function render(events){
     }else if(now>=start && now<=end){
       const days = Math.ceil((end-now)/86400000);
       text="終了まで\n"+days+"日";
-      card.querySelector?card.classList.add("glow"):card.classList.add("glow");
+      card.classList.add("glow");
     }else{
       text="終了済み";
       card.classList.add("past");
@@ -153,7 +343,6 @@ function render(events){
       box.appendChild(img);
     }else box.textContent="No Image";
 
-    // 開くボタン
     const btn = document.createElement("div");
     btn.className="open-btn";
     btn.textContent="開く";
@@ -164,39 +353,28 @@ function render(events){
   }
 }
 
-// 🔘 モーダル
+// モーダル
 function openModal(src){
+  const modal = document.getElementById("modal");
   const modalImg = document.getElementById("modal-img");
+  const loader = document.getElementById("modal-loader");
   modalImg.src="";
-  document.getElementById("modal").style.display="flex";
-  // 読み込み中
-  const loader = document.createElement("div");
-  loader.textContent="読み込み中...";
-  loader.style.color="#fff";
-  loader.style.fontSize="18px";
-  loader.style.textAlign="center";
-  loader.style.position="absolute";
-  loader.style.top="50%";
-  loader.style.left="50%";
-  loader.style.transform="translate(-50%,-50%)";
-  loader.id="modal-loader";
-  document.getElementById("modal").appendChild(loader);
+  loader.style.display="block";
+  modal.style.display="flex";
 
   const img = new Image();
   img.src = proxyImage(src);
   img.onload = ()=>{
     modalImg.src = img.src;
-    const l = document.getElementById("modal-loader");
-    if(l) l.remove();
+    loader.style.display="none";
   }
 }
 function closeModal(){document.getElementById("modal").style.display="none";}
 document.addEventListener("keydown",e=>{if(e.key==="Escape") closeModal();});
 
-// 🖥 スケジュールロード
 loadSchedule();
 
-// 🛑 スクショ防止
+// スクショ防止
 document.addEventListener('contextmenu', e => e.preventDefault());
 document.addEventListener('selectstart', e => e.preventDefault());
 document.addEventListener('copy', e => e.preventDefault());
