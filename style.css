@@ -1,76 +1,69 @@
-body{
-  margin:0;
+body {
   background:#0f111a;
   color:#fff;
-  font-family:system-ui;
+  font-family: system-ui, sans-serif;
+  margin:0;
 }
 
-.title{
-  text-align:center;
-  margin:16px 0;
-}
-
-#month-tabs{
+/* 月タブ */
+#month-tabs {
   display:flex;
+  gap:8px;
   justify-content:center;
-  gap:10px;
   flex-wrap:wrap;
-  margin-bottom:10px;
+  margin:12px 0;
 }
 
-.tab{
-  padding:6px 14px;
+.tab {
+  padding:6px 12px;
   background:#222;
   border-radius:10px;
   cursor:pointer;
-  font-size:14px;
+  font-size:13px;
 }
 
-.tab.active{
-  background:#00d0ff;
+.tab.active {
+  background:#00c8ff;
   color:#000;
 }
 
-#schedule{
+/* 全体レイアウト */
+#schedule {
   display:grid;
-  grid-template-columns:repeat(4,1fr);
+  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
   gap:14px;
   padding:14px;
 }
 
-@media(max-width:1100px){
-  #schedule{ grid-template-columns:repeat(3,1fr); }
-}
-
-@media(max-width:700px){
-  #schedule{ grid-template-columns:repeat(2,1fr); }
-}
-
-.card{
+/* カード */
+.card {
   background:#1b1e2a;
   border-radius:14px;
-  padding:8px;
+  padding:10px;
+  box-shadow:0 4px 10px rgba(0,0,0,.3);
   transition:.2s;
 }
 
-.card.active{
-  box-shadow:0 0 12px #00eaff;
+.card.active {
+  box-shadow:0 0 12px rgba(0,200,255,.9);
 }
 
-.card.ended{
-  opacity:.35;
+.card.ended {
+  opacity:.45;
 }
 
-.card img{
+/* 画像 */
+.card img {
   width:100%;
-  height:150px;
+  height:140px;
   object-fit:cover;
   border-radius:10px;
-  cursor:pointer;
 }
 
-.info{
+/* 情報 */
+.info {
   margin-top:6px;
   font-size:12px;
   line-height:1.4;
+  color:#ddd;
 }
