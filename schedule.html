@@ -4,236 +4,53 @@
 <meta charset="UTF-8">
 <title>Mirrativ Event Schedule</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- 可愛いフォント読み込み -->
+<link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
+
 <style>
 /* 基本 */
-body{
-  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  background:#0e0e11;
-  color:#fff;
-  margin:0;
-  padding:0;
-  user-select:none;
-}
-h1{text-align:center;margin:20px 0;}
-
-/* スケジュールグリッド */
-#schedule{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:12px;
-  padding:12px;
-}
-.card{
-  background:#1a1b20;
-  border-radius:16px;
-  overflow:hidden;
-  box-shadow:0 6px 14px rgba(0,0,0,.4);
-  position:relative;
-  transition:transform .3s,box-shadow .3s;
-}
-.card:hover{
-  transform:scale(1.03);
-  box-shadow:0 14px 24px rgba(0,0,0,.5);
-}
-.image-box{
-  aspect-ratio:1/1;
-  background:#000;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  cursor:pointer;
-  position:relative;
-  overflow:hidden;
-  border-radius:12px;
-}
-.image-box img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  transition: transform .3s;
-}
-.image-box:hover img{
-  transform:scale(1.05);
-}
-.time-circle{
-  position:absolute;
-  top:8px;
-  right:8px;
-  width:52px;
-  height:52px;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:11px;
-  font-weight:bold;
-  text-align:center;
-  line-height:1.2;
-  color:#fff;
-  box-shadow:0 0 8px rgba(255,255,255,0.3);
-  background:linear-gradient(135deg,#ff6,#f90);
-}
-.time-circle.glow{
-  animation:glow 1.2s infinite;
-}
-@keyframes glow{
-  0%{box-shadow:0 0 8px #0f0;}
-  50%{box-shadow:0 0 18px #0f0;}
-  100%{box-shadow:0 0 8px #0f0;}
-}
-.past{opacity:0.5;}
-
-/* 開くボタン */
-.open-btn{
-  position:absolute;
-  bottom:10px;
-  right:10px;
-  background:#ff6;
-  color:#000;
-  font-weight:bold;
-  padding:8px 14px;
-  border-radius:10px;
-  cursor:pointer;
-  font-size:14px;
-  z-index:2;
-  text-align:center;
-  transition: background .2s;
-}
+body{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#0e0e11;color:#fff;margin:0;padding:0;user-select:none;}
+h1{text-align:center;margin:16px 0;}
+#tabs{display:flex;overflow-x:auto;gap:8px;padding:8px;margin:0 16px;}
+.tab{padding:6px 12px;background:#222;border-radius:8px;cursor:pointer;white-space:nowrap;}
+.tab.active{background:#ff6;color:#000;font-weight:bold;}
+#schedule{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:16px;}
+.card{background:#1a1b20;border-radius:14px;overflow:hidden;box-shadow:0 6px 14px rgba(0,0,0,.4);transition:transform .3s,box-shadow .3s;position:relative;}
+.card:hover{transform:scale(1.03);box-shadow:0 12px 20px rgba(0,0,0,.5);}
+.image-box{aspect-ratio:1/1;background:#000;display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;overflow:hidden;}
+.image-box img{width:100%;height:100%;object-fit:cover;}
+.time{padding:6px;font-size:14px;text-align:center;opacity:.9;}
+.open-btn{position:absolute;bottom:8px;right:8px;background:#ff6;font-weight:bold;color:#000;padding:6px 10px;border-radius:8px;cursor:pointer;font-size:14px;z-index:2;}
 .open-btn:hover{background:#ff8;}
-
-/* モーダル */
-.overlay{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,.85);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:999;
-  display:none;
-  flex-direction:column;
-}
-.modal{
-  position:relative;
-  background:#000;
-  border-radius:14px;
-  max-width:90%;
-  max-height:90%;
-  overflow:hidden;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-.modal img{
-  max-width:100%;
-  max-height:100%;
-  object-fit:contain;
-}
-.close-btn{
-  position:absolute;
-  top:10px;
-  right:10px;
-  font-size:40px;
-  font-weight:bold;
-  color:#fff;
-  background:rgba(0,0,0,.5);
-  padding:6px 12px;
-  border-radius:8px;
-  cursor:pointer;
-}
-#modal-loader{
-  color:#fff;
-  font-size:18px;
-  text-align:center;
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-}
+.overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:999;display:none;}
+.modal{position:relative;background:#000;border-radius:12px;max-width:90%;max-height:90%;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+.modal img{width:100%;height:auto;object-fit:contain;display:block;}
+#modal-loading{position:absolute;color:#fff;font-size:18px;}
+.close-btn{position:absolute;top:10px;right:10px;font-size:36px;font-weight:bold;color:#fff;background:rgba(0,0,0,.5);padding:6px 12px;border-radius:8px;cursor:pointer;}
+@keyframes glow{0%{box-shadow:0 0 8px #0f0;}50%{box-shadow:0 0 20px #0f0;}100%{box-shadow:0 0 8px #0f0;}}
+.glow{animation:glow 1.2s infinite;}
+.past{opacity:0.4;}
+.count-circle{position:absolute;top:8px;right:8px;width:48px;height:48px;border-radius:50%;background:#ff6;color:#000;display:flex;align-items:center;justify-content:center;font-family:'Luckiest Guy',cursive;font-size:12px;font-weight:bold;line-height:1.2;text-align:center;}
 
 /* パスワード画面 */
-#pw-screen{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:#111;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
-  z-index:1000;
-}
-#pw-screen input{
-  font-size:28px;
-  padding:14px;
-  margin:12px;
-  border-radius:8px;
-  border:none;
-  text-align:center;
-  width:280px;
-}
-#pw-screen button{
-  font-size:24px;
-  padding:12px 18px;
-  margin-top:12px;
-  border-radius:8px;
-  border:none;
-  background:#ff6;
-  color:#000;
-  cursor:pointer;
-}
+#pw-screen{position:fixed;top:0;left:0;width:100%;height:100%;background:#111;display:flex;align-items:center;justify-content:center;flex-direction:column;z-index:1000;}
+#pw-screen input{font-size:28px;padding:14px;margin:12px;border-radius:8px;border:none;text-align:center;width:260px;}
+#pw-screen button{font-size:24px;padding:12px 18px;margin-top:12px;border-radius:8px;border:none;background:#ff6;color:#000;cursor:pointer;}
 #pw-screen button:hover{background:#ff8;}
-#pw-screen .info{
-  text-align:center;
-  margin-top:20px;
-  font-size:16px;
-  line-height:1.5;
-  max-width:400px;
-}
-#pw-screen #pw-version{
-  position:absolute;
-  bottom:10px;
-  font-size:14px;
-  color:#888;
-}
+#pw-screen .info{text-align:center;margin-top:20px;font-size:16px;line-height:1.5;max-width:380px;}
+#pw-screen #pw-version{position:absolute;bottom:10px;font-size:14px;color:#888;}
+#screenshot-warning{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);color:#f00;display:flex;align-items:center;justify-content:center;text-align:center;font-size:24px;padding:20px;z-index:2000;display:none;}
+#version{position:fixed;bottom:4px;right:8px;font-size:12px;color:#888;}
 
-/* スクショ防止オーバーレイ */
-#screenshot-warning{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.9);
-  color:#f00;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  font-size:24px;
-  padding:20px;
-  z-index:2000;
-  display:none;
-}
-#version{
-  position:fixed;
-  bottom:4px;
-  right:8px;
-  font-size:12px;
-  color:#888;
-}
+/* フェードイン */
+.fade-in{opacity:0;transform:translateY(20px);animation:fadeIn 0.6s forwards;}
+@keyframes fadeIn{to{opacity:1;transform:translateY(0);}}
 </style>
 </head>
 <body>
 
-<div id="screenshot-warning">
-スクリーンショットは許可されていません！
-</div>
+<div id="screenshot-warning">スクリーンショットは許可されていません！</div>
 
 <div id="pw-screen">
 <h1>リーク情報閲覧のためパスワードが必要です</h1>
@@ -243,138 +60,139 @@ h1{text-align:center;margin:20px 0;}
 このページには未公開情報・イベント内部情報が含まれています。<br>
 関係者以外の閲覧は禁止されています。
 </div>
-<div id="pw-version">Version 1.1.3</div>
+<div id="pw-version">Version 1.2.0</div>
 </div>
 
 <h1>イベントスケジュール</h1>
+<div id="tabs"></div>
 <div id="schedule"></div>
 
 <div class="overlay" id="modal">
   <div class="modal">
+    <div id="modal-loading">読み込み中…</div>
     <span class="close-btn" onclick="closeModal()">×</span>
     <img id="modal-img" src="">
-    <div id="modal-loader">読み込み中...</div>
   </div>
 </div>
 
-<div id="version">Version 1.1.3 / 更新日: 2026-01-06</div>
+<div id="version">Version 1.2.0 / 更新日: 2026-01-06</div>
 
 <script>
-// パスワード管理
-const PASSWORD = "johnleak";
-const CURRENT_VERSION = "1.1.3";
-if(localStorage.getItem("pw_ok") !== PASSWORD+"_"+CURRENT_VERSION){
-  document.getElementById("pw-screen").style.display = "flex";
+// 🔑 パスワード
+const VERSION="1.2.0";
+const PASSWORD="johnleak";
+if(localStorage.getItem("pw_ok")!==PASSWORD+"_"+VERSION){
+  document.getElementById("pw-screen").style.display="flex";
 }
 function checkPassword(){
-  const val = document.getElementById("pw").value;
-  if(val === PASSWORD){
-    localStorage.setItem("pw_ok", PASSWORD+"_"+CURRENT_VERSION);
-    document.getElementById("pw-screen").style.display = "none";
-  }else{
-    alert("パスワードが違います");
-  }
+  const val=document.getElementById("pw").value;
+  if(val===PASSWORD){
+    localStorage.setItem("pw_ok",PASSWORD+"_"+VERSION);
+    document.getElementById("pw-screen").style.display="none";
+  }else alert("パスワードが違います");
 }
 
-// 画像プロキシ
+// 🔁 画像プロキシ
 function proxyImage(url){return "https://images.weserv.nl/?url="+encodeURIComponent(url.replace(/^https?:\/\//,""));}
-// 直リンク
 function directLink(url){return "mirr://webview/window/open?url="+encodeURIComponent(url);}
 
-// JSON読み込み
+// 📦 JSON読み込み
+let allEvents=[];
 async function loadSchedule(){
-  const listRes = await fetch("schedule/index.json");
-  const files = await listRes.json();
-  let events = [];
+  const listRes=await fetch("schedule/index.json");
+  const files=await listRes.json();
   for(const file of files){
-    const res = await fetch("schedule/"+file);
-    const data = await res.json();
-    events = events.concat(data);
+    const res=await fetch("schedule/"+file);
+    const data=await res.json();
+    allEvents=allEvents.concat(data);
   }
-  const seen = {};
-  events = events.filter(e=>{
-    const key = e.url+"|"+e.start+"|"+e.end;
-    if(seen[key]) return false;
-    seen[key]=true;
-    return true;
+  // 月ごとタブ作成
+  const tabsDiv=document.getElementById("tabs");
+  const months=[...new Set(allEvents.map(e=>new Date(e.start).getFullYear()+"-"+("0"+(new Date(e.start).getMonth()+1)).slice(-2)))];
+  months.forEach((m,i)=>{
+    const t=document.createElement("div");
+    t.className="tab";
+    t.textContent=m;
+    t.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));t.classList.add('active');render(filterByMonth(m));};
+    tabsDiv.appendChild(t);
   });
-  render(events);
+  // 最新月選択
+  const latest=months[months.length-1];
+  document.querySelectorAll('.tab').forEach(x=>{if(x.textContent===latest)x.classList.add('active');});
+  render(filterByMonth(latest));
+}
+function filterByMonth(month){
+  return allEvents.filter(e=>{
+    const m=new Date(e.start).getFullYear()+"-"+("0"+(new Date(e.start).getMonth()+1)).slice(-2);
+    return m===month;
+  });
 }
 
-// 描画
+// 🖼 描画
 function render(events){
-  const wrap = document.getElementById("schedule");
+  const wrap=document.getElementById("schedule");
   wrap.innerHTML="";
-  events.sort((a,b)=> new Date(a.start)-new Date(b.start));
-  const now = new Date();
+  events.sort((a,b)=>new Date(a.start)-new Date(b.start));
+  const now=new Date();
+  const seen={};
+  events=events.filter(e=>{
+    const key=e.url+"|"+e.start+"|"+e.end;
+    if(seen[key])return false;seen[key]=true;return true;
+  });
+  events.forEach((e,i)=>{
+    const start=new Date(e.start),end=new Date(e.end);
+    const card=document.createElement("div");
+    card.className="card fade-in";
 
-  for(const e of events){
-    const start = new Date(e.start);
-    const end = new Date(e.end);
-    const card = document.createElement("div");
-    card.className="card";
+    // Glow / 過去
+    if(now>end)card.classList.add("past");
+    else if(now>=start && now<=end)card.classList.add("glow");
 
-    const box = document.createElement("div");
+    const box=document.createElement("div");
     box.className="image-box";
+    box.onclick=()=>openModal(e.image.replace("catalog_banner","hero"));
 
-    let text="";
-    if(now<start){
-      const days = Math.ceil((start-now)/86400000);
-      text="開始まで\n"+days+"日";
-    }else if(now>=start && now<=end){
-      const days = Math.ceil((end-now)/86400000);
-      text="終了まで\n"+days+"日";
-      card.classList.add("glow");
-    }else{
-      text="終了済み";
-      card.classList.add("past");
-    }
-
-    const circle = document.createElement("div");
-    circle.className="time-circle";
-    if(now>=start && now<=end) circle.classList.add("glow");
-    circle.textContent=text;
-    box.appendChild(circle);
-
-    box.onclick = ()=> openModal(e.image.replace("catalog_banner","hero"));
     if(e.image){
-      const img = document.createElement("img");
-      img.src = proxyImage(e.image);
+      const img=document.createElement("img");
+      img.src=proxyImage(e.image);
       box.appendChild(img);
     }else box.textContent="No Image";
 
-    const btn = document.createElement("div");
+    // 開始/終了まで〇日
+    const daysDiv=document.createElement("div");
+    daysDiv.className="count-circle";
+    if(now<start){daysDiv.textContent="開始\nまで\n"+Math.ceil((start-now)/86400000)+"日";}
+    else if(now>=start && now<=end){daysDiv.textContent="終了\nまで\n"+Math.ceil((end-now)/86400000)+"日";}
+    else{daysDiv.textContent="終了";}
+
+    const btn=document.createElement("div");
     btn.className="open-btn";
     btn.textContent="開く";
-    btn.onclick = (ev)=>{ev.stopPropagation(); location.href = directLink(e.url);};
+    btn.onclick=(ev)=>{ev.stopPropagation();location.href=directLink(e.url);};
 
-    card.append(box,btn);
+    card.append(daysDiv,box,btn);
     wrap.appendChild(card);
-  }
+  });
 }
 
-// モーダル
+// 🔘 モーダル
 function openModal(src){
-  const modal = document.getElementById("modal");
-  const modalImg = document.getElementById("modal-img");
-  const loader = document.getElementById("modal-loader");
-  modalImg.src="";
-  loader.style.display="block";
+  const modal=document.getElementById("modal");
+  const img=document.getElementById("modal-img");
+  const loading=document.getElementById("modal-loading");
+  loading.style.display="block";
+  img.style.display="none";
+  img.onload=()=>{loading.style.display="none";img.style.display="block";}
+  img.src=proxyImage(src);
   modal.style.display="flex";
-
-  const img = new Image();
-  img.src = proxyImage(src);
-  img.onload = ()=>{
-    modalImg.src = img.src;
-    loader.style.display="none";
-  }
 }
 function closeModal(){document.getElementById("modal").style.display="none";}
-document.addEventListener("keydown",e=>{if(e.key==="Escape") closeModal();});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal();});
 
+// 🖥 スケジュールロード
 loadSchedule();
 
-// スクショ防止
+// 🛑 スクショ防止
 document.addEventListener('contextmenu', e => e.preventDefault());
 document.addEventListener('selectstart', e => e.preventDefault());
 document.addEventListener('copy', e => e.preventDefault());
