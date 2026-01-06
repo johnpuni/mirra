@@ -2,150 +2,116 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>イベントスケジュール</title>
-
+<title>Mirrativ Schedule</title>
 <style>
-body {
+body{
   margin:0;
-  font-family: system-ui, sans-serif;
-  background:#f1f3f5;
+  background:#0f1116;
+  font-family:system-ui;
+  color:white;
 }
-
-header {
-  position:sticky;
-  top:0;
-  background:white;
-  padding:12px;
+h1{
   text-align:center;
-  font-weight:700;
-  box-shadow:0 2px 6px rgba(0,0,0,.1);
-  z-index:10;
+  padding:16px;
 }
-
-#schedule {
+#schedule{
   display:grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
   gap:14px;
-  padding:14px;
+  padding:16px;
 }
-
-.month-title {
-  grid-column:1/-1;
-  margin:12px 4px 2px;
-  font-weight:700;
-  color:#555;
+.card{
+  background:#1b1f2a;
+  border-radius:12px;
+  padding:10px;
+  box-shadow:0 6px 18px rgba(0,0,0,.3);
 }
-
-.card {
-  background:white;
-  border-radius:14px;
-  box-shadow:0 6px 12px rgba(0,0,0,.12);
+.image-box{
+  aspect-ratio:1/1;
+  border-radius:10px;
   overflow:hidden;
-  transition:.2s;
-}
-
-.card:active {
-  transform:scale(.97);
-}
-
-.image-box {
-  position:relative;
+  background:#000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   cursor:pointer;
 }
-
-.image-box img {
+.image-box img{
   width:100%;
-  display:block;
+  height:100%;
+  object-fit:cover;
 }
-
-.badge {
-  position:absolute;
-  top:8px;
-  left:8px;
-  padding:4px 8px;
-  border-radius:999px;
-  font-size:11px;
-  color:white;
-  font-weight:700;
-}
-
-.running { background:#28a745; }
-.future { background:#0d6efd; }
-.ended { background:#6c757d; }
-
-.time {
-  padding:10px;
-  text-align:center;
-  font-size:13px;
-}
-
-.time strong {
+.no-image{
+  color:#aaa;
   font-size:14px;
+}
+.time{
+  margin-top:8px;
+  font-size:12px;
+  color:#ccc;
+  text-align:center;
 }
 </style>
 </head>
-
 <body>
 
-<header>イベントスケジュール</header>
+<h1>イベントスケジュール</h1>
 <div id="schedule"></div>
 
 <script>
-fetch("schedule/index.json")
-.then(r => r.json())
-.then(events => {
+const basePath = "schedule/";
 
+async function loadAllSchedules(){
+  const files = await fetch(basePath + "index.json").then(r=>r.json());
+  let all = [];
+
+  for(const f of files){
+    const data = await fetch(basePath + f).then(r=>r.json());
+    all = all.concat(data);
+  }
+
+  render(all);
+}
+
+function render(events){
   const list = document.getElementById("schedule");
-  const now = new Date();
+  list.innerHTML = "";
 
-  events = events.map(e => ({
-    ...e,
-    start:new Date(e.start),
-    end:new Date(e.end),
-    direct:"mirr://webview/window/open?url=" + encodeURIComponent(e.url)
-  })).sort((a,b)=>a.start-b.start);
+  events.sort((a,b)=> new Date(a.start) - new Date(b.start));
 
-  let currentMonth = "";
-
-  events.forEach(e => {
-
-    const monthLabel = `${e.start.getFullYear()}年 ${e.start.getMonth()+1}月`;
-    if(monthLabel !== currentMonth){
-      currentMonth = monthLabel;
-      const title = document.createElement("div");
-      title.className = "month-title";
-      title.textContent = monthLabel;
-      list.appendChild(title);
-    }
-
-    let status = "future";
-    let label = "予定";
-    if(now >= e.start && now <= e.end){ status="running"; label="開催中"; }
-    else if(now > e.end){ status="ended"; label="終了"; }
-
+  for(const e of events){
     const card = document.createElement("div");
     card.className = "card";
 
     const box = document.createElement("div");
     box.className = "image-box";
-    box.onclick = () => location.href = e.direct;
+    box.onclick = ()=>{
+      const link = "mirr://webview/window/open?url=" + encodeURIComponent(e.url);
+      location.href = link;
+    };
 
-    const badge = document.createElement("div");
-    badge.className = `badge ${status}`;
-    badge.textContent = label;
-
-    const img = document.createElement("img");
-    img.src = e.image;
+    if(e.image){
+      const img = document.createElement("img");
+      img.src = e.image;
+      box.appendChild(img);
+    }else{
+      box.textContent = "No image";
+      box.classList.add("no-image");
+    }
 
     const time = document.createElement("div");
     time.className = "time";
-    time.innerHTML = `<strong>${e.start.toLocaleDateString()}</strong> ～ ${e.end.toLocaleDateString()}`;
+    time.textContent =
+      new Date(e.start).toLocaleDateString() +
+      " ～ " +
+      new Date(e.end).toLocaleDateString();
 
-    box.append(badge, img);
     card.append(box, time);
     list.appendChild(card);
-  });
-});
+  }
+}
+
+loadAllSchedules();
 </script>
 
 </body>
