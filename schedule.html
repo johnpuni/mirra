@@ -4,36 +4,26 @@
 <meta charset="UTF-8">
 <title>Mirrativ Event Schedule</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<!-- 可愛いフォント読み込み -->
-<link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
-
 <style>
-/* 基本 */
 body{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#0e0e11;color:#fff;margin:0;padding:0;user-select:none;}
-h1{text-align:center;margin:16px 0;}
-#tabs{display:flex;overflow-x:auto;gap:8px;padding:8px;margin:0 16px;}
-.tab{padding:6px 12px;background:#222;border-radius:8px;cursor:pointer;white-space:nowrap;}
-.tab.active{background:#ff6;color:#000;font-weight:bold;}
-#schedule{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:16px;}
-.card{background:#1a1b20;border-radius:14px;overflow:hidden;box-shadow:0 6px 14px rgba(0,0,0,.4);transition:transform .3s,box-shadow .3s;position:relative;}
-.card:hover{transform:scale(1.03);box-shadow:0 12px 20px rgba(0,0,0,.5);}
-.image-box{aspect-ratio:1/1;background:#000;display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;overflow:hidden;}
-.image-box img{width:100%;height:100%;object-fit:cover;}
-.time{padding:6px;font-size:14px;text-align:center;opacity:.9;}
-.open-btn{position:absolute;bottom:8px;right:8px;background:#ff6;font-weight:bold;color:#000;padding:6px 10px;border-radius:8px;cursor:pointer;font-size:14px;z-index:2;}
+h1{text-align:center;margin:20px 0;}
+#month-tabs{display:flex;justify-content:center;gap:8px;margin-bottom:12px;flex-wrap:wrap;}
+.month-btn{background:#222;color:#fff;padding:6px 12px;border-radius:8px;cursor:pointer;transition:0.2s;}
+.month-btn.active{background:#ff6;color:#000;}
+#schedule{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:12px;}
+.card{background:#1a1b20;border-radius:14px;overflow:hidden;box-shadow:0 6px 14px rgba(0,0,0,.4);position:relative;transition:transform .3s,box-shadow .3s;}
+.card:hover{transform:scale(1.05);box-shadow:0 12px 20px rgba(0,0,0,.5);}
+.image-box{position:relative;overflow:hidden;width:100%;aspect-ratio:1/1;cursor:pointer;background:#000;display:flex;align-items:center;justify-content:center;}
+.image-box img{width:100%;height:100%;object-fit:contain;}
+.time-circle{position:absolute;top:6px;right:6px;background:#ff6;color:#000;font-weight:bold;width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;text-align:center;animation:pop 1.2s infinite alternate;}
+@keyframes pop{0%{transform:scale(1);}50%{transform:scale(1.1);}100%{transform:scale(1);}}
+.past{opacity:0.4;}
+.open-btn{position:absolute;bottom:8px;right:8px;background:#ff6;color:#000;font-weight:bold;padding:6px 10px;border-radius:8px;cursor:pointer;z-index:2;font-size:14px;}
 .open-btn:hover{background:#ff8;}
 .overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;z-index:999;display:none;}
-.modal{position:relative;background:#000;border-radius:12px;max-width:90%;max-height:90%;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+.modal{position:relative;background:#000;border-radius:12px;max-width:90%;max-height:90%;overflow:hidden;}
 .modal img{width:100%;height:auto;object-fit:contain;display:block;}
-#modal-loading{position:absolute;color:#fff;font-size:18px;}
 .close-btn{position:absolute;top:10px;right:10px;font-size:36px;font-weight:bold;color:#fff;background:rgba(0,0,0,.5);padding:6px 12px;border-radius:8px;cursor:pointer;}
-@keyframes glow{0%{box-shadow:0 0 8px #0f0;}50%{box-shadow:0 0 20px #0f0;}100%{box-shadow:0 0 8px #0f0;}}
-.glow{animation:glow 1.2s infinite;}
-.past{opacity:0.4;}
-.count-circle{position:absolute;top:8px;right:8px;width:48px;height:48px;border-radius:50%;background:#ff6;color:#000;display:flex;align-items:center;justify-content:center;font-family:'Luckiest Guy',cursive;font-size:12px;font-weight:bold;line-height:1.2;text-align:center;}
-
-/* パスワード画面 */
 #pw-screen{position:fixed;top:0;left:0;width:100%;height:100%;background:#111;display:flex;align-items:center;justify-content:center;flex-direction:column;z-index:1000;}
 #pw-screen input{font-size:28px;padding:14px;margin:12px;border-radius:8px;border:none;text-align:center;width:260px;}
 #pw-screen button{font-size:24px;padding:12px 18px;margin-top:12px;border-radius:8px;border:none;background:#ff6;color:#000;cursor:pointer;}
@@ -42,10 +32,6 @@ h1{text-align:center;margin:16px 0;}
 #pw-screen #pw-version{position:absolute;bottom:10px;font-size:14px;color:#888;}
 #screenshot-warning{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);color:#f00;display:flex;align-items:center;justify-content:center;text-align:center;font-size:24px;padding:20px;z-index:2000;display:none;}
 #version{position:fixed;bottom:4px;right:8px;font-size:12px;color:#888;}
-
-/* フェードイン */
-.fade-in{opacity:0;transform:translateY(20px);animation:fadeIn 0.6s forwards;}
-@keyframes fadeIn{to{opacity:1;transform:translateY(0);}}
 </style>
 </head>
 <body>
@@ -56,143 +42,58 @@ h1{text-align:center;margin:16px 0;}
 <h1>リーク情報閲覧のためパスワードが必要です</h1>
 <input type="password" id="pw" placeholder="Password">
 <button onclick="checkPassword()">Enter</button>
-<div class="info">
-このページには未公開情報・イベント内部情報が含まれています。<br>
-関係者以外の閲覧は禁止されています。
-</div>
-<div id="pw-version">Version 1.2.0</div>
+<div class="info">このページには未公開情報・イベント内部情報が含まれています。<br>関係者以外の閲覧は禁止されています。</div>
+<div id="pw-version">Version 1.1.0</div>
 </div>
 
 <h1>イベントスケジュール</h1>
-<div id="tabs"></div>
+<div id="month-tabs"></div>
 <div id="schedule"></div>
 
 <div class="overlay" id="modal">
   <div class="modal">
-    <div id="modal-loading">読み込み中…</div>
     <span class="close-btn" onclick="closeModal()">×</span>
     <img id="modal-img" src="">
   </div>
 </div>
 
-<div id="version">Version 1.2.0 / 更新日: 2026-01-06</div>
+<div id="version">Version 1.1.0 / 更新日: 2026-01-06</div>
 
 <script>
-// 🔑 パスワード
-const VERSION="1.2.0";
-const PASSWORD="johnleak";
-if(localStorage.getItem("pw_ok")!==PASSWORD+"_"+VERSION){
+// パスワード
+const PASSWORD = "johnleak";
+const VERSION = "1.1.0";
+if(localStorage.getItem("pw_ok") !== PASSWORD+VERSION){
   document.getElementById("pw-screen").style.display="flex";
 }
 function checkPassword(){
-  const val=document.getElementById("pw").value;
-  if(val===PASSWORD){
-    localStorage.setItem("pw_ok",PASSWORD+"_"+VERSION);
+  const val = document.getElementById("pw").value;
+  if(val === PASSWORD){
+    localStorage.setItem("pw_ok", PASSWORD+VERSION);
     document.getElementById("pw-screen").style.display="none";
-  }else alert("パスワードが違います");
+  }else{
+    alert("パスワードが違います");
+  }
 }
 
-// 🔁 画像プロキシ
+// 画像プロキシ
 function proxyImage(url){return "https://images.weserv.nl/?url="+encodeURIComponent(url.replace(/^https?:\/\//,""));}
+// Mirrativ直通リンク
 function directLink(url){return "mirr://webview/window/open?url="+encodeURIComponent(url);}
 
-// 📦 JSON読み込み
-let allEvents=[];
-async function loadSchedule(){
-  const listRes=await fetch("schedule/index.json");
-  const files=await listRes.json();
-  for(const file of files){
-    const res=await fetch("schedule/"+file);
-    const data=await res.json();
-    allEvents=allEvents.concat(data);
-  }
-  // 月ごとタブ作成
-  const tabsDiv=document.getElementById("tabs");
-  const months=[...new Set(allEvents.map(e=>new Date(e.start).getFullYear()+"-"+("0"+(new Date(e.start).getMonth()+1)).slice(-2)))];
-  months.forEach((m,i)=>{
-    const t=document.createElement("div");
-    t.className="tab";
-    t.textContent=m;
-    t.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));t.classList.add('active');render(filterByMonth(m));};
-    tabsDiv.appendChild(t);
-  });
-  // 最新月選択
-  const latest=months[months.length-1];
-  document.querySelectorAll('.tab').forEach(x=>{if(x.textContent===latest)x.classList.add('active');});
-  render(filterByMonth(latest));
-}
-function filterByMonth(month){
-  return allEvents.filter(e=>{
-    const m=new Date(e.start).getFullYear()+"-"+("0"+(new Date(e.start).getMonth()+1)).slice(-2);
-    return m===month;
-  });
-}
-
-// 🖼 描画
-function render(events){
-  const wrap=document.getElementById("schedule");
-  wrap.innerHTML="";
-  events.sort((a,b)=>new Date(a.start)-new Date(b.start));
-  const now=new Date();
-  const seen={};
-  events=events.filter(e=>{
-    const key=e.url+"|"+e.start+"|"+e.end;
-    if(seen[key])return false;seen[key]=true;return true;
-  });
-  events.forEach((e,i)=>{
-    const start=new Date(e.start),end=new Date(e.end);
-    const card=document.createElement("div");
-    card.className="card fade-in";
-
-    // Glow / 過去
-    if(now>end)card.classList.add("past");
-    else if(now>=start && now<=end)card.classList.add("glow");
-
-    const box=document.createElement("div");
-    box.className="image-box";
-    box.onclick=()=>openModal(e.image.replace("catalog_banner","hero"));
-
-    if(e.image){
-      const img=document.createElement("img");
-      img.src=proxyImage(e.image);
-      box.appendChild(img);
-    }else box.textContent="No Image";
-
-    // 開始/終了まで〇日
-    const daysDiv=document.createElement("div");
-    daysDiv.className="count-circle";
-    if(now<start){daysDiv.textContent="開始\nまで\n"+Math.ceil((start-now)/86400000)+"日";}
-    else if(now>=start && now<=end){daysDiv.textContent="終了\nまで\n"+Math.ceil((end-now)/86400000)+"日";}
-    else{daysDiv.textContent="終了";}
-
-    const btn=document.createElement("div");
-    btn.className="open-btn";
-    btn.textContent="開く";
-    btn.onclick=(ev)=>{ev.stopPropagation();location.href=directLink(e.url);};
-
-    card.append(daysDiv,box,btn);
-    wrap.appendChild(card);
-  });
-}
-
-// 🔘 モーダル
+// モーダル
 function openModal(src){
-  const modal=document.getElementById("modal");
-  const img=document.getElementById("modal-img");
-  const loading=document.getElementById("modal-loading");
-  loading.style.display="block";
-  img.style.display="none";
-  img.onload=()=>{loading.style.display="none";img.style.display="block";}
-  img.src=proxyImage(src);
-  modal.style.display="flex";
+  const img = document.getElementById("modal-img");
+  img.src="";
+  document.getElementById("modal").style.display="flex";
+  const tmp = new Image();
+  tmp.src = proxyImage(src);
+  tmp.onload = ()=> img.src = tmp.src;
 }
 function closeModal(){document.getElementById("modal").style.display="none";}
-document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal();});
+document.addEventListener("keydown",e=>{if(e.key==="Escape") closeModal();});
 
-// 🖥 スケジュールロード
-loadSchedule();
-
-// 🛑 スクショ防止
+// スクショ防止
 document.addEventListener('contextmenu', e => e.preventDefault());
 document.addEventListener('selectstart', e => e.preventDefault());
 document.addEventListener('copy', e => e.preventDefault());
@@ -203,6 +104,82 @@ document.addEventListener('keydown', e => {
     setTimeout(()=>document.getElementById("screenshot-warning").style.display="none",3000);
   }
 });
+
+// JSON読み込み
+async function loadSchedule(){
+  const listRes = await fetch("schedule/index.json");
+  const files = await listRes.json();
+  let events = [];
+  for(const file of files){
+    const res = await fetch("schedule/"+file);
+    const data = await res.json();
+    events = events.concat(data);
+  }
+  const seen = {};
+  events = events.filter(e=>{
+    const key = e.url+"|"+e.start+"|"+e.end;
+    if(seen[key]) return false;
+    seen[key]=true;
+    return true;
+  });
+
+  const months = [...new Set(events.map(e=>e.start.slice(0,7)))].sort().reverse();
+  renderMonthTabs(months,events);
+  render(events,months[0]);
+}
+
+// 月タブ
+function renderMonthTabs(months,events){
+  const tabWrap = document.getElementById("month-tabs");
+  tabWrap.innerHTML="";
+  months.forEach(m=>{
+    const btn = document.createElement("div");
+    btn.className="month-btn";
+    btn.textContent=m;
+    btn.onclick=()=>{render(events,m); document.querySelectorAll(".month-btn").forEach(b=>b.classList.remove("active")); btn.classList.add("active");};
+    tabWrap.appendChild(btn);
+  });
+  document.querySelectorAll(".month-btn")[0].classList.add("active");
+}
+
+// 描画
+function render(events,month){
+  const wrap=document.getElementById("schedule");
+  wrap.innerHTML="";
+  const now = new Date();
+  const filtered = events.filter(e=>e.start.startsWith(month));
+  filtered.sort((a,b)=> new Date(a.start)-new Date(b.start));
+  filtered.forEach(e=>{
+    const start=new Date(e.start), end=new Date(e.end);
+    const card=document.createElement("div");
+    card.className="card";
+    if(now>end) card.classList.add("past");
+    else if(now>=start && now<=end) card.classList.add("glow");
+
+    const box=document.createElement("div");
+    box.className="image-box";
+    box.onclick=()=> openModal(e.image.replace("catalog_banner","hero"));
+    if(e.image){const img=document.createElement("img"); img.src=proxyImage(e.image); box.appendChild(img);}else box.textContent="No Image";
+
+    // 丸に開催まで終了まで
+    const circle=document.createElement("div");
+    circle.className="time-circle";
+    if(now<start){const days=Math.ceil((start-now)/86400000); circle.textContent="開始\nまで\n"+days+"日";}
+    else if(now>=start && now<=end){const days=Math.ceil((end-now)/86400000); circle.textContent="終了\nまで\n"+days+"日";}
+    else circle.textContent="終了";
+
+    // 開くボタン
+    const btn=document.createElement("div");
+    btn.className="open-btn";
+    btn.textContent="開く";
+    btn.onclick=(ev)=>{ev.stopPropagation(); location.href=directLink(e.url);};
+
+    card.append(box,circle,btn);
+    wrap.appendChild(card);
+  });
+}
+
+loadSchedule();
 </script>
 </body>
 </html>
