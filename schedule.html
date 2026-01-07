@@ -146,7 +146,7 @@ function render(events){
 
     const circle=document.createElement("div"); circle.className="time-circle";
     if(now<start){circle.textContent="開始\n"+Math.ceil((start-now)/86400000)+"日"; circle.style.color="#00f";}
-    else if(now>=start && now<=end){circle.textContent="終了\n"+Math.ceil((end-now)/86400000)+"日"; circle.style.color="#0f0";}
+    else if(now>=start && now<=end){circle.textContent="終了\n"+Math.ceil((end-now)/86400000)+"日"; circle.style.color="#ff0";} // ←見やすく黄色に
     else{circle.textContent="終了"; circle.style.color="#888";}
 
     const dateText=document.createElement("div"); 
@@ -168,9 +168,16 @@ function openModal(hero, images){
   const img=document.getElementById("modal-img");
   const btnsWrap=document.getElementById("modal-btns");
 
+  // Heroとその他画像を整理
   currentImages=[{src:hero,name:"Hero"}].concat(images||[]).filter(x=>x.src);
   btnsWrap.innerHTML="";
-  currentImages.forEach(item=>{const b=document.createElement("button"); b.textContent=item.name; b.onclick=()=>loadModalImage(item.src); btnsWrap.appendChild(b);});
+  currentImages.forEach(item=>{
+    const b=document.createElement("button"); 
+    b.textContent=item.name; 
+    b.onclick=()=>loadModalImage(item.src); 
+    btnsWrap.appendChild(b);
+  });
+
   loadModalImage(currentImages[0].src);
   document.getElementById("modal").style.display="flex";
 }
