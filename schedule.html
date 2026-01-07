@@ -11,7 +11,7 @@ h1{text-align:center;margin:16px 0;}
 .tab{padding:6px 12px;margin:2px;border-radius:6px;background:#222;cursor:pointer;transition:0.3s;}
 .tab.active{background:#ff6;color:#000;font-weight:bold;}
 #schedule{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:12px;}
-.card{background:#1a1b20;border-radius:14px;overflow:hidden;box-shadow:0 6px 14px rgba(0,0,0,.4);transition:transform .3s,box-shadow .3s;position:relative;padding-bottom:6px;}
+.card{background:#1a1b20;border-radius:14px;overflow:hidden;box-shadow:0 6px 14px rgba(0,0,0,.4);transition:transform .3s,box-shadow .3s;position:relative;padding-bottom:28px;}
 .card:hover{transform:scale(1.03);box-shadow:0 12px 20px rgba(0,0,0,.5);}
 .image-box{position:relative;cursor:pointer;overflow:hidden;width:100%;}
 .image-box img{width:100%;height:auto;display:block;}
@@ -76,25 +76,20 @@ const VERSION = "1.3.5";
 const PASSWORD = "johnleak";
 
 // パスワード管理
-const pwOk = localStorage.getItem("pw_ok");
-if(pwOk !== "true_"+VERSION){
+if(localStorage.getItem("pw_ok") !== "true_"+VERSION){
   document.getElementById("pw-screen").style.display="flex";
 }else{
   document.getElementById("pw-screen").style.display="none";
 }
 function checkPassword(){
-  const val = document.getElementById("pw").value;
-  if(val === PASSWORD){
+  if(document.getElementById("pw").value === PASSWORD){
     localStorage.setItem("pw_ok","true_"+VERSION);
     document.getElementById("pw-screen").style.display="none";
-  }else{
-    alert("パスワードが違います");
-  }
+  }else{alert("パスワードが違います");}
 }
 
 // 画像プロキシ
 function proxyImage(url){return "https://images.weserv.nl/?url="+encodeURIComponent(url.replace(/^https?:\/\//,""));}
-// Mirrativ直通リンク
 function directLink(url){return "mirr://webview/window/open?url="+encodeURIComponent(url);}
 
 // JSON読み込み
@@ -103,89 +98,63 @@ async function loadSchedule(){
   const files = await listRes.json();
   let events = [];
   for(const file of files){
-    const res = await fetch("schedule/"+file);
-    const data = await res.json();
+    const data = await fetch("schedule/"+file).then(r=>r.json());
     events = events.concat(data);
   }
-  const seen = {};
+  const seen={};
   events = events.filter(e=>{
-    const key = e.url+"|"+e.start+"|"+e.end;
+    const key=e.url+"|"+e.start+"|"+e.end;
     if(seen[key]) return false;
     seen[key]=true;
     return true;
   });
-  const months = Array.from(new Set(events.map(e=>e.start.substr(0,7)))).sort();
-  renderTabs(months, events);
+  const months=Array.from(new Set(events.map(e=>e.start.substr(0,7)))).sort();
+  renderTabs(months,events);
 }
 
 // 月タブ描画
-function renderTabs(months, events){
-  const tabsWrap = document.getElementById("tabs");
-  tabsWrap.innerHTML="";
-  const nowMonth = new Date().toISOString().substr(0,7);
+function renderTabs(months,events){
+  const tabsWrap=document.getElementById("tabs"); tabsWrap.innerHTML="";
+  const nowMonth=new Date().toISOString().substr(0,7);
   months.forEach(m=>{
-    const tab = document.createElement("div");
+    const tab=document.createElement("div");
     tab.className="tab"+(m===nowMonth?" active":"");
-    tab.textContent = m;
-    tab.onclick = ()=>{
-      document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
-      tab.classList.add("active");
-      render(events.filter(ev=>ev.start.substr(0,7)===m));
-    };
+    tab.textContent=m;
+    tab.onclick=()=>{document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active")); tab.classList.add("active"); render(events.filter(ev=>ev.start.substr(0,7)===m));};
     tabsWrap.appendChild(tab);
   });
-  const initialMonth = months.includes(nowMonth)?nowMonth:months[months.length-1];
+  const initialMonth=months.includes(nowMonth)?nowMonth:months[months.length-1];
   render(events.filter(ev=>ev.start.substr(0,7)===initialMonth));
 }
 
 // カード描画
 function render(events){
-  const wrap = document.getElementById("schedule");
-  wrap.innerHTML="";
-  events.sort((a,b)=> new Date(a.start) - new Date(b.start));
-  const now = new Date();
+  const wrap=document.getElementById("schedule"); wrap.innerHTML="";
+  const now=new Date();
+  events.sort((a,b)=>new Date(a.start)-new Date(b.start));
   for(const e of events){
-    const start = new Date(e.start);
-    const end = new Date(e.end);
-    const card = document.createElement("div");
-    card.className="card";
+    const start=new Date(e.start), end=new Date(e.end);
+    const card=document.createElement("div"); card.className="card";
     if(now>=start && now<=end) card.classList.add("glow");
 
-    const box = document.createElement("div");
-    box.className="image-box";
-    box.onclick = ()=> openModal(e.image);
+    const box=document.createElement("div"); box.className="image-box"; 
+    box.onclick=()=>openModal(e.hero,e.images);
 
     if(e.image){
-      const img = document.createElement("img");
-      img.src = proxyImage(e.image);
-      box.appendChild(img);
+      const img=document.createElement("img"); img.src=proxyImage(e.image); box.appendChild(img);
     }else box.textContent="No Image";
 
-    const circle = document.createElement("div");
-    circle.className="time-circle";
-    if(now<start){
-      const days = Math.ceil((start-now)/86400000);
-      circle.textContent="開始\n"+days+"日";
-      circle.style.color="#000";
-    }else if(now>=start && now<=end){
-      const days = Math.ceil((end-now)/86400000);
-      circle.textContent="終了\n"+days+"日";
-      circle.style.color="#0f0";
-    }else{
-      circle.textContent="終了";
-      circle.style.color="#888";
-    }
+    const circle=document.createElement("div"); circle.className="time-circle";
+    if(now<start){circle.textContent="開始\n"+Math.ceil((start-now)/86400000)+"日"; circle.style.color="#00f";}
+    else if(now>=start && now<=end){circle.textContent="終了\n"+Math.ceil((end-now)/86400000)+"日"; circle.style.color="#0f0";}
+    else{circle.textContent="終了"; circle.style.color="#888";}
 
-    const dateText = document.createElement("div");
-    dateText.style.textAlign="center";
-    dateText.style.fontSize="12px";
-    dateText.style.marginTop="4px";
-    dateText.textContent = `期間: ${e.start.substr(0,10)} ~ ${e.end.substr(0,10)}`;
+    const dateText=document.createElement("div"); 
+    dateText.style.textAlign="center"; dateText.style.fontSize="12px"; dateText.style.margin="6px 0 28px 0"; 
+    dateText.textContent=`期間: ${e.start.substr(0,10)} ~ ${e.end.substr(0,10)}`;
 
-    const btn = document.createElement("div");
-    btn.className="open-btn";
-    btn.textContent="開く";
-    btn.onclick = (ev)=>{ev.stopPropagation(); location.href = directLink(e.url);};
+    const btn=document.createElement("div"); btn.className="open-btn"; btn.textContent="開く";
+    btn.onclick=(ev)=>{ev.stopPropagation(); location.href=directLink(e.url);};
 
     card.append(box,circle,dateText,btn);
     wrap.appendChild(card);
@@ -193,40 +162,24 @@ function render(events){
 }
 
 // モーダル
-let currentImages = [];
-function openModal(src){
-  const loader = document.getElementById("modal-loader");
-  const img = document.getElementById("modal-img");
-  const btnsWrap = document.getElementById("modal-btns");
-  currentImages = [
-    {src: src, name:"Hero"}
-    ,{src:"featured_reward.png", name:"報酬"}
-    ,{src:"map.png", name:"マップ"}
-    ,{src:"topic.png", name:"トピック"}
-    ,{src:"topic2.png", name:"トピック2"}
-    ,{src:"emomorun.png", name:"エモモラン"}
-    ,{src:"rule.png", name:"ルール"}
-    ,{src:"rule2.png", name:"ルール2"}
-  ].filter(img=>img.src); // 画像がないもの除外
+let currentImages=[];
+function openModal(hero, images){
+  const loader=document.getElementById("modal-loader");
+  const img=document.getElementById("modal-img");
+  const btnsWrap=document.getElementById("modal-btns");
 
+  currentImages=[{src:hero,name:"Hero"}].concat(images||[]).filter(x=>x.src);
   btnsWrap.innerHTML="";
-  currentImages.forEach((item,i)=>{
-    const b = document.createElement("button");
-    b.textContent = item.name;
-    b.onclick = ()=> loadModalImage(item.src);
-    btnsWrap.appendChild(b);
-  });
-
+  currentImages.forEach(item=>{const b=document.createElement("button"); b.textContent=item.name; b.onclick=()=>loadModalImage(item.src); btnsWrap.appendChild(b);});
   loadModalImage(currentImages[0].src);
   document.getElementById("modal").style.display="flex";
 }
 function loadModalImage(src){
-  const loader = document.getElementById("modal-loader");
-  const img = document.getElementById("modal-img");
-  loader.style.display="block";
-  img.style.display="none";
-  img.onload = ()=>{loader.style.display="none"; img.style.display="block";}
-  img.src = proxyImage(src);
+  const loader=document.getElementById("modal-loader");
+  const img=document.getElementById("modal-img");
+  loader.style.display="block"; img.style.display="none";
+  img.onload=()=>{loader.style.display="none"; img.style.display="block";}
+  img.src=proxyImage(src);
 }
 function closeModal(){document.getElementById("modal").style.display="none";}
 document.addEventListener("keydown",e=>{if(e.key==="Escape") closeModal();});
@@ -235,16 +188,10 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape") closeModal();});
 loadSchedule();
 
 // スクショ防止
-document.addEventListener('contextmenu', e => e.preventDefault());
-document.addEventListener('selectstart', e => e.preventDefault());
-document.addEventListener('copy', e => e.preventDefault());
-document.addEventListener('keydown', e => {
-  if(e.ctrlKey && ["c","C","s","S","p","P"].includes(e.key)) {
-    e.preventDefault();
-    document.getElementById("screenshot-warning").style.display="flex";
-    setTimeout(()=>document.getElementById("screenshot-warning").style.display="none",3000);
-  }
-});
+document.addEventListener('contextmenu',e=>e.preventDefault());
+document.addEventListener('selectstart',e=>e.preventDefault());
+document.addEventListener('copy',e=>e.preventDefault());
+document.addEventListener('keydown',e=>{if(e.ctrlKey && ["c","C","s","S","p","P"].includes(e.key)){e.preventDefault();document.getElementById("screenshot-warning").style.display="flex";setTimeout(()=>document.getElementById("screenshot-warning").style.display="none",3000);}});
 </script>
 </body>
 </html>
