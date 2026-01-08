@@ -23,24 +23,18 @@ h1{text-align:center;margin:16px 0;}
 .modal img{max-width:100%;max-height:100%;object-fit:contain;margin-bottom:8px;border-radius:6px;}
 .close-btn{position:absolute;top:10px;right:10px;font-size:36px;font-weight:bold;color:#fff;background:rgba(0,0,0,.5);padding:6px 12px;border-radius:8px;cursor:pointer;z-index:3;}
 .modal-buttons{display:flex;gap:8px;margin-bottom:6px;flex-wrap:wrap;justify-content:center;}
-.modal-buttons button{padding:6px 12px;border:none;border-radius:6px;background:#ff0;color:#000;cursor:pointer;font-weight:bold;transition:0.2s;}
+.modal-buttons button{padding:8px 14px;border:none;border-radius:6px;background:#ff0;color:#000;cursor:pointer;font-weight:bold;transition:0.2s;font-size:14px;}
 .modal-buttons button.active{background:#ffd;font-weight:bold;}
 .modal-buttons button:hover{background:#ffe;}
 .loader{color:#fff;font-size:18px;text-align:center;}
-
-/* glow effect */
 @keyframes glow{0%{box-shadow:0 0 8px #0f0;}50%{box-shadow:0 0 20px #0f0;}100%{box-shadow:0 0 8px #0f0;}}
 .glow{animation:glow 1.2s infinite;}
-
-/* パスワード画面 */
 #pw-screen{position:fixed;top:0;left:0;width:100%;height:100%;background:#111;display:flex;align-items:center;justify-content:center;flex-direction:column;z-index:1000;}
 #pw-screen input{font-size:28px;padding:14px;margin:12px;border-radius:8px;border:none;text-align:center;width:260px;}
 #pw-screen button{font-size:24px;padding:12px 18px;margin-top:12px;border-radius:8px;border:none;background:#ff0;color:#000;cursor:pointer;}
 #pw-screen button:hover{background:#ffd;}
 #pw-screen .info{text-align:center;margin-top:20px;font-size:16px;line-height:1.5;max-width:380px;}
 #pw-screen #pw-version{position:absolute;bottom:10px;font-size:14px;color:#888;}
-
-/* スクショ防止 */
 #screenshot-warning{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);color:#f00;display:flex;align-items:center;justify-content:center;text-align:center;font-size:24px;padding:20px;z-index:2000;display:none;}
 #version{position:fixed;bottom:4px;right:8px;font-size:12px;color:#888;}
 </style>
@@ -145,9 +139,10 @@ function render(events){
       const img=document.createElement("img"); img.src=proxyImage(e.image); box.appendChild(img);
     }else box.textContent="No Image";
 
-    const circle=document.createElement("div"); circle.className="time-circle";
+    const circle=document.createElement("div"); 
+    circle.className="time-circle";
     if(now<start){circle.textContent="開始\n"+Math.ceil((start-now)/86400000)+"日"; circle.style.color="#00f";}
-    else if(now>=start && now<=end){circle.textContent="終了\n"+Math.ceil((end-now)/86400000)+"日"; circle.style.color="#ff0";}
+    else if(now>=start && now<=end){circle.textContent="終了\n"+Math.ceil((end-now)/86400000)+"日"; circle.style.color="red";} // 🔴 赤に変更
     else{circle.textContent="終了"; circle.style.color="#888";}
 
     const dateText=document.createElement("div"); 
@@ -207,7 +202,6 @@ function closeModal(){
   document.getElementById("modal").style.display="none";
 }
 
-// ESCで閉じる
 document.addEventListener("keydown",e=>{
   if(e.key==="Escape") closeModal();
 });
