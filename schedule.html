@@ -169,17 +169,17 @@ function openModal(hero, images){
   currentImages = [];
 
   // Hero画像
-  if(hero) currentImages.push({src:hero.replace("catalog_banner","hero"), name:"Hero"});
+  if(hero) currentImages.push({src:hero, name:"Hero"});
 
-  // 他画像も catalog_banner → key に置換
+  // 他画像キー
   if(images){
-    for(const key of ["featured_reward","map","topic","topic2","emomorun"]){
+    ["featured_reward","map","topic","topic2","emomorun"].forEach(key=>{
       if(images[key]){
         let src = images[key];
         if(src.includes("catalog_banner")) src = src.replace("catalog_banner", key);
         currentImages.push({src: src, name: key});
       }
-    }
+    });
   }
 
   btnsWrap.innerHTML="";
