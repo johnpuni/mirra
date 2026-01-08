@@ -131,10 +131,8 @@ function render(events){
 
     const box=document.createElement("div"); box.className="image-box";
 
-    // 🔹 catalog_banner を hero に置換してモーダル表示
     box.onclick=()=>{
-      let hero = e.image ? e.image.replace("catalog_banner","hero") : null;
-      openModal(hero, e.images);
+      openModal(e.image, e.images);
     };
 
     if(e.image){
@@ -166,9 +164,16 @@ function openModal(hero, images){
   const btnsWrap=document.getElementById("modal-btns");
 
   currentImages = [];
-  if(hero) currentImages.push({src:hero,name:"Hero"});
+
+  // Hero画像
+  if(hero) currentImages.push({src:hero.replace("catalog_banner","hero"), name:"Hero"});
+
+  // 他画像も catalog_banner → key に置換
   for(const key of ["featured_reward","map","topic","topic2","emomorun"]){
-    if(images && images[key]) currentImages.push({src:images[key],name:key});
+    if(images && images[key]){
+      const newSrc = images[key].replace("catalog_banner", key);
+      currentImages.push({src: newSrc, name: key});
+    }
   }
 
   btnsWrap.innerHTML="";
@@ -184,7 +189,14 @@ function openModal(hero, images){
     btnsWrap.appendChild(b);
   });
 
-  loadModalImage(currentImages[0].src);
+  if(currentImages.length>0){
+    loadModalImage(currentImages[0].src);
+  }else{
+    img.style.display="none";
+    loader.textContent="画像がありません";
+    loader.style.display="block";
+  }
+
   document.getElementById("modal").style.display="flex";
 }
 
@@ -207,7 +219,13 @@ loadSchedule();
 document.addEventListener('contextmenu',e=>e.preventDefault());
 document.addEventListener('selectstart',e=>e.preventDefault());
 document.addEventListener('copy',e=>e.preventDefault());
-document.addEventListener('keydown',e=>{if(e.ctrlKey && ["c","C","s","S","p","P"].includes(e.key)){e.preventDefault();document.getElementById("screenshot-warning").style.display="flex";setTimeout(()=>document.getElementById("screenshot-warning").style.display="none",3000);}});
+document.addEventListener('keydown',e=>{
+  if(e.ctrlKey && ["c","C","s","S","p","P"].includes(e.key)){
+    e.preventDefault();
+    document.getElementById("screenshot-warning").style.display="flex";
+    setTimeout(()=>document.getElementById("screenshot-warning").style.display="none",3000);
+  }
+});
 </script>
 </body>
 </html>
