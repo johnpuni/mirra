@@ -26,10 +26,8 @@ h1{text-align:center;margin:16px 0;}
 .modal-buttons button{padding:6px 10px;border:none;border-radius:6px;background:#ff6;color:#000;cursor:pointer;font-weight:bold;}
 .modal-buttons button:hover{background:#ff8;}
 .loader{color:#fff;font-size:18px;text-align:center;}
-
-/* glow effect */
-@keyframes glow{0%{box-shadow:0 0 8px #0f0;}50%{box-shadow:0 0 20px #0f0;}100%{box-shadow:0 0 8px #0f0;}}
 .glow{animation:glow 1.2s infinite;}
+@keyframes glow{0%{box-shadow:0 0 8px #0f0;}50%{box-shadow:0 0 20px #0f0;}100%{box-shadow:0 0 8px #0f0;}}
 
 /* パスワード画面 */
 #pw-screen{position:fixed;top:0;left:0;width:100%;height:100%;background:#111;display:flex;align-items:center;justify-content:center;flex-direction:column;z-index:1000;}
@@ -63,9 +61,9 @@ h1{text-align:center;margin:16px 0;}
 <div class="overlay" id="modal">
   <div class="modal">
     <span class="close-btn" onclick="closeModal()">×</span>
-    <div class="modal-buttons" id="modal-btns"></div>
-    <div class="loader" id="modal-loader">読み込み中...</div>
     <img id="modal-img" src="" style="display:none;">
+    <div class="loader" id="modal-loader">読み込み中...</div>
+    <div class="modal-buttons" id="modal-btns"></div>
   </div>
 </div>
 
@@ -92,7 +90,7 @@ function checkPassword(){
 function proxyImage(url){return "https://images.weserv.nl/?url="+encodeURIComponent(url.replace(/^https?:\/\//,""));}
 function directLink(url){return "mirr://webview/window/open?url="+encodeURIComponent(url);}
 
-// JSON読み込み
+// スケジュール読み込み
 async function loadSchedule(){
   const listRes = await fetch("schedule/index.json");
   const files = await listRes.json();
@@ -138,7 +136,13 @@ function render(events){
     if(now>=start && now<=end) card.classList.add("glow");
 
     const box=document.createElement("div"); box.className="image-box"; 
-    box.onclick=()=>openModal(e.hero,e.images);
+    box.onclick=()=>openModal(e.hero,{
+      "featured_reward": e.featured_reward,
+      "map": e.map,
+      "topic": e.topic,
+      "topic2": e.topic2,
+      "emomorun": e.emomorun
+    });
 
     if(e.image){
       const img=document.createElement("img"); img.src=proxyImage(e.image); box.appendChild(img);
@@ -146,7 +150,7 @@ function render(events){
 
     const circle=document.createElement("div"); circle.className="time-circle";
     if(now<start){circle.textContent="開始\n"+Math.ceil((start-now)/86400000)+"日"; circle.style.color="#00f";}
-    else if(now>=start && now<=end){circle.textContent="終了\n"+Math.ceil((end-now)/86400000)+"日"; circle.style.color="#ff0";} // ←見やすく黄色に
+    else if(now>=start && now<=end){circle.textContent="終了\n"+Math.ceil((end-now)/86400000)+"日"; circle.style.color="#ff3b3b";} // 赤に変更して目立つ
     else{circle.textContent="終了"; circle.style.color="#888";}
 
     const dateText=document.createElement("div"); 
@@ -168,8 +172,12 @@ function openModal(hero, images){
   const img=document.getElementById("modal-img");
   const btnsWrap=document.getElementById("modal-btns");
 
-  // Heroとその他画像を整理
-  currentImages=[{src:hero,name:"Hero"}].concat(images||[]).filter(x=>x.src);
+  // Hero + 各種画像
+  currentImages=[{src:hero,name:"Hero"}];
+  for(const key of ["featured_reward","map","topic","topic2","emomorun"]){
+    if(images[key]) currentImages.push({src:images[key], name:key});
+  }
+
   btnsWrap.innerHTML="";
   currentImages.forEach(item=>{
     const b=document.createElement("button"); 
@@ -181,6 +189,7 @@ function openModal(hero, images){
   loadModalImage(currentImages[0].src);
   document.getElementById("modal").style.display="flex";
 }
+
 function loadModalImage(src){
   const loader=document.getElementById("modal-loader");
   const img=document.getElementById("modal-img");
