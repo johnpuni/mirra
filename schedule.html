@@ -70,7 +70,6 @@ h1{text-align:center;margin:16px 0;}
 const VERSION = "1.3.5";
 const PASSWORD = "johnleak";
 
-// パスワード画面
 if(localStorage.getItem("pw_ok") !== "true_"+VERSION){
   document.getElementById("pw-screen").style.display="flex";
 }else{
@@ -83,11 +82,9 @@ function checkPassword(){
   }else{alert("パスワードが違います");}
 }
 
-// 画像プロキシ・リンク
 function proxyImage(url){return "https://images.weserv.nl/?url="+encodeURIComponent(url.replace(/^https?:\/\//,""));}
 function directLink(url){return "mirr://webview/window/open?url="+encodeURIComponent(url);}
 
-// スケジュールロード
 async function loadSchedule(){
   const listRes = await fetch("schedule/index.json");
   const files = await listRes.json();
@@ -107,7 +104,6 @@ async function loadSchedule(){
   renderTabs(months,events);
 }
 
-// タブ描画
 function renderTabs(months,events){
   const tabsWrap=document.getElementById("tabs"); tabsWrap.innerHTML="";
   const nowMonth=new Date().toISOString().substr(0,7);
@@ -115,11 +111,7 @@ function renderTabs(months,events){
     const tab=document.createElement("div");
     tab.className="tab"+(m===nowMonth?" active":"");
     tab.textContent=m;
-    tab.onclick=()=>{
-      document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
-      tab.classList.add("active");
-      render(events.filter(ev=>ev.start.substr(0,7)===m));
-    };
+    tab.onclick=()=>{document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active")); tab.classList.add("active"); render(events.filter(ev=>ev.start.substr(0,7)===m));};
     tabsWrap.appendChild(tab);
   });
   const initialMonth=months.includes(nowMonth)?nowMonth:months[months.length-1];
@@ -138,9 +130,16 @@ function render(events){
     if(now>=start && now<=end) card.classList.add("glow");
 
     const box=document.createElement("div"); box.className="image-box";
-    box.onclick=()=>{ openModal(e.image, e.images); };
-    if(e.image){ const img=document.createElement("img"); img.src=proxyImage(e.image); box.appendChild(img);}
-    else box.textContent="No Image";
+
+    // 🔹 catalog_banner を hero に置換してモーダル表示
+    box.onclick=()=>{
+      let hero = e.image ? e.image.replace("catalog_banner","hero") : null;
+      openModal(hero, e.images);
+    };
+
+    if(e.image){
+      const img=document.createElement("img"); img.src=proxyImage(e.image); box.appendChild(img);
+    }else box.textContent="No Image";
 
     const circle=document.createElement("div"); circle.className="time-circle";
     if(now<start){circle.textContent="開始\n"+Math.ceil((start-now)/86400000)+"日"; circle.style.color="#00f";}
@@ -167,13 +166,9 @@ function openModal(hero, images){
   const btnsWrap=document.getElementById("modal-btns");
 
   currentImages = [];
-
-  // Hero画像
-  if(hero) currentImages.push({src:hero, name:"Hero"});
-
-  // featured_reward のみ
-  if(images && images.featured_reward){
-    currentImages.push({src:images.featured_reward, name:"Reward"});
+  if(hero) currentImages.push({src:hero,name:"Hero"});
+  for(const key of ["featured_reward","map","topic","topic2","emomorun"]){
+    if(images && images[key]) currentImages.push({src:images[key],name:key});
   }
 
   btnsWrap.innerHTML="";
@@ -189,14 +184,7 @@ function openModal(hero, images){
     btnsWrap.appendChild(b);
   });
 
-  if(currentImages.length>0){
-    loadModalImage(currentImages[0].src);
-  }else{
-    img.style.display="none";
-    loader.textContent="画像がありません";
-    loader.style.display="block";
-  }
-
+  loadModalImage(currentImages[0].src);
   document.getElementById("modal").style.display="flex";
 }
 
@@ -219,13 +207,7 @@ loadSchedule();
 document.addEventListener('contextmenu',e=>e.preventDefault());
 document.addEventListener('selectstart',e=>e.preventDefault());
 document.addEventListener('copy',e=>e.preventDefault());
-document.addEventListener('keydown',e=>{
-  if(e.ctrlKey && ["c","C","s","S","p","P"].includes(e.key)){
-    e.preventDefault();
-    document.getElementById("screenshot-warning").style.display="flex";
-    setTimeout(()=>document.getElementById("screenshot-warning").style.display="none",3000);
-  }
-});
+document.addEventListener('keydown',e=>{if(e.ctrlKey && ["c","C","s","S","p","P"].includes(e.key)){e.preventDefault();document.getElementById("screenshot-warning").style.display="flex";setTimeout(()=>document.getElementById("screenshot-warning").style.display="none",3000);}});
 </script>
 </body>
 </html>
