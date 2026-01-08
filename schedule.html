@@ -70,6 +70,7 @@ h1{text-align:center;margin:16px 0;}
 const VERSION = "1.3.5";
 const PASSWORD = "johnleak";
 
+// パスワード画面
 if(localStorage.getItem("pw_ok") !== "true_"+VERSION){
   document.getElementById("pw-screen").style.display="flex";
 }else{
@@ -82,9 +83,11 @@ function checkPassword(){
   }else{alert("パスワードが違います");}
 }
 
+// 画像プロキシ・リンク
 function proxyImage(url){return "https://images.weserv.nl/?url="+encodeURIComponent(url.replace(/^https?:\/\//,""));}
 function directLink(url){return "mirr://webview/window/open?url="+encodeURIComponent(url);}
 
+// スケジュールロード
 async function loadSchedule(){
   const listRes = await fetch("schedule/index.json");
   const files = await listRes.json();
@@ -104,6 +107,7 @@ async function loadSchedule(){
   renderTabs(months,events);
 }
 
+// タブ描画
 function renderTabs(months,events){
   const tabsWrap=document.getElementById("tabs"); tabsWrap.innerHTML="";
   const nowMonth=new Date().toISOString().substr(0,7);
@@ -111,7 +115,11 @@ function renderTabs(months,events){
     const tab=document.createElement("div");
     tab.className="tab"+(m===nowMonth?" active":"");
     tab.textContent=m;
-    tab.onclick=()=>{document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active")); tab.classList.add("active"); render(events.filter(ev=>ev.start.substr(0,7)===m));};
+    tab.onclick=()=>{
+      document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+      tab.classList.add("active");
+      render(events.filter(ev=>ev.start.substr(0,7)===m));
+    };
     tabsWrap.appendChild(tab);
   });
   const initialMonth=months.includes(nowMonth)?nowMonth:months[months.length-1];
@@ -130,14 +138,9 @@ function render(events){
     if(now>=start && now<=end) card.classList.add("glow");
 
     const box=document.createElement("div"); box.className="image-box";
-
-    box.onclick=()=>{
-      openModal(e.image, e.images);
-    };
-
-    if(e.image){
-      const img=document.createElement("img"); img.src=proxyImage(e.image); box.appendChild(img);
-    }else box.textContent="No Image";
+    box.onclick=()=>{ openModal(e.image, e.images); };
+    if(e.image){ const img=document.createElement("img"); img.src=proxyImage(e.image); box.appendChild(img);}
+    else box.textContent="No Image";
 
     const circle=document.createElement("div"); circle.className="time-circle";
     if(now<start){circle.textContent="開始\n"+Math.ceil((start-now)/86400000)+"日"; circle.style.color="#00f";}
@@ -169,10 +172,13 @@ function openModal(hero, images){
   if(hero) currentImages.push({src:hero.replace("catalog_banner","hero"), name:"Hero"});
 
   // 他画像も catalog_banner → key に置換
-  for(const key of ["featured_reward","map","topic","topic2","emomorun"]){
-    if(images && images[key]){
-      const newSrc = images[key].replace("catalog_banner", key);
-      currentImages.push({src: newSrc, name: key});
+  if(images){
+    for(const key of ["featured_reward","map","topic","topic2","emomorun"]){
+      if(images[key]){
+        let src = images[key];
+        if(src.includes("catalog_banner")) src = src.replace("catalog_banner", key);
+        currentImages.push({src: src, name: key});
+      }
     }
   }
 
