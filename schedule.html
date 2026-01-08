@@ -87,49 +87,29 @@ function checkPassword(){
 function proxyImage(url){return "https://images.weserv.nl/?url="+encodeURIComponent(url.replace(/^https?:\/\//,""));}
 function directLink(url){return "mirr://webview/window/open?url="+encodeURIComponent(url);}
 
-// スケジュールロード
-async function loadSchedule(){
-  const listRes = await fetch("schedule/index.json");
-  const files = await listRes.json();
-  let events = [];
-  for(const file of files){
-    const data = await fetch("schedule/"+file).then(r=>r.json());
-    events = events.concat(data);
+// 固定イベント
+const events = [
+  {
+    title:"サンプルイベント",
+    start:"2026-01-06",
+    end:"2026-01-10",
+    url:"https://example.com",
+    image:"https://via.placeholder.com/400x200.png?text=Hero",
+    images:{
+      featured_reward:"https://via.placeholder.com/400x200.png?text=Reward",
+      map:"https://via.placeholder.com/400x200.png?text=Map",
+      topic:"https://via.placeholder.com/400x200.png?text=Topic",
+      topic2:"https://via.placeholder.com/400x200.png?text=Topic2",
+      emomorun:"https://via.placeholder.com/400x200.png?text=Emomorun"
+    }
   }
-  const seen={};
-  events = events.filter(e=>{
-    const key=e.url+"|"+e.start+"|"+e.end;
-    if(seen[key]) return false;
-    seen[key]=true;
-    return true;
-  });
-  const months=Array.from(new Set(events.map(e=>e.start.substr(0,7)))).sort();
-  renderTabs(months,events);
-}
-
-// タブ描画
-function renderTabs(months,events){
-  const tabsWrap=document.getElementById("tabs"); tabsWrap.innerHTML="";
-  const nowMonth=new Date().toISOString().substr(0,7);
-  months.forEach(m=>{
-    const tab=document.createElement("div");
-    tab.className="tab"+(m===nowMonth?" active":"");
-    tab.textContent=m;
-    tab.onclick=()=>{
-      document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
-      tab.classList.add("active");
-      render(events.filter(ev=>ev.start.substr(0,7)===m));
-    };
-    tabsWrap.appendChild(tab);
-  });
-  const initialMonth=months.includes(nowMonth)?nowMonth:months[months.length-1];
-  render(events.filter(ev=>ev.start.substr(0,7)===initialMonth));
-}
+];
 
 // カード描画
 function render(events){
   const wrap=document.getElementById("schedule"); wrap.innerHTML="";
   const now=new Date();
+
   events.sort((a,b)=>new Date(a.start)-new Date(b.start));
 
   for(const e of events){
@@ -149,7 +129,7 @@ function render(events){
 
     const dateText=document.createElement("div"); 
     dateText.style.textAlign="center"; dateText.style.fontSize="12px"; dateText.style.margin="6px 0 28px 0"; 
-    dateText.textContent=`期間: ${e.start.substr(0,10)} ~ ${e.end.substr(0,10)}`;
+    dateText.textContent=`期間: ${e.start} ~ ${e.end}`;
 
     const btn=document.createElement("div"); btn.className="open-btn"; btn.textContent="開く";
     btn.onclick=(ev)=>{ev.stopPropagation(); location.href=directLink(e.url);};
@@ -171,16 +151,12 @@ function openModal(hero, images){
   // Hero画像
   if(hero) currentImages.push({src:hero, name:"Hero"});
 
-  // 他画像キー
-  if(images){
-    ["featured_reward","map","topic","topic2","emomorun"].forEach(key=>{
-      if(images[key]){
-        let src = images[key];
-        if(src.includes("catalog_banner")) src = src.replace("catalog_banner", key);
-        currentImages.push({src: src, name: key});
-      }
-    });
-  }
+  // 他画像
+  ["featured_reward","map","topic","topic2","emomorun"].forEach(key=>{
+    if(images && images[key]){
+      currentImages.push({src:images[key], name:key});
+    }
+  });
 
   btnsWrap.innerHTML="";
   currentImages.forEach((item,index)=>{
@@ -218,8 +194,8 @@ function loadModalImage(src){
 function closeModal(){document.getElementById("modal").style.display="none";}
 document.addEventListener("keydown",e=>{if(e.key==="Escape") closeModal();});
 
-// スケジュールロード
-loadSchedule();
+// 描画
+render(events);
 
 // スクショ防止
 document.addEventListener('contextmenu',e=>e.preventDefault());
