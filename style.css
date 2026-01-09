@@ -1,69 +1,10 @@
-body {
-  background:#0f111a;
-  color:#fff;
-  font-family: system-ui, sans-serif;
-  margin:0;
-}
+body { background:#111; color:white; font-family:sans-serif; margin:0 }
+.top { padding:10px; background:#222 }
+input { padding:6px; }
+button { padding:6px 10px; margin-left:5px }
 
-/* 月タブ */
-#month-tabs {
-  display:flex;
-  gap:8px;
-  justify-content:center;
-  flex-wrap:wrap;
-  margin:12px 0;
-}
+video { width:100%; max-height:40vh; background:black }
 
-.tab {
-  padding:6px 12px;
-  background:#222;
-  border-radius:10px;
-  cursor:pointer;
-  font-size:13px;
-}
-
-.tab.active {
-  background:#00c8ff;
-  color:#000;
-}
-
-/* 全体レイアウト */
-#schedule {
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
-  gap:14px;
-  padding:14px;
-}
-
-/* カード */
-.card {
-  background:#1b1e2a;
-  border-radius:14px;
-  padding:10px;
-  box-shadow:0 4px 10px rgba(0,0,0,.3);
-  transition:.2s;
-}
-
-.card.active {
-  box-shadow:0 0 12px rgba(0,200,255,.9);
-}
-
-.card.ended {
-  opacity:.45;
-}
-
-/* 画像 */
-.card img {
-  width:100%;
-  height:140px;
-  object-fit:cover;
-  border-radius:10px;
-}
-
-/* 情報 */
-.info {
-  margin-top:6px;
-  font-size:12px;
-  line-height:1.4;
-  color:#ddd;
-}
+.controls { padding:8px; }
+.panel { display:flex }
+.box { flex:1; max-height:50vh; overflow-y:auto; padding:10px; display:none }
