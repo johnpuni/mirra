@@ -2,107 +2,65 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mirrativ Viewer</title>
-<style>
-body { font-family: sans-serif; background: #f2f2f2; margin: 0; padding: 0;}
-#container { display: flex; flex-direction: column; align-items: center; padding: 20px;}
-#video { width: 80%; max-width: 800px; margin-bottom: 10px; background: black;}
-#controls { margin-bottom: 10px;}
-#panels { display: flex; width: 80%; max-width: 800px; gap: 10px;}
-.panel { flex: 1; background: white; padding: 10px; border-radius: 5px; max-height: 300px; overflow-y: auto;}
-button { margin-left: 5px;}
-</style>
 </head>
 <body>
-<div id="container">
-<h2>Mirrativ Viewer（ブラウザ完結版）</h2>
-<div id="controls">
-<label>ユーザーID: <input type="text" id="userId" placeholder="例: 110179176"></label>
+<input id="userId" placeholder="Mirrativ ユーザーID">
 <button onclick="start()">開始</button>
-</div>
-<video id="video" controls autoplay></video>
-<div id="panels">
-<div class="panel">
+
+<video id="video" controls autoplay style="width:80%; margin-top:20px;"></video>
+
+<div>
 <h3>コメント</h3>
-<button onclick="togglePanel('comments')">表示/非表示</button>
 <div id="comments"></div>
-</div>
-<div class="panel">
 <h3>ギフト</h3>
-<button onclick="togglePanel('gifts')">表示/非表示</button>
 <div id="gifts"></div>
-</div>
-</div>
 </div>
 
 <script>
-let commentPanelVisible = true;
-let giftPanelVisible = true;
-let commentInterval;
-let giftInterval;
-
-function togglePanel(panel) {
-  if(panel === 'comments') {
-    commentPanelVisible = !commentPanelVisible;
-    document.getElementById('comments').style.display = commentPanelVisible ? 'block' : 'none';
-  } else if(panel === 'gifts') {
-    giftPanelVisible = !giftPanelVisible;
-    document.getElementById('gifts').style.display = giftPanelVisible ? 'block' : 'none';
-  }
-}
+let commentInterval, giftInterval;
 
 async function start() {
-  const userId = document.getElementById('userId').value.trim();
-  if(!userId) { alert('ユーザーIDを入力してください'); return; }
+  const userId = document.getElementById('userId').value;
+  if(!userId) return alert('ユーザーIDを入力してください');
 
-  // ライブ履歴取得
-  const historyResp = await fetch(`https://www.mirrativ.com/api/live/live_history?page=1&user_id=${userId}`);
-  const historyData = await historyResp.json();
-  if(!historyData.data || historyData.data.length === 0) { alert('配信中ではありません'); return; }
+  // LIVEID取得
+  const history = await fetch(`https://www.mirrativ.com/api/live/live_history?page=1&user_id=${userId}`).then(r=>r.json());
+  if(!history.data || history.data.length===0) return alert('配信中ではありません');
+  const liveId = history.data[0].live_id;
 
-  const liveId = historyData.data[0].live_id;
+  // HLS取得
+  const stream = await fetch(`https://www.mirrativ.com/api/live/get_streaming_url?live_id=${liveId}`).then(r=>r.json());
+  const hls = stream.streaming_url_hls;
+  if(!hls) return alert('HLS URL 取得失敗');
 
-  // ストリーム URL
-  const streamResp = await fetch(`https://www.mirrativ.com/api/live/get_streaming_url?live_id=${liveId}`);
-  const streamData = await streamResp.json();
-  const hlsUrl = streamData.streaming_url_hls;
-  if(!hlsUrl) { alert('配信URL取得失敗'); return; }
+  document.getElementById('video').src = hls;
 
-  const video = document.getElementById('video');
-  video.src = hlsUrl;
-
-  // コメント取得
-  if(commentInterval) clearInterval(commentInterval);
-  commentInterval = setInterval(async () => {
-    const cResp = await fetch(`https://www.mirrativ.com/api/live/live_comments?live_id=${liveId}`);
-    const cData = await cResp.json();
+  // コメント自動取得
+  clearInterval(commentInterval);
+  commentInterval = setInterval(async()=>{
+    const comments = await fetch(`https://www.mirrativ.com/api/live/live_comments?live_id=${liveId}`).then(r=>r.json());
     const cDiv = document.getElementById('comments');
-    if(cDiv) {
-      cDiv.innerHTML = '';
-      cData.data.forEach(c => {
-        const el = document.createElement('div');
-        el.textContent = `${c.username || '名無し'}: ${c.comment}`;
-        cDiv.appendChild(el);
-      });
-    }
-  }, 3000);
+    cDiv.innerHTML = '';
+    comments.data.forEach(c=>{
+      const el = document.createElement('div');
+      el.textContent = `${c.username || '名無し'}: ${c.comment}`;
+      cDiv.appendChild(el);
+    });
+  },3000);
 
-  // ギフト取得
-  if(giftInterval) clearInterval(giftInterval);
-  giftInterval = setInterval(async () => {
-    const gResp = await fetch(`https://www.mirrativ.com/gift/ranking?live_id=${liveId}`);
-    const gData = await gResp.json();
+  // ギフト自動取得
+  clearInterval(giftInterval);
+  giftInterval = setInterval(async()=>{
+    const gifts = await fetch(`https://www.mirrativ.com/gift/ranking?live_id=${liveId}`).then(r=>r.json());
     const gDiv = document.getElementById('gifts');
-    if(gDiv) {
-      gDiv.innerHTML = '';
-      gData.forEach(g => {
-        const el = document.createElement('div');
-        el.textContent = `${g.username || '名無し'}: ${g.gift_name} × ${g.count}`;
-        gDiv.appendChild(el);
-      });
-    }
-  }, 5000);
+    gDiv.innerHTML = '';
+    gifts.forEach(g=>{
+      const el = document.createElement('div');
+      el.textContent = `${g.username || '名無し'}: ${g.gift_name} × ${g.count}`;
+      gDiv.appendChild(el);
+    });
+  },5000);
 }
 </script>
 </body>
