@@ -2,59 +2,32 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>エモバト機体データベース</title>
+<title>エモバト 機体データベース</title>
 <style>
-body { font-family: sans-serif; background:#111; color:#eee; }
-h1 { text-align:center; }
-#container { display:flex; gap:20px; }
-#list { width:30%; border-right:1px solid #444; padding-right:10px; }
-#list div { padding:10px; cursor:pointer; border-bottom:1px solid #333; }
-#list div:hover { background:#333; }
-#detail { flex:1; }
-.item { margin:5px 0; }
-.label { color:#aaa; }
+body{background:#0f1115;color:#eee;font-family:sans-serif}
+.card{border:1px solid #333;padding:12px;margin:10px;cursor:pointer}
+.card:hover{background:#222}
 </style>
 </head>
 <body>
 
 <h1>エモバト 機体データベース</h1>
-
-<div id="container">
-  <div id="list"></div>
-  <div id="detail">機体を選択してください</div>
-</div>
+<div id="list"></div>
 
 <script>
-async function loadList(){
-  const res = await fetch("data/mecha/index.json");
-  const files = await res.json();
+const mechas = [
+  "accessory_machines_c_0001_01.asset.json"
+];
 
-  const list = document.getElementById("list");
-  for(const file of files){
-    const div = document.createElement("div");
-    div.textContent = file.name;
-    div.onclick = ()=> loadMecha(file.file);
-    list.appendChild(div);
-  }
-}
+const list = document.getElementById("list");
 
-async function loadMecha(file){
-  const res = await fetch("data/mecha/" + file);
-  const json = await res.json();
-  const m = json.MonoBehaviour;
-
-  const d = document.getElementById("detail");
-  d.innerHTML = `
-    <h2>${m.aircraftName}</h2>
-    <div class="item"><span class="label">説明:</span> ${m.description}</div>
-    <div class="item"><span class="label">移動速度:</span> ${m.moveSpeed}</div>
-    <div class="item"><span class="label">加速:</span> ${m.moveAccel}</div>
-    <div class="item"><span class="label">旋回速度:</span> ${m.rotationSpeed}</div>
-    <div class="item"><span class="label">防御:</span> ${m.defense}</div>
-  `;
-}
-
-loadList();
+mechas.forEach(file=>{
+  const div = document.createElement("div");
+  div.className="card";
+  div.textContent=file;
+  div.onclick=()=>location.href="mecha.html?file="+file;
+  list.appendChild(div);
+});
 </script>
 
 </body>
