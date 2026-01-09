@@ -1,93 +1,18 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mirrativランキング</title>
-<style>
-body {
-  font-family: sans-serif;
-  background: #f0f2f5;
-  padding: 1em;
-}
-h1 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-#ranking-container {
-  max-width: 600px;
-  margin: auto;
-  background: #fff;
-  border-radius: 8px;
-  overflow-y: auto;
-  max-height: 80vh;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-.card {
-  display: flex;
-  align-items: center;
-  padding: 8px 12px;
-  border-bottom: 1px solid #eee;
-}
-.rank {
-  width: 40px;
-  text-align: center;
-  font-weight: bold;
-}
-.name {
-  flex: 1;
-  margin-left: 10px;
-}
-.score {
-  width: 100px;
-  text-align: right;
-}
-.badge {
-  width: 20px;
-  height: 20px;
-  margin-left: 6px;
-}
-.rank1 { background: #fff8dc; }  /* 金 */
-.rank2 { background: #f0f0f0; }  /* 銀 */
-.rank3 { background: #fde3c0; }  /* 銅 */
-</style>
-</head>
 <body>
-<h1>Mirrativイベントランキング</h1>
-<div id="ranking-container">
-  <div id="ranking"></div>
-</div>
-
 <script>
-const apiUrl = "http://localhost:3000/mirrativ?gift_event_id=4063";
-
-fetch(apiUrl)
-  .then(res => res.json())
-  .then(data => {
-    const container = document.getElementById("ranking");
-    const users = data.users || [];
-
-    users.forEach(user => {
-      const card = document.createElement("div");
-      card.classList.add("card");
-      if(user.rank === 1) card.classList.add("rank1");
-      else if(user.rank === 2) card.classList.add("rank2");
-      else if(user.rank === 3) card.classList.add("rank3");
-
-      card.innerHTML = `
-        <div class="rank">${user.rank}</div>
-        <img src="${user.icon_url}" width="40" height="40">
-        <div class="name">${user.name}</div>
-        <div class="score">${user.score.toLocaleString()}</div>
-        <img src="${user.badge_image_url}" class="badge">
-      `;
-      container.appendChild(card);
-    });
-  })
-  .catch(err => {
-    document.getElementById("ranking").innerHTML = `<p style="text-align:center; color:red;">エラー: ${err}</p>`;
-    console.error(err);
-  });
+async function checkMirrativ() {
+  try {
+    const res = await fetch('https://www.mirrativ.com/api/live/live_history?page=1&user_id=110179176');
+    console.log('status', res.status);
+    const data = await res.json();
+    console.log(data);
+  } catch(e) {
+    console.error(e);
+  }
+}
+checkMirrativ();
 </script>
 </body>
 </html>
