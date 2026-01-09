@@ -1,232 +1,28 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ユニット詳細（攻略サイト風）</title>
-<style>
-:root{
-  --bg:#f5f5f5; --card:#fff; --text:#222; --muted:#666; --border:#ccc; --accent:#333;
-  --btn:#eee; --shadow:0 2px 8px rgba(0,0,0,0.1);
-  --attack:#f28c8c; --defense:#8cc7f2; --movement:#8cf29c;
-}
-body.dark{
-  --bg:#0f1115; --card:#1a1e27; --text:#e6e6e6; --muted:#a3a3a3; --border:#2b2f3a; --accent:#7aa2f7;
-  --btn:#1b2030; --shadow:0 2px 10px rgba(0,0,0,0.35);
-  --attack:#f77; --defense:#4aa; --movement:#4a7;
-}
-body{
-  margin:0; font-family:sans-serif; background:var(--bg); color:var(--text); transition:.2s; padding:20px;
-}
-h1{margin-bottom:10px; text-align:center;}
-img#unitImg{
-  max-width:300px; width:100%; border-radius:10px; display:block; margin:0 auto 15px auto; box-shadow: var(--shadow); cursor:pointer;
-}
-.controls{display:flex; justify-content:flex-end; margin-bottom:15px;}
-button{padding:6px 10px; border:none; border-radius:5px; cursor:pointer; background:var(--btn); transition:.2s;}
-button:hover{opacity:.8;}
-a{color:var(--accent); text-decoration:none; font-weight:bold; display:inline-block; margin-top:15px;}
-a:hover{text-decoration:underline;}
-.card-container{display:flex; flex-wrap:wrap; gap:15px; justify-content:center; margin-bottom:20px;}
-.card{background:var(--card); border-radius:10px; box-shadow:var(--shadow); padding:15px; width:320px; transition:.2s;}
-.card:hover{transform:scale(1.03);}
-.card h3{margin-top:0; margin-bottom:10px; font-size:1.2em; text-align:center;}
-.card ul{list-style:none; padding:0; margin:0;}
-.card li{margin-bottom:5px; line-height:1.4;}
-.attack{border-left:4px solid var(--attack); padding-left:8px;}
-.defense{border-left:4px solid var(--defense); padding-left:8px;}
-.movement{border-left:4px solid var(--movement); padding-left:8px;}
-.modal{display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); justify-content:center; align-items:center; z-index:1000;}
-.modal img{max-width:90%; max-height:90%; border-radius:10px;}
-</style>
+<title>機体詳細</title>
 </head>
 <body>
-
-<div class="controls">
-  <button id="themeToggle">🌙 ダーク切替</button>
-</div>
-
-<h1 id="unitName">読み込み中…</h1>
-<img id="unitImg" src="" alt="">
-<p id="unitDesc"></p>
-
-<div class="card-container">
-  <div class="card movement">
-    <h3>機体パラメータ</h3>
-    <ul id="unitStats"></ul>
-  </div>
-  <div class="card attack">
-    <h3>武器設定</h3>
-    <ul id="weaponStats"></ul>
-  </div>
-  <div class="card defense">
-    <h3>パッシブスキル</h3>
-    <ul id="passiveSkills"></ul>
-  </div>
-</div>
-
-<a href="unit_list.html">← 一覧に戻る</a>
-
-<!-- モーダル -->
-<div class="modal" id="imgModal">
-  <img id="modalImg" src="" alt="">
-</div>
+<h1 id="name"></h1>
+<div id="info"></div>
 
 <script>
-// ダークモード初期化
-(function initTheme(){
-  if(localStorage.getItem("emobo_theme")==="dark") document.body.classList.add("dark");
-})();
-document.getElementById("themeToggle").addEventListener("click",()=>{
-  document.body.classList.toggle("dark");
-  localStorage.setItem("emobo_theme",document.body.classList.contains("dark")?"dark":"light");
-});
-
-// URLからユニットID取得
 const params = new URLSearchParams(location.search);
-const id = params.get('id');
+const file = params.get("file");
 
-// 攻略用翻訳マップ
-const translations = {
-  aircraftName:"機体名", description:"説明",
-  moveSpeed:"移動速度", moveAccel:"加速度", moveResistPower:"慣性抵抗",
-  moveBrake:"ブレーキ", rotationSpeed:"旋回速度", respawnPositionSelectMoveSpeed:"リスポーン選択速度",
-  defense:"防御力", searchHitRadius:"索敵範囲", specialMoves:"特殊移動",
-  memo:"武器名", weaponCategry:"武器カテゴリ", attackPower:"攻撃力", attackTimeSpan:"攻撃間隔",
-  useChargeWhenFire:"チャージ発射", useChargeWithoutFire:"チャージのみ", maxChargeTime:"最大チャージ時間",
-  inChargeFx:"チャージ中FX", disableChargeEffectWhenMax:"最大時エフェクト無効",
-  buffType:"効果種類", buffPower:"効果値", buffDuration:"効果時間", buffProbability:"発動確率",
-  tag:"タグ", targetType:"対象タイプ", img:"画像"
-};
-
-// 値整形・再帰
-function formatValue(val){
-  if(val==null) return "-";
-  if(typeof val==="number") return (Math.abs(val)%1===0)? val : val.toFixed(2);
-  if(typeof val==="string") return val;
-  if(Array.isArray(val)){
-    const ul=document.createElement("ul");
-    val.forEach(v=>{
-      const li=document.createElement("li");
-      if(typeof v==="object") li.appendChild(formatObject(v));
-      else li.textContent=v;
-      ul.appendChild(li);
-    });
-    return ul;
-  }
-  if(typeof val==="object") return formatObject(val);
-  return val;
-}
-function formatObject(obj){
-  const ul=document.createElement("ul");
-  Object.keys(obj).forEach(k=>{
-    const v=obj[k];
-    const li=document.createElement("li");
-    if(typeof v==="object" && v!==null){
-      li.textContent = (translations[k]||k)+":";
-      li.appendChild(formatValue(v));
-    }else{
-      li.textContent = (translations[k]||k) + ": " + v;
-    }
-    ul.appendChild(li);
-  });
-  return ul;
-}
-
-// fetchして単体ユニット表示
-if(id){
-  fetch(`units/${id}.json`)
-    .then(res=>res.json())
-    .then(data=>{
-      const m = data;
-      const w = data.weaponSettings ? [data.weaponSettings] : [];
-      const p = data.passiveSkills || [];
-
-      // タイトル部
-      document.getElementById("unitName").textContent = m.aircraftName || "名称不明";
-      document.getElementById("unitDesc").textContent = m.description || "";
-      const unitImg=document.getElementById("unitImg");
-      unitImg.src=m.img||"images/default.png";
-      unitImg.alt=m.aircraftName||"no name";
-
-      // 機体パラメータ
-      const statsUl=document.getElementById("unitStats");
-      statsUl.innerHTML="";
-      Object.keys(m).forEach(key=>{
-        if(["aircraftName","description","img","weaponSettings","passiveSkills","KobanBuffList","specialMoves"].includes(key)) return;
-        if(translations[key]){
-          const li=document.createElement("li");
-          li.textContent = translations[key]+": "+m[key];
-          statsUl.appendChild(li);
-        }
-      });
-      // 特殊移動
-      if(m.specialMoves && m.specialMoves.length){
-        const li=document.createElement("li");
-        li.textContent = "特殊移動: " + m.specialMoves.join(", ");
-        statsUl.appendChild(li);
-      }
-
-      // 武器設定
-      const weaponUl=document.getElementById("weaponStats");
-      weaponUl.innerHTML="";
-      if(w.length===0) weaponUl.innerHTML="<li>なし</li>";
-      else w.forEach((weapon,i)=>{
-        const title=document.createElement("li");
-        title.textContent=`--- 武器${i+1} ---`;
-        weaponUl.appendChild(title);
-        Object.keys(weapon).forEach(key=>{
-          if(translations[key]){
-            const li=document.createElement("li");
-            li.textContent = translations[key]+": "+weapon[key];
-            weaponUl.appendChild(li);
-          }
-        });
-      });
-
-      // パッシブスキル
-      const passiveUl=document.getElementById("passiveSkills");
-      passiveUl.innerHTML="";
-      if(p.length===0) passiveUl.innerHTML="<li>なし</li>";
-      else p.forEach((skill,i)=>{
-        const title=document.createElement("li");
-        title.textContent=`--- スキル${i+1} ---`;
-        passiveUl.appendChild(title);
-        passiveUl.appendChild(formatObject(skill));
-      });
-
-      // KobanBuffList表示
-      if(m.KobanBuffList && m.KobanBuffList.length){
-        const card=document.createElement("div");
-        card.className="card defense";
-        const h3=document.createElement("h3"); h3.textContent="特殊バフ";
-        card.appendChild(h3);
-        m.KobanBuffList.forEach((buff,i)=>{
-          const li=document.createElement("li");
-          li.textContent = `#${i+1} ${buff.tag} / 効果: ${buff.buffParam} / 時間: ${buff.buffDuration}`;
-          card.appendChild(li);
-        });
-        document.querySelector(".card-container").appendChild(card);
-      }
-    })
-    .catch(err=>{
-      console.error(err);
-      document.getElementById("unitName").textContent="データ読み込み失敗";
-    });
-}else{
-  document.getElementById("unitName").textContent="IDが指定されていません";
-}
-
-// 画像モーダル
-const modal=document.getElementById("imgModal");
-const modalImg=document.getElementById("modalImg");
-const unitImg=document.getElementById("unitImg");
-unitImg.addEventListener("click",()=>{
-  modal.style.display="flex";
-  modalImg.src=unitImg.src;
+fetch("data/minigame_002/prefabs/game/weapon/"+file)
+.then(r=>r.json())
+.then(j=>{
+  const m=j.MonoBehaviour;
+  name.textContent=m.aircraftName||file;
+  info.innerHTML=`
+    <p>移動速度: ${m.moveSpeed}</p>
+    <p>加速: ${m.moveAccel}</p>
+    <p>防御: ${m.defense}</p>
+  `;
 });
-modal.addEventListener("click",()=>modal.style.display="none");
 </script>
-
 </body>
 </html>
