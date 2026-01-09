@@ -5,12 +5,13 @@
 <title>Mirrativ Web Viewer</title>
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 <style>
-body { background:#111; color:#fff; font-family:sans-serif; margin:0 }
-.top { padding:10px; background:#222 }
-video { width:100%; background:black }
-.panel { display:flex }
-.box { flex:1; max-height:40vh; overflow:auto; display:none; padding:8px }
-button { margin-left:5px }
+body{background:#111;color:#fff;font-family:sans-serif;margin:0}
+.top{padding:10px;background:#222}
+input,button{padding:6px;margin-right:5px}
+video{width:100%;background:black}
+.panel{display:flex}
+.box{flex:1;max-height:45vh;overflow:auto;display:none;padding:8px;border-top:1px solid #333}
+.comment{border-bottom:1px solid #333;padding:5px 0}
 </style>
 </head>
 <body>
@@ -18,8 +19,8 @@ button { margin-left:5px }
 <div class="top">
 <input id="uid" placeholder="User ID">
 <button onclick="start()">接続</button>
-<button onclick="toggle('comments')">💬</button>
-<button onclick="toggle('gifts')">🎁</button>
+<button onclick="toggle('comments')">💬 コメント</button>
+<button onclick="toggle('gifts')">🎁 ギフト</button>
 </div>
 
 <video id="player" controls autoplay></video>
@@ -30,16 +31,21 @@ button { margin-left:5px }
 </div>
 
 <script>
-const proxy = url => 
-  fetch(`https://cors.isomorphic-git.org/${url}`).then(r=>r.json())
-
+const proxy = url => fetch(`https://cors.isomorphic-git.org/${url}`).then(r=>r.json())
 let liveId = null
 
 async function start(){
   const uid = document.getElementById('uid').value
+  console.clear()
 
   const history = await proxy(`https://www.mirrativ.com/api/live/live_history?page=1&user_id=${uid}`)
-  liveId = history.lives[0].live_id
+  console.log('HISTORY', history)
+
+  const live = history.lives.find(l=>l.status==='on_air') || history.lives[0]
+  if(!live){ alert('配信が見つかりません'); return }
+
+  liveId = live.live_id
+  console.log('LIVE_ID', liveId)
 
   const stream = await proxy(`https://www.mirrativ.com/api/live/get_streaming_url?live_id=${liveId}`)
   play(stream.streaming_url_hls)
@@ -67,7 +73,7 @@ function loadComments(){
     const data = await proxy(`https://www.mirrativ.com/api/live/live_comments?live_id=${liveId}`)
     document.getElementById('comments').innerHTML =
       data.comments.map(c=>`
-      <div>
+      <div class="comment">
         <img src="${c.user.icon_url}" width="24">
         <b>${c.user.name}</b> Lv.${c.user.cheer_level}<br>
         ${c.comment}
