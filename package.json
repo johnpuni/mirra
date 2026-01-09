@@ -1,5 +1,5 @@
 {
-  "name": "mirrativ-proxy",
+  "name": "mirrativ-web-proxy",
   "type": "module",
   "scripts": { "start": "node server.js" },
   "dependencies": {
