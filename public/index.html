@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Mirrativ Viewer</title>
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+<style>
+body{background:#111;color:#fff;font-family:sans-serif;margin:0}
+.top{padding:10px;background:#222}
+input,button{padding:6px;margin-right:5px}
+video{width:100%;background:black}
+.panel{display:flex}
+.box{flex:1;max-height:45vh;overflow:auto;display:none;padding:8px;border-top:1px solid #333}
+.comment{border-bottom:1px solid #333;padding:5px 0}
+</style>
+</head>
+<body>
+
+<div class="top">
+<input id="uid" placeholder="MirrativユーザーID">
+<button onclick="start()">接続</button>
+<button onclick="toggle('comments')">💬 コメント</button>
+<button onclick="toggle('gifts')">🎁 ギフト</button>
+</div>
+
+<video id="player" controls autoplay></video>
+
+<div class="panel">
+  <div id="comments" class="box"></div>
+  <div id="gifts" class="box"></div>
+</div>
+
+<script>
+const proxyBase = "https://YOUR_RENDER_URL_HERE/proxy?url="
+
+let liveId = null
+
+async function proxy(url){ 
+  return fetch(proxyBase + encodeURIComponent(url)).then(r=>r.json()) 
+}
+
+async function start(){
+  const uid = document.getElementById('uid').value
+  console.clear()
+
+  const history = await proxy(`https://www.mirrativ.com/api/live/live_history?page=1&user_id=${uid}`)
+  if(!history.lives || history.lives.length===0){ alert("配信が見つかりません"); return }
+
+  const live = history.lives.find(l=>l.status==='on_air') || history.lives[0]
+  liveId = live.live_id
+
+  const stream = await proxy(`https://www.mirrativ.com/api/live/get_streaming_url?live_id=${liveId}`)
+  play(stream.streaming_url_hls)
+
+  loadComments()
+  loadGifts()
+}
+
+function play(url){
+  const v = document.getElementById('player')
+  if(Hls.isSupported()){
+    const hls = new Hls()
+    hls.loadSource(url)
+    hls.attachMedia(v)
+  } else v.src = url
+}
+
+function toggle(id){
+  const e = document.getElementById(id)
+  e.style.display = e.style.display==='none'?'block':'none'
+}
+
+function loadComments(){
+  setInterval(async ()=>{
+    if(!liveId) return
+    const data = await proxy(`https://www.mirrativ.com/api/live/live_comments?live_id=${liveId}`)
+    document.getElementById('comments').innerHTML =
+      (data.comments||[]).map(c=>`
+      <div class="comment">
+        <img src="${c.user.icon_url}" width="24">
+        <b>${c.user.name}</b> Lv.${c.user.cheer_level}<br>
+        ${c.comment}
+      </div>`).join('')
+  }, 2000)
+}
+
+async function loadGifts(){
+  if(!liveId) return
+  const data = await proxy(`https://www.mirrativ.com/gift/ranking?live_id=${liveId}`)
+  document.getElementById('gifts').innerHTML =
+    (data.ranking||[]).map(g=>`${g.user.name} 🎁 ${g.total_amount}`).join('<br>')
+}
+</script>
+</body>
+</html>
