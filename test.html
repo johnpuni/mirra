@@ -2,66 +2,26 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>Mirrativ Viewer</title>
+<title>Mirrativ API Test</title>
 </head>
 <body>
-<input id="userId" placeholder="Mirrativ ユーザーID">
-<button onclick="start()">開始</button>
-
-<video id="video" controls autoplay style="width:80%; margin-top:20px;"></video>
-
-<div>
-<h3>コメント</h3>
-<div id="comments"></div>
-<h3>ギフト</h3>
-<div id="gifts"></div>
-</div>
+<h1>Mirrativ API Test</h1>
+<button id="checkBtn">APIチェック</button>
+<pre id="result"></pre>
 
 <script>
-let commentInterval, giftInterval;
+document.getElementById('checkBtn').onclick = async () => {
+  const userId = "110179176"; // 適当なユーザーID
+  const resultDiv = document.getElementById('result');
 
-async function start() {
-  const userId = document.getElementById('userId').value;
-  if(!userId) return alert('ユーザーIDを入力してください');
-
-  // LIVEID取得
-  const history = await fetch(`https://www.mirrativ.com/api/live/live_history?page=1&user_id=${userId}`).then(r=>r.json());
-  if(!history.data || history.data.length===0) return alert('配信中ではありません');
-  const liveId = history.data[0].live_id;
-
-  // HLS取得
-  const stream = await fetch(`https://www.mirrativ.com/api/live/get_streaming_url?live_id=${liveId}`).then(r=>r.json());
-  const hls = stream.streaming_url_hls;
-  if(!hls) return alert('HLS URL 取得失敗');
-
-  document.getElementById('video').src = hls;
-
-  // コメント自動取得
-  clearInterval(commentInterval);
-  commentInterval = setInterval(async()=>{
-    const comments = await fetch(`https://www.mirrativ.com/api/live/live_comments?live_id=${liveId}`).then(r=>r.json());
-    const cDiv = document.getElementById('comments');
-    cDiv.innerHTML = '';
-    comments.data.forEach(c=>{
-      const el = document.createElement('div');
-      el.textContent = `${c.username || '名無し'}: ${c.comment}`;
-      cDiv.appendChild(el);
-    });
-  },3000);
-
-  // ギフト自動取得
-  clearInterval(giftInterval);
-  giftInterval = setInterval(async()=>{
-    const gifts = await fetch(`https://www.mirrativ.com/gift/ranking?live_id=${liveId}`).then(r=>r.json());
-    const gDiv = document.getElementById('gifts');
-    gDiv.innerHTML = '';
-    gifts.forEach(g=>{
-      const el = document.createElement('div');
-      el.textContent = `${g.username || '名無し'}: ${g.gift_name} × ${g.count}`;
-      gDiv.appendChild(el);
-    });
-  },5000);
-}
+  try {
+    const res = await fetch(`https://www.mirrativ.com/api/live/live_history?page=1&user_id=${userId}`);
+    const data = await res.json();
+    resultDiv.textContent = JSON.stringify(data, null, 2);
+  } catch(e) {
+    resultDiv.textContent = e.toString();
+  }
+};
 </script>
 </body>
 </html>
