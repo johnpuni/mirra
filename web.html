@@ -3,28 +3,83 @@
 <head>
 <meta charset="UTF-8">
 <title>Mirrativ Web Viewer</title>
-<link rel="stylesheet" href="style.css">
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+<style>
+body { background:#111; color:#fff; font-family:sans-serif; margin:0 }
+.top { padding:10px; background:#222 }
+video { width:100%; background:black }
+.panel { display:flex }
+.box { flex:1; max-height:40vh; overflow:auto; display:none; padding:8px }
+button { margin-left:5px }
+</style>
 </head>
 <body>
 
 <div class="top">
-  <input id="userId" placeholder="Mirrativ User ID">
-  <button onclick="loadLive()">接続</button>
+<input id="uid" placeholder="User ID">
+<button onclick="start()">接続</button>
+<button onclick="toggle('comments')">💬</button>
+<button onclick="toggle('gifts')">🎁</button>
 </div>
 
 <video id="player" controls autoplay></video>
-
-<div class="controls">
-  <button onclick="toggle('comments')">💬 コメント</button>
-  <button onclick="toggle('gifts')">🎁 ギフト</button>
-</div>
 
 <div class="panel">
   <div id="comments" class="box"></div>
   <div id="gifts" class="box"></div>
 </div>
 
-<script src="app.js"></script>
+<script>
+const proxy = url => 
+  fetch(`https://cors.isomorphic-git.org/${url}`).then(r=>r.json())
+
+let liveId = null
+
+async function start(){
+  const uid = document.getElementById('uid').value
+
+  const history = await proxy(`https://www.mirrativ.com/api/live/live_history?page=1&user_id=${uid}`)
+  liveId = history.lives[0].live_id
+
+  const stream = await proxy(`https://www.mirrativ.com/api/live/get_streaming_url?live_id=${liveId}`)
+  play(stream.streaming_url_hls)
+
+  loadComments()
+  loadGifts()
+}
+
+function play(url){
+  const v = document.getElementById('player')
+  if(Hls.isSupported()){
+    const hls = new Hls()
+    hls.loadSource(url)
+    hls.attachMedia(v)
+  } else v.src = url
+}
+
+function toggle(id){
+  const e = document.getElementById(id)
+  e.style.display = e.style.display === 'none' ? 'block' : 'none'
+}
+
+function loadComments(){
+  setInterval(async ()=>{
+    const data = await proxy(`https://www.mirrativ.com/api/live/live_comments?live_id=${liveId}`)
+    document.getElementById('comments').innerHTML =
+      data.comments.map(c=>`
+      <div>
+        <img src="${c.user.icon_url}" width="24">
+        <b>${c.user.name}</b> Lv.${c.user.cheer_level}<br>
+        ${c.comment}
+      </div>`).join('')
+  }, 2000)
+}
+
+async function loadGifts(){
+  const data = await proxy(`https://www.mirrativ.com/gift/ranking?live_id=${liveId}`)
+  document.getElementById('gifts').innerHTML =
+    data.ranking.map(g=>`${g.user.name} 🎁 ${g.total_amount}`).join('<br>')
+}
+</script>
 </body>
 </html>
