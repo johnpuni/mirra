@@ -1,0 +1,314 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "b624b098a9b3810971f7cb81287ce80b",
+      "type": 3
+    },
+    "m_Name": "wp_capsule_missile_01_laser",
+    "m_EditorClassIdentifier": null,
+    "memo": "貫通レーザー",
+    "weaponCategry": 2,
+    "enemySearchRadius": 30.8,
+    "enemySearchOffset": 24.2,
+    "attackPower": 45,
+    "attackStopPower": 10000,
+    "attackIgnoreDefense": 60,
+    "attackDisableBrakeTime": 0,
+    "additionalPower": 0,
+    "attackHitShape": 1,
+    "attackHitRadius": 0,
+    "attackHitSize": {
+      "x": 1,
+      "y": 3,
+      "z": 20
+    },
+    "hitGrowingTimeRate": 0,
+    "attackHitPositionOffset": {
+      "x": 0,
+      "y": -0.54,
+      "z": 14
+    },
+    "attackMoveSpeed": 0,
+    "attackMoveAccel": 0,
+    "attackMoveSpeedY": 0,
+    "attackMoveAccelY": 0,
+    "attackDuration": 0.2,
+    "attackTimeSpan": 0.3,
+    "isBackCritical": 0,
+    "isSideCritical": 0,
+    "shieldBreak": 0,
+    "isReflector": 0,
+    "refrectionRate": 0,
+    "reflectionAddSpeedRate": 0,
+    "invalidRefrection": 0,
+    "isSelfRefrection": 0,
+    "selfRefrectionNum": 0,
+    "refrectionRandomRot": {
+      "x": 0,
+      "y": 0
+    },
+    "isHideHitEffect": 0,
+    "killComboRate": 0,
+    "useLimitMax": -1,
+    "spriteButtonIcon": {
+      "fileID": 0
+    },
+    "useClickWhenFire": 1,
+    "useChargeWhenFire": 0,
+    "useChargeWithoutFire": 0,
+    "weaponAutoChargeSettings": {
+      "fileID": 0
+    },
+    "attackRotationSpeed": 0,
+    "bulletFx": "Fx/Bullet/bl_laser",
+    "shootSeType": 79,
+    "shootAnimName": null,
+    "shootFx": null,
+    "hitSeType": 59,
+    "hitJudgeType": 3,
+    "canFireFx": null,
+    "canEffectHomingBuff": 0,
+    "isInfinitePenetrate": 1,
+    "isHitManyTime": 0,
+    "viewTargetMarker": 0,
+    "playerPenetrateNum": 0,
+    "isWallPenetrate": 1,
+    "bulletGeneratePositionOffset": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "shootingRecoil": 20,
+    "isChild": 1,
+    "isOverwriteDirection": 1,
+    "IsLookAtY": 0,
+    "IsWoofer": 0,
+    "IsFriendlyFireInvalid": 0,
+    "friendlyFireRate": 1,
+    "reflectionFx": null,
+    "bulletTeamColorSwitch": 0,
+    "bulletPowerZero": 0,
+    "bulletMoveStop": 0,
+    "overwriteDirectionType": 3,
+    "onGround": 0,
+    "onGroundOffsetY": 0.1,
+    "addPowerPerSec": 0,
+    "addPowerMin": 0,
+    "addPowerMax": 9999,
+    "yourselfBuffs": [
+      {
+        "type": 1,
+        "power": -9999,
+        "duration": 0.2
+      }
+    ],
+    "buffType": 0,
+    "buffPower": 0,
+    "buffDuration": 0,
+    "buffProbability": 0,
+    "bufftag": null,
+    "buffUpdateOnManyHit": 0,
+    "isRemoveOnTargetDie": 1,
+    "buffManyHitShowFx": 0,
+    "buffDuplicationMax": 0,
+    "explosionTriggerType": 0,
+    "explosionPower": 50,
+    "explosionStopPower": 10000,
+    "explosionDisableBrakeTime": 0,
+    "explosionHitShape": 0,
+    "explosionHitRadius": 15,
+    "explosionHitSize": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "explosionAttackMoveSpeed": 0,
+    "explosionAttackMoveAccel": 0,
+    "explosionHitGrowingTimeRate": 0,
+    "explosionDuration": 0.2,
+    "explosionSeType": 59,
+    "hitFx": null,
+    "explosionFx": "Fx/Bullet/bl_DragonFire_explosion_01",
+    "enemyOtherExplosionFx": null,
+    "explosionGrowingFx": null,
+    "disableExplosionFx": null,
+    "withOutSelfFX": 0,
+    "explosionHitJudgeType": 3,
+    "hitPartyType": 2,
+    "explosionDirectionType": 2,
+    "IsExplosionFxPosY": 0,
+    "explosionFxPosY": 0,
+    "switchToAngers": [
+      {
+        "angerRateOrMore": 0.4,
+        "powerAddition": {
+          "isUse": 1,
+          "_float": 30
+        },
+        "attackHit": {
+          "isUse": 1,
+          "attackHitShape": 1,
+          "attackHitRadius": 0,
+          "attackHitSize": {
+            "x": 3,
+            "y": 3,
+            "z": 30
+          },
+          "attackHitPositionOffset": {
+            "x": 0,
+            "y": -0.54,
+            "z": 19
+          }
+        },
+        "attackDuration": {
+          "isUse": 1,
+          "_float": 0.4
+        },
+        "attackTimeSpan": {
+          "isUse": 1,
+          "_float": 0.5
+        },
+        "bulletFx": {
+          "isUse": 1,
+          "_string": "Fx/Bullet/bl_anger_01_laser"
+        },
+        "canFireFx": {
+          "isUse": 0,
+          "_string": null
+        },
+        "shootingRecoil": {
+          "isUse": 1,
+          "_float": 25
+        },
+        "buff": {
+          "isUse": 0,
+          "probability": 0,
+          "buffType": 0,
+          "buffPower": 0,
+          "buffDuration": 0,
+          "bufftag": null,
+          "buffUpdateOnManyHit": 0,
+          "isRemoveOnTargetDie": 0,
+          "buffManyHitShowFx": 0,
+          "buffDuplicationMax": 0
+        },
+        "missileReloadTime": {
+          "isUse": 0,
+          "_float": 0
+        },
+        "yourselfBuff": {
+          "isUse": 1,
+          "yourselfBuffs": [
+            {
+              "type": 1,
+              "power": -9999,
+              "duration": 0.4
+            },
+            {
+              "type": 33,
+              "power": 0,
+              "duration": 0.3
+            }
+          ]
+        },
+        "shieldBreak": {
+          "isUse": 0,
+          "_bool": 0
+        }
+      },
+      {
+        "angerRateOrMore": 0.9,
+        "powerAddition": {
+          "isUse": 1,
+          "_float": 65
+        },
+        "attackHit": {
+          "isUse": 1,
+          "attackHitShape": 1,
+          "attackHitRadius": 0,
+          "attackHitSize": {
+            "x": 6,
+            "y": 3,
+            "z": 40
+          },
+          "attackHitPositionOffset": {
+            "x": 0,
+            "y": -0.54,
+            "z": 24
+          }
+        },
+        "attackDuration": {
+          "isUse": 1,
+          "_float": 1
+        },
+        "attackTimeSpan": {
+          "isUse": 1,
+          "_float": 1.2
+        },
+        "bulletFx": {
+          "isUse": 1,
+          "_string": "Fx/Bullet/bl_anger_02_laser"
+        },
+        "canFireFx": {
+          "isUse": 0,
+          "_string": null
+        },
+        "shootingRecoil": {
+          "isUse": 1,
+          "_float": 30
+        },
+        "buff": {
+          "isUse": 0,
+          "probability": 0,
+          "buffType": 0,
+          "buffPower": 0,
+          "buffDuration": 0,
+          "bufftag": null,
+          "buffUpdateOnManyHit": 0,
+          "isRemoveOnTargetDie": 0,
+          "buffManyHitShowFx": 0,
+          "buffDuplicationMax": 0
+        },
+        "missileReloadTime": {
+          "isUse": 0,
+          "_float": 0
+        },
+        "yourselfBuff": {
+          "isUse": 1,
+          "yourselfBuffs": [
+            {
+              "type": 1,
+              "power": -9999,
+              "duration": 1
+            },
+            {
+              "type": 33,
+              "power": 0,
+              "duration": 0.8
+            }
+          ]
+        },
+        "shieldBreak": {
+          "isUse": 1,
+          "_bool": 1
+        }
+      }
+    ]
+  }
+}

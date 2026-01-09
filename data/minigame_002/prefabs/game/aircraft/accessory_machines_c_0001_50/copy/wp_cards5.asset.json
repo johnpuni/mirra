@@ -1,0 +1,238 @@
+{
+  "Mesh": {
+    "serializedVersion": 11,
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_Name": "wp_cards5",
+    "m_SubMeshes": [
+      {
+        "serializedVersion": 2,
+        "firstByte": 0,
+        "indexCount": 66,
+        "topology": 0,
+        "baseVertex": 0,
+        "firstVertex": 0,
+        "vertexCount": 26,
+        "localAABB": {
+          "m_Center": {
+            "x": -0.9138194,
+            "y": 0.051631488,
+            "z": 1.7388489
+          },
+          "m_Extent": {
+            "x": 0.6195703,
+            "y": 0,
+            "z": 0.666655
+          }
+        }
+      }
+    ],
+    "m_Shapes": {
+      "vertices": [],
+      "shapes": [],
+      "channels": [],
+      "fullWeights": []
+    },
+    "m_BindPose": [],
+    "m_BoneNameHashes": null,
+    "m_RootBoneNameHash": 0,
+    "m_BonesAABB": [],
+    "m_VariableBoneCountWeights": {
+      "m_Data": null
+    },
+    "m_MeshCompression": 0,
+    "m_IsReadable": 0,
+    "m_KeepVertices": 0,
+    "m_KeepIndices": 0,
+    "m_IndexFormat": 0,
+    "m_IndexBuffer": "0000010002000300040002000500030002000500020006000700050006000800090006000a000b000c000d000a000c000d000e000a000d000f000e000f0010000e00100011000e00110012000e000e0013000a000e0012001300110014001200140015001200150016001200120016001700120017001800120018001300180019001300",
+    "m_VertexData": {
+      "serializedVersion": 3,
+      "m_VertexCount": 26,
+      "m_Channels": [
+        {
+          "stream": 0,
+          "offset": 0,
+          "format": 0,
+          "dimension": 3
+        },
+        {
+          "stream": 0,
+          "offset": 12,
+          "format": 1,
+          "dimension": 52
+        },
+        {
+          "stream": 0,
+          "offset": 0,
+          "format": 0,
+          "dimension": 0
+        },
+        {
+          "stream": 0,
+          "offset": 20,
+          "format": 2,
+          "dimension": 4
+        },
+        {
+          "stream": 0,
+          "offset": 24,
+          "format": 1,
+          "dimension": 2
+        },
+        {
+          "stream": 0,
+          "offset": 0,
+          "format": 0,
+          "dimension": 0
+        },
+        {
+          "stream": 0,
+          "offset": 0,
+          "format": 0,
+          "dimension": 0
+        },
+        {
+          "stream": 0,
+          "offset": 0,
+          "format": 0,
+          "dimension": 0
+        },
+        {
+          "stream": 0,
+          "offset": 0,
+          "format": 0,
+          "dimension": 0
+        },
+        {
+          "stream": 0,
+          "offset": 0,
+          "format": 0,
+          "dimension": 0
+        },
+        {
+          "stream": 0,
+          "offset": 0,
+          "format": 0,
+          "dimension": 0
+        },
+        {
+          "stream": 0,
+          "offset": 0,
+          "format": 0,
+          "dimension": 0
+        },
+        {
+          "stream": 0,
+          "offset": 0,
+          "format": 0,
+          "dimension": 0
+        },
+        {
+          "stream": 0,
+          "offset": 0,
+          "format": 0,
+          "dimension": 0
+        }
+      ],
+      "m_DataSize": 728,
+      "_typelessdata": "c7385dbf8a7b533dc7f319400000003c04000000000000ff6b3ba6397e3458bf8a7b533dcbb919400000003c04000000000000ff6f3ba0390b8f5dbf8a7b533dd59117400000003c04000000000000ff633b9a39305462bf8a7b533d548a19400000003c02800000000000ff633ba939c7385dbf8a7b533dc7f319400000003c00000000000000ff6b3ba639d598c1bf8a7b533d4a3401400000003c02800000000000ff563aa9394236bfbf8a7b533d9977fe3f0000003c02800000000000ff563a9a39f282c3bf8a7b533dab4300400000003c00000000000000ff4f3aa9391d46c4bf8a7b533dae18fe3f0000003c00000000000000ff493aa439f282c3bf8a7b533dab4300400000003c00000000000000ff4f3aa9390b8f5dbf8a7b533dd59117400000003c00000000000000ff633b9a397e3458bf8a7b533dcbb919400000003c00000000000000ff6f3ba039739f54bf8a7b533de9eb18400000003c00000000000000ff723b9a39050899be8a7b533dc261c13f0000003c00000000000000ff723bdf3738e7aabe8a7b533d9cadbe3f0000003c00000000000000ff633bdf37d1a796be8a7b533d860cbf3f0000003c00000000000000ff703bd13784b499be8a7b533dde9dbc3f0000003c02000000000000ff6a3bc537ed5ca1be8a7b533d9cbcba3f0000003c00000000000000ff633bc137145176bf8a7b533d8a018e3f0000003c00000000000000ff563adf374236bfbf8a7b533d9977fe3f0000003c00000000000000ff563a9a39f28b71bf8a7b533d8d108a3f0000003c00000000000000ff563ac13758a776bf8a7b533da73d893f0000003c00000000000000ff4e3ac537a6ab7bbf8a7b533d9fb1893f0000003c04800000000000ff493ad037ae407fbf8a7b533d644d8b3f0000003c00000000000000ff473adf370faec3bf8a7b533d72c3fb3f0000003c00000000000000ff473a9a391d46c4bf8a7b533dae18fe3f0000003c00000000000000ff493aa439"
+    },
+    "m_CompressedMesh": {
+      "m_Vertices": {
+        "m_NumItems": 0,
+        "m_Range": 0,
+        "m_Start": 0,
+        "m_Data": null,
+        "m_BitSize": 0
+      },
+      "m_UV": {
+        "m_NumItems": 0,
+        "m_Range": 0,
+        "m_Start": 0,
+        "m_Data": null,
+        "m_BitSize": 0
+      },
+      "m_Normals": {
+        "m_NumItems": 0,
+        "m_Range": 0,
+        "m_Start": 0,
+        "m_Data": null,
+        "m_BitSize": 0
+      },
+      "m_Tangents": {
+        "m_NumItems": 0,
+        "m_Range": 0,
+        "m_Start": 0,
+        "m_Data": null,
+        "m_BitSize": 0
+      },
+      "m_Weights": {
+        "m_NumItems": 0,
+        "m_Data": null,
+        "m_BitSize": 0
+      },
+      "m_NormalSigns": {
+        "m_NumItems": 0,
+        "m_Data": null,
+        "m_BitSize": 0
+      },
+      "m_TangentSigns": {
+        "m_NumItems": 0,
+        "m_Data": null,
+        "m_BitSize": 0
+      },
+      "m_FloatColors": {
+        "m_NumItems": 0,
+        "m_Range": 0,
+        "m_Start": 0,
+        "m_Data": null,
+        "m_BitSize": 0
+      },
+      "m_BoneIndices": {
+        "m_NumItems": 0,
+        "m_Data": null,
+        "m_BitSize": 0
+      },
+      "m_Triangles": {
+        "m_NumItems": 0,
+        "m_Data": null,
+        "m_BitSize": 0
+      },
+      "m_UVInfo": 0
+    },
+    "m_LocalAABB": {
+      "m_Center": {
+        "x": -0.9138194,
+        "y": 0.051631488,
+        "z": 1.7388489
+      },
+      "m_Extent": {
+        "x": 0.6195703,
+        "y": 0,
+        "z": 0.666655
+      }
+    },
+    "m_MeshUsageFlags": 0,
+    "m_CookingOptions": 30,
+    "m_BakedConvexCollisionMesh": null,
+    "m_BakedTriangleCollisionMesh": null,
+    "m_MeshMetrics[0]": 27.56776,
+    "m_MeshMetrics[1]": 1,
+    "m_MeshOptimizationFlags": -1,
+    "m_StreamData": {
+      "serializedVersion": 2,
+      "offset": 0,
+      "size": 0,
+      "path": null
+    }
+  }
+}

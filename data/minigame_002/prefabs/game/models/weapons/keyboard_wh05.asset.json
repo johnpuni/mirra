@@ -1,0 +1,238 @@
+{
+  "Mesh": {
+    "serializedVersion": 11,
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_Name": "keyboard_wh05",
+    "m_SubMeshes": [
+      {
+        "serializedVersion": 2,
+        "firstByte": 0,
+        "indexCount": 60,
+        "topology": 0,
+        "baseVertex": 0,
+        "firstVertex": 0,
+        "vertexCount": 40,
+        "localAABB": {
+          "m_Center": {
+            "x": -0.0072678514,
+            "y": -0.0013981257,
+            "z": -0.24446201
+          },
+          "m_Extent": {
+            "x": 0.072561294,
+            "y": 0.04182125,
+            "z": 0.24446201
+          }
+        }
+      }
+    ],
+    "m_Shapes": {
+      "vertices": [],
+      "shapes": [],
+      "channels": [],
+      "fullWeights": []
+    },
+    "m_BindPose": [],
+    "m_BoneNameHashes": null,
+    "m_RootBoneNameHash": 0,
+    "m_BonesAABB": [],
+    "m_VariableBoneCountWeights": {
+      "m_Data": null
+    },
+    "m_MeshCompression": 0,
+    "m_IsReadable": 0,
+    "m_KeepVertices": 0,
+    "m_KeepIndices": 0,
+    "m_IndexFormat": 0,
+    "m_IndexBuffer": "000001000200000002000300040005000600040006000700080009000a0008000a000b000c000d000e000c000e000f00100011001200100012001300140015001600140016001700180019001a0018001a001b001c001d001e001c001e001f00200021002200200022002300240025002600240026002700",
+    "m_VertexData": {
+      "serializedVersion": 3,
+      "m_VertexCount": 40,
+      "m_Channels": [
+        {
+          "stream": 0,
+          "offset": 0,
+          "format": 0,
+          "dimension": 3
+        },
+        {
+          "stream": 0,
+          "offset": 12,
+          "format": 1,
+          "dimension": 52
+        },
+        {
+          "stream": 0,
+          "offset": 20,
+          "format": 1,
+          "dimension": 4
+        },
+        {
+          "stream": 0,
+          "offset": 28,
+          "format": 2,
+          "dimension": 4
+        },
+        {
+          "stream": 0,
+          "offset": 32,
+          "format": 1,
+          "dimension": 2
+        },
+        {
+          "stream": 0,
+          "offset": 0,
+          "format": 0,
+          "dimension": 0
+        },
+        {
+          "stream": 0,
+          "offset": 0,
+          "format": 0,
+          "dimension": 0
+        },
+        {
+          "stream": 0,
+          "offset": 0,
+          "format": 0,
+          "dimension": 0
+        },
+        {
+          "stream": 0,
+          "offset": 0,
+          "format": 0,
+          "dimension": 0
+        },
+        {
+          "stream": 0,
+          "offset": 0,
+          "format": 0,
+          "dimension": 0
+        },
+        {
+          "stream": 0,
+          "offset": 0,
+          "format": 0,
+          "dimension": 0
+        },
+        {
+          "stream": 0,
+          "offset": 0,
+          "format": 0,
+          "dimension": 0
+        },
+        {
+          "stream": 0,
+          "offset": 0,
+          "format": 0,
+          "dimension": 0
+        },
+        {
+          "stream": 0,
+          "offset": 0,
+          "format": 0,
+          "dimension": 0
+        }
+      ],
+      "m_DataSize": 1440,
+      "_typelessdata": "90b885bd000231bd00000000000000bc9d000000003c0000000000bcffffffffea318835777da3bdcd0631bd4054fabe000000bc9d000000003c0000000000bcffffffffea3182364998773dcd0631bd4054fabe000000bc9d000000003c0000000000bcffffffff7532823692b8853d000231bd00000000000000bc9d000000003c0000000000bcffffffff75328835589c95bdb892253d05f5f6be0000a839a8b90000003c0000000000bcfffffffff031ae365edf5c3db892253d05f5f6be0000a839a8b90000003c0000000000bcffffffff6f32ae362298773de1980a3d4054fabe0000a839a8b90000003c0000000000bcffffffff7532a836c17ca3bde1980a3d4054fabe0000a839a8b90000003c0000000000bcffffffffea31a836c17ca3bde1980a3d4054fabea8b9a8396225000099b9a0b90a3000bcffffffff9b31823690b885bde1980a3d00000000a8b9a83962250000a4b9a7b9812b00bcffffffff9b318835a13871bdb892253d14ced7bba8b9a83962250000a4b9a7b9542b00bcffffffff91318b35589c95bdb892253d05f5f6bea8b9a8396225000099b9a0b9053000bcffffffff91317e3690b885bde1980a3d000000000000a839a8390000003c0000000000bcffffffffea31613592b8853de1980a3d000000000000a839a8390000003c0000000000bcffffffff75326135a135703db892253d14ced7bb0000a839a8390000003c0000000000bcffffffff6f325c35a13871bdb892253d14ced7bb0000a839a8390000003c0000000000bcfffffffff0315c355edf5c3db892253d05f5f6bea839a8392e9f0000a0b99e393eaf00bcffffffffce327e36a135703db892253d14ced7bba839a8392e9f0000a6b9a5394dab00bcffffffffce328b3592b8853de1980a3d00000000a839a8392e9f0000a6b9a53973ab00bcffffffffc43288352298773de1980a3d4054fabea839a8392e9f0000a0b99e3946af00bcffffffffc4328236a13871bdb892253d14ced7bb0000003c00000000003c00000000003cffffffff63305735a135703db892253d14ced7bb0000003c00000000003c00000000003cffffffff033157355edf5c3db892253d05f5f6be0000003c00000000003c00000000003cffffffff0331b036589c95bdb892253d05f5f6be0000003c00000000003c00000000003cffffffff6330b036777da3bdcd0631bd4054fabe0000000000bc0000003c0000000000bcffffffffea318236c17ca3bde1980a3d4054fabe0000000000bc0000003c0000000000bcffffffffea31a8362298773de1980a3d4054fabe0000000000bc0000003c0000000000bcffffffff7532a8364998773dcd0631bd4054fabe0000000000bc0000003c0000000000bcffffffff7532823692b8853d000231bd0000000000000000003c0000003c0000000000bcffffffff7532883592b8853de1980a3d0000000000000000003c0000003c0000000000bcffffffff7532613590b885bde1980a3d0000000000000000003c0000003c0000000000bcffffffffea31613590b885bd000231bd0000000000000000003c0000003c0000000000bcffffffffea3188354998773dcd0631bd4054fabe003c0f0013a100000000003c2f9600bcffffffff753282362298773de1980a3d4054fabe003c0f0013a100000000003c919500bcffffffffc432823692b8853de1980a3d00000000003c0f0013a100000000003c000000bcffffffffc432883592b8853d000231bd00000000003c0f0013a100000000003c000000bcffffffff7532883590b885bd000231bd00000000ffbb93009b270000000000bc000000bcffffffffea31883590b885bde1980a3d00000000ffbb93009b270000000000bc000000bcffffffff9b318835c17ca3bde1980a3d4054fabeffbb93009b270000000000bc000000bcffffffff9b318236777da3bdcd0631bd4054fabeffbb93009b270000000000bc000000bcffffffffea318236"
+    },
+    "m_CompressedMesh": {
+      "m_Vertices": {
+        "m_NumItems": 0,
+        "m_Range": 0,
+        "m_Start": 0,
+        "m_Data": null,
+        "m_BitSize": 0
+      },
+      "m_UV": {
+        "m_NumItems": 0,
+        "m_Range": 0,
+        "m_Start": 0,
+        "m_Data": null,
+        "m_BitSize": 0
+      },
+      "m_Normals": {
+        "m_NumItems": 0,
+        "m_Range": 0,
+        "m_Start": 0,
+        "m_Data": null,
+        "m_BitSize": 0
+      },
+      "m_Tangents": {
+        "m_NumItems": 0,
+        "m_Range": 0,
+        "m_Start": 0,
+        "m_Data": null,
+        "m_BitSize": 0
+      },
+      "m_Weights": {
+        "m_NumItems": 0,
+        "m_Data": null,
+        "m_BitSize": 0
+      },
+      "m_NormalSigns": {
+        "m_NumItems": 0,
+        "m_Data": null,
+        "m_BitSize": 0
+      },
+      "m_TangentSigns": {
+        "m_NumItems": 0,
+        "m_Data": null,
+        "m_BitSize": 0
+      },
+      "m_FloatColors": {
+        "m_NumItems": 0,
+        "m_Range": 0,
+        "m_Start": 0,
+        "m_Data": null,
+        "m_BitSize": 0
+      },
+      "m_BoneIndices": {
+        "m_NumItems": 0,
+        "m_Data": null,
+        "m_BitSize": 0
+      },
+      "m_Triangles": {
+        "m_NumItems": 0,
+        "m_Data": null,
+        "m_BitSize": 0
+      },
+      "m_UVInfo": 0
+    },
+    "m_LocalAABB": {
+      "m_Center": {
+        "x": -0.0072678514,
+        "y": -0.0013981257,
+        "z": -0.24446201
+      },
+      "m_Extent": {
+        "x": 0.072561294,
+        "y": 0.04182125,
+        "z": 0.24446201
+      }
+    },
+    "m_MeshUsageFlags": 0,
+    "m_CookingOptions": 30,
+    "m_BakedConvexCollisionMesh": null,
+    "m_BakedTriangleCollisionMesh": null,
+    "m_MeshMetrics[0]": 64.79671,
+    "m_MeshMetrics[1]": 1,
+    "m_MeshOptimizationFlags": -1,
+    "m_StreamData": {
+      "serializedVersion": 2,
+      "offset": 0,
+      "size": 0,
+      "path": null
+    }
+  }
+}

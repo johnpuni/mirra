@@ -1,0 +1,78 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "353d3699e795a4f5b9c3a521ef46f9e1",
+      "type": 3
+    },
+    "m_Name": "accessory_machines_c_0021_03",
+    "m_EditorClassIdentifier": null,
+    "aircraftName": "パイロ・マンタX",
+    "description": "武器: カプセル・ミサイル",
+    "moveSpeed": 22,
+    "moveAccel": 35,
+    "moveResistPower": 20,
+    "moveBrake": 20,
+    "rotationSpeed": 270,
+    "respawnPositionSelectMoveSpeed": 80,
+    "defense": 5,
+    "searchHitRadius": 1,
+    "weaponPositionOffset": {
+      "x": 0,
+      "y": 0,
+      "z": 7.5
+    },
+    "pilotPositionOffset": {
+      "x": 0,
+      "y": 0.946,
+      "z": 0.984
+    },
+    "pilotScale": {
+      "x": 3,
+      "y": 3,
+      "z": 3
+    },
+    "avatarNeckPositionOffset": {
+      "x": 0,
+      "y": 4.14,
+      "z": 0.12
+    },
+    "avatarScale": {
+      "x": 14,
+      "y": 14,
+      "z": 14
+    },
+    "weaponSettings": {
+      "fileID": 11400000,
+      "guid": "64c0b99238e16624c9a9ac95bb6f6978",
+      "type": 2
+    },
+    "passiveSkills": [
+      {
+        "fileID": 11400000,
+        "guid": "ad974920d21d0e9488eb43cef43b4a61",
+        "type": 2
+      }
+    ],
+    "resistantToBuffs": null,
+    "flickDashSettings": {
+      "fileID": 0
+    },
+    "ForceShowFlyGauge": 0
+  }
+}

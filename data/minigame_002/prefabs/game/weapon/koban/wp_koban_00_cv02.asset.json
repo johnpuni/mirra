@@ -1,0 +1,218 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "9fffef0c67dde8f81015f950cecb3c17",
+      "type": 3
+    },
+    "m_Name": "wp_koban_00_cv02",
+    "m_EditorClassIdentifier": null,
+    "memo": "パンチ",
+    "weaponCategry": 1,
+    "enemySearchRadius": 14,
+    "enemySearchOffset": 10,
+    "attackPower": 60,
+    "attackStopPower": 10000,
+    "attackIgnoreDefense": 0,
+    "attackDisableBrakeTime": 1,
+    "additionalPower": 0,
+    "attackHitShape": 0,
+    "attackHitRadius": 3,
+    "attackHitSize": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "hitGrowingTimeRate": 0,
+    "attackHitPositionOffset": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "attackMoveSpeed": 0,
+    "attackMoveAccel": 0,
+    "attackMoveSpeedY": 0,
+    "attackMoveAccelY": 0,
+    "attackDuration": 0.3,
+    "attackTimeSpan": 0.45,
+    "isBackCritical": 1,
+    "isSideCritical": 0,
+    "shieldBreak": 0,
+    "isReflector": 0,
+    "refrectionRate": 0,
+    "reflectionAddSpeedRate": 0,
+    "invalidRefrection": 0,
+    "isSelfRefrection": 0,
+    "selfRefrectionNum": 0,
+    "refrectionRandomRot": {
+      "x": 0,
+      "y": 0
+    },
+    "isHideHitEffect": 0,
+    "killComboRate": 0,
+    "useLimitMax": -1,
+    "spriteButtonIcon": {
+      "fileID": 0
+    },
+    "useClickWhenFire": 1,
+    "useChargeWhenFire": 0,
+    "useChargeWithoutFire": 0,
+    "weaponAutoChargeSettings": {
+      "fileID": 0
+    },
+    "prefabWeapon": {
+      "fileID": 1506796044869694,
+      "guid": "89c8f26e42fe3e94791aefd63a492e47",
+      "type": 2
+    },
+    "prefabWeaponBase": {
+      "fileID": 1506796044869694,
+      "guid": "89c8f26e42fe3e94791aefd63a492e47",
+      "type": 2
+    },
+    "weaponObjectRotate": {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "w": 1
+    },
+    "shootAnimName": null,
+    "localShootAnim": 1,
+    "attackMoveRange": 9,
+    "curveTimeToPosition": {
+      "serializedVersion": 2,
+      "m_Curve": [
+        {
+          "serializedVersion": 3,
+          "time": 0,
+          "value": 0,
+          "inSlope": 0,
+          "outSlope": 0,
+          "weightedMode": 0,
+          "inWeight": 0,
+          "outWeight": 0
+        },
+        {
+          "serializedVersion": 3,
+          "time": 0.05,
+          "value": 1,
+          "inSlope": 0.09993771,
+          "outSlope": 0,
+          "weightedMode": 0,
+          "inWeight": 0.33333334,
+          "outWeight": 0.33333334
+        },
+        {
+          "serializedVersion": 3,
+          "time": 0.95,
+          "value": 1,
+          "inSlope": 0,
+          "outSlope": 1.9008005,
+          "weightedMode": 0,
+          "inWeight": 0.33333334,
+          "outWeight": 0.33333334
+        },
+        {
+          "serializedVersion": 3,
+          "time": 1,
+          "value": 0,
+          "inSlope": 2,
+          "outSlope": 2,
+          "weightedMode": 0,
+          "inWeight": 0,
+          "outWeight": 0
+        }
+      ],
+      "m_PreInfinity": 2,
+      "m_PostInfinity": 2,
+      "m_RotationOrder": 4
+    },
+    "shootSeType": 46,
+    "hitSeType": 54,
+    "hitTeamSeType": 69,
+    "buffCatchSeType": 68,
+    "handAnimName": "punch",
+    "powerUpFx": "Fx/Battle/fx_aura_type_oneshot_1",
+    "buffCatchFx": "Fx/Battle/fx_aura_type_oneshot_2",
+    "kobanObjectPath": "accessory_machines_c_0037/ARM/Pivot",
+    "kobanObjectScale": 1,
+    "itemGigantic": {
+      "fileID": 11400000,
+      "guid": "1cdbb8b49ebedf64a8278938b139230c",
+      "type": 2
+    },
+    "hideWeaponWhenIdleForPuppet": 0,
+    "hideWeaponDelay": 0,
+    "useReturnHandDurationLimit": 0,
+    "returnHandDurationLimit": 0,
+    "kobanCatchBuff": 1,
+    "hitJudgeType": 0,
+    "KobanBuffList": [
+      {
+        "buffType": 9,
+        "buffDuration": 9999,
+        "buffParam": 3,
+        "tag": "Koban_Attack",
+        "buffUpdateOnManyHit": 0,
+        "duplicationMax": 10,
+        "isRemoveOnTargetDie": 1,
+        "isRemoveOnDamage": 1
+      },
+      {
+        "buffType": 34,
+        "buffDuration": 9999,
+        "buffParam": 0.23,
+        "tag": "Koban_Gigantic",
+        "buffUpdateOnManyHit": 0,
+        "duplicationMax": 10,
+        "isRemoveOnTargetDie": 1,
+        "isRemoveOnDamage": 1
+      },
+      {
+        "buffType": 31,
+        "buffDuration": 9999,
+        "buffParam": 0,
+        "tag": "Koban_Extend",
+        "buffUpdateOnManyHit": 0,
+        "duplicationMax": 10,
+        "isRemoveOnTargetDie": 1,
+        "isRemoveOnDamage": 1
+      },
+      {
+        "buffType": 72,
+        "buffDuration": 9999,
+        "buffParam": 0.2,
+        "tag": "Koban_AttackSpeedUp",
+        "buffUpdateOnManyHit": 0,
+        "duplicationMax": 10,
+        "isRemoveOnTargetDie": 1,
+        "isRemoveOnDamage": 1
+      },
+      {
+        "buffType": 10,
+        "buffDuration": 9999,
+        "buffParam": 2,
+        "tag": "Koban_WeightUp",
+        "buffUpdateOnManyHit": 0,
+        "duplicationMax": 10,
+        "isRemoveOnTargetDie": 1,
+        "isRemoveOnDamage": 1
+      }
+    ]
+  }
+}

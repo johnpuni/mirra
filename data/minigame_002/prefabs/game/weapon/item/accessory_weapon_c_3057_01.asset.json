@@ -1,0 +1,91 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "01e304e756d188dcd4cf32b5cb34e0af",
+      "type": 3
+    },
+    "m_Name": "accessory_weapon_c_3057_01",
+    "m_EditorClassIdentifier": null,
+    "memo": "装備アイテム - みんなでパンダマン",
+    "weaponCategry": 0,
+    "enemySearchRadius": 0,
+    "enemySearchOffset": 0,
+    "attackPower": 2,
+    "attackStopPower": 10000,
+    "attackIgnoreDefense": 10000,
+    "attackDisableBrakeTime": 1,
+    "additionalPower": 0,
+    "attackHitShape": 0,
+    "attackHitRadius": 4.5,
+    "attackHitSize": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "hitGrowingTimeRate": 0,
+    "attackHitPositionOffset": {
+      "x": 0,
+      "y": 0,
+      "z": 2.56
+    },
+    "attackMoveSpeed": 0,
+    "attackMoveAccel": 0,
+    "attackMoveSpeedY": 0,
+    "attackMoveAccelY": 0,
+    "attackDuration": 12,
+    "attackTimeSpan": 0.1,
+    "isBackCritical": 0,
+    "isSideCritical": 0,
+    "shieldBreak": 0,
+    "isReflector": 0,
+    "refrectionRate": 0,
+    "reflectionAddSpeedRate": 0,
+    "invalidRefrection": 0,
+    "isSelfRefrection": 0,
+    "selfRefrectionNum": 0,
+    "refrectionRandomRot": {
+      "x": 0,
+      "y": 0
+    },
+    "isHideHitEffect": 0,
+    "killComboRate": 0,
+    "useLimitMax": 3,
+    "spriteButtonIcon": {
+      "fileID": 21300000,
+      "guid": "db99f24bf2934c543bc3d36a9a50aa6a",
+      "type": 2
+    },
+    "useClickWhenFire": 1,
+    "useChargeWhenFire": 0,
+    "useChargeWithoutFire": 0,
+    "weaponAutoChargeSettings": {
+      "fileID": 0
+    },
+    "buffType": 20,
+    "targetType": 1,
+    "tag": null,
+    "isRemoveOnTargetDie": 1,
+    "DisableItemWhileBuffActive": 1,
+    "powerScaleType": 0,
+    "shootSeType": 53,
+    "shootAnimName": "chr_hit",
+    "shootFx": "Fx/Battle/fx_nikuman",
+    "isSpawnFxEffectedPlayers": 1
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "a2c0ab091692274f872ea189ae5b76b2",
+      "type": 3
+    },
+    "m_Name": "st_584_StageSettings",
+    "m_EditorClassIdentifier": null,
+    "stageName": "st_584",
+    "imageStageName": {
+      "fileID": 21300000,
+      "guid": "549d5b0390d622f41b57e81c863e923e",
+      "type": 2
+    },
+    "stageBuffSettings": {
+      "fileID": 0
+    },
+    "stageViewCameraOrthographicSize": 270,
+    "cameraOrthographicSize": 50,
+    "useCameraRotation": 1,
+    "cameraRotation": {
+      "x": 45,
+      "y": 45,
+      "z": 0
+    },
+    "bgmType": 1,
+    "maxBumperNum": 0,
+    "prefabBumper": {
+      "fileID": 1004342066716500,
+      "guid": "2868e3eab4798ce45ac0d332ef9908e8",
+      "type": 2
+    },
+    "prefabWallBumper": {
+      "fileID": 1226306440022846,
+      "guid": "02c5fe34cfab76f4880ab86e0a72b82d",
+      "type": 2
+    },
+    "prefabHypotenuseWallBumper": {
+      "fileID": 1502453230380398,
+      "guid": "144439243472e694c8c1239b0c8e1160",
+      "type": 2
+    },
+    "stageLimitMin": {
+      "x": -439,
+      "y": 0,
+      "z": -394
+    },
+    "stageLimitMax": {
+      "x": 439,
+      "y": 0,
+      "z": 394
+    },
+    "stageLimitPushBackSize": 1,
+    "stageObjectLaunchTimeInterval": 0,
+    "stageObjectLaunchProbabilityOnPlayerDie": 0,
+    "gameType": 1,
+    "subType": 0,
+    "subRuleParam": {
+      "dropItems": []
+    },
+    "flagItem": {
+      "fileID": 11400000,
+      "guid": "ed835144e48e4df4a99bd785221d633f",
+      "type": 2
+    }
+  }
+}

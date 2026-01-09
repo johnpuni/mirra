@@ -1,0 +1,72 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "353d3699e795a4f5b9c3a521ef46f9e1",
+      "type": 3
+    },
+    "m_Name": "accessory_machines_c_0001_37",
+    "m_EditorClassIdentifier": null,
+    "aircraftName": "エモカーX・ムーン型",
+    "description": "武器: トリックムーン",
+    "moveSpeed": 18,
+    "moveAccel": 20,
+    "moveResistPower": 20,
+    "moveBrake": 35,
+    "rotationSpeed": 540,
+    "respawnPositionSelectMoveSpeed": 80,
+    "defense": 1,
+    "searchHitRadius": 1,
+    "weaponPositionOffset": {
+      "x": 0,
+      "y": 0.3,
+      "z": 4.5
+    },
+    "pilotPositionOffset": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "pilotScale": {
+      "x": 3,
+      "y": 3,
+      "z": 3
+    },
+    "avatarNeckPositionOffset": {
+      "x": 0,
+      "y": 3.1,
+      "z": -0.75
+    },
+    "avatarScale": {
+      "x": 14,
+      "y": 14,
+      "z": 14
+    },
+    "weaponSettings": {
+      "fileID": 11400000,
+      "guid": "11a17a18933c6754bbb719622f5b7925",
+      "type": 2
+    },
+    "passiveSkills": [],
+    "resistantToBuffs": null,
+    "flickDashSettings": {
+      "fileID": 0
+    },
+    "ForceShowFlyGauge": 0
+  }
+}

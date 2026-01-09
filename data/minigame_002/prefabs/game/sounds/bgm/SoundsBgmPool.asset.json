@@ -1,0 +1,46 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "33e37019b6d7e7221f568b664c8c4c62",
+      "type": 3
+    },
+    "m_Name": "SoundsBgmPool",
+    "m_EditorClassIdentifier": null,
+    "m_Key": "Sounds/bgm/",
+    "m_GameObjects": [],
+    "m_ScriptableObjects": [],
+    "m_AudioClips": [
+      {
+        "fileID": 8300000,
+        "guid": "da272328acad6c0448ecdaa309581c45",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "fde72b4fdb0928d4989c11b41fc4a51c",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "e540e8c4ea5054744b298fc5ca61f65b",
+        "type": 3
+      }
+    ]
+  }
+}

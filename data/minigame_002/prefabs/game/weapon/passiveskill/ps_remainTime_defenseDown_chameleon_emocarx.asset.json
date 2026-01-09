@@ -1,0 +1,97 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "c5b52ff9f8d7db766ccee58c9e65b8e1",
+      "type": 3
+    },
+    "m_Name": "ps_remainTime_defenseDown_chameleon_emocarx",
+    "m_EditorClassIdentifier": null,
+    "memo": "1:30~0:00の間重さ-X",
+    "weaponCategry": 0,
+    "enemySearchRadius": 0,
+    "enemySearchOffset": 0,
+    "attackPower": -10,
+    "attackStopPower": 0,
+    "attackIgnoreDefense": 0,
+    "attackDisableBrakeTime": 0,
+    "additionalPower": 0,
+    "attackHitShape": 0,
+    "attackHitRadius": 0,
+    "attackHitSize": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "hitGrowingTimeRate": 0,
+    "attackHitPositionOffset": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "attackMoveSpeed": 0,
+    "attackMoveAccel": 0,
+    "attackMoveSpeedY": 0,
+    "attackMoveAccelY": 0,
+    "attackDuration": -1,
+    "attackTimeSpan": 0,
+    "isBackCritical": 0,
+    "isSideCritical": 0,
+    "shieldBreak": 0,
+    "isReflector": 0,
+    "refrectionRate": 0,
+    "reflectionAddSpeedRate": 0,
+    "invalidRefrection": 0,
+    "isSelfRefrection": 0,
+    "selfRefrectionNum": 0,
+    "refrectionRandomRot": {
+      "x": 0,
+      "y": 0
+    },
+    "isHideHitEffect": 0,
+    "killComboRate": 0,
+    "useLimitMax": -1,
+    "spriteButtonIcon": {
+      "fileID": 0
+    },
+    "useClickWhenFire": 1,
+    "useChargeWhenFire": 0,
+    "useChargeWithoutFire": 0,
+    "weaponAutoChargeSettings": {
+      "fileID": 0
+    },
+    "buffType": 10,
+    "targetType": 0,
+    "tag": null,
+    "powerScaleType": 0,
+    "shootSeType": 0,
+    "shootAnimName": null,
+    "shootFx": null,
+    "triggerType": 8,
+    "triggerValue": 90,
+    "triggerString": null,
+    "gradeType": 0,
+    "maxGradeNum": 0,
+    "remainingLifeBuffSettings": {
+      "RemainLife3Power": 0,
+      "RemainLife2Power": 0,
+      "RemainLife1Power": 0
+    },
+    "shouldPlayParticleWhenEmitBuff": 0
+  }
+}

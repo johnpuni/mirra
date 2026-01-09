@@ -1,0 +1,80 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "353d3699e795a4f5b9c3a521ef46f9e1",
+      "type": 3
+    },
+    "m_Name": "accessory_machines_c_0046_01",
+    "m_EditorClassIdentifier": null,
+    "aircraftName": "S44",
+    "description": null,
+    "moveSpeed": 34,
+    "moveAccel": 28,
+    "moveResistPower": 40,
+    "moveBrake": 45,
+    "rotationSpeed": 720,
+    "respawnPositionSelectMoveSpeed": 80,
+    "defense": 19,
+    "searchHitRadius": 1,
+    "weaponPositionOffset": {
+      "x": 0,
+      "y": 0.6,
+      "z": 4
+    },
+    "pilotPositionOffset": {
+      "x": -4.543419e-13,
+      "y": 1.0233241,
+      "z": -3.239134
+    },
+    "pilotScale": {
+      "x": 3.2,
+      "y": 3.2,
+      "z": 3.2
+    },
+    "avatarNeckPositionOffset": {
+      "x": 0.0032000002,
+      "y": 4.411228,
+      "z": -4.080113
+    },
+    "avatarScale": {
+      "x": 14,
+      "y": 14,
+      "z": 14
+    },
+    "weaponSettings": {
+      "fileID": 11400000,
+      "guid": "b4f679e5cf1036340870bee9ee7184aa",
+      "type": 2
+    },
+    "passiveSkills": [
+      {
+        "fileID": 11400000,
+        "guid": "2a019fb38d39de349bb96721c13120b6",
+        "type": 2
+      }
+    ],
+    "resistantToBuffs": null,
+    "flickDashSettings": {
+      "fileID": 11400000,
+      "guid": "18bd135e96d4e774b9e7dc2ef23fb7eb",
+      "type": 2
+    },
+    "ForceShowFlyGauge": 0
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "edfb931950b8be5f3786585acab9df75",
+      "type": 3
+    },
+    "m_Name": "accessory_weapon_c_3054_01",
+    "m_EditorClassIdentifier": null,
+    "memo": "装備アイテム - ピンチアップスター",
+    "weaponCategry": 0,
+    "enemySearchRadius": 0,
+    "enemySearchOffset": 0,
+    "attackPower": 0,
+    "attackStopPower": 0,
+    "attackIgnoreDefense": 0,
+    "attackDisableBrakeTime": 0,
+    "additionalPower": 0,
+    "attackHitShape": 0,
+    "attackHitRadius": 3,
+    "attackHitSize": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "hitGrowingTimeRate": 0,
+    "attackHitPositionOffset": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "attackMoveSpeed": 0,
+    "attackMoveAccel": 0,
+    "attackMoveSpeedY": 0,
+    "attackMoveAccelY": 0,
+    "attackDuration": 0.5,
+    "attackTimeSpan": 0.5,
+    "isBackCritical": 0,
+    "isSideCritical": 0,
+    "shieldBreak": 0,
+    "isReflector": 0,
+    "refrectionRate": 0,
+    "reflectionAddSpeedRate": 0,
+    "invalidRefrection": 0,
+    "isSelfRefrection": 0,
+    "selfRefrectionNum": 0,
+    "refrectionRandomRot": {
+      "x": 0,
+      "y": 0
+    },
+    "isHideHitEffect": 0,
+    "killComboRate": 0,
+    "useLimitMax": 10,
+    "spriteButtonIcon": {
+      "fileID": 21300000,
+      "guid": "137d37b7d52169444a0f5645587f80f6",
+      "type": 2
+    },
+    "useClickWhenFire": 1,
+    "useChargeWhenFire": 0,
+    "useChargeWithoutFire": 0,
+    "weaponAutoChargeSettings": {
+      "fileID": 0
+    },
+    "moveSpeed": 60,
+    "minMoveSeconds": 0.3,
+    "bulletFx": "Fx/Bullet/bl_pinchup_star",
+    "bulletParticle": null,
+    "shootSe": 61,
+    "shootFx": "Fx/Bullet/bl_handgun_explosion",
+    "buffType": 91,
+    "hitSeType": 40,
+    "hitFx": "Fx/Battle/fx_hitA",
+    "buffDuration": 9,
+    "remainLife1Effect": 5,
+    "remainLife2Effect": 3,
+    "remainLife3Effect": 1
+  }
+}

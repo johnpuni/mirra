@@ -1,0 +1,56 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "54f599c206402faf63488587effc9b8a",
+      "type": 3
+    },
+    "m_Name": "ItemCandy_B_200",
+    "m_EditorClassIdentifier": null,
+    "itemType": 1007,
+    "getRadius": 12,
+    "getRadiusPuppet": 12,
+    "isDestroyObjectOnGet": 0,
+    "itemObjectName": "Stage/Item/candy2_B",
+    "isEnemyOtherObject": 0,
+    "itemEnemyObjectName": null,
+    "needAnimationEventForGettable": 0,
+    "buffType": 8,
+    "targetType": 0,
+    "buffDuration": 9999,
+    "buffParam": 3,
+    "tag": "ItamCandy_B_Speed",
+    "buffUpdateOnManyHit": 0,
+    "duplicationMax": 5,
+    "dontRemoveOnTargetDie": 1,
+    "subBuffParams": [],
+    "getFx": "Fx/Battle/fx_candy_B",
+    "gimmickSe": 0,
+    "getSe": 77,
+    "isPointGetItem": 0,
+    "isUseItemWeapon": 0,
+    "itemSettings": {
+      "fileID": 0
+    },
+    "isOtherTeamAnotherItem": 0,
+    "otherTeamItemSettings": {
+      "fileID": 0
+    },
+    "itemTag": null
+  }
+}

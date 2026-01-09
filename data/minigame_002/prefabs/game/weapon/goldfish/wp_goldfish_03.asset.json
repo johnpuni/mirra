@@ -1,0 +1,223 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "ff574485ed45cd439b75caa57f3a7c3e",
+      "type": 3
+    },
+    "m_Name": "wp_goldfish_03",
+    "m_EditorClassIdentifier": null,
+    "memo": "チビキン・クロキン",
+    "weaponCategry": 1,
+    "enemySearchRadius": 14,
+    "enemySearchOffset": 10,
+    "attackPower": 62,
+    "attackStopPower": 10000,
+    "attackIgnoreDefense": 0,
+    "attackDisableBrakeTime": 1,
+    "additionalPower": 0,
+    "attackHitShape": 0,
+    "attackHitRadius": 3,
+    "attackHitSize": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "hitGrowingTimeRate": 0,
+    "attackHitPositionOffset": {
+      "x": 0,
+      "y": 0,
+      "z": -1
+    },
+    "attackMoveSpeed": 60,
+    "attackMoveAccel": 0,
+    "attackMoveSpeedY": 0,
+    "attackMoveAccelY": 0,
+    "attackDuration": 1.5,
+    "attackTimeSpan": 1.8,
+    "isBackCritical": 0,
+    "isSideCritical": 1,
+    "shieldBreak": 0,
+    "isReflector": 0,
+    "refrectionRate": 0,
+    "reflectionAddSpeedRate": 0,
+    "invalidRefrection": 0,
+    "isSelfRefrection": 0,
+    "selfRefrectionNum": 0,
+    "refrectionRandomRot": {
+      "x": 0,
+      "y": 0
+    },
+    "isHideHitEffect": 0,
+    "killComboRate": 0,
+    "useLimitMax": -1,
+    "spriteButtonIcon": {
+      "fileID": 0
+    },
+    "useClickWhenFire": 1,
+    "useChargeWhenFire": 1,
+    "useChargeWithoutFire": 0,
+    "weaponAutoChargeSettings": {
+      "fileID": 0
+    },
+    "maxChargeTime": 3.5,
+    "inChargeDeceleratingRate": 1.5,
+    "inChargeMoveSpeedRate": 0.3,
+    "inChargeSe": 63,
+    "chargeMaxFx": "Fx/Battle/fx_charge_punch_attack_max",
+    "inChargeFx": "Fx/Battle/fx_charge_dash_attack2",
+    "disableChargeEffectWhenMax": 1,
+    "isChargeBuffContext": {
+      "type": 0,
+      "power": 0,
+      "duration": 0,
+      "tag": null,
+      "isRemoveOnTargetDie": 1,
+      "customSatelliteFxName": null
+    },
+    "buffContexts": [
+      {
+        "type": 66,
+        "power": 10,
+        "duration": 30,
+        "tag": "GoldFish",
+        "isRemoveOnTargetDie": 0,
+        "customSatelliteFxName": "Fx/Bullet/bl_goldfishB_01_2"
+      }
+    ],
+    "prefabWeapon": {
+      "fileID": 1357209883107811,
+      "guid": "319524c3d76467749bd74ead9eb1a8b6",
+      "type": 2
+    },
+    "prefabWeaponBase": {
+      "fileID": 1141606710671544,
+      "guid": "52319a418583b8146aafc0008c3b73e7",
+      "type": 2
+    },
+    "prefabSpring": {
+      "fileID": 1770565901062834,
+      "guid": "01d4236fda4a3934dbce4f1b6557a0c6",
+      "type": 2
+    },
+    "attackMoveRange": 13,
+    "curveTimeToPosition": {
+      "serializedVersion": 2,
+      "m_Curve": [
+        {
+          "serializedVersion": 3,
+          "time": 0,
+          "value": 0,
+          "inSlope": 0,
+          "outSlope": 0,
+          "weightedMode": 0,
+          "inWeight": 0,
+          "outWeight": 0
+        },
+        {
+          "serializedVersion": 3,
+          "time": 0.21794873,
+          "value": 1,
+          "inSlope": 1.5468156,
+          "outSlope": 0,
+          "weightedMode": 0,
+          "inWeight": 0.33333334,
+          "outWeight": 0.33333334
+        },
+        {
+          "serializedVersion": 3,
+          "time": 1,
+          "value": 1,
+          "inSlope": 0,
+          "outSlope": 2,
+          "weightedMode": 0,
+          "inWeight": 0,
+          "outWeight": 0
+        }
+      ],
+      "m_PreInfinity": 2,
+      "m_PostInfinity": 2,
+      "m_RotationOrder": 4
+    },
+    "shootSeType": 54,
+    "isPenguin": 0,
+    "isGoldFish": 1,
+    "attackPowerRateCurve": {
+      "serializedVersion": 2,
+      "m_Curve": [
+        {
+          "serializedVersion": 3,
+          "time": 0,
+          "value": 1,
+          "inSlope": 0,
+          "outSlope": 0,
+          "weightedMode": 0,
+          "inWeight": 0,
+          "outWeight": 0
+        },
+        {
+          "serializedVersion": 3,
+          "time": 1,
+          "value": 1,
+          "inSlope": 0,
+          "outSlope": 0,
+          "weightedMode": 0,
+          "inWeight": 0,
+          "outWeight": 0
+        }
+      ],
+      "m_PreInfinity": 2,
+      "m_PostInfinity": 2,
+      "m_RotationOrder": 4
+    },
+    "chargeFireContexts": [],
+    "disableChargePunch": 0,
+    "buffType": 39,
+    "buffPower": -10,
+    "buffDuration": 10,
+    "buffTag": null,
+    "buffRemoveWithBullet": 0,
+    "buffRemoveOnDamage": 0,
+    "buffUpdateOnManyHit": 0,
+    "isRemoveOnTargetDie": 1,
+    "explosionRate": 25,
+    "explosionPower": 0,
+    "explosionStopPower": 0,
+    "explosionDisableBrakeTime": 0,
+    "explosionHitShape": 0,
+    "explosionHitRadius": 12,
+    "explosionHitSize": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "explosionDuration": 8,
+    "explosionMoveSpeed": 0,
+    "explosionMoveAccel": 0,
+    "explosionHitInterval": 6,
+    "explosionSeType": 54,
+    "explosionFx": "Fx/Bullet/bl_kurage_trap",
+    "disableExplosionFx": null,
+    "explosionScale": 1,
+    "explosionHitJudgeType": 1,
+    "hitPartyType": 0,
+    "isHitManyTime": 0,
+    "bulletGenerateNum": 1,
+    "additionalColliders": []
+  }
+}

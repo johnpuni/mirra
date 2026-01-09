@@ -1,0 +1,96 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "0db86c6d3abf2ae32d259efe643ea0ac",
+      "type": 3
+    },
+    "m_Name": "accessory_weapon_c_3038_01",
+    "m_EditorClassIdentifier": null,
+    "memo": "アイテム - キャンディオクトパス",
+    "weaponCategry": 0,
+    "enemySearchRadius": 0,
+    "enemySearchOffset": 0,
+    "attackPower": 0,
+    "attackStopPower": 0,
+    "attackIgnoreDefense": 0,
+    "attackDisableBrakeTime": 0,
+    "additionalPower": 0,
+    "attackHitShape": 0,
+    "attackHitRadius": 5,
+    "attackHitSize": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "hitGrowingTimeRate": 0,
+    "attackHitPositionOffset": {
+      "x": 0,
+      "y": 0,
+      "z": 8
+    },
+    "attackMoveSpeed": 0,
+    "attackMoveAccel": 0,
+    "attackMoveSpeedY": 0,
+    "attackMoveAccelY": 0,
+    "attackDuration": 12,
+    "attackTimeSpan": 15,
+    "isBackCritical": 0,
+    "isSideCritical": 0,
+    "shieldBreak": 0,
+    "isReflector": 0,
+    "refrectionRate": 0,
+    "reflectionAddSpeedRate": 0,
+    "invalidRefrection": 0,
+    "isSelfRefrection": 0,
+    "selfRefrectionNum": 0,
+    "refrectionRandomRot": {
+      "x": 0,
+      "y": 0
+    },
+    "isHideHitEffect": 0,
+    "killComboRate": 0,
+    "useLimitMax": 0,
+    "spriteButtonIcon": {
+      "fileID": 21300000,
+      "guid": "ebc0416830452d5459ef258c07081011",
+      "type": 2
+    },
+    "useClickWhenFire": 1,
+    "useChargeWhenFire": 0,
+    "useChargeWithoutFire": 0,
+    "weaponAutoChargeSettings": {
+      "fileID": 0
+    },
+    "enemyPrefab": {
+      "fileID": 1656997083563219,
+      "guid": "b00ede8def080924e9d2925bac9601dc",
+      "type": 2
+    },
+    "spawnFx": "Fx/Battle/fx_skillshoot",
+    "spawnSeType": 37,
+    "spawnAnimName": "takoSpawnAnimation",
+    "enemyEggFx": "Stage/Item/takoEgg",
+    "spawnEggFx": "Fx/Battle/fx_skillshoot",
+    "spawnEggSeType": 37,
+    "spawnEggAnimName": null,
+    "wakeUpDuration": 0,
+    "EggTimerDuration": 15,
+    "isFriendlyFireInvalid": 1
+  }
+}

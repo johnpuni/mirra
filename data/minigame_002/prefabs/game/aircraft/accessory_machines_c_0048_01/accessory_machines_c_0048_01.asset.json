@@ -1,0 +1,72 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "353d3699e795a4f5b9c3a521ef46f9e1",
+      "type": 3
+    },
+    "m_Name": "accessory_machines_c_0048_01",
+    "m_EditorClassIdentifier": null,
+    "aircraftName": "S46彼岸花",
+    "description": "武器: 唐傘",
+    "moveSpeed": 37,
+    "moveAccel": 23,
+    "moveResistPower": 30,
+    "moveBrake": 50,
+    "rotationSpeed": 1080,
+    "respawnPositionSelectMoveSpeed": 80,
+    "defense": 15,
+    "searchHitRadius": 1,
+    "weaponPositionOffset": {
+      "x": 0,
+      "y": 3.5,
+      "z": 0
+    },
+    "pilotPositionOffset": {
+      "x": -4.543419e-13,
+      "y": 3.2633238,
+      "z": -0.4991341
+    },
+    "pilotScale": {
+      "x": 3.2,
+      "y": 3.2,
+      "z": 3.2
+    },
+    "avatarNeckPositionOffset": {
+      "x": 0.0032000002,
+      "y": 6.6512284,
+      "z": -1.3401129
+    },
+    "avatarScale": {
+      "x": 14,
+      "y": 14,
+      "z": 14
+    },
+    "weaponSettings": {
+      "fileID": 11400000,
+      "guid": "bf53e0c2bcedff445bc5d03db3935127",
+      "type": 2
+    },
+    "passiveSkills": [],
+    "resistantToBuffs": null,
+    "flickDashSettings": {
+      "fileID": 0
+    },
+    "ForceShowFlyGauge": 0
+  }
+}

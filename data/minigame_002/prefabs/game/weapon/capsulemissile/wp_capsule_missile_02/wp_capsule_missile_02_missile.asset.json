@@ -1,0 +1,170 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "c1d575bc1c860ecd683cb5eb681fece2",
+      "type": 3
+    },
+    "m_Name": "wp_capsule_missile_02_missile",
+    "m_EditorClassIdentifier": null,
+    "memo": "ミサイル",
+    "weaponCategry": 2,
+    "enemySearchRadius": 32,
+    "enemySearchOffset": 32,
+    "attackPower": 35,
+    "attackStopPower": 10000,
+    "attackIgnoreDefense": 30,
+    "attackDisableBrakeTime": 0,
+    "additionalPower": 0,
+    "attackHitShape": 0,
+    "attackHitRadius": 5,
+    "attackHitSize": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "hitGrowingTimeRate": 0,
+    "attackHitPositionOffset": {
+      "x": 0,
+      "y": -0.54,
+      "z": 6.25
+    },
+    "attackMoveSpeed": 10,
+    "attackMoveAccel": 60,
+    "attackMoveSpeedY": 0,
+    "attackMoveAccelY": 0,
+    "attackDuration": 1.2,
+    "attackTimeSpan": 0.1,
+    "isBackCritical": 0,
+    "isSideCritical": 0,
+    "shieldBreak": 0,
+    "isReflector": 0,
+    "refrectionRate": 0,
+    "reflectionAddSpeedRate": 0,
+    "invalidRefrection": 0,
+    "isSelfRefrection": 0,
+    "selfRefrectionNum": 0,
+    "refrectionRandomRot": {
+      "x": 0,
+      "y": 0
+    },
+    "isHideHitEffect": 0,
+    "killComboRate": 0,
+    "useLimitMax": -1,
+    "spriteButtonIcon": {
+      "fileID": 0
+    },
+    "useClickWhenFire": 1,
+    "useChargeWhenFire": 0,
+    "useChargeWithoutFire": 0,
+    "weaponAutoChargeSettings": {
+      "fileID": 0
+    },
+    "attackRotationSpeed": 10,
+    "bulletFx": "Fx/Bullet/bl_capsule_02",
+    "shootSeType": 59,
+    "shootAnimName": "chr_hit",
+    "shootFx": null,
+    "hitSeType": 59,
+    "hitJudgeType": 3,
+    "canFireFx": "Fx/Bullet/bl_capsule_02_can_fire",
+    "canEffectHomingBuff": 0,
+    "isInfinitePenetrate": 0,
+    "isHitManyTime": 0,
+    "viewTargetMarker": 0,
+    "playerPenetrateNum": 0,
+    "isWallPenetrate": 1,
+    "bulletGeneratePositionOffset": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "shootingRecoil": 0,
+    "isChild": 0,
+    "isOverwriteDirection": 0,
+    "IsLookAtY": 0,
+    "IsWoofer": 0,
+    "IsFriendlyFireInvalid": 0,
+    "friendlyFireRate": 1,
+    "reflectionFx": null,
+    "bulletTeamColorSwitch": 0,
+    "bulletPowerZero": 0,
+    "bulletMoveStop": 0,
+    "overwriteDirectionType": 0,
+    "onGround": 0,
+    "onGroundOffsetY": 0.1,
+    "addPowerPerSec": 0,
+    "addPowerMin": 0,
+    "addPowerMax": 9999,
+    "yourselfBuffs": [],
+    "buffType": 0,
+    "buffPower": 0,
+    "buffDuration": 0,
+    "buffProbability": 0,
+    "bufftag": null,
+    "buffUpdateOnManyHit": 0,
+    "isRemoveOnTargetDie": 1,
+    "buffManyHitShowFx": 0,
+    "buffDuplicationMax": 0,
+    "explosionTriggerType": 2,
+    "explosionPower": 35,
+    "explosionStopPower": 10000,
+    "explosionDisableBrakeTime": 0,
+    "explosionHitShape": 0,
+    "explosionHitRadius": 15,
+    "explosionHitSize": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "explosionAttackMoveSpeed": 0,
+    "explosionAttackMoveAccel": 0,
+    "explosionHitGrowingTimeRate": 0,
+    "explosionDuration": 0.2,
+    "explosionSeType": 60,
+    "hitFx": null,
+    "explosionFx": "Fx/Bullet/bl_capsule_explosion",
+    "enemyOtherExplosionFx": null,
+    "explosionGrowingFx": null,
+    "disableExplosionFx": null,
+    "withOutSelfFX": 0,
+    "explosionHitJudgeType": 3,
+    "hitPartyType": 2,
+    "explosionDirectionType": 2,
+    "IsExplosionFxPosY": 0,
+    "explosionFxPosY": 0,
+    "switchToAngers": [],
+    "missileReloadTime": 7,
+    "multiMissiles": [
+      {
+        "offset": {
+          "x": 1.25,
+          "y": -1.3,
+          "z": 0
+        }
+      },
+      {
+        "offset": {
+          "x": -1.25,
+          "y": -1.3,
+          "z": 0
+        }
+      }
+    ]
+  }
+}

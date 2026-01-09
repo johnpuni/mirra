@@ -1,0 +1,60 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "54f599c206402faf63488587effc9b8a",
+      "type": 3
+    },
+    "m_Name": "Item_Bamboo_Drop",
+    "m_EditorClassIdentifier": null,
+    "itemType": 30,
+    "getRadius": 12,
+    "getRadiusPuppet": 12,
+    "isDestroyObjectOnGet": 0,
+    "itemObjectName": "Stage/Item/ItemBamboo_Drop_01",
+    "isEnemyOtherObject": 0,
+    "itemEnemyObjectName": "Stage/Item/ItemBamboo_Drop_02",
+    "needAnimationEventForGettable": 0,
+    "buffType": 0,
+    "targetType": 0,
+    "buffDuration": 0,
+    "buffParam": 0,
+    "tag": null,
+    "buffUpdateOnManyHit": 0,
+    "duplicationMax": 0,
+    "dontRemoveOnTargetDie": 0,
+    "subBuffParams": [],
+    "getFx": null,
+    "gimmickSe": 0,
+    "getSe": 77,
+    "isPointGetItem": 0,
+    "isUseItemWeapon": 1,
+    "itemSettings": {
+      "fileID": 11400000,
+      "guid": "95dd0b319d0cfb04cb46776d8d7ef557",
+      "type": 2
+    },
+    "isOtherTeamAnotherItem": 0,
+    "otherTeamItemSettings": {
+      "fileID": 11400000,
+      "guid": "95dd0b319d0cfb04cb46776d8d7ef557",
+      "type": 2
+    },
+    "itemTag": "Bamboo"
+  }
+}

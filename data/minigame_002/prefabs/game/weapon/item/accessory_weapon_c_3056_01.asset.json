@@ -1,0 +1,122 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "50183dd9cc5f1d692a368b1bfa3913e9",
+      "type": 3
+    },
+    "m_Name": "accessory_weapon_c_3056_01",
+    "m_EditorClassIdentifier": null,
+    "memo": "装備アイテム - ヘビースタンプ",
+    "weaponCategry": 0,
+    "enemySearchRadius": 0,
+    "enemySearchOffset": 0,
+    "attackPower": 0,
+    "attackStopPower": 0,
+    "attackIgnoreDefense": 0,
+    "attackDisableBrakeTime": 0,
+    "additionalPower": 0,
+    "attackHitShape": 0,
+    "attackHitRadius": 0,
+    "attackHitSize": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "hitGrowingTimeRate": 0,
+    "attackHitPositionOffset": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "attackMoveSpeed": 0,
+    "attackMoveAccel": 0,
+    "attackMoveSpeedY": 0,
+    "attackMoveAccelY": 0,
+    "attackDuration": 0.3,
+    "attackTimeSpan": 22,
+    "isBackCritical": 0,
+    "isSideCritical": 0,
+    "shieldBreak": 0,
+    "isReflector": 0,
+    "refrectionRate": 0,
+    "reflectionAddSpeedRate": 0,
+    "invalidRefrection": 0,
+    "isSelfRefrection": 0,
+    "selfRefrectionNum": 0,
+    "refrectionRandomRot": {
+      "x": 0,
+      "y": 0
+    },
+    "isHideHitEffect": 0,
+    "killComboRate": 0,
+    "useLimitMax": -1,
+    "spriteButtonIcon": {
+      "fileID": 21300000,
+      "guid": "5600527fead79df47a75f974056214bb",
+      "type": 2
+    },
+    "useClickWhenFire": 1,
+    "useChargeWhenFire": 0,
+    "useChargeWithoutFire": 0,
+    "weaponAutoChargeSettings": {
+      "fileID": 0
+    },
+    "bulletPosition": {
+      "x": 0,
+      "y": 0,
+      "z": -5
+    },
+    "bulletFx": "Fx/Bullet/bl_neon_stamp_buff_B",
+    "shootSeType": 0,
+    "shootAnimName": "chr_hit",
+    "shootFx": "Fx/Battle/fx_skillshoot",
+    "buffType": 10,
+    "buffPower": 3,
+    "buffDuration": 13,
+    "buffTag": "BuffNotUpdateStampDefenceUp",
+    "buffRemoveWithBullet": 0,
+    "buffRemoveOnDamage": 0,
+    "buffUpdateOnManyHit": 1,
+    "isRemoveOnTargetDie": 1,
+    "isChangedBuffPowerByTargetRemainLife": 1,
+    "remainLife2BuffPower": 7,
+    "remainLife1BuffPower": 15,
+    "explosionPower": 0,
+    "explosionStopPower": 0,
+    "explosionDisableBrakeTime": 0,
+    "explosionHitShape": 0,
+    "explosionHitRadius": 30,
+    "explosionHitSize": {
+      "x": 2,
+      "y": 2,
+      "z": 2
+    },
+    "explosionDuration": 8,
+    "explosionHitInterval": 1,
+    "explosionSeType": 66,
+    "explosionFx": "Fx/Bullet/bl_neon_stamp_buff_B",
+    "disableExplosionFx": "Fx/Bullet/bl_neon_buff_A",
+    "explosionScale": 1,
+    "explosionHitJudgeType": 1,
+    "hitPartyType": 1,
+    "isHitManyTime": 1,
+    "bulletGenerateNum": 1,
+    "additionalColliders": []
+  }
+}

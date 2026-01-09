@@ -1,0 +1,83 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "353d3699e795a4f5b9c3a521ef46f9e1",
+      "type": 3
+    },
+    "m_Name": "accessory_machines_c_0030_03",
+    "m_EditorClassIdentifier": null,
+    "aircraftName": "機関車レトロスター号 ガワガエ:03",
+    "description": "武器: もくもくリボルバー",
+    "moveSpeed": 34,
+    "moveAccel": 16,
+    "moveResistPower": 30,
+    "moveBrake": 40,
+    "rotationSpeed": 300,
+    "respawnPositionSelectMoveSpeed": 80,
+    "defense": 16,
+    "searchHitRadius": 1,
+    "weaponPositionOffset": {
+      "x": 0,
+      "y": 1.58,
+      "z": 6.8
+    },
+    "pilotPositionOffset": {
+      "x": 0,
+      "y": 1.6,
+      "z": 0.6
+    },
+    "pilotScale": {
+      "x": 3,
+      "y": 3,
+      "z": 3
+    },
+    "avatarNeckPositionOffset": {
+      "x": 0,
+      "y": 4.8,
+      "z": -0.1
+    },
+    "avatarScale": {
+      "x": 14,
+      "y": 14,
+      "z": 14
+    },
+    "weaponSettings": {
+      "fileID": 11400000,
+      "guid": "a16ab7159749fea4db4b9a3ffea49e86",
+      "type": 2
+    },
+    "passiveSkills": [
+      {
+        "fileID": 11400000,
+        "guid": "aefafd3e0c9f69447b40d81d8da4a269",
+        "type": 2
+      },
+      {
+        "fileID": 11400000,
+        "guid": "60ddf92778fd03d4793ca4b55c6a76ea",
+        "type": 2
+      }
+    ],
+    "resistantToBuffs": null,
+    "flickDashSettings": {
+      "fileID": 0
+    },
+    "ForceShowFlyGauge": 0
+  }
+}

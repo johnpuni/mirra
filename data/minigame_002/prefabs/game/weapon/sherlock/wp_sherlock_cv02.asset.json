@@ -1,0 +1,157 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "f370724ed77745c7c1bb11b146e5c309",
+      "type": 3
+    },
+    "m_Name": "wp_sherlock_cv02",
+    "m_EditorClassIdentifier": null,
+    "memo": "シャーロックの虫眼鏡レーザー",
+    "weaponCategry": 2,
+    "enemySearchRadius": 30.8,
+    "enemySearchOffset": 24.2,
+    "attackPower": 41,
+    "attackStopPower": 10000,
+    "attackIgnoreDefense": 60,
+    "attackDisableBrakeTime": 0,
+    "additionalPower": 0,
+    "attackHitShape": 1,
+    "attackHitRadius": 0,
+    "attackHitSize": {
+      "x": 1,
+      "y": 10,
+      "z": 20
+    },
+    "hitGrowingTimeRate": 0,
+    "attackHitPositionOffset": {
+      "x": 0,
+      "y": -1,
+      "z": 10
+    },
+    "attackMoveSpeed": 0,
+    "attackMoveAccel": 0,
+    "attackMoveSpeedY": 0,
+    "attackMoveAccelY": 0,
+    "attackDuration": 0.1,
+    "attackTimeSpan": 1,
+    "isBackCritical": 0,
+    "isSideCritical": 0,
+    "shieldBreak": 0,
+    "isReflector": 0,
+    "refrectionRate": 0,
+    "reflectionAddSpeedRate": 0,
+    "invalidRefrection": 0,
+    "isSelfRefrection": 0,
+    "selfRefrectionNum": 0,
+    "refrectionRandomRot": {
+      "x": 0,
+      "y": 0
+    },
+    "isHideHitEffect": 0,
+    "killComboRate": 0,
+    "useLimitMax": -1,
+    "spriteButtonIcon": {
+      "fileID": 0
+    },
+    "useClickWhenFire": 1,
+    "useChargeWhenFire": 0,
+    "useChargeWithoutFire": 1,
+    "weaponAutoChargeSettings": {
+      "fileID": 0
+    },
+    "maxChargeTime": 1.5,
+    "inChargeDeceleratingRate": 1,
+    "inChargeMoveSpeedRate": 0.3,
+    "inChargeSe": 63,
+    "chargeMaxFx": "Fx/Battle/fx_charge_dash_attack_max",
+    "inChargeFx": "Fx/Battle/fx_charge_dash_attack3",
+    "disableChargeEffectWhenMax": 1,
+    "isChargeBuffContext": {
+      "type": 0,
+      "power": 0,
+      "duration": 0,
+      "tag": null,
+      "isRemoveOnTargetDie": 1,
+      "customSatelliteFxName": null
+    },
+    "buffContexts": [
+      {
+        "type": 21,
+        "power": 0,
+        "duration": 15,
+        "tag": "Sherlock",
+        "isRemoveOnTargetDie": 1,
+        "customSatelliteFxName": null
+      }
+    ],
+    "bulletFx": "Fx/Bullet/bl_laser_yellow",
+    "shootSeType": 79,
+    "shootFx": null,
+    "hitSeType": 40,
+    "isWallPenetrate": 1,
+    "isInfinitePenetrate": 1,
+    "playerPenetrateNum": 0,
+    "hitPartyType": 0,
+    "friendlyFireRate": 1,
+    "shootingRecoil": 20,
+    "buffTag": "WeaponSherlockLaser",
+    "enemyBuffs": [
+      {
+        "buffRatio": 30,
+        "buffType": 75,
+        "buffPower": 0,
+        "buffDuration": 7
+      }
+    ],
+    "friendBuffs": [
+      {
+        "buffRatio": 30,
+        "buffType": 20,
+        "buffPower": 2,
+        "buffDuration": 7
+      }
+    ],
+    "blockItemDropper": {
+      "ItemDatas": [
+        {
+          "Weight": 40,
+          "ItemMasterSetting": {
+            "fileID": 0
+          }
+        },
+        {
+          "Weight": 30,
+          "ItemMasterSetting": {
+            "fileID": 11400000,
+            "guid": "5bbd3e295ac1dfb40a9cb548965fe6b1",
+            "type": 2
+          }
+        },
+        {
+          "Weight": 30,
+          "ItemMasterSetting": {
+            "fileID": 11400000,
+            "guid": "f8f8a2ca669f3574089eefbcd640f880",
+            "type": 2
+          }
+        }
+      ]
+    }
+  }
+}

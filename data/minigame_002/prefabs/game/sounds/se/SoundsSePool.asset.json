@@ -1,0 +1,306 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "33e37019b6d7e7221f568b664c8c4c62",
+      "type": 3
+    },
+    "m_Name": "SoundsSePool",
+    "m_EditorClassIdentifier": null,
+    "m_Key": "Sounds/se/",
+    "m_GameObjects": [],
+    "m_ScriptableObjects": [],
+    "m_AudioClips": [
+      {
+        "fileID": 8300000,
+        "guid": "149f835125acd4440a6d703922962499",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "7bd1a577886d09241927186f44179ae2",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "2449c3d4df1c93448975ffa880c29f6c",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "8d38999fb80a98844b828d9c577310f6",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "14d6b1df3dd0f094d9b2badc8a93257b",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "48db73b65d0e4044aa16b4d2434b0a02",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "9cf79a2c52780704faffee13222342fe",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "5566cfb6d0195a845b22277373d14a75",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "e6488658e0a6e5346b88f2f979659044",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "3bcb5efe0b983d64594461b30b5d6a78",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "c17f2612340509646b4baff0dea991be",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "6e8b1558efde1084797986ab23e34806",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "8957a01728377c5499ff651ec0b92c55",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "e482e2350e6b573459f880deee2a9df0",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "0600114716a82ae4e9d3e48c0ff08a0f",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "63c5ebab0da4447458a1f901dc8321d9",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "9daa420a2a8d8fd4997d96fabc4b8c39",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "841e01d65f5443a44b5f119ad7f8f51c",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "ee7aeedc55c398348a94a7e511a87f7c",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "c9e1eb00936fbd446b0cc895163fb241",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "7d13b4294a10eab4abac0e5a13ab1451",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "ed6737d90b8d69f47adcec4ade792c01",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "360337fba6f58c746b799c97acaa04d2",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "79d000122bfdcf04dbdd6581a8c2dfc3",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "211014803c3c31b49bd21a65132a11eb",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "c54217fb00258ce4ea1b7d6133b13f26",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "9979694ab15f73e4693bc08afc1079be",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "f9fcb6e90ef6c54438e8c71d1302f2b7",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "e1b2c8bb066bca841a011ab7237a61bf",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "d12b90cc4d9ccce4b8844e142860b692",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "ab9caecc98d9da24d8cab7fbdf4a3bcb",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "da2340b8c70ab7445bd40ce72c1e081f",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "1f7c555848b58784eb1b7a199bfc75c4",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "a0827575ddbf0ee45a2ac7f1caeca3fa",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "b587811e395af9e478615ec7d81fd793",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "9a1b889ca0a001d43885dc3eea4e75bf",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "16ba3e458eb7ab9499331515e1acbfa1",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "db02cd2f24a65644487732e82d54640b",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "303f1a4045e751e4180452df993a8f77",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "cb58824a3a0c2f842aea78a81c0af1e2",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "4f9b0a9e1fd237d469fdadefae5a494b",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "4a2f1a842c8ac144c807d283d05e9911",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "ed876c2b6cf93754ba237bcd6fbeb152",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "7de441cb8a673b041bee52c94a79a3dc",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "6aa92c81078995b48ac45715be25404b",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "c2a6cead011631b438dc4f20829d3fac",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "58999b9658195734ab6928841243b636",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "b6e3d4ca5982e9d449e62fe41405a31f",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "0f000c6b1eaf2b04b9f02608f6a747b5",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "bad1c1fc41d96954b930eceb0a2705c9",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "a74e52b61db9aa54393b4a25489f9fdc",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "1d0ceaaeb7ca8234d862129376c3c273",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "6de2fafd89ccca24581762fd7a0f5329",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "a89d6bf0dfe639a439ee123de798ea23",
+        "type": 3
+      },
+      {
+        "fileID": 8300000,
+        "guid": "a468108b80ee2cc45b2d761faf0a6570",
+        "type": 3
+      }
+    ]
+  }
+}

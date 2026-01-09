@@ -1,0 +1,284 @@
+{
+  "Font": {
+    "serializedVersion": 5,
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_Name": "New Font 1",
+    "m_LineSpacing": 0.1,
+    "m_DefaultMaterial": {
+      "fileID": 2100000,
+      "guid": "31846ae1bfad60b4f8b8374b3470ea76",
+      "type": 2
+    },
+    "m_FontSize": 0,
+    "m_Texture": {
+      "fileID": 0
+    },
+    "m_AsciiStartOffset": 0,
+    "m_Tracking": 0.85,
+    "m_CharacterSpacing": 3,
+    "m_CharacterPadding": 1,
+    "m_ConvertCase": 0,
+    "m_CharacterRects": [
+      {
+        "serializedVersion": 2,
+        "index": 48,
+        "uv": {
+          "serializedVersion": 2,
+          "x": 0,
+          "y": 0,
+          "width": 0.29,
+          "height": 0.1718
+        },
+        "vert": {
+          "serializedVersion": 2,
+          "x": 0,
+          "y": 0,
+          "width": 36,
+          "height": -44
+        },
+        "advance": 45,
+        "flipped": 0
+      },
+      {
+        "serializedVersion": 2,
+        "index": 49,
+        "uv": {
+          "serializedVersion": 2,
+          "x": 0.6,
+          "y": 0.179,
+          "width": 0.145,
+          "height": 0.166
+        },
+        "vert": {
+          "serializedVersion": 2,
+          "x": 0.5,
+          "y": 0,
+          "width": 20,
+          "height": -44
+        },
+        "advance": 25,
+        "flipped": 0
+      },
+      {
+        "serializedVersion": 2,
+        "index": 50,
+        "uv": {
+          "serializedVersion": 2,
+          "x": 0.293,
+          "y": 0.3515,
+          "width": 0.2656,
+          "height": 0.17
+        },
+        "vert": {
+          "serializedVersion": 2,
+          "x": 0,
+          "y": 0,
+          "width": 34,
+          "height": -44
+        },
+        "advance": 40,
+        "flipped": 0
+      },
+      {
+        "serializedVersion": 2,
+        "index": 51,
+        "uv": {
+          "serializedVersion": 2,
+          "x": 0,
+          "y": 0.35,
+          "width": 0.274,
+          "height": 0.1735
+        },
+        "vert": {
+          "serializedVersion": 2,
+          "x": 0,
+          "y": 0,
+          "width": 36,
+          "height": -44
+        },
+        "advance": 42,
+        "flipped": 0
+      },
+      {
+        "serializedVersion": 2,
+        "index": 52,
+        "uv": {
+          "serializedVersion": 2,
+          "x": 0,
+          "y": 0.1796,
+          "width": 0.28125,
+          "height": 0.164
+        },
+        "vert": {
+          "serializedVersion": 2,
+          "x": 0,
+          "y": 0,
+          "width": 36,
+          "height": -44
+        },
+        "advance": 42,
+        "flipped": 0
+      },
+      {
+        "serializedVersion": 2,
+        "index": 53,
+        "uv": {
+          "serializedVersion": 2,
+          "x": 0,
+          "y": 0.525,
+          "width": 0.282,
+          "height": 0.1679
+        },
+        "vert": {
+          "serializedVersion": 2,
+          "x": 0,
+          "y": 0,
+          "width": 36,
+          "height": -44
+        },
+        "advance": 42,
+        "flipped": 0
+      },
+      {
+        "serializedVersion": 2,
+        "index": 54,
+        "uv": {
+          "serializedVersion": 2,
+          "x": 0.31,
+          "y": 0,
+          "width": 0.2812,
+          "height": 0.1679
+        },
+        "vert": {
+          "serializedVersion": 2,
+          "x": 2,
+          "y": 0,
+          "width": 36,
+          "height": -44
+        },
+        "advance": 42,
+        "flipped": 0
+      },
+      {
+        "serializedVersion": 2,
+        "index": 55,
+        "uv": {
+          "serializedVersion": 2,
+          "x": 0.2968,
+          "y": 0.1796,
+          "width": 0.2812,
+          "height": 0.164
+        },
+        "vert": {
+          "serializedVersion": 2,
+          "x": 0,
+          "y": 0,
+          "width": 36,
+          "height": -44
+        },
+        "advance": 42,
+        "flipped": 0
+      },
+      {
+        "serializedVersion": 2,
+        "index": 56,
+        "uv": {
+          "serializedVersion": 2,
+          "x": 0.575,
+          "y": 0.3515,
+          "width": 0.272,
+          "height": 0.1718
+        },
+        "vert": {
+          "serializedVersion": 2,
+          "x": 0,
+          "y": 0,
+          "width": 36,
+          "height": -44
+        },
+        "advance": 42,
+        "flipped": 0
+      },
+      {
+        "serializedVersion": 2,
+        "index": 57,
+        "uv": {
+          "serializedVersion": 2,
+          "x": 0.598,
+          "y": 0,
+          "width": 0.284,
+          "height": 0.165
+        },
+        "vert": {
+          "serializedVersion": 2,
+          "x": 0,
+          "y": 0,
+          "width": 36,
+          "height": -44
+        },
+        "advance": 42,
+        "flipped": 0
+      },
+      {
+        "serializedVersion": 2,
+        "index": 47,
+        "uv": {
+          "serializedVersion": 2,
+          "x": 0.35,
+          "y": 0.525,
+          "width": 0.282,
+          "height": 0.1679
+        },
+        "vert": {
+          "serializedVersion": 2,
+          "x": 0,
+          "y": 0,
+          "width": 36,
+          "height": -44
+        },
+        "advance": 42,
+        "flipped": 0
+      },
+      {
+        "serializedVersion": 2,
+        "index": 44,
+        "uv": {
+          "serializedVersion": 2,
+          "x": 0.68,
+          "y": 0.525,
+          "width": 0.1,
+          "height": 0.1679
+        },
+        "vert": {
+          "serializedVersion": 2,
+          "x": 0,
+          "y": 0,
+          "width": 15,
+          "height": -44
+        },
+        "advance": 15,
+        "flipped": 0
+      }
+    ],
+    "m_KerningValues": {},
+    "m_PixelScale": 0.1,
+    "m_FontData": null,
+    "m_Ascent": 0,
+    "m_Descent": 0,
+    "m_DefaultStyle": 0,
+    "m_FontNames": [],
+    "m_FallbackFonts": [],
+    "m_FontRenderingMode": 0,
+    "m_UseLegacyBoundsCalculation": 0,
+    "m_ShouldRoundAdvanceValue": 1
+  }
+}

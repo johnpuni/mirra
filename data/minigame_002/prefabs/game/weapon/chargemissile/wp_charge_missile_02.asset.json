@@ -1,0 +1,142 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "889463a9086d97eb379534c80d5c08a4",
+      "type": 3
+    },
+    "m_Name": "wp_charge_missile_02",
+    "m_EditorClassIdentifier": null,
+    "memo": "不死鳥武器",
+    "weaponCategry": 2,
+    "enemySearchRadius": 30.8,
+    "enemySearchOffset": 24.2,
+    "attackPower": 47,
+    "attackStopPower": 10000,
+    "attackIgnoreDefense": 60,
+    "attackDisableBrakeTime": 0,
+    "additionalPower": 0,
+    "attackHitShape": 0,
+    "attackHitRadius": 5,
+    "attackHitSize": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "hitGrowingTimeRate": 0,
+    "attackHitPositionOffset": {
+      "x": 0,
+      "y": -0.54,
+      "z": 6.25
+    },
+    "attackMoveSpeed": 20,
+    "attackMoveAccel": 0,
+    "attackMoveSpeedY": 0,
+    "attackMoveAccelY": 0,
+    "attackDuration": 0.84,
+    "attackTimeSpan": 0.5,
+    "isBackCritical": 0,
+    "isSideCritical": 0,
+    "shieldBreak": 0,
+    "isReflector": 0,
+    "refrectionRate": 0,
+    "reflectionAddSpeedRate": 0,
+    "invalidRefrection": 0,
+    "isSelfRefrection": 0,
+    "selfRefrectionNum": 0,
+    "refrectionRandomRot": {
+      "x": 0,
+      "y": 0
+    },
+    "isHideHitEffect": 0,
+    "killComboRate": 0,
+    "useLimitMax": -1,
+    "spriteButtonIcon": {
+      "fileID": 0
+    },
+    "useClickWhenFire": 1,
+    "useChargeWhenFire": 1,
+    "useChargeWithoutFire": 0,
+    "weaponAutoChargeSettings": {
+      "fileID": 0
+    },
+    "maxChargeTime": 2.5,
+    "inChargeDeceleratingRate": 1,
+    "inChargeMoveSpeedRate": 0.3,
+    "inChargeSe": 63,
+    "chargeMaxFx": "Fx/Battle/fx_charge_dash_attack_max",
+    "inChargeFx": "Fx/Battle/fx_charge_dash_attack",
+    "disableChargeEffectWhenMax": 0,
+    "isChargeBuffContext": {
+      "type": 0,
+      "power": 0,
+      "duration": 0,
+      "tag": null,
+      "isRemoveOnTargetDie": 1,
+      "customSatelliteFxName": null
+    },
+    "buffContexts": [],
+    "lowChargeMissileCount": 1,
+    "lowChargeMissileScale": 1,
+    "lowChargeMissileRange": 1,
+    "lowChargeMissileNonCenter": 0,
+    "semiMiddleChargeMissileCount": 2,
+    "semiMiddleChargeMissileScale": 1.1,
+    "semiMiddleChargeMissileRange": 1.1,
+    "semiMiddleChargeMissileNonCenter": 1,
+    "middleChargeMissileCount": 2,
+    "middleChargeMissileScale": 1.1,
+    "middleChargeMissileRange": 1.1,
+    "middleChargeMissileNonCenter": 1,
+    "maxChargeMissileCount": 2,
+    "maxChargeMissileScale": 1.1,
+    "maxChargeMissileRange": 2,
+    "maxChargeMissileNonCenter": 1,
+    "chargeRateSemiMiddle": 0.3,
+    "chargeRateMiddle": 0.6,
+    "autoMissileSpan": 0,
+    "bulletGeneratePositionOffset": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "hitJudgeType": 1,
+    "hitPartyType": 0,
+    "hitSeType": 59,
+    "isWallPenetrate": 1,
+    "bulletFx": "Fx/Bullet/bl_phoenixFire_01",
+    "shootFx": null,
+    "shootSeType": 79,
+    "isChild": 0,
+    "IsFriendlyFireInvalid": 1,
+    "buffType": 0,
+    "buffPower": 0,
+    "buffDuration": 0,
+    "buffProbability": 0,
+    "bufftag": null,
+    "buffUpdateOnManyHit": 0,
+    "isRemoveOnTargetDie": 1,
+    "buffManyHitShowFx": 0,
+    "buffDuplicationMax": 0,
+    "missileSettings": {
+      "fileID": 11400000,
+      "guid": "684c704580383fb4aab407ae011b68d2",
+      "type": 2
+    }
+  }
+}

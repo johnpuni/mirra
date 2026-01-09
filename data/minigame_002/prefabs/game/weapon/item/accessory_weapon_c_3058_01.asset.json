@@ -1,0 +1,122 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "179e8c2a241ab3eb58f8bcc83d38cf97",
+      "type": 3
+    },
+    "m_Name": "accessory_weapon_c_3058_01",
+    "m_EditorClassIdentifier": null,
+    "memo": "装備アイテム_炸裂！タコツボ爆弾",
+    "weaponCategry": 0,
+    "enemySearchRadius": 0,
+    "enemySearchOffset": 0,
+    "attackPower": 0,
+    "attackStopPower": 0,
+    "attackIgnoreDefense": 0,
+    "attackDisableBrakeTime": 0,
+    "additionalPower": 0,
+    "attackHitShape": 0,
+    "attackHitRadius": 0,
+    "attackHitSize": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "hitGrowingTimeRate": 0,
+    "attackHitPositionOffset": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "attackMoveSpeed": 23.64,
+    "attackMoveAccel": 0,
+    "attackMoveSpeedY": 0,
+    "attackMoveAccelY": 0,
+    "attackDuration": 4,
+    "attackTimeSpan": 18,
+    "isBackCritical": 0,
+    "isSideCritical": 0,
+    "shieldBreak": 0,
+    "isReflector": 0,
+    "refrectionRate": 0,
+    "reflectionAddSpeedRate": 0,
+    "invalidRefrection": 0,
+    "isSelfRefrection": 0,
+    "selfRefrectionNum": 0,
+    "refrectionRandomRot": {
+      "x": 0,
+      "y": 0
+    },
+    "isHideHitEffect": 0,
+    "killComboRate": 0,
+    "useLimitMax": -1,
+    "spriteButtonIcon": {
+      "fileID": 21300000,
+      "guid": "dffc78277c0b57e42883225ee140eade",
+      "type": 2
+    },
+    "useClickWhenFire": 1,
+    "useChargeWhenFire": 0,
+    "useChargeWithoutFire": 0,
+    "weaponAutoChargeSettings": {
+      "fileID": 0
+    },
+    "bulletPosition": {
+      "x": 0,
+      "y": 0,
+      "z": -5
+    },
+    "bulletFx": "Fx/Bullet/bl_octopus_pot",
+    "shootSeType": 37,
+    "shootAnimName": "chr_hit",
+    "shootFx": "Fx/Bullet/bl_octopus_ink_missile_explosion",
+    "buffType": 19,
+    "buffPower": 0.8,
+    "buffDuration": 8,
+    "buffTag": null,
+    "buffRemoveWithBullet": 0,
+    "buffRemoveOnDamage": 0,
+    "buffUpdateOnManyHit": 0,
+    "isRemoveOnTargetDie": 1,
+    "isChangedBuffPowerByTargetRemainLife": 0,
+    "remainLife2BuffPower": 0,
+    "remainLife1BuffPower": 0,
+    "explosionPower": 30,
+    "explosionStopPower": 10000,
+    "explosionDisableBrakeTime": 1,
+    "explosionHitShape": 0,
+    "explosionHitRadius": 5,
+    "explosionHitSize": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "explosionDuration": 5,
+    "explosionHitInterval": 1,
+    "explosionSeType": 42,
+    "explosionFx": "Fx/Bullet/bl_octopus_ink_missile",
+    "disableExplosionFx": null,
+    "explosionScale": 1,
+    "explosionHitJudgeType": 2,
+    "hitPartyType": 3,
+    "isHitManyTime": 0,
+    "bulletGenerateNum": 8,
+    "additionalColliders": []
+  }
+}

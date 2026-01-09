@@ -1,0 +1,75 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "54f599c206402faf63488587effc9b8a",
+      "type": 3
+    },
+    "m_Name": "StageItemPresent_Buff_A",
+    "m_EditorClassIdentifier": null,
+    "itemType": 2002,
+    "getRadius": 8,
+    "getRadiusPuppet": 10,
+    "isDestroyObjectOnGet": 0,
+    "itemObjectName": "Stage/Item/presentbox_03",
+    "isEnemyOtherObject": 0,
+    "itemEnemyObjectName": null,
+    "needAnimationEventForGettable": 1,
+    "buffType": 6,
+    "targetType": 1,
+    "buffDuration": 10,
+    "buffParam": 0.3,
+    "tag": "Present_A",
+    "buffUpdateOnManyHit": 0,
+    "duplicationMax": 0,
+    "dontRemoveOnTargetDie": 1,
+    "subBuffParams": [
+      {
+        "buffType": 7,
+        "buffDuration": 10,
+        "buffParam": 0.5,
+        "tag": "Present_B",
+        "buffUpdateOnManyHit": 0,
+        "duplicationMax": 0,
+        "dontRemoveOnTargetDie": 1
+      },
+      {
+        "buffType": 1,
+        "buffDuration": 10,
+        "buffParam": 0.25,
+        "tag": "Present_C",
+        "buffUpdateOnManyHit": 0,
+        "duplicationMax": 0,
+        "dontRemoveOnTargetDie": 1
+      }
+    ],
+    "getFx": "Fx/Battle/fx_warcry",
+    "gimmickSe": 0,
+    "getSe": 61,
+    "isPointGetItem": 0,
+    "isUseItemWeapon": 0,
+    "itemSettings": {
+      "fileID": 0
+    },
+    "isOtherTeamAnotherItem": 0,
+    "otherTeamItemSettings": {
+      "fileID": 0
+    },
+    "itemTag": null
+  }
+}

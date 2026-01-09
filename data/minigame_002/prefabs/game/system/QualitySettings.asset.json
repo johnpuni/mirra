@@ -1,0 +1,114 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "82379e199195e9355063088e01d273ba",
+      "type": 3
+    },
+    "m_Name": "QualitySettings",
+    "m_EditorClassIdentifier": null,
+    "defaultLevelAndroid": 3,
+    "defaultLevelIos": 3,
+    "levels": [
+      {
+        "name": "Level 1",
+        "system": {
+          "qualityLevel": 0
+        },
+        "fog": {
+          "fog": 0,
+          "fogColor": {
+            "r": 0.5,
+            "g": 0.5,
+            "b": 0.5,
+            "a": 1
+          },
+          "fogMode": 3,
+          "fogDensity": 0.01
+        },
+        "postProcessing": {
+          "usePostProcess": 0,
+          "useBloom": 0,
+          "useColorGrading": 0,
+          "useDepthOfField": 0,
+          "useVignette": 0
+        },
+        "other": {
+          "usePlayerAnimation": 0,
+          "useTapEffect": 0
+        }
+      },
+      {
+        "name": "Level 2",
+        "system": {
+          "qualityLevel": 1
+        },
+        "fog": {
+          "fog": 0,
+          "fogColor": {
+            "r": 0.5,
+            "g": 0.5,
+            "b": 0.5,
+            "a": 1
+          },
+          "fogMode": 3,
+          "fogDensity": 0.01
+        },
+        "postProcessing": {
+          "usePostProcess": 0,
+          "useBloom": 0,
+          "useColorGrading": 1,
+          "useDepthOfField": 0,
+          "useVignette": 0
+        },
+        "other": {
+          "usePlayerAnimation": 0,
+          "useTapEffect": 1
+        }
+      },
+      {
+        "name": "Level 3",
+        "system": {
+          "qualityLevel": 2
+        },
+        "fog": {
+          "fog": 0,
+          "fogColor": {
+            "r": 1,
+            "g": 1,
+            "b": 1,
+            "a": 1
+          },
+          "fogMode": 1,
+          "fogDensity": "5E+14"
+        },
+        "postProcessing": {
+          "usePostProcess": 1,
+          "useBloom": 1,
+          "useColorGrading": 1,
+          "useDepthOfField": 1,
+          "useVignette": 1
+        },
+        "other": {
+          "usePlayerAnimation": 1,
+          "useTapEffect": 1
+        }
+      }
+    ]
+  }
+}

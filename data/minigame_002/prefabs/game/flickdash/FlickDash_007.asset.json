@@ -1,0 +1,38 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "fd6d21e32245f8670158d47df2369f83",
+      "type": 3
+    },
+    "m_Name": "FlickDash_007",
+    "m_EditorClassIdentifier": null,
+    "Memo": "まねき猫のフリックダッシュ",
+    "Interval": 2,
+    "FrontMoveStopPower": 10,
+    "FrontMoveForce": 70,
+    "MutekiTime": 0,
+    "StunTime": 0.25,
+    "seType": 67,
+    "FlyAfter": 0,
+    "FlyAnimation": 0,
+    "FlyDuration": 0,
+    "ContinuousNum": 2,
+    "CanContinuousDuration": 1
+  }
+}

@@ -1,0 +1,143 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "50183dd9cc5f1d692a368b1bfa3913e9",
+      "type": 3
+    },
+    "m_Name": "accessory_weapon_c_3025_01",
+    "m_EditorClassIdentifier": null,
+    "memo": "装備アイテム_7thアニバーサーリーうちわ(虹竜巻)",
+    "weaponCategry": 0,
+    "enemySearchRadius": 0,
+    "enemySearchOffset": 0,
+    "attackPower": 0,
+    "attackStopPower": 0,
+    "attackIgnoreDefense": 0,
+    "attackDisableBrakeTime": 0,
+    "additionalPower": 0,
+    "attackHitShape": 0,
+    "attackHitRadius": 0,
+    "attackHitSize": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "hitGrowingTimeRate": 0,
+    "attackHitPositionOffset": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "attackMoveSpeed": 40,
+    "attackMoveAccel": 0,
+    "attackMoveSpeedY": 0,
+    "attackMoveAccelY": 0,
+    "attackDuration": 0.1,
+    "attackTimeSpan": 18,
+    "isBackCritical": 0,
+    "isSideCritical": 0,
+    "shieldBreak": 0,
+    "isReflector": 0,
+    "refrectionRate": 0,
+    "reflectionAddSpeedRate": 0,
+    "invalidRefrection": 1,
+    "isSelfRefrection": 0,
+    "selfRefrectionNum": 0,
+    "refrectionRandomRot": {
+      "x": 0,
+      "y": 0
+    },
+    "isHideHitEffect": 1,
+    "killComboRate": 0,
+    "useLimitMax": -1,
+    "spriteButtonIcon": {
+      "fileID": 21300000,
+      "guid": "cda31de6b55b0bf49980641dad2886be",
+      "type": 2
+    },
+    "useClickWhenFire": 1,
+    "useChargeWhenFire": 0,
+    "useChargeWithoutFire": 0,
+    "weaponAutoChargeSettings": {
+      "fileID": 0
+    },
+    "bulletPosition": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "bulletFx": "Fx/Bullet/bl_uchiwa_tornado_shoot",
+    "shootSeType": 64,
+    "shootAnimName": "chr_hit",
+    "shootFx": "Fx/Battle/fx_skillshoot",
+    "buffType": 15,
+    "buffPower": 200,
+    "buffDuration": 0,
+    "buffTag": null,
+    "buffRemoveWithBullet": 1,
+    "buffRemoveOnDamage": 1,
+    "buffUpdateOnManyHit": 0,
+    "isRemoveOnTargetDie": 1,
+    "isChangedBuffPowerByTargetRemainLife": 0,
+    "remainLife2BuffPower": 0,
+    "remainLife1BuffPower": 0,
+    "explosionPower": 0,
+    "explosionStopPower": 0,
+    "explosionDisableBrakeTime": 0,
+    "explosionHitShape": 0,
+    "explosionHitRadius": 17,
+    "explosionHitSize": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "explosionDuration": 6,
+    "explosionHitInterval": 6,
+    "explosionSeType": 54,
+    "explosionFx": "Fx/Bullet/bl_uchiwa_tornado",
+    "disableExplosionFx": null,
+    "explosionScale": 1,
+    "explosionHitJudgeType": 1,
+    "hitPartyType": 0,
+    "isHitManyTime": 0,
+    "bulletGenerateNum": 1,
+    "additionalColliders": [
+      {
+        "explosionPower": 60,
+        "explosionStopPower": 10000,
+        "explosionIgnoreDefense": 0,
+        "explosionDisableBrakeTime": 1,
+        "explosionHitShape": 0,
+        "explosionHitRadius": 5,
+        "explosionHitSize": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "explosionHitInterval": 6,
+        "isHitManyTime": 0,
+        "isReflector": 1,
+        "refrectionRate": 1.3,
+        "isHideHitEffect": 0,
+        "isOverwriteDirection": 1,
+        "overwriteDirectionType": 4
+      }
+    ]
+  }
+}

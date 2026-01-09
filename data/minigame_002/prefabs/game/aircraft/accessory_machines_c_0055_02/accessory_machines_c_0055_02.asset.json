@@ -1,0 +1,93 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "353d3699e795a4f5b9c3a521ef46f9e1",
+      "type": 3
+    },
+    "m_Name": "accessory_machines_c_0055_02",
+    "m_EditorClassIdentifier": null,
+    "aircraftName": "カメレ･オ･マキナ-ガワガエ02",
+    "description": "武器:ゼンマイショット",
+    "moveSpeed": 30,
+    "moveAccel": 30,
+    "moveResistPower": 35,
+    "moveBrake": 60,
+    "rotationSpeed": 1080,
+    "respawnPositionSelectMoveSpeed": 80,
+    "defense": 30,
+    "searchHitRadius": 1,
+    "weaponPositionOffset": {
+      "x": 0,
+      "y": 1.58,
+      "z": 6.8
+    },
+    "pilotPositionOffset": {
+      "x": -0.03,
+      "y": 0.8633238,
+      "z": -0.58913404
+    },
+    "pilotScale": {
+      "x": 3,
+      "y": 3,
+      "z": 3
+    },
+    "avatarNeckPositionOffset": {
+      "x": -0.0268,
+      "y": 4.251228,
+      "z": -1.4301131
+    },
+    "avatarScale": {
+      "x": 14,
+      "y": 14,
+      "z": 14
+    },
+    "weaponSettings": {
+      "fileID": 11400000,
+      "guid": "5c396f8346d6e0f41b69a0b928d1b224",
+      "type": 2
+    },
+    "passiveSkills": [
+      {
+        "fileID": 11400000,
+        "guid": "51ae85f20474f504d9afdf7bd9afbe42",
+        "type": 2
+      },
+      {
+        "fileID": 11400000,
+        "guid": "82fa2a78d0bbc5749bf36c91c0010a5d",
+        "type": 2
+      },
+      {
+        "fileID": 11400000,
+        "guid": "7febebb04321e744a89c4fee79de6bc4",
+        "type": 2
+      },
+      {
+        "fileID": 11400000,
+        "guid": "08fabeec359d5594891cb5d5d7b8e19b",
+        "type": 2
+      }
+    ],
+    "resistantToBuffs": null,
+    "flickDashSettings": {
+      "fileID": 0
+    },
+    "ForceShowFlyGauge": 0
+  }
+}

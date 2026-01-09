@@ -1,0 +1,88 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "353d3699e795a4f5b9c3a521ef46f9e1",
+      "type": 3
+    },
+    "m_Name": "accessory_machines_c_0001_41",
+    "m_EditorClassIdentifier": null,
+    "aircraftName": "エモカーX・コロコロパンダ型",
+    "description": "武器: パンダボール",
+    "moveSpeed": 20,
+    "moveAccel": 28,
+    "moveResistPower": 20,
+    "moveBrake": 35,
+    "rotationSpeed": 720,
+    "respawnPositionSelectMoveSpeed": 80,
+    "defense": 6,
+    "searchHitRadius": 1,
+    "weaponPositionOffset": {
+      "x": 0,
+      "y": 0.3,
+      "z": 4.5
+    },
+    "pilotPositionOffset": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "pilotScale": {
+      "x": 3,
+      "y": 3,
+      "z": 3
+    },
+    "avatarNeckPositionOffset": {
+      "x": 0,
+      "y": 3.1,
+      "z": -0.75
+    },
+    "avatarScale": {
+      "x": 14,
+      "y": 14,
+      "z": 14
+    },
+    "weaponSettings": {
+      "fileID": 11400000,
+      "guid": "fcdfa85a406a17240b6401f2b4dd4052",
+      "type": 2
+    },
+    "passiveSkills": [
+      {
+        "fileID": 11400000,
+        "guid": "0ab8ededea22d194ca9f11330ca3f522",
+        "type": 2
+      },
+      {
+        "fileID": 11400000,
+        "guid": "c94e3343f30b298449ec6c79ecb86891",
+        "type": 2
+      },
+      {
+        "fileID": 11400000,
+        "guid": "2841d5a3a6c51d94984bf85804b8cd17",
+        "type": 2
+      }
+    ],
+    "resistantToBuffs": null,
+    "flickDashSettings": {
+      "fileID": 0
+    },
+    "ForceShowFlyGauge": 0
+  }
+}

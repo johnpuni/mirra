@@ -1,0 +1,168 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "c08f36bbc432c2f43761fa6c12f80746",
+      "type": 3
+    },
+    "m_Name": "wp_boomerang_00_cv04",
+    "m_EditorClassIdentifier": null,
+    "memo": "リボンブーメラン",
+    "weaponCategry": 0,
+    "enemySearchRadius": 14,
+    "enemySearchOffset": 10,
+    "attackPower": 60,
+    "attackStopPower": 10000,
+    "attackIgnoreDefense": 0,
+    "attackDisableBrakeTime": 1,
+    "additionalPower": 0,
+    "attackHitShape": 0,
+    "attackHitRadius": 4,
+    "attackHitSize": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "hitGrowingTimeRate": 0,
+    "attackHitPositionOffset": {
+      "x": 0,
+      "y": 3,
+      "z": 0
+    },
+    "attackMoveSpeed": 0,
+    "attackMoveAccel": 0,
+    "attackMoveSpeedY": 0,
+    "attackMoveAccelY": 0,
+    "attackDuration": 0.4,
+    "attackTimeSpan": 0.01,
+    "isBackCritical": 0,
+    "isSideCritical": 0,
+    "shieldBreak": 0,
+    "isReflector": 0,
+    "refrectionRate": 0,
+    "reflectionAddSpeedRate": 0,
+    "invalidRefrection": 0,
+    "isSelfRefrection": 0,
+    "selfRefrectionNum": 0,
+    "refrectionRandomRot": {
+      "x": 0,
+      "y": 0
+    },
+    "isHideHitEffect": 0,
+    "killComboRate": 0,
+    "useLimitMax": -1,
+    "spriteButtonIcon": {
+      "fileID": 0
+    },
+    "useClickWhenFire": 1,
+    "useChargeWhenFire": 1,
+    "useChargeWithoutFire": 0,
+    "weaponAutoChargeSettings": {
+      "fileID": 0
+    },
+    "maxChargeTime": 2,
+    "inChargeDeceleratingRate": 1,
+    "inChargeMoveSpeedRate": 0.3,
+    "inChargeSe": 63,
+    "chargeMaxFx": "Fx/Battle/fx_charge_dash_attack_max",
+    "inChargeFx": "Fx/Battle/fx_charge_dash_attack",
+    "disableChargeEffectWhenMax": 0,
+    "isChargeBuffContext": {
+      "type": 0,
+      "power": 0,
+      "duration": 0,
+      "tag": null,
+      "isRemoveOnTargetDie": 1,
+      "customSatelliteFxName": null
+    },
+    "buffContexts": [],
+    "prefabWeapon": {
+      "fileID": 1791977929463113,
+      "guid": "adc99236b3cd4fd4a9f23e07038647e7",
+      "type": 2
+    },
+    "prefabChargeMaxWeapon": {
+      "fileID": 1623331047375775,
+      "guid": "5d3b89a7f052c36448751b57b27af5ac",
+      "type": 2
+    },
+    "weaponObjectRotate": {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "w": 0
+    },
+    "waitDuration": 2,
+    "comeBackTime": 1,
+    "hitIntervaTime": 0.5,
+    "rotationSpeed": 1000,
+    "chargeRangeValue": 0.2,
+    "chargeScaleValue": 0.3,
+    "attackMoveRange": 30,
+    "curveTimeToPosition": {
+      "serializedVersion": 2,
+      "m_Curve": [
+        {
+          "serializedVersion": 3,
+          "time": 0,
+          "value": 0,
+          "inSlope": 1,
+          "outSlope": 1,
+          "weightedMode": 0,
+          "inWeight": 0,
+          "outWeight": 0
+        },
+        {
+          "serializedVersion": 3,
+          "time": 1,
+          "value": 1,
+          "inSlope": 1,
+          "outSlope": 1,
+          "weightedMode": 0,
+          "inWeight": 0,
+          "outWeight": 0
+        }
+      ],
+      "m_PreInfinity": 2,
+      "m_PostInfinity": 2,
+      "m_RotationOrder": 4
+    },
+    "comeBackRotationSpeed": 720,
+    "forceDirectionType": 1,
+    "returnForceDirectionType": 5,
+    "shootSeType": 72,
+    "canGrabItem": 0,
+    "hideWeaponWhenIdleForPuppet": 0,
+    "hideWeaponDelay": 0,
+    "useReturnHandDurationLimit": 0,
+    "returnHandDurationLimit": 0,
+    "chargeFireContexts": [
+      {
+        "chargeRateOrMore": 0.5,
+        "expandAttackRangeRate": 0,
+        "fx": "Fx/Battle/fx_punch_kuma_1"
+      },
+      {
+        "chargeRateOrMore": 0.99,
+        "expandAttackRangeRate": 4,
+        "fx": "Fx/Battle/fx_punch_kuma_2"
+      }
+    ],
+    "disableChargePunch": 0
+  }
+}

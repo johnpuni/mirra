@@ -1,0 +1,113 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "013da6550c464dde88b94523862b340d",
+      "type": 3
+    },
+    "m_Name": "wp_shikigami_01_cv02",
+    "m_EditorClassIdentifier": null,
+    "memo": "式神(上空回避ストンピング)",
+    "weaponCategry": 0,
+    "enemySearchRadius": 30.8,
+    "enemySearchOffset": 24.2,
+    "attackPower": 65,
+    "attackStopPower": 10000,
+    "attackIgnoreDefense": 0,
+    "attackDisableBrakeTime": 1,
+    "additionalPower": 17,
+    "attackHitShape": 0,
+    "attackHitRadius": 20,
+    "attackHitSize": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "hitGrowingTimeRate": 0,
+    "attackHitPositionOffset": {
+      "x": 0,
+      "y": -0.54,
+      "z": 6.25
+    },
+    "attackMoveSpeed": 34.9,
+    "attackMoveAccel": 0,
+    "attackMoveSpeedY": 0,
+    "attackMoveAccelY": 0,
+    "attackDuration": 0.2,
+    "attackTimeSpan": 1.5,
+    "isBackCritical": 0,
+    "isSideCritical": 0,
+    "shieldBreak": 1,
+    "isReflector": 0,
+    "refrectionRate": 0,
+    "reflectionAddSpeedRate": 0,
+    "invalidRefrection": 0,
+    "isSelfRefrection": 0,
+    "selfRefrectionNum": 0,
+    "refrectionRandomRot": {
+      "x": 0,
+      "y": 0
+    },
+    "isHideHitEffect": 0,
+    "killComboRate": 0,
+    "useLimitMax": -1,
+    "spriteButtonIcon": {
+      "fileID": 0
+    },
+    "useClickWhenFire": 1,
+    "useChargeWhenFire": 1,
+    "useChargeWithoutFire": 0,
+    "weaponAutoChargeSettings": {
+      "fileID": 0
+    },
+    "maxChargeTime": 1.35,
+    "inChargeDeceleratingRate": 1,
+    "inChargeMoveSpeedRate": 0,
+    "inChargeSe": 0,
+    "chargeMaxFx": "Fx/Battle/fx_charge_dash_attack_max",
+    "inChargeFx": "Fx/Battle/fx_charge_dash_attack3",
+    "disableChargeEffectWhenMax": 1,
+    "isChargeBuffContext": {
+      "type": 0,
+      "power": 0,
+      "duration": 0,
+      "tag": null,
+      "isRemoveOnTargetDie": 1,
+      "customSatelliteFxName": null
+    },
+    "buffContexts": [],
+    "standingCoolTime": 3,
+    "standingMaxTime": 0.5,
+    "stompingForwardSpeed": 3.5,
+    "stompingWeaknessTime": 1.5,
+    "stompingSeType": 42,
+    "stompingFx": "Fx/Bullet/bl_bomb_explosion",
+    "stompingShieldBreakProbability": 30,
+    "idleAnimTrigger": "Idle",
+    "standAnimTrigger": "Stand",
+    "stompingAnimTrigger": "Stomping",
+    "readyAnimTrigger": "Ready",
+    "unreadyAnimTrigger": "Unready",
+    "standSpeedName": "RotateSpeed",
+    "normalWeapon": {
+      "fileID": 11400000,
+      "guid": "3b52070cd5e16694bbe6f771210de514",
+      "type": 2
+    }
+  }
+}

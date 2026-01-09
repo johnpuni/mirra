@@ -1,0 +1,173 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "d05eb46655283eebc51ace8e7a8bbb87",
+      "type": 3
+    },
+    "m_Name": "wp_pigeon_emocarx",
+    "m_EditorClassIdentifier": null,
+    "memo": "s43スパイ鳩エモカーX",
+    "weaponCategry": 2,
+    "enemySearchRadius": 30,
+    "enemySearchOffset": 24,
+    "attackPower": 41,
+    "attackStopPower": 10000,
+    "attackIgnoreDefense": 0,
+    "attackDisableBrakeTime": 0,
+    "additionalPower": 0,
+    "attackHitShape": 0,
+    "attackHitRadius": 5,
+    "attackHitSize": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "hitGrowingTimeRate": 0,
+    "attackHitPositionOffset": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "attackMoveSpeed": 65,
+    "attackMoveAccel": 0,
+    "attackMoveSpeedY": 0,
+    "attackMoveAccelY": 0,
+    "attackDuration": 0.8,
+    "attackTimeSpan": 1.5,
+    "isBackCritical": 0,
+    "isSideCritical": 0,
+    "shieldBreak": 0,
+    "isReflector": 0,
+    "refrectionRate": 0,
+    "reflectionAddSpeedRate": 0,
+    "invalidRefrection": 0,
+    "isSelfRefrection": 0,
+    "selfRefrectionNum": 0,
+    "refrectionRandomRot": {
+      "x": 0,
+      "y": 0
+    },
+    "isHideHitEffect": 0,
+    "killComboRate": 0,
+    "useLimitMax": -1,
+    "spriteButtonIcon": {
+      "fileID": 0
+    },
+    "useClickWhenFire": 1,
+    "useChargeWhenFire": 0,
+    "useChargeWithoutFire": 0,
+    "weaponAutoChargeSettings": {
+      "fileID": 0
+    },
+    "maxChargeTime": 1.5,
+    "inChargeDeceleratingRate": 1,
+    "inChargeMoveSpeedRate": 0,
+    "inChargeSe": 63,
+    "chargeMaxFx": "Fx/Battle/fx_charge_dash_attack_max",
+    "inChargeFx": "Fx/Battle/fx_charge_dash_attack3",
+    "disableChargeEffectWhenMax": 0,
+    "isChargeBuffContext": {
+      "type": 0,
+      "power": 0,
+      "duration": 0,
+      "tag": null,
+      "isRemoveOnTargetDie": 1,
+      "customSatelliteFxName": null
+    },
+    "buffContexts": [],
+    "DualGuns": {
+      "BuffTag": "PigeonDualGuns",
+      "Prefab": {
+        "fileID": 1481165317313838,
+        "guid": "d5ef6ee05adbc1049b33427923a2cfa9",
+        "type": 2
+      },
+      "ShootDuration": 0.4,
+      "DualSideOffset": 2,
+      "ShootSeType": 71,
+      "IsWallPenetrate": 1,
+      "PlayerPenetrateNum": -1,
+      "HitPartyType": 0,
+      "FriendlyFireRate": 1,
+      "BuffData": {
+        "Type": 10,
+        "Power": -3,
+        "Duration": 2
+      },
+      "Levels": [
+        {
+          "ShootNum": 1
+        },
+        {
+          "ShootNum": 3
+        }
+      ]
+    },
+    "ChargeFly": {
+      "SeType": 81,
+      "DashForce": 60,
+      "Duration": 2
+    },
+    "Fortress": {
+      "Enabled": 1,
+      "BuffTag": "PigeonFortress",
+      "Prefab": {
+        "fileID": 1746365166896503,
+        "guid": "c05f76023e1c8dd43ad41cc328397c72",
+        "type": 2
+      },
+      "EnemyPrefab": {
+        "fileID": 0
+      },
+      "FirstInstantiateInterval": 50,
+      "InstantiateInterval": 40,
+      "InstantiateStepNum": 3,
+      "InstantiateStepInterval": 5,
+      "GridSize": {
+        "x": 2,
+        "y": 2
+      },
+      "LifeTime": 5,
+      "HitInterval": 1,
+      "TouchSeType": 66,
+      "ItemRecastSpeedScale": 0,
+      "ItemRecastSpeedScaleWithUseLimit": 0,
+      "BuffDatas": [
+        {
+          "Type": 8,
+          "Power": 10,
+          "Duration": 15,
+          "MultiplexLimit": 3
+        },
+        {
+          "Type": 9,
+          "Power": 10,
+          "Duration": 15,
+          "MultiplexLimit": 3
+        },
+        {
+          "Type": 10,
+          "Power": 5,
+          "Duration": 15,
+          "MultiplexLimit": 3
+        }
+      ]
+    }
+  }
+}

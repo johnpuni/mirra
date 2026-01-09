@@ -1,0 +1,78 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "353d3699e795a4f5b9c3a521ef46f9e1",
+      "type": 3
+    },
+    "m_Name": "accessory_machines_c_0049_01",
+    "m_EditorClassIdentifier": null,
+    "aircraftName": "S47鏡餅",
+    "description": "トリモチ砲",
+    "moveSpeed": 28,
+    "moveAccel": 21,
+    "moveResistPower": 30,
+    "moveBrake": 40,
+    "rotationSpeed": 360,
+    "respawnPositionSelectMoveSpeed": 80,
+    "defense": 34,
+    "searchHitRadius": 1,
+    "weaponPositionOffset": {
+      "x": 0,
+      "y": 3.5,
+      "z": 6.8
+    },
+    "pilotPositionOffset": {
+      "x": -4.543419e-13,
+      "y": 1.7833239,
+      "z": -0.47913405
+    },
+    "pilotScale": {
+      "x": 3,
+      "y": 3,
+      "z": 3
+    },
+    "avatarNeckPositionOffset": {
+      "x": 0.0032000002,
+      "y": 5.171228,
+      "z": -1.320113
+    },
+    "avatarScale": {
+      "x": 14,
+      "y": 14,
+      "z": 14
+    },
+    "weaponSettings": {
+      "fileID": 11400000,
+      "guid": "5d13897d5c65e194181b8d670f7a4ae2",
+      "type": 2
+    },
+    "passiveSkills": [
+      {
+        "fileID": 11400000,
+        "guid": "e27164f50b0a2a549b69a1fd1885446f",
+        "type": 2
+      }
+    ],
+    "resistantToBuffs": null,
+    "flickDashSettings": {
+      "fileID": 0
+    },
+    "ForceShowFlyGauge": 0
+  }
+}

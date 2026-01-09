@@ -1,0 +1,66 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "54f599c206402faf63488587effc9b8a",
+      "type": 3
+    },
+    "m_Name": "ItemDropCandy_R",
+    "m_EditorClassIdentifier": null,
+    "itemType": 60,
+    "getRadius": 12,
+    "getRadiusPuppet": 12,
+    "isDestroyObjectOnGet": 0,
+    "itemObjectName": "Stage/Item/candy1_B",
+    "isEnemyOtherObject": 0,
+    "itemEnemyObjectName": null,
+    "needAnimationEventForGettable": 0,
+    "buffType": 9,
+    "targetType": 0,
+    "buffDuration": 9999,
+    "buffParam": 6,
+    "tag": "ItamCandy_R_Attack",
+    "buffUpdateOnManyHit": 0,
+    "duplicationMax": 5,
+    "dontRemoveOnTargetDie": 1,
+    "subBuffParams": [
+      {
+        "buffType": 34,
+        "buffDuration": 9999,
+        "buffParam": 0.25,
+        "tag": "ItamCandy_R_Gigantic",
+        "buffUpdateOnManyHit": 0,
+        "duplicationMax": 5,
+        "dontRemoveOnTargetDie": 1
+      }
+    ],
+    "getFx": "Fx/Battle/fx_candy_R",
+    "gimmickSe": 0,
+    "getSe": 77,
+    "isPointGetItem": 0,
+    "isUseItemWeapon": 0,
+    "itemSettings": {
+      "fileID": 0
+    },
+    "isOtherTeamAnotherItem": 0,
+    "otherTeamItemSettings": {
+      "fileID": 0
+    },
+    "itemTag": null
+  }
+}

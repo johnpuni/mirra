@@ -1,0 +1,151 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "250ac6066f9dc19cebf12b26a3b27099",
+      "type": 3
+    },
+    "m_Name": "StagePool",
+    "m_EditorClassIdentifier": null,
+    "m_Key": "Stage/",
+    "m_GameObjects": [
+      {
+        "fileID": 1125389226091099,
+        "guid": "39d6e3ce9c6116344a163d9ae2924d72",
+        "type": 2
+      },
+      {
+        "fileID": 1177899018229703,
+        "guid": "be68f6ceb76ea0e4caa032be8d3931a8",
+        "type": 2
+      },
+      {
+        "fileID": 1785621801842896,
+        "guid": "c09dac2b960efd144b2e1d18367a89a4",
+        "type": 2
+      },
+      {
+        "fileID": 1127387807517285,
+        "guid": "04da480f0956458478a17fb85a75683b",
+        "type": 2
+      },
+      {
+        "fileID": 1123095459236026,
+        "guid": "2160d247ce59d0e4e973c87e4f405182",
+        "type": 2
+      },
+      {
+        "fileID": 1222077220479265,
+        "guid": "fa1230b190e7ece4eb6f0919336da7ad",
+        "type": 2
+      },
+      {
+        "fileID": 1775964817189622,
+        "guid": "0a3cd126f837e6543b169a1707c01b66",
+        "type": 2
+      },
+      {
+        "fileID": 1345234132963775,
+        "guid": "625b6f48db32f3241a73d7dc1504626f",
+        "type": 2
+      },
+      {
+        "fileID": 1409655291887222,
+        "guid": "87f75d0ffca82bb4f98c5b5af2e2c8db",
+        "type": 2
+      },
+      {
+        "fileID": 1528892705491120,
+        "guid": "1344961c84aaef4488eef7913265cae3",
+        "type": 2
+      },
+      {
+        "fileID": 1407323293885462,
+        "guid": "5a212c97edc86eb4eb28f7e9f5a138c4",
+        "type": 2
+      },
+      {
+        "fileID": 1242036069407748,
+        "guid": "f774df7d6b2b7c043a3493b14b55306f",
+        "type": 2
+      }
+    ],
+    "m_ScriptableObjects": [
+      {
+        "fileID": 11400000,
+        "guid": "ee35c3fc3a3c20e49a2202625c230172",
+        "type": 2
+      },
+      {
+        "fileID": 11400000,
+        "guid": "fc29b8a6e666cb44292c678547d071be",
+        "type": 2
+      },
+      {
+        "fileID": 11400000,
+        "guid": "85de779902355e44c95c384868c5a8e5",
+        "type": 2
+      },
+      {
+        "fileID": 11400000,
+        "guid": "bc772e179c8516c42be8230af1e684e6",
+        "type": 2
+      },
+      {
+        "fileID": 11400000,
+        "guid": "7064945e170f6934fb74dd0f583664c3",
+        "type": 2
+      },
+      {
+        "fileID": 11400000,
+        "guid": "19da02a486f47554491edf3580daef0a",
+        "type": 2
+      },
+      {
+        "fileID": 11400000,
+        "guid": "36d5bf64266363248b0c7510223c9b57",
+        "type": 2
+      },
+      {
+        "fileID": 11400000,
+        "guid": "89a59b7893e287d4aa0e30e4070f990c",
+        "type": 2
+      },
+      {
+        "fileID": 11400000,
+        "guid": "f4efad11034591248af9fa2ee516da0f",
+        "type": 2
+      },
+      {
+        "fileID": 11400000,
+        "guid": "3aaa34cf4c26978419090fae7904e166",
+        "type": 2
+      },
+      {
+        "fileID": 11400000,
+        "guid": "3a199d3bf032dd0419353a67db89b459",
+        "type": 2
+      },
+      {
+        "fileID": 11400000,
+        "guid": "dcbc70b64bce20e46ba37e2869e537fe",
+        "type": 2
+      }
+    ]
+  }
+}

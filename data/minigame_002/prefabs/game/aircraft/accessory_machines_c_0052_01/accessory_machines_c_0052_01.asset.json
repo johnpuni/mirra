@@ -1,0 +1,72 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "353d3699e795a4f5b9c3a521ef46f9e1",
+      "type": 3
+    },
+    "m_Name": "accessory_machines_c_0052_01",
+    "m_EditorClassIdentifier": null,
+    "aircraftName": "シマリスポストマン",
+    "description": "武器:ホーミングどんぐり",
+    "moveSpeed": 41,
+    "moveAccel": 31,
+    "moveResistPower": 100,
+    "moveBrake": 20,
+    "rotationSpeed": 1080,
+    "respawnPositionSelectMoveSpeed": 80,
+    "defense": 15,
+    "searchHitRadius": 1,
+    "weaponPositionOffset": {
+      "x": 0,
+      "y": 1.58,
+      "z": 6.8
+    },
+    "pilotPositionOffset": {
+      "x": -4.543419e-13,
+      "y": 1.8263239,
+      "z": -1.3491341
+    },
+    "pilotScale": {
+      "x": 3,
+      "y": 3,
+      "z": 3
+    },
+    "avatarNeckPositionOffset": {
+      "x": 0.0032000002,
+      "y": 5.214228,
+      "z": -2.190113
+    },
+    "avatarScale": {
+      "x": 14,
+      "y": 14,
+      "z": 14
+    },
+    "weaponSettings": {
+      "fileID": 11400000,
+      "guid": "fc8d73871b20dc243b7eadd2dfbf21be",
+      "type": 2
+    },
+    "passiveSkills": [],
+    "resistantToBuffs": null,
+    "flickDashSettings": {
+      "fileID": 0
+    },
+    "ForceShowFlyGauge": 0
+  }
+}

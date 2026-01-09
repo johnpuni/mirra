@@ -1,0 +1,115 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "010c5f209df843c0ed1790547d458820",
+      "type": 3
+    },
+    "m_Name": "accessory_weapon_c_3032_01",
+    "m_EditorClassIdentifier": null,
+    "memo": "装備アイテム_しゃぼんシールド",
+    "weaponCategry": 0,
+    "enemySearchRadius": 14,
+    "enemySearchOffset": 10,
+    "attackPower": 10,
+    "attackStopPower": 10000,
+    "attackIgnoreDefense": 0,
+    "attackDisableBrakeTime": 1,
+    "additionalPower": 0,
+    "attackHitShape": 0,
+    "attackHitRadius": 3,
+    "attackHitSize": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "hitGrowingTimeRate": 0,
+    "attackHitPositionOffset": {
+      "x": 0,
+      "y": 0,
+      "z": 1
+    },
+    "attackMoveSpeed": 0,
+    "attackMoveAccel": 0,
+    "attackMoveSpeedY": 0,
+    "attackMoveAccelY": 0,
+    "attackDuration": 0.1,
+    "attackTimeSpan": 18,
+    "isBackCritical": 0,
+    "isSideCritical": 0,
+    "shieldBreak": 0,
+    "isReflector": 0,
+    "refrectionRate": 0,
+    "reflectionAddSpeedRate": 0,
+    "invalidRefrection": 0,
+    "isSelfRefrection": 0,
+    "selfRefrectionNum": 0,
+    "refrectionRandomRot": {
+      "x": 0,
+      "y": 0
+    },
+    "isHideHitEffect": 0,
+    "killComboRate": 0,
+    "useLimitMax": -1,
+    "spriteButtonIcon": {
+      "fileID": 21300000,
+      "guid": "a639d66c418fa164babae974a638e295",
+      "type": 2
+    },
+    "useClickWhenFire": 1,
+    "useChargeWhenFire": 0,
+    "useChargeWithoutFire": 0,
+    "weaponAutoChargeSettings": {
+      "fileID": 0
+    },
+    "satelliteMaxCount": 3,
+    "satelliteDuration": 12,
+    "satelliteMoveSpeed": 7,
+    "satelliteMoveAccel": 0,
+    "satelliteHitSphape": 0,
+    "satelliteHitRadius": 3,
+    "satelliteHitSize": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "satellitePower": 20,
+    "satelliteStopPower": 10000,
+    "satelliteIgnoreDefense": 0,
+    "satelliteDisableBreakeTime": 0.5,
+    "satelliteIsAnnihilator": 1,
+    "satelliteInvalidRefrection": 1,
+    "satelliteIsPunchCollision": 0,
+    "isFriendlyFireInvalid": 1,
+    "orbitRadius": 7,
+    "playerPenetrateNum": 0,
+    "isWallPenetrate": 1,
+    "bulletFx": "Fx/Bullet/bl_bubble",
+    "shootSeType": 68,
+    "shootAnimName": "chr_hit",
+    "shootFx": "Fx/Bullet/bl_bomb_explosion",
+    "buffType": 4,
+    "buffPower": 0.7,
+    "buffDuration": 6,
+    "buffProbability": 100,
+    "bufftag": null,
+    "buffUpdateOnManyHit": 0,
+    "isRemoveOnTargetDie": 1,
+    "buffManyHitShowFx": 0
+  }
+}

@@ -1,0 +1,238 @@
+{
+  "Mesh": {
+    "serializedVersion": 11,
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_Name": "L_foot",
+    "m_SubMeshes": [
+      {
+        "serializedVersion": 2,
+        "firstByte": 0,
+        "indexCount": 114,
+        "topology": 0,
+        "baseVertex": 0,
+        "firstVertex": 0,
+        "vertexCount": 48,
+        "localAABB": {
+          "m_Center": {
+            "x": -0.09614734,
+            "y": -0.12148401,
+            "z": 0.0018442348
+          },
+          "m_Extent": {
+            "x": 0.059233963,
+            "y": 0.17050841,
+            "z": 0.069104195
+          }
+        }
+      }
+    ],
+    "m_Shapes": {
+      "vertices": [],
+      "shapes": [],
+      "channels": [],
+      "fullWeights": []
+    },
+    "m_BindPose": [],
+    "m_BoneNameHashes": null,
+    "m_RootBoneNameHash": 0,
+    "m_BonesAABB": [],
+    "m_VariableBoneCountWeights": {
+      "m_Data": null
+    },
+    "m_MeshCompression": 0,
+    "m_IsReadable": 0,
+    "m_KeepVertices": 0,
+    "m_KeepIndices": 0,
+    "m_IndexFormat": 0,
+    "m_IndexBuffer": "00000100020000000200030003000400000003000500040006000700080006000800090009000a00060009000b000a000c000d000e000c000e000f00100011001200100013001100140011001300140013001500150016001400150017001600180019001a0018001a001b001c0018001d001c001d001e001c001e001f001f0020001c00200021001c001f00220020001f002300220024001d0023002400230025002000260021001b00210027002600270021001b002700280026002900270026002a00290026002b002a002c0022002b002c002b002d002e002a0028002e0028002f00",
+    "m_VertexData": {
+      "serializedVersion": 3,
+      "m_VertexCount": 48,
+      "m_Channels": [
+        {
+          "stream": 0,
+          "offset": 0,
+          "format": 0,
+          "dimension": 3
+        },
+        {
+          "stream": 0,
+          "offset": 12,
+          "format": 1,
+          "dimension": 52
+        },
+        {
+          "stream": 0,
+          "offset": 0,
+          "format": 0,
+          "dimension": 0
+        },
+        {
+          "stream": 0,
+          "offset": 0,
+          "format": 0,
+          "dimension": 0
+        },
+        {
+          "stream": 0,
+          "offset": 20,
+          "format": 1,
+          "dimension": 2
+        },
+        {
+          "stream": 0,
+          "offset": 24,
+          "format": 0,
+          "dimension": 2
+        },
+        {
+          "stream": 0,
+          "offset": 0,
+          "format": 0,
+          "dimension": 0
+        },
+        {
+          "stream": 0,
+          "offset": 0,
+          "format": 0,
+          "dimension": 0
+        },
+        {
+          "stream": 0,
+          "offset": 0,
+          "format": 0,
+          "dimension": 0
+        },
+        {
+          "stream": 0,
+          "offset": 0,
+          "format": 0,
+          "dimension": 0
+        },
+        {
+          "stream": 0,
+          "offset": 0,
+          "format": 0,
+          "dimension": 0
+        },
+        {
+          "stream": 0,
+          "offset": 0,
+          "format": 0,
+          "dimension": 0
+        },
+        {
+          "stream": 0,
+          "offset": 0,
+          "format": 0,
+          "dimension": 0
+        },
+        {
+          "stream": 0,
+          "offset": 0,
+          "format": 0,
+          "dimension": 0
+        }
+      ],
+      "m_DataSize": 1536,
+      "_typelessdata": "8f3217bdcb538ebefb68153d643b05801f360000a53af632acaaea3e9209703f8f3217bdcb538ebe574d06bd643b05801fb60000a53acd31acaaea3e6ef64f3f7b3217bdcfcd483d574d06bd643b05801fb600004639cd31acaaea3e6ef64f3f7b3217bdcfcd483dfb68153d643b05801f3600004639f632aaaaea3e9009703f333292bdcb538ebe694d913d1f360380643b0000a53ac733acaaea3e0000803f293292bdcfcd483d694d913d1f360380643b00004639c733abaaea3e0000803fae9ff7bdcb538ebe694d913d1fb60200643b0000a53a65293c6acc3e0000803f333292bdcb538ebe694d913d1f360380643b0000a53a24246e40de3e0000803f293292bdcfcd483d694d913d1f360380643b0000463924246f40de3e0000803fa39ff7bdcfcd483d694d913d1fb60200643b0000463965293c6acc3e0000803f471c1fbecb538ebefb68153d64bb02001f360000a53a552c0000c03e0000803f471c1fbecfcd483dfb68153d64bb02001f3600004639552c0000c03e0000803f471c1fbecb538ebe574d06bd64bb02001fb60000a53aaa2e0000c03e6df64f3f471c1fbecb538ebefb68153d64bb02001f360000a53a552c0000c03e9209703f471c1fbecfcd483dfb68153d64bb02001f3600004639552c0000c03e9209703f471c1fbecfcd483d574d06bd64bb02001fb600004639aa2e0000c03e6ef64f3f471c1fbecfcd483d574d06bd64bb02001fb600004639aa2e0000c03e0000403fae9ff7bdcb538ebe97bf89bd1fb6020064bb0000a53a27303c6acc3e0000403f471c1fbecb538ebe574d06bd64bb02001fb60000a53aaa2e0100c03e0100403fa39ff7bdcfcd483d97bf89bd1fb6020064bb0000463927303c6acc3e0000403f333292bdcb538ebe97bf89bd1f36038064bb0000a53afb306e40de3e0000403f293292bdcfcd483d97bf89bd1f36038064bb00004639fb306f40de3e0000403f8f3217bdcb538ebe574d06bd643b05801fb60000a53acd31acaaea3e0000403f7b3217bdcfcd483d574d06bd643b05801fb600004639cd31abaaea3e0000403f471c1fbecb538ebe574d06bd04b9e0b928b40000a53aaa2e0000c03e6df64f3fc7c310be088095bef510ddbc09b709bbd4b10000ba3a712e0000c03e58a6523fc7c310be088095be3d48fb3c09b709bbd4310000ba3a8f2c0000c03ea7596d3f471c1fbecb538ebefb68153d04b9e0b928340000a53a552c0000c03e9209703fc7c310be088095bef510ddbc09b709bbd4b10000ba3a712eac0bc53e59a6523fae9ff7bdcb538ebe97bf89bd28b4e0b904b90000cd3af82f3c6acc3e0000403f47bdebbd088095be051d5abdd4b109bb09b70000d63a542f4581ce3ec77c463fa4149ebd088095be051d5abdd43109bb09b70000fe3a572f6729dc3ec87c463fcc9450bd088095bef510ddbc093709bbd4b100001a3b7a2efe9ee53e5aa6523fc7c310be088095be3d48fb3c09b709bbd4310000ba3a8f2cad0bc53ea7596d3f8f3217bdcb538ebe574d06bd0439e0b928b400002f3bbb2eacaaea3e6ef64f3f333292bdcb538ebe97bf89bd2834e0b904b90000073bfb2f6e40de3e0000403f47bdebbd088095be051d5abdd4b109bb09b70000d63a542f4481ce3e0000403fa4149ebd088095be051d5abdd43109bb09b70000fe3a572f6729dc3e0000403fcc9450bd088095be3d48fb3c093709bbd43100001b3b8e2cfd9ee53ea7596d3f47bdebbd088095bea938693dd4b109bb09370000d63a5c2b4481ce3e3983793fae9ff7bdcb538ebe694d913d28b4e0b904390000cd3a162a3c6acc3e0000803fa4149ebd088095bea938693dd43109bb09370000ff3a5c2b6829dc3e3883793f333292bdcb538ebe694d913d2834e0b904390000073b112a6e40de3e0000803f8f3217bdcb538ebefb68153d0439e0b9283400002f3b4a2cacaaea3e9209703fcc9450bd088095bef510ddbc093709bbd4b100001a3b7a2eacaaea3e59a6523fcc9450bd088095be3d48fb3c093709bbd43100001b3b8e2cacaaea3ea7596d3fa4149ebd088095bea938693dd43109bb09370000ff3a5c2b6629dc3e0000803f47bdebbd088095bea938693dd4b109bb09370000d63a5c2b4481ce3e0000803f"
+    },
+    "m_CompressedMesh": {
+      "m_Vertices": {
+        "m_NumItems": 0,
+        "m_Range": 0,
+        "m_Start": 0,
+        "m_Data": null,
+        "m_BitSize": 0
+      },
+      "m_UV": {
+        "m_NumItems": 0,
+        "m_Range": 0,
+        "m_Start": 0,
+        "m_Data": null,
+        "m_BitSize": 0
+      },
+      "m_Normals": {
+        "m_NumItems": 0,
+        "m_Range": 0,
+        "m_Start": 0,
+        "m_Data": null,
+        "m_BitSize": 0
+      },
+      "m_Tangents": {
+        "m_NumItems": 0,
+        "m_Range": 0,
+        "m_Start": 0,
+        "m_Data": null,
+        "m_BitSize": 0
+      },
+      "m_Weights": {
+        "m_NumItems": 0,
+        "m_Data": null,
+        "m_BitSize": 0
+      },
+      "m_NormalSigns": {
+        "m_NumItems": 0,
+        "m_Data": null,
+        "m_BitSize": 0
+      },
+      "m_TangentSigns": {
+        "m_NumItems": 0,
+        "m_Data": null,
+        "m_BitSize": 0
+      },
+      "m_FloatColors": {
+        "m_NumItems": 0,
+        "m_Range": 0,
+        "m_Start": 0,
+        "m_Data": null,
+        "m_BitSize": 0
+      },
+      "m_BoneIndices": {
+        "m_NumItems": 0,
+        "m_Data": null,
+        "m_BitSize": 0
+      },
+      "m_Triangles": {
+        "m_NumItems": 0,
+        "m_Data": null,
+        "m_BitSize": 0
+      },
+      "m_UVInfo": 0
+    },
+    "m_LocalAABB": {
+      "m_Center": {
+        "x": -0.09614734,
+        "y": -0.12148401,
+        "z": 0.0018442348
+      },
+      "m_Extent": {
+        "x": 0.059233963,
+        "y": 0.17050841,
+        "z": 0.069104195
+      }
+    },
+    "m_MeshUsageFlags": 0,
+    "m_CookingOptions": 30,
+    "m_BakedConvexCollisionMesh": null,
+    "m_BakedTriangleCollisionMesh": null,
+    "m_MeshMetrics[0]": 3.729109,
+    "m_MeshMetrics[1]": 3740685.5,
+    "m_MeshOptimizationFlags": -1,
+    "m_StreamData": {
+      "serializedVersion": 2,
+      "offset": 0,
+      "size": 0,
+      "path": null
+    }
+  }
+}

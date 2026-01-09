@@ -1,0 +1,35 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "250ac6066f9dc19cebf12b26a3b27099",
+      "type": 3
+    },
+    "m_Name": "PilotPool",
+    "m_EditorClassIdentifier": null,
+    "m_Key": "Pilot/",
+    "m_GameObjects": [
+      {
+        "fileID": 1632213808963672,
+        "guid": "fb50823ba7f80d94ca15c9a6779ea99d",
+        "type": 2
+      }
+    ],
+    "m_ScriptableObjects": []
+  }
+}

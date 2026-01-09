@@ -1,0 +1,74 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "353d3699e795a4f5b9c3a521ef46f9e1",
+      "type": 3
+    },
+    "m_Name": "accessory_machines_c_0015_04",
+    "m_EditorClassIdentifier": null,
+    "aircraftName": "てんくうこくりゅう",
+    "description": "ドラゴンブレス",
+    "moveSpeed": 25,
+    "moveAccel": 32,
+    "moveResistPower": 30,
+    "moveBrake": 35,
+    "rotationSpeed": 360,
+    "respawnPositionSelectMoveSpeed": 80,
+    "defense": 5,
+    "searchHitRadius": 1,
+    "weaponPositionOffset": {
+      "x": 0,
+      "y": 2.38,
+      "z": 4.72
+    },
+    "pilotPositionOffset": {
+      "x": 0,
+      "y": 3.29,
+      "z": -0.205
+    },
+    "pilotScale": {
+      "x": 3,
+      "y": 3,
+      "z": 3
+    },
+    "avatarNeckPositionOffset": {
+      "x": 0,
+      "y": 6.5,
+      "z": -0.85
+    },
+    "avatarScale": {
+      "x": 14,
+      "y": 14,
+      "z": 14
+    },
+    "weaponSettings": {
+      "fileID": 11400000,
+      "guid": "5f9cf7bf6e5935646bb564766ea30060",
+      "type": 2
+    },
+    "passiveSkills": [],
+    "resistantToBuffs": null,
+    "flickDashSettings": {
+      "fileID": 11400000,
+      "guid": "7c8ac83d1465ed44a845f204758409cd",
+      "type": 2
+    },
+    "ForceShowFlyGauge": 0
+  }
+}

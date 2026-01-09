@@ -1,0 +1,71 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "f72bbfab1401cda0e43de9781cf70a75",
+      "type": 3
+    },
+    "m_Name": "tako2Setting 1",
+    "m_EditorClassIdentifier": null,
+    "MoveSpeedWhenRandomWalk": 15,
+    "MoveSpeedWhenRandomWalkForce": 50,
+    "MoveSpeedWhenWalkToTarget": 10,
+    "HitRadius": 6,
+    "HitPower": 40,
+    "friendlyFireRate": 1,
+    "angerPowerNum": 0,
+    "angerPowerMax": 0,
+    "ReceiveDamagePower": 50,
+    "ReceiveDamageStunTime": 0.7,
+    "HitInterval": 0.75,
+    "RandomWalkTime": 20,
+    "RandomWalkTurnAroundTime": 4,
+    "GenerateWillSpawnIndexNum": 20,
+    "MaxWalkToTargetTime": 5,
+    "MinWalkToTargetTime": 4,
+    "BumperFx": [
+      "Fx/Battle/fx_hitA",
+      "Fx/Battle/fx_bumper"
+    ],
+    "BumperHitInterval": 1,
+    "FallFx": [
+      "Fx/Battle/fx_hitA"
+    ],
+    "FallFxOffset": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "FloorCheckRayOriginHeight": 1,
+    "FloorCheckRayDistance": 1.1,
+    "FloorCheckDistance": 5,
+    "ForceDestroyPositionHeight": -7,
+    "CheckFloorInterval": 1,
+    "CanMovePositionY": 1,
+    "BumperHitPower": 70,
+    "AccelRate": 1.01,
+    "DecelerateRate": 0.95,
+    "PredictTime": 0.1,
+    "SendSyncIntervalTime": 0.1,
+    "ForceSyncPositionLength": 18,
+    "SyncPositionInterpolation": 0,
+    "SyncPositionSpeed": 0,
+    "NotPositionSyncTimeByDamage": 0.7,
+    "RespawnInterval": 3
+  }
+}

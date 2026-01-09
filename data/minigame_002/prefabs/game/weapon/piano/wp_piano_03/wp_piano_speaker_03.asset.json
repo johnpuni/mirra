@@ -1,0 +1,172 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "73e615fa8be462855984e55d6a3fb9f3",
+      "type": 3
+    },
+    "m_Name": "wp_piano_speaker_03",
+    "m_EditorClassIdentifier": null,
+    "memo": "スピーカー",
+    "weaponCategry": 2,
+    "enemySearchRadius": 30.8,
+    "enemySearchOffset": 24.2,
+    "attackPower": 61,
+    "attackStopPower": 10000,
+    "attackIgnoreDefense": 60,
+    "attackDisableBrakeTime": 0,
+    "additionalPower": 0,
+    "attackHitShape": 0,
+    "attackHitRadius": 5,
+    "attackHitSize": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "hitGrowingTimeRate": 0,
+    "attackHitPositionOffset": {
+      "x": 0,
+      "y": -0.54,
+      "z": 6.25
+    },
+    "attackMoveSpeed": 32,
+    "attackMoveAccel": 0,
+    "attackMoveSpeedY": 0,
+    "attackMoveAccelY": 0,
+    "attackDuration": 2.5,
+    "attackTimeSpan": 0.1,
+    "isBackCritical": 0,
+    "isSideCritical": 0,
+    "shieldBreak": 0,
+    "isReflector": 0,
+    "refrectionRate": 0,
+    "reflectionAddSpeedRate": 0,
+    "invalidRefrection": 0,
+    "isSelfRefrection": 0,
+    "selfRefrectionNum": 0,
+    "refrectionRandomRot": {
+      "x": 0,
+      "y": 0
+    },
+    "isHideHitEffect": 0,
+    "killComboRate": 0,
+    "useLimitMax": -1,
+    "spriteButtonIcon": {
+      "fileID": 0
+    },
+    "useClickWhenFire": 1,
+    "useChargeWhenFire": 0,
+    "useChargeWithoutFire": 0,
+    "weaponAutoChargeSettings": {
+      "fileID": 0
+    },
+    "attackRotationSpeed": 40,
+    "bulletFx": "Fx/Bullet/bl_resonance_01_bullet",
+    "shootSeType": 71,
+    "shootAnimName": "chr_hit",
+    "shootFx": null,
+    "hitSeType": 59,
+    "hitJudgeType": 3,
+    "canFireFx": null,
+    "canEffectHomingBuff": 1,
+    "isInfinitePenetrate": 1,
+    "isHitManyTime": 0,
+    "viewTargetMarker": 0,
+    "playerPenetrateNum": 3,
+    "isWallPenetrate": 1,
+    "bulletGeneratePositionOffset": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "shootingRecoil": 0,
+    "isChild": 0,
+    "isOverwriteDirection": 0,
+    "IsLookAtY": 0,
+    "IsWoofer": 0,
+    "IsFriendlyFireInvalid": 1,
+    "friendlyFireRate": 0,
+    "reflectionFx": null,
+    "bulletTeamColorSwitch": 0,
+    "bulletPowerZero": 0,
+    "bulletMoveStop": 0,
+    "overwriteDirectionType": 0,
+    "onGround": 0,
+    "onGroundOffsetY": 0.1,
+    "addPowerPerSec": 0,
+    "addPowerMin": 0,
+    "addPowerMax": 9999,
+    "yourselfBuffs": [],
+    "buffType": 0,
+    "buffPower": 0,
+    "buffDuration": 0,
+    "buffProbability": 0,
+    "bufftag": null,
+    "buffUpdateOnManyHit": 0,
+    "isRemoveOnTargetDie": 1,
+    "buffManyHitShowFx": 0,
+    "buffDuplicationMax": 0,
+    "explosionTriggerType": 0,
+    "explosionPower": 50,
+    "explosionStopPower": 10000,
+    "explosionDisableBrakeTime": 0,
+    "explosionHitShape": 0,
+    "explosionHitRadius": 15,
+    "explosionHitSize": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "explosionAttackMoveSpeed": 0,
+    "explosionAttackMoveAccel": 0,
+    "explosionHitGrowingTimeRate": 0,
+    "explosionDuration": 0.2,
+    "explosionSeType": 59,
+    "hitFx": null,
+    "explosionFx": "Fx/Bullet/bl_speakerBullet_explosion",
+    "enemyOtherExplosionFx": null,
+    "explosionGrowingFx": null,
+    "disableExplosionFx": null,
+    "withOutSelfFX": 0,
+    "explosionHitJudgeType": 3,
+    "hitPartyType": 2,
+    "explosionDirectionType": 2,
+    "IsExplosionFxPosY": 0,
+    "explosionFxPosY": 0,
+    "switchToAngers": [],
+    "missileReloadTime": 4.5,
+    "multiMissiles": [
+      {
+        "offset": {
+          "x": 3.8,
+          "y": 0,
+          "z": -3
+        }
+      },
+      {
+        "offset": {
+          "x": -3.8,
+          "y": 0,
+          "z": -3
+        }
+      }
+    ],
+    "canFireModelPathLeft": "accessory_machines_c_0033_02(Clone)/GameObject/wp_piano/ballReady_L",
+    "canFireModelPathRight": "accessory_machines_c_0033_02(Clone)/GameObject/wp_piano/ballReady_R"
+  }
+}

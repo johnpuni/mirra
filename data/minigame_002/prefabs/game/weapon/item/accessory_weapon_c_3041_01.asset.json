@@ -1,0 +1,454 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "fe7144f237895db88715e099b3f3bbde",
+      "type": 3
+    },
+    "m_Name": "accessory_weapon_c_3041_01",
+    "m_EditorClassIdentifier": null,
+    "memo": "アイテム福袋",
+    "weaponCategry": 0,
+    "enemySearchRadius": 24,
+    "enemySearchOffset": 19,
+    "attackPower": 0,
+    "attackStopPower": 1000,
+    "attackIgnoreDefense": 0,
+    "attackDisableBrakeTime": 0.5,
+    "additionalPower": 0,
+    "attackHitShape": 0,
+    "attackHitRadius": 3,
+    "attackHitSize": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "hitGrowingTimeRate": 0,
+    "attackHitPositionOffset": {
+      "x": 0,
+      "y": 2,
+      "z": -30
+    },
+    "attackMoveSpeed": 0,
+    "attackMoveAccel": 0,
+    "attackMoveSpeedY": 0,
+    "attackMoveAccelY": 0,
+    "attackDuration": 15,
+    "attackTimeSpan": 15.2,
+    "isBackCritical": 0,
+    "isSideCritical": 0,
+    "shieldBreak": 0,
+    "isReflector": 0,
+    "refrectionRate": 0,
+    "reflectionAddSpeedRate": 0,
+    "invalidRefrection": 0,
+    "isSelfRefrection": 0,
+    "selfRefrectionNum": 0,
+    "refrectionRandomRot": {
+      "x": 0,
+      "y": 0
+    },
+    "isHideHitEffect": 0,
+    "killComboRate": 0,
+    "useLimitMax": 3,
+    "spriteButtonIcon": {
+      "fileID": 21300000,
+      "guid": "3c04d080f7c7c16448bcbd47bb35d914",
+      "type": 2
+    },
+    "useClickWhenFire": 1,
+    "useChargeWhenFire": 0,
+    "useChargeWithoutFire": 0,
+    "weaponAutoChargeSettings": {
+      "fileID": 0
+    },
+    "attackRotationSpeed": 0,
+    "bulletFx": "Fx/Bullet/bl_mysterybox",
+    "shootSeType": 61,
+    "shootAnimName": "chr_hit",
+    "shootFx": "Fx/Battle/fx_eagle_small",
+    "hitSeType": 0,
+    "hitJudgeType": 3,
+    "hitPartyType": 1,
+    "canFireFx": null,
+    "canEffectHomingBuff": 0,
+    "isInfinitePenetrate": 0,
+    "viewTargetMarker": 0,
+    "playerPenetrateNum": 0,
+    "isWallPenetrate": 1,
+    "bulletGeneratePositionOffset": {
+      "x": 0,
+      "y": 0,
+      "z": -30
+    },
+    "bulletGeneratePositionOffsets": [
+      {
+        "x": 10,
+        "y": 0,
+        "z": 20
+      },
+      {
+        "x": 0,
+        "y": 0,
+        "z": 30
+      },
+      {
+        "x": -10,
+        "y": 0,
+        "z": 20
+      }
+    ],
+    "shootingRecoil": 0,
+    "isChild": 0,
+    "isOverwriteDirection": 0,
+    "IsLookAtY": 0,
+    "IsWoofer": 0,
+    "IsFriendlyFireInvalid": 0,
+    "friendlyFireRate": 1,
+    "reflectionFx": null,
+    "bulletTeamColorSwitch": 0,
+    "bulletPowerZero": 1,
+    "bulletMoveStop": 1,
+    "overwriteDirectionType": 0,
+    "bulletCount": 3,
+    "angleInterval": 0,
+    "itemGroupList": [
+      {
+        "itemRate": 100,
+        "itemList": [
+          {
+            "itemBulletFx": "Stage/Item/Item_DragonEgg_NoOmen_01",
+            "itemEnemyBulletFx": "Stage/Item/Item_DragonEgg_NoOmen_02",
+            "useItem": {
+              "fileID": 11400000,
+              "guid": "9ebe0704a187ae44bb99e141648dcff2",
+              "type": 2
+            }
+          },
+          {
+            "itemBulletFx": "Stage/Item/Item_StunGun_NoOmen_01",
+            "itemEnemyBulletFx": "Stage/Item/Item_StunGun_NoOmen_01",
+            "useItem": {
+              "fileID": 11400000,
+              "guid": "4fd8c05b3ebe92040a692c97878b6d73",
+              "type": 2
+            }
+          },
+          {
+            "itemBulletFx": "Stage/Item/Item_TornadoFan_NoOmen_01",
+            "itemEnemyBulletFx": "Stage/Item/Item_TornadoFan_NoOmen_02",
+            "useItem": {
+              "fileID": 11400000,
+              "guid": "4c49beb83ca152e48bd1c74226c8ae61",
+              "type": 2
+            }
+          }
+        ]
+      },
+      {
+        "itemRate": 100,
+        "itemList": [
+          {
+            "itemBulletFx": "Stage/Item/Item_DefenceQube_NoOmen_01",
+            "itemEnemyBulletFx": "Stage/Item/Item_DefenceQube_NoOmen_02",
+            "useItem": {
+              "fileID": 11400000,
+              "guid": "ffcb8a10e043d624a8a8122f5f77c9ae",
+              "type": 2
+            }
+          },
+          {
+            "itemBulletFx": "Stage/Item/Item_InkSquid_NoOmen_01",
+            "itemEnemyBulletFx": "Stage/Item/Item_InkSquid_NoOmen_02",
+            "useItem": {
+              "fileID": 11400000,
+              "guid": "7c856bb2a506966489918c4651676ba5",
+              "type": 2
+            }
+          },
+          {
+            "itemBulletFx": "Stage/Item/Item_GreenPepper_NoOmen_01",
+            "itemEnemyBulletFx": "Stage/Item/Item_GreenPepper_NoOmen_02",
+            "useItem": {
+              "fileID": 11400000,
+              "guid": "a9696899056ca86439b5956991a331ec",
+              "type": 2
+            }
+          }
+        ]
+      },
+      {
+        "itemRate": 100,
+        "itemList": [
+          {
+            "itemBulletFx": "Stage/Item/Item_HandGun_NoOmen_01",
+            "itemEnemyBulletFx": "Stage/Item/Item_HandGun_NoOmen_02",
+            "useItem": {
+              "fileID": 11400000,
+              "guid": "6642f4a619a129a4d838a0523ba8f145",
+              "type": 2
+            }
+          },
+          {
+            "itemBulletFx": "Stage/Item/Item_Tanuki_NoOmen_01",
+            "itemEnemyBulletFx": "Stage/Item/Item_Tanuki_NoOmen_02",
+            "useItem": {
+              "fileID": 11400000,
+              "guid": "15dbd2f9ab5a56843a8405279f75e06d",
+              "type": 2
+            }
+          },
+          {
+            "itemBulletFx": "Stage/Item/Item_Whistle_NoOmen_01",
+            "itemEnemyBulletFx": "Stage/Item/Item_Whistle_NoOmen_02",
+            "useItem": {
+              "fileID": 11400000,
+              "guid": "0c0dd89d1f98a6c4ea53febef418ef52",
+              "type": 2
+            }
+          }
+        ]
+      },
+      {
+        "itemRate": 100,
+        "itemList": [
+          {
+            "itemBulletFx": "Stage/Item/Item_Saber_NoOmen_01",
+            "itemEnemyBulletFx": "Stage/Item/Item_Saber_NoOmen_02",
+            "useItem": {
+              "fileID": 11400000,
+              "guid": "33d3017626c627d4680a73d95cfcba24",
+              "type": 2
+            }
+          },
+          {
+            "itemBulletFx": "Stage/Item/Item_Snow_NoOmen_01",
+            "itemEnemyBulletFx": "Stage/Item/Item_Snow_NoOmen_02",
+            "useItem": {
+              "fileID": 11400000,
+              "guid": "144374a431d93b54fb6ba662eed6595a",
+              "type": 2
+            }
+          },
+          {
+            "itemBulletFx": "Stage/Item/Item_AnniversaryBomb_NoOmen_01",
+            "itemEnemyBulletFx": "Stage/Item/Item_AnniversaryBomb_NoOmen_02",
+            "useItem": {
+              "fileID": 11400000,
+              "guid": "fc48b7098e692c64fb322d897a7fd212",
+              "type": 2
+            }
+          }
+        ]
+      },
+      {
+        "itemRate": 100,
+        "itemList": [
+          {
+            "itemBulletFx": "Stage/Item/Item_Jellyfish_NoOmen_01",
+            "itemEnemyBulletFx": "Stage/Item/Item_Jellyfish_NoOmen_02",
+            "useItem": {
+              "fileID": 11400000,
+              "guid": "1c32648aeb3e203498f5c4f697b32a86",
+              "type": 2
+            }
+          },
+          {
+            "itemBulletFx": "Stage/Item/Item_SupportTrumpet_NoOmen_01",
+            "itemEnemyBulletFx": "Stage/Item/Item_SupportTrumpet_NoOmen_02",
+            "useItem": {
+              "fileID": 11400000,
+              "guid": "9ff675d7d443293498f06e3266972dba",
+              "type": 2
+            }
+          },
+          {
+            "itemBulletFx": "Stage/Item/Item_BilibiliNetGun_NoOmen_01",
+            "itemEnemyBulletFx": "Stage/Item/Item_BilibiliNetGun_NoOmen_02",
+            "useItem": {
+              "fileID": 11400000,
+              "guid": "888277c741fe9634fa6823f742614607",
+              "type": 2
+            }
+          }
+        ]
+      },
+      {
+        "itemRate": 100,
+        "itemList": [
+          {
+            "itemBulletFx": "Stage/Item/Item_BountyMissile_NoOmen_01",
+            "itemEnemyBulletFx": "Stage/Item/Item_BountyMissile_NoOmen_02",
+            "useItem": {
+              "fileID": 11400000,
+              "guid": "5c1ae071c5b200b4e8da74de7842cd69",
+              "type": 2
+            }
+          },
+          {
+            "itemBulletFx": "Stage/Item/Item_Gigantic_NoOmen_01",
+            "itemEnemyBulletFx": "Stage/Item/Item_Gigantic_NoOmen_02",
+            "useItem": {
+              "fileID": 11400000,
+              "guid": "0e79caff52e5c09438bd04b01ab32932",
+              "type": 2
+            }
+          },
+          {
+            "itemBulletFx": "Stage/Item/Item_SlimeBomb_NoOmen_01",
+            "itemEnemyBulletFx": "Stage/Item/Item_SlimeBomb_NoOmen_02",
+            "useItem": {
+              "fileID": 11400000,
+              "guid": "752b9f97d287a1147be22a1fa491ab86",
+              "type": 2
+            }
+          }
+        ]
+      },
+      {
+        "itemRate": 100,
+        "itemList": [
+          {
+            "itemBulletFx": "Stage/Item/Item_KurakuraEnargy_NoOmen_01",
+            "itemEnemyBulletFx": "Stage/Item/Item_KurakuraEnargy_NoOmen_02",
+            "useItem": {
+              "fileID": 11400000,
+              "guid": "44756d09978f2f94bb6a487be6916a7f",
+              "type": 2
+            }
+          },
+          {
+            "itemBulletFx": "Stage/Item/Item_MagiciansBat_NoOmen_01",
+            "itemEnemyBulletFx": "Stage/Item/Item_MagiciansBat_NoOmen_02",
+            "useItem": {
+              "fileID": 11400000,
+              "guid": "5caf57973d9891b42ade0266b89bc3b0",
+              "type": 2
+            }
+          },
+          {
+            "itemBulletFx": "Stage/Item/Item_SlimeBomb_NoOmen_01",
+            "itemEnemyBulletFx": "Stage/Item/Item_SlimeBomb_NoOmen_02",
+            "useItem": {
+              "fileID": 11400000,
+              "guid": "752b9f97d287a1147be22a1fa491ab86",
+              "type": 2
+            }
+          }
+        ]
+      },
+      {
+        "itemRate": 100,
+        "itemList": [
+          {
+            "itemBulletFx": "Stage/Item/Item_MagicHand_Omen_01",
+            "itemEnemyBulletFx": "Stage/Item/Item_MagicHand_Omen_02",
+            "useItem": {
+              "fileID": 11400000,
+              "guid": "31cd525b688588b4087a996bfbe43859",
+              "type": 2
+            }
+          },
+          {
+            "itemBulletFx": "Stage/Item/Item_BambooLauncher_NoOmen_01",
+            "itemEnemyBulletFx": "Stage/Item/Item_BambooLauncher_NoOmen_02",
+            "useItem": {
+              "fileID": 11400000,
+              "guid": "8db93ef76de6c434987a2cfdff294b8b",
+              "type": 2
+            }
+          },
+          {
+            "itemBulletFx": "Stage/Item/Item_BilibiliNetGun_NoOmen_01",
+            "itemEnemyBulletFx": "Stage/Item/Item_BilibiliNetGun_NoOmen_02",
+            "useItem": {
+              "fileID": 11400000,
+              "guid": "888277c741fe9634fa6823f742614607",
+              "type": 2
+            }
+          }
+        ]
+      },
+      {
+        "itemRate": 100,
+        "itemList": [
+          {
+            "itemBulletFx": "Stage/Item/Item_HeartBomb_NoOmen_01",
+            "itemEnemyBulletFx": "Stage/Item/Item_HeartBomb_NoOmen_02",
+            "useItem": {
+              "fileID": 11400000,
+              "guid": "9d48d048ea1ceca4793e0cd5baefe193",
+              "type": 2
+            }
+          },
+          {
+            "itemBulletFx": "Stage/Item/Item_Mogura_NoOmen_01",
+            "itemEnemyBulletFx": "Stage/Item/Item_Mogura_NoOmen_02",
+            "useItem": {
+              "fileID": 11400000,
+              "guid": "e2088f3d97fad0e41ba40e960d5badb7",
+              "type": 2
+            }
+          },
+          {
+            "itemBulletFx": "Stage/Item/Item_BilibiliNetGun_NoOmen_01",
+            "itemEnemyBulletFx": "Stage/Item/Item_BilibiliNetGun_NoOmen_02",
+            "useItem": {
+              "fileID": 11400000,
+              "guid": "888277c741fe9634fa6823f742614607",
+              "type": 2
+            }
+          }
+        ]
+      },
+      {
+        "itemRate": 100,
+        "itemList": [
+          {
+            "itemBulletFx": "Stage/Item/Item_TornadoFan_NoOmen_01",
+            "itemEnemyBulletFx": "Stage/Item/Item_TornadoFan_NoOmen_02",
+            "useItem": {
+              "fileID": 11400000,
+              "guid": "4c49beb83ca152e48bd1c74226c8ae61",
+              "type": 2
+            }
+          },
+          {
+            "itemBulletFx": "Stage/Item/Item_AnniversaryBomb_NoOmen_01",
+            "itemEnemyBulletFx": "Stage/Item/Item_AnniversaryBomb_NoOmen_02",
+            "useItem": {
+              "fileID": 11400000,
+              "guid": "fc48b7098e692c64fb322d897a7fd212",
+              "type": 2
+            }
+          },
+          {
+            "itemBulletFx": "Stage/Item/Item_GreenPepper_NoOmen_01",
+            "itemEnemyBulletFx": "Stage/Item/Item_GreenPepper_NoOmen_02",
+            "useItem": {
+              "fileID": 11400000,
+              "guid": "a9696899056ca86439b5956991a331ec",
+              "type": 2
+            }
+          }
+        ]
+      }
+    ],
+    "yourselfBuffs": []
+  }
+}

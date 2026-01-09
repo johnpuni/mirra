@@ -1,0 +1,125 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "79af5ebdd025d10b015e759b0c2d03a6",
+      "type": 3
+    },
+    "m_Name": "wp_batfang_cv02",
+    "m_EditorClassIdentifier": null,
+    "memo": "S39ドラキュラコウモリの牙",
+    "weaponCategry": 1,
+    "enemySearchRadius": 14,
+    "enemySearchOffset": 10,
+    "attackPower": 51,
+    "attackStopPower": 10000,
+    "attackIgnoreDefense": 0,
+    "attackDisableBrakeTime": 1,
+    "additionalPower": 0,
+    "attackHitShape": 0,
+    "attackHitRadius": 3,
+    "attackHitSize": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "hitGrowingTimeRate": 0,
+    "attackHitPositionOffset": {
+      "x": 0,
+      "y": 0,
+      "z": 1
+    },
+    "attackMoveSpeed": 0,
+    "attackMoveAccel": 0,
+    "attackMoveSpeedY": 0,
+    "attackMoveAccelY": 0,
+    "attackDuration": 0.9,
+    "attackTimeSpan": 1.2,
+    "isBackCritical": 0,
+    "isSideCritical": 0,
+    "shieldBreak": 0,
+    "isReflector": 0,
+    "refrectionRate": 0,
+    "reflectionAddSpeedRate": 0,
+    "invalidRefrection": 0,
+    "isSelfRefrection": 0,
+    "selfRefrectionNum": 0,
+    "refrectionRandomRot": {
+      "x": 0,
+      "y": 0
+    },
+    "isHideHitEffect": 0,
+    "killComboRate": 0,
+    "useLimitMax": -1,
+    "spriteButtonIcon": {
+      "fileID": 0
+    },
+    "useClickWhenFire": 1,
+    "useChargeWhenFire": 0,
+    "useChargeWithoutFire": 0,
+    "weaponAutoChargeSettings": {
+      "fileID": 0
+    },
+    "PunchPrefab": {
+      "fileID": 1365314689561530,
+      "guid": "6b0df0517ec5e0440a99e6ba11a240e7",
+      "type": 2
+    },
+    "PunchData": {
+      "Enabled": 1,
+      "MoveRange": 5,
+      "AttackScaleAnimOffset": 0,
+      "Prefab_Spring": {
+        "fileID": 1770565901062834,
+        "guid": "01d4236fda4a3934dbce4f1b6557a0c6",
+        "type": 2
+      },
+      "SpringScaleXY": 0.6,
+      "SpringScaleZAdjuster": 0.1,
+      "ShootSeType": 55,
+      "ShootSeOctaRange": {
+        "x": 0,
+        "y": 2
+      },
+      "FireAnimDuration": 0.3,
+      "ReturnAnimDuration": 0.3,
+      "AnimatorStateName_Attack": "Attack",
+      "UseSameFireId": 0,
+      "DontReturn": 0
+    },
+    "maxBuffGrade": 11,
+    "BuffDatas": [
+      {
+        "type": 9,
+        "power": 2
+      },
+      {
+        "type": 8,
+        "power": 1
+      },
+      {
+        "type": 81,
+        "power": 2
+      },
+      {
+        "type": 80,
+        "power": 10
+      }
+    ]
+  }
+}

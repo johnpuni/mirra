@@ -1,0 +1,815 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "250ac6066f9dc19cebf12b26a3b27099",
+      "type": 3
+    },
+    "m_Name": "GettableItemPool",
+    "m_EditorClassIdentifier": null,
+    "m_Key": "Stage/Item/",
+    "m_GameObjects": [
+      {
+        "fileID": 1255498197314441,
+        "guid": "8fe18f6c6ed1ce247a2c2b40745a3b84",
+        "type": 2
+      },
+      {
+        "fileID": 1300115492071558,
+        "guid": "ef7ad33b5cf0a964e922a156b44a21dd",
+        "type": 2
+      },
+      {
+        "fileID": 1883663548053878,
+        "guid": "f7950768a1890964b8b2e6d9d4d545cf",
+        "type": 2
+      },
+      {
+        "fileID": 1953564118639988,
+        "guid": "a6cbb88ffd48908498374523e3666dc7",
+        "type": 2
+      },
+      {
+        "fileID": 1741090524163056,
+        "guid": "4cd5545fe73d00a4a8e75620d8e946dd",
+        "type": 2
+      },
+      {
+        "fileID": 1571862113243355,
+        "guid": "e514aab2b8fcb244a96995fc902142c4",
+        "type": 2
+      },
+      {
+        "fileID": 1504362496398767,
+        "guid": "eb56f4c4d0e67ed449c059afc123ed27",
+        "type": 2
+      },
+      {
+        "fileID": 1169266020225803,
+        "guid": "62cf9c2126ffaa04099cae5500698c89",
+        "type": 2
+      },
+      {
+        "fileID": 1999410717394939,
+        "guid": "c2d8fc7db33ef4c48a54e5977e71fd5e",
+        "type": 2
+      },
+      {
+        "fileID": 1974414560483111,
+        "guid": "2bb827de4c2b61d468de9b67407a53eb",
+        "type": 2
+      },
+      {
+        "fileID": 1897270947717678,
+        "guid": "8af4307fcbdd5ea40ac284315800af90",
+        "type": 2
+      },
+      {
+        "fileID": 1866615055613935,
+        "guid": "08d92d527ec23ff4aafc24762dedb5ef",
+        "type": 2
+      },
+      {
+        "fileID": 1432824040827780,
+        "guid": "c1409831550ab5b498c7b35ec1cba63f",
+        "type": 2
+      },
+      {
+        "fileID": 1294231704483308,
+        "guid": "a4419d3e03b749f4ca7fb32401b04bdc",
+        "type": 2
+      },
+      {
+        "fileID": 1394254319827314,
+        "guid": "a3e843915256b9d4fa607e074a6bdffc",
+        "type": 2
+      },
+      {
+        "fileID": 1440425363781922,
+        "guid": "34f751d60929f1649894f4ddc21fc3c3",
+        "type": 2
+      },
+      {
+        "fileID": 1019105403181382,
+        "guid": "aceefd787b2d7c248a53f054d7cf7676",
+        "type": 2
+      },
+      {
+        "fileID": 1545871267077692,
+        "guid": "b6582862d6e03104a98cfbedaed7f412",
+        "type": 2
+      },
+      {
+        "fileID": 1946603936579793,
+        "guid": "94d58f794b35ff34b86fd3294ae01811",
+        "type": 2
+      },
+      {
+        "fileID": 1910022439964108,
+        "guid": "a0a12042036122242bba9a1afc90e821",
+        "type": 2
+      },
+      {
+        "fileID": 1142729228343455,
+        "guid": "9782662324752dc4f8042c8b8a82c817",
+        "type": 2
+      },
+      {
+        "fileID": 1545976066295308,
+        "guid": "726082e9c3e361840ae3ad69ba2accf6",
+        "type": 2
+      },
+      {
+        "fileID": 1780806819392027,
+        "guid": "d0c7e45541b6e62479c06b3b96c36572",
+        "type": 2
+      },
+      {
+        "fileID": 1357327960751014,
+        "guid": "d8c5148377e534c4cbf0f1e5d8f72744",
+        "type": 2
+      },
+      {
+        "fileID": 1846886176378526,
+        "guid": "fb67ee17ec68cf24693784becd9b6f74",
+        "type": 2
+      },
+      {
+        "fileID": 1169351770984315,
+        "guid": "3b3e12544aaacb34da9b0daa580802fe",
+        "type": 2
+      },
+      {
+        "fileID": 1060357520149147,
+        "guid": "7a1c5d1510e63df4ab97fd706b3c0760",
+        "type": 2
+      },
+      {
+        "fileID": 1830992462793816,
+        "guid": "7c5ea4b20d825bd42a9ac549373a556e",
+        "type": 2
+      },
+      {
+        "fileID": 1298571989547879,
+        "guid": "3f5e82d2d28325f4d9d9a3cbaf6bd7b0",
+        "type": 2
+      },
+      {
+        "fileID": 1404169299643132,
+        "guid": "7c5e8e49aae948e46b5f3a74a7ce5311",
+        "type": 2
+      },
+      {
+        "fileID": 1696539831336699,
+        "guid": "4bfa8445a78a7824dab205a184de17e0",
+        "type": 2
+      },
+      {
+        "fileID": 1247677935548859,
+        "guid": "8fcbc4c13ebe23349a03c768064ffd86",
+        "type": 2
+      },
+      {
+        "fileID": 1502302692640452,
+        "guid": "6e8a25b32c6da7247bb1cf703ccbaadb",
+        "type": 2
+      },
+      {
+        "fileID": 1102217552686632,
+        "guid": "4b99618ce84628b4b9e90a4f8ac3f27f",
+        "type": 2
+      },
+      {
+        "fileID": 1836632493267241,
+        "guid": "2df912096d7b7d042a478bd71436e562",
+        "type": 2
+      },
+      {
+        "fileID": 1395659291050099,
+        "guid": "075d954abfbb05741a409b5448dc0044",
+        "type": 2
+      },
+      {
+        "fileID": 1317726337236221,
+        "guid": "39a16fc1f8a9666408a359c2c5caaa71",
+        "type": 2
+      },
+      {
+        "fileID": 1846349508003093,
+        "guid": "bcb0a47c8f09de642ae01796a2b1e6f6",
+        "type": 2
+      },
+      {
+        "fileID": 1659370301085352,
+        "guid": "6fd3f24da8d03c944bc7be426eb6e567",
+        "type": 2
+      },
+      {
+        "fileID": 1381287562637016,
+        "guid": "6f9d06cba8e9e4242baccd6af2c13bf9",
+        "type": 2
+      },
+      {
+        "fileID": 1581636373811445,
+        "guid": "eea89ba8a814ba946abf020d94b93e7e",
+        "type": 2
+      },
+      {
+        "fileID": 1845239155264238,
+        "guid": "d9a3be3caaa83654ca240b73838d14b0",
+        "type": 2
+      },
+      {
+        "fileID": 1673068937236767,
+        "guid": "b9fed61707ac6454499a12f1473bea22",
+        "type": 2
+      },
+      {
+        "fileID": 1452419497679237,
+        "guid": "7aeec893bb5670f49ace79f12e661315",
+        "type": 2
+      },
+      {
+        "fileID": 1783090556555990,
+        "guid": "27efbd83edf45734faa27bdbc2a795c5",
+        "type": 2
+      },
+      {
+        "fileID": 1300074802790200,
+        "guid": "8f23c8e6deb37c146a3924b0aa8d4c35",
+        "type": 2
+      },
+      {
+        "fileID": 1559525612845543,
+        "guid": "bbd1ec0266b187c43bab7c5dec30e5dd",
+        "type": 2
+      },
+      {
+        "fileID": 1085938955643611,
+        "guid": "b86173880b3e55f45b8694640b6eb3b2",
+        "type": 2
+      },
+      {
+        "fileID": 1970153015556356,
+        "guid": "bc7bd926eb2f3a145b142ffa05be9c31",
+        "type": 2
+      },
+      {
+        "fileID": 1376837611836227,
+        "guid": "a617ff2ceda087f49b43548e43708991",
+        "type": 2
+      },
+      {
+        "fileID": 1971292342845165,
+        "guid": "40f43e9c6468a854db288b2063117752",
+        "type": 2
+      },
+      {
+        "fileID": 1205209348700172,
+        "guid": "e712fc0df574f0c43b20980c6eaf0656",
+        "type": 2
+      },
+      {
+        "fileID": 1862658990970668,
+        "guid": "1843db0f37aa18d4e854013af4ced123",
+        "type": 2
+      },
+      {
+        "fileID": 1712642101334668,
+        "guid": "1ec5543623f8e7a4aa3083581af89d6a",
+        "type": 2
+      },
+      {
+        "fileID": 1628885710420870,
+        "guid": "806bd1ea5402fe94e9887c75d510db52",
+        "type": 2
+      },
+      {
+        "fileID": 1690566665376822,
+        "guid": "db7e5542b747c574f8ba1cb150bd7cec",
+        "type": 2
+      },
+      {
+        "fileID": 1479253899296544,
+        "guid": "d01d4433771f7ae4c9a5decf8d0e9d13",
+        "type": 2
+      },
+      {
+        "fileID": 1888378789848139,
+        "guid": "50b728ed24195244e9c454302237678f",
+        "type": 2
+      },
+      {
+        "fileID": 1269745971674959,
+        "guid": "d8da59ef62e5bcf449d450205fab2368",
+        "type": 2
+      },
+      {
+        "fileID": 1414850370982124,
+        "guid": "1d839f9cac11e194aa6e98281e5c37b5",
+        "type": 2
+      },
+      {
+        "fileID": 1281145379751547,
+        "guid": "7ab4b3f2fa0e1c042818ae08edf7b311",
+        "type": 2
+      },
+      {
+        "fileID": 1735245438946731,
+        "guid": "4f667c61e5298db498f7ee62003f9af8",
+        "type": 2
+      },
+      {
+        "fileID": 1277873259287212,
+        "guid": "4e877f16ec12ed54aac31e12f91f8381",
+        "type": 2
+      },
+      {
+        "fileID": 1080547357214811,
+        "guid": "ac8e08cf0c3a7044eb32b190e4e0ebd6",
+        "type": 2
+      },
+      {
+        "fileID": 1964988240135142,
+        "guid": "7e0e97583fb3f134ab4be1b2d2c5de0b",
+        "type": 2
+      },
+      {
+        "fileID": 1185636779315737,
+        "guid": "86b737ebe7b1223409b1da07bff7207a",
+        "type": 2
+      },
+      {
+        "fileID": 1415286331927253,
+        "guid": "6a1196021635f3a44a4fe50f967d9c8b",
+        "type": 2
+      },
+      {
+        "fileID": 1768375682599228,
+        "guid": "54de97f2c12f1554fa0d1e6aebd6ded6",
+        "type": 2
+      },
+      {
+        "fileID": 1692784634012140,
+        "guid": "0933849a2918dcb46b3542124b112dd6",
+        "type": 2
+      },
+      {
+        "fileID": 1493830729068267,
+        "guid": "d5b6a4e240319f34396948cf98d8943b",
+        "type": 2
+      },
+      {
+        "fileID": 1509121915789520,
+        "guid": "147a177cfbcbad4469e6f0f2dcf80d4a",
+        "type": 2
+      },
+      {
+        "fileID": 1269745971674959,
+        "guid": "d8da59ef62e5bcf449d450205fab2368",
+        "type": 2
+      },
+      {
+        "fileID": 1143831754761639,
+        "guid": "48b3afe2e41d6cd40bcd66743444d985",
+        "type": 2
+      },
+      {
+        "fileID": 1466126356905462,
+        "guid": "ee9d49fd64a182d4da47f6d94a40057c",
+        "type": 2
+      },
+      {
+        "fileID": 1822495178399009,
+        "guid": "5502d48f540ccaa4db181f09f7290265",
+        "type": 2
+      },
+      {
+        "fileID": 1787942125425875,
+        "guid": "012e9d19ef2cb6b48bd58e96768647f0",
+        "type": 2
+      },
+      {
+        "fileID": 1628427333718858,
+        "guid": "cd129deb89ee52c4f8450557cae1a83a",
+        "type": 2
+      },
+      {
+        "fileID": 1676476121022853,
+        "guid": "eb89458b735eb98408c342b53f6af387",
+        "type": 2
+      },
+      {
+        "fileID": 1595741708197532,
+        "guid": "604440c591fa65149a5d962eeda0b7e8",
+        "type": 2
+      },
+      {
+        "fileID": 1407829744446117,
+        "guid": "c1d53311b08c5374aaac0ec94abe701e",
+        "type": 2
+      },
+      {
+        "fileID": 1512755605523724,
+        "guid": "359653ca47ac94d428c7a84784bcea98",
+        "type": 2
+      },
+      {
+        "fileID": 1070672872121220,
+        "guid": "b2f7595ce44348c4b821ef6772004a5b",
+        "type": 2
+      },
+      {
+        "fileID": 1399194228593439,
+        "guid": "2ea54cbca2fa8c64dbbb47f4a61834e1",
+        "type": 2
+      },
+      {
+        "fileID": 1142137366699275,
+        "guid": "2bd756bf53ea234438b39c6573a49326",
+        "type": 2
+      },
+      {
+        "fileID": 1534369286404372,
+        "guid": "1642005485d4da44eabe8d36df8c0f45",
+        "type": 2
+      },
+      {
+        "fileID": 1922708929681795,
+        "guid": "cfbae0abada353249bcecfe98c1d3b9c",
+        "type": 2
+      },
+      {
+        "fileID": 1776191842689495,
+        "guid": "a8a1285d9c1fecd419d7c2ee2102339a",
+        "type": 2
+      },
+      {
+        "fileID": 1210833854970113,
+        "guid": "cf5a59e3ee815d441aa266b7895cd6dc",
+        "type": 2
+      },
+      {
+        "fileID": 1930854640457485,
+        "guid": "78d9515bf505ce64aa531541159da6e1",
+        "type": 2
+      },
+      {
+        "fileID": 1759746406045707,
+        "guid": "45389921cbb9d5e4f9bf224457426431",
+        "type": 2
+      },
+      {
+        "fileID": 1596046644574104,
+        "guid": "5282182b4b81de3499b4b1fd76f82463",
+        "type": 2
+      },
+      {
+        "fileID": 1549322676337167,
+        "guid": "a18d7efd315d9f14d8f85c0a98835ff4",
+        "type": 2
+      },
+      {
+        "fileID": 1723354668934555,
+        "guid": "f5c207f383b214c48830a481075a892d",
+        "type": 2
+      },
+      {
+        "fileID": 1448616003537878,
+        "guid": "e8ecf582f6ff5664ea826e1fb24d0f1e",
+        "type": 2
+      },
+      {
+        "fileID": 1737624745665081,
+        "guid": "6ca43874ecaf72f43a119362df880e90",
+        "type": 2
+      },
+      {
+        "fileID": 1426912397772749,
+        "guid": "e39990ee936e1f64cb5d7641faa302de",
+        "type": 2
+      },
+      {
+        "fileID": 1859991203810975,
+        "guid": "ec905b037eb8f0647aecf52d1eadc50a",
+        "type": 2
+      },
+      {
+        "fileID": 1696155638056986,
+        "guid": "b44330f2e59a2a34980914ecda3192e1",
+        "type": 2
+      },
+      {
+        "fileID": 1843471478106429,
+        "guid": "16d0bc0953d24014f954dd3602d7d746",
+        "type": 2
+      },
+      {
+        "fileID": 1251585679211391,
+        "guid": "d89b509414438544cbb7d88c9630bd81",
+        "type": 2
+      },
+      {
+        "fileID": 1696610411547257,
+        "guid": "929de684049d74a49b755fc08f92a878",
+        "type": 2
+      },
+      {
+        "fileID": 1513451297186242,
+        "guid": "d4539b7085a36374fbd25bff115bb941",
+        "type": 2
+      },
+      {
+        "fileID": 1947257228426562,
+        "guid": "66a5b348ba73c13458b0b34ac4b10376",
+        "type": 2
+      },
+      {
+        "fileID": 1088384909173399,
+        "guid": "c57024c1b3f5b674c84412856ed68945",
+        "type": 2
+      },
+      {
+        "fileID": 1577287960373965,
+        "guid": "cdeb1a0c55a369d45adb69b4287bd490",
+        "type": 2
+      },
+      {
+        "fileID": 1232903119331544,
+        "guid": "038b2a5a92631364c8ea3ed4d52b9974",
+        "type": 2
+      },
+      {
+        "fileID": 1882419138189431,
+        "guid": "e894b65951b79b847b868515be1f8b1a",
+        "type": 2
+      },
+      {
+        "fileID": 1434655960335874,
+        "guid": "c482adbbea6af6141b650c2c58278531",
+        "type": 2
+      },
+      {
+        "fileID": 1627405302313406,
+        "guid": "7f0cfdc327801154e9ca4e820b295a2f",
+        "type": 2
+      },
+      {
+        "fileID": 1138125966144931,
+        "guid": "f10122b28af88b34f8d0ac7b428d5612",
+        "type": 2
+      },
+      {
+        "fileID": 1351497998814244,
+        "guid": "e7b423ca604d3464fb9288132cb35866",
+        "type": 2
+      },
+      {
+        "fileID": 1118063090442196,
+        "guid": "694a5a08aadf7664ea42d0f4d8092c4b",
+        "type": 2
+      },
+      {
+        "fileID": 1704932605996408,
+        "guid": "3e213ef55e5a11e41a76e268cc79d648",
+        "type": 2
+      },
+      {
+        "fileID": 1971882710544775,
+        "guid": "80d3ebe3101144e4caf77b21b61723ae",
+        "type": 2
+      },
+      {
+        "fileID": 1668281604749990,
+        "guid": "fc15eb07b6a4b934c982e15beef63d37",
+        "type": 2
+      },
+      {
+        "fileID": 1662535904328847,
+        "guid": "a00fba6fed41db5458914bd41383468b",
+        "type": 2
+      },
+      {
+        "fileID": 1286181859040526,
+        "guid": "0b36b017f2c12df4cafcb832adf64def",
+        "type": 2
+      },
+      {
+        "fileID": 1656614958596957,
+        "guid": "17cff0ef43061054e944dd46548e0c31",
+        "type": 2
+      },
+      {
+        "fileID": 1974165976927685,
+        "guid": "d9e5e22a47eaa6346bea366debfaabf8",
+        "type": 2
+      },
+      {
+        "fileID": 1329691252526140,
+        "guid": "7b59a5b013071f642b981633d380e416",
+        "type": 2
+      },
+      {
+        "fileID": 1743489491877584,
+        "guid": "bb87c30f7ebedd64aa350a8950c8a4ac",
+        "type": 2
+      },
+      {
+        "fileID": 1325010680095499,
+        "guid": "4423588c508146043b3ab0f7364da12c",
+        "type": 2
+      },
+      {
+        "fileID": 1140520100777874,
+        "guid": "95a5527c4f986b045927f958819e9a18",
+        "type": 2
+      },
+      {
+        "fileID": 1317078689522906,
+        "guid": "99d0ef7e6008d2d4884bf0ee65f81c04",
+        "type": 2
+      },
+      {
+        "fileID": 1852807193900889,
+        "guid": "5b6b04e826d4a0144bde0ed82155d4fe",
+        "type": 2
+      },
+      {
+        "fileID": 1578430553954121,
+        "guid": "b16cfcca0291cdd42a76096b00dda506",
+        "type": 2
+      },
+      {
+        "fileID": 1432073589229371,
+        "guid": "3f57a61dd63ff1a43bd5879f3915a6fb",
+        "type": 2
+      },
+      {
+        "fileID": 1209531685346964,
+        "guid": "3341ca7bbad28b5489ba8df004ef37d3",
+        "type": 2
+      },
+      {
+        "fileID": 1650367005666670,
+        "guid": "5a759a1cb6602344bae0afbfa1637616",
+        "type": 2
+      },
+      {
+        "fileID": 1677277027256877,
+        "guid": "646b948207934f642bb2e6ba42cf94d6",
+        "type": 2
+      },
+      {
+        "fileID": 1456484426453569,
+        "guid": "75995643ab759d547b8e8b7f2f2e234e",
+        "type": 2
+      },
+      {
+        "fileID": 1918116254478247,
+        "guid": "8edb2f5f5d10f3a4a84240e42b6b1f87",
+        "type": 2
+      },
+      {
+        "fileID": 1346887380891840,
+        "guid": "00a92c93ec43b58428d910ce4184225b",
+        "type": 2
+      },
+      {
+        "fileID": 1235714073075688,
+        "guid": "fb8a4c9b7260730489bb12816e1bef9b",
+        "type": 2
+      },
+      {
+        "fileID": 1720378580503484,
+        "guid": "3b60ea3417d673240ab486e6b5d11d74",
+        "type": 2
+      },
+      {
+        "fileID": 1150135431054591,
+        "guid": "64f639bdec8cb534e9db628e4815d720",
+        "type": 2
+      },
+      {
+        "fileID": 1571883333491204,
+        "guid": "6e579a67819beb649be76c8affd0a89b",
+        "type": 2
+      },
+      {
+        "fileID": 1458046153472533,
+        "guid": "a03628ce78d1ce949b1985d4e477ccfe",
+        "type": 2
+      },
+      {
+        "fileID": 1853151471481527,
+        "guid": "76c8c9a3c883e144bbf36bc845bb0c7d",
+        "type": 2
+      },
+      {
+        "fileID": 1973161628162747,
+        "guid": "3e7011965b93188429411c4fbfa8c2c4",
+        "type": 2
+      },
+      {
+        "fileID": 1440710488262057,
+        "guid": "40b8c68a2796c294380d9f487e87a19c",
+        "type": 2
+      },
+      {
+        "fileID": 1007517900526659,
+        "guid": "2aa95a45bcd955c448db3399b5f20e6c",
+        "type": 2
+      },
+      {
+        "fileID": 1417372353526645,
+        "guid": "8aa3917856fd8be4d991e9aad651752e",
+        "type": 2
+      },
+      {
+        "fileID": 1086355544385600,
+        "guid": "b1d36fa8c47664b45b21510812771506",
+        "type": 2
+      },
+      {
+        "fileID": 1577088809327825,
+        "guid": "f548090f8edbdbd4fb300b897abd6c71",
+        "type": 2
+      },
+      {
+        "fileID": 1218081086719864,
+        "guid": "942c4c09fe97ccf4d8b87fa8ce3e9da7",
+        "type": 2
+      },
+      {
+        "fileID": 1248681959042594,
+        "guid": "6729ad786d053304f8044f0af45c3d96",
+        "type": 2
+      },
+      {
+        "fileID": 1998703491671511,
+        "guid": "c1ed617f97b81634cb1578dd9c7f08b1",
+        "type": 2
+      },
+      {
+        "fileID": 1181419742094946,
+        "guid": "f7df8328fda9cd7478128ed34563eb54",
+        "type": 2
+      },
+      {
+        "fileID": 1424673202503146,
+        "guid": "36f290cb25f1bbc419afd42131787adf",
+        "type": 2
+      },
+      {
+        "fileID": 1811860658636979,
+        "guid": "cd39459a172f51543a753805e94849d3",
+        "type": 2
+      },
+      {
+        "fileID": 1042084407607641,
+        "guid": "50f6dc914452ef648820c87e680c3c1d",
+        "type": 2
+      },
+      {
+        "fileID": 1218588474816902,
+        "guid": "8563d9420e8b8904e9bf7ae199ca27dc",
+        "type": 2
+      },
+      {
+        "fileID": 1248681959042594,
+        "guid": "6729ad786d053304f8044f0af45c3d96",
+        "type": 2
+      },
+      {
+        "fileID": 1164939900922331,
+        "guid": "4a6418992be37c64a957489461d4ba89",
+        "type": 2
+      },
+      {
+        "fileID": 1180449869256901,
+        "guid": "4fb31fccbdbebd84584550bff9e29437",
+        "type": 2
+      },
+      {
+        "fileID": 1748715116767238,
+        "guid": "63a780b7e78cf284bae4d3c2d49f857b",
+        "type": 2
+      }
+    ],
+    "m_ScriptableObjects": []
+  }
+}

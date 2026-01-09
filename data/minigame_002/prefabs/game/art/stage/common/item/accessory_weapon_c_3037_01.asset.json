@@ -1,0 +1,147 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "1296a4d5d29f307c4d5497eca2d0c7f1",
+      "type": 3
+    },
+    "m_Name": "accessory_weapon_c_3037_01",
+    "m_EditorClassIdentifier": null,
+    "memo": "アイテム - 8周年花火",
+    "weaponCategry": 0,
+    "enemySearchRadius": 0,
+    "enemySearchOffset": 0,
+    "attackPower": 0,
+    "attackStopPower": 0,
+    "attackIgnoreDefense": 0,
+    "attackDisableBrakeTime": 0,
+    "additionalPower": 0,
+    "attackHitShape": 0,
+    "attackHitRadius": 0,
+    "attackHitSize": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "hitGrowingTimeRate": 0,
+    "attackHitPositionOffset": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "attackMoveSpeed": 0,
+    "attackMoveAccel": 0,
+    "attackMoveSpeedY": 0,
+    "attackMoveAccelY": 0,
+    "attackDuration": 8,
+    "attackTimeSpan": 12,
+    "isBackCritical": 0,
+    "isSideCritical": 0,
+    "shieldBreak": 1,
+    "isReflector": 0,
+    "refrectionRate": 0,
+    "reflectionAddSpeedRate": 0,
+    "invalidRefrection": 0,
+    "isSelfRefrection": 0,
+    "selfRefrectionNum": 0,
+    "refrectionRandomRot": {
+      "x": 0,
+      "y": 0
+    },
+    "isHideHitEffect": 0,
+    "killComboRate": 0,
+    "useLimitMax": -1,
+    "spriteButtonIcon": {
+      "fileID": 21300000,
+      "guid": "6d8e8aa4caac4704680967deb86f49db",
+      "type": 2
+    },
+    "useClickWhenFire": 1,
+    "useChargeWhenFire": 0,
+    "useChargeWithoutFire": 0,
+    "weaponAutoChargeSettings": {
+      "fileID": 0
+    },
+    "markerTime": 5,
+    "bulletPosition": {
+      "x": 0,
+      "y": 1,
+      "z": 50
+    },
+    "bulletFx": "Fx/Bullet/bl_anniversary_bomb",
+    "shootSeType": 49,
+    "shootAnimName": "chr_hit",
+    "shootFx": "Fx/Battle/fx_skillshoot",
+    "IsFriendlyFireInvalid": 1,
+    "countSeType": 48,
+    "enterSeType": 75,
+    "buffType": 0,
+    "buffPower": 0,
+    "buffDuration": 0,
+    "buffTag": null,
+    "buffRemoveWithBullet": 0,
+    "buffRemoveOnDamage": 0,
+    "buffUpdateOnManyHit": 0,
+    "isRemoveOnTargetDie": 1,
+    "shockPower": 1,
+    "shockStopPower": 10000,
+    "shockDisableBrakeTime": 1,
+    "shockHitShape": 0,
+    "shockHitRadius": 60,
+    "shockHitSize": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "shockDuration": 0.2,
+    "shockHitInterval": 1,
+    "shockSeType": 42,
+    "shockFx": "Fx/Bullet/bl_anniversary_bomb_explosion",
+    "disableshockFx": null,
+    "shockScale": 1,
+    "shockHitJudgeType": 2,
+    "shockHitPartyType": 0,
+    "isShockHitManyTime": 0,
+    "isShockShieldBreak": 1,
+    "ShockbulletGenerateNum": 1,
+    "explosionPower": 65,
+    "explosionStopPower": 10000,
+    "explosionDisableBrakeTime": 1,
+    "explosionHitShape": 0,
+    "explosionHitRadius": 60,
+    "explosionHitSize": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "explosionDuration": 5,
+    "explosionHitInterval": 1,
+    "explosionSeType": 60,
+    "explosionSeType2": 60,
+    "explosionFx": "Fx/Bullet/bl_anniversary_bomb_explosion_fireworks",
+    "disableExplosionFx": null,
+    "explosionScale": 1,
+    "explosionHitJudgeType": 2,
+    "hitPartyType": 0,
+    "isHitManyTime": 0,
+    "isShieldBreak": 1,
+    "bulletGenerateNum": 1,
+    "updateFireIdSpan": 1,
+    "additionalColliders": []
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "54f599c206402faf63488587effc9b8a",
+      "type": 3
+    },
+    "m_Name": "StageItem_CrashEnergy",
+    "m_EditorClassIdentifier": null,
+    "itemType": 12,
+    "getRadius": 8,
+    "getRadiusPuppet": 10,
+    "isDestroyObjectOnGet": 0,
+    "itemObjectName": "Stage/Item/Item_CrashEnergy",
+    "isEnemyOtherObject": 0,
+    "itemEnemyObjectName": null,
+    "needAnimationEventForGettable": 1,
+    "buffType": 0,
+    "targetType": 0,
+    "buffDuration": 0,
+    "buffParam": 0,
+    "tag": null,
+    "buffUpdateOnManyHit": 0,
+    "duplicationMax": 0,
+    "dontRemoveOnTargetDie": 0,
+    "subBuffParams": [],
+    "getFx": "Fx/Battle/fx_hitC",
+    "gimmickSe": 0,
+    "getSe": 77,
+    "isPointGetItem": 0,
+    "isUseItemWeapon": 1,
+    "itemSettings": {
+      "fileID": 11400000,
+      "guid": "3b8dbf3acdd4d144a94b89f740cc061b",
+      "type": 2
+    },
+    "isOtherTeamAnotherItem": 0,
+    "otherTeamItemSettings": {
+      "fileID": 0
+    },
+    "itemTag": null
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "54f599c206402faf63488587effc9b8a",
+      "type": 3
+    },
+    "m_Name": "StageItemPresent_Buff_B",
+    "m_EditorClassIdentifier": null,
+    "itemType": 2003,
+    "getRadius": 8,
+    "getRadiusPuppet": 10,
+    "isDestroyObjectOnGet": 0,
+    "itemObjectName": "Stage/Item/presentbox_03",
+    "isEnemyOtherObject": 0,
+    "itemEnemyObjectName": null,
+    "needAnimationEventForGettable": 1,
+    "buffType": 58,
+    "targetType": 3,
+    "buffDuration": 8,
+    "buffParam": 45,
+    "tag": "burn",
+    "buffUpdateOnManyHit": 0,
+    "duplicationMax": 0,
+    "dontRemoveOnTargetDie": 1,
+    "subBuffParams": [],
+    "getFx": "Fx/Battle/fx_buff_onfire_oneshot",
+    "gimmickSe": 0,
+    "getSe": 67,
+    "isPointGetItem": 0,
+    "isUseItemWeapon": 0,
+    "itemSettings": {
+      "fileID": 0
+    },
+    "isOtherTeamAnotherItem": 0,
+    "otherTeamItemSettings": {
+      "fileID": 0
+    },
+    "itemTag": null
+  }
+}

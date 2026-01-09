@@ -1,0 +1,133 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "c3cbeb49ae886ea183e6224f3ab60bba",
+      "type": 3
+    },
+    "m_Name": "wp_3way_laser_01_emocarx",
+    "m_EditorClassIdentifier": null,
+    "memo": "3WAYレーザー(エモカー用)",
+    "weaponCategry": 2,
+    "enemySearchRadius": 50,
+    "enemySearchOffset": 20,
+    "attackPower": 40,
+    "attackStopPower": 10000,
+    "attackIgnoreDefense": -10.26,
+    "attackDisableBrakeTime": 1,
+    "additionalPower": 0,
+    "attackHitShape": 0,
+    "attackHitRadius": 3,
+    "attackHitSize": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "hitGrowingTimeRate": 0,
+    "attackHitPositionOffset": {
+      "x": 0,
+      "y": 3,
+      "z": 12
+    },
+    "attackMoveSpeed": 50,
+    "attackMoveAccel": 0,
+    "attackMoveSpeedY": 0,
+    "attackMoveAccelY": 0,
+    "attackDuration": 1,
+    "attackTimeSpan": 0.1,
+    "isBackCritical": 0,
+    "isSideCritical": 0,
+    "shieldBreak": 0,
+    "isReflector": 0,
+    "refrectionRate": 0,
+    "reflectionAddSpeedRate": 0,
+    "invalidRefrection": 0,
+    "isSelfRefrection": 0,
+    "selfRefrectionNum": 0,
+    "refrectionRandomRot": {
+      "x": 0,
+      "y": 0
+    },
+    "isHideHitEffect": 0,
+    "killComboRate": 0,
+    "useLimitMax": -1,
+    "spriteButtonIcon": {
+      "fileID": 0
+    },
+    "useClickWhenFire": 1,
+    "useChargeWhenFire": 0,
+    "useChargeWithoutFire": 0,
+    "weaponAutoChargeSettings": {
+      "fileID": 0
+    },
+    "stockBulletNumMax": 4,
+    "generateInterval": 0.1,
+    "angleBulletOffset": 10,
+    "bulletFx": "Fx/Bullet/bl_gatling_01",
+    "AmmoIndicatorPath": "accessory_machines_c_0001_70(Clone)/accessory_machines_c_0001_07/wp_gatling",
+    "AmmoIndicatorMaterials": [
+      {
+        "fileID": 2100000,
+        "guid": "dec8a2a44e3487a4085bb65341e99802",
+        "type": 2
+      },
+      {
+        "fileID": 2100000,
+        "guid": "2a7c4afca0d8f104ab63331242533c3a",
+        "type": 2
+      },
+      {
+        "fileID": 2100000,
+        "guid": "bc988418b7fe4ae45bfeeffd71d7c79c",
+        "type": 2
+      },
+      {
+        "fileID": 2100000,
+        "guid": "c721fceb78130f8479b2b45dd3bfad71",
+        "type": 2
+      }
+    ],
+    "AmmoIndicatorPathBody": "accessory_machines_c_0001_70(Clone)/accessory_machines_c_0001_07/BODY",
+    "AmmoIndicatorMaterialsBody": [
+      {
+        "fileID": 2100000,
+        "guid": "da974652a8abf0f46a3da59770301bb8",
+        "type": 2
+      },
+      {
+        "fileID": 2100000,
+        "guid": "f363a7c76ece2ae498b3d086c6f5aba1",
+        "type": 2
+      },
+      {
+        "fileID": 2100000,
+        "guid": "5182882d622dead47b1d061a6b995465",
+        "type": 2
+      },
+      {
+        "fileID": 2100000,
+        "guid": "bae1f6225331ca445aa4c3183a1d5815",
+        "type": 2
+      }
+    ],
+    "bulletChargeTime": 1,
+    "isWallPenetrate": 0,
+    "isInfinitePenetrate": 1,
+    "playerPenetrateNum": 1
+  }
+}

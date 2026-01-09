@@ -1,0 +1,78 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "353d3699e795a4f5b9c3a521ef46f9e1",
+      "type": 3
+    },
+    "m_Name": "accessory_machines_c_0003_06",
+    "m_EditorClassIdentifier": null,
+    "aircraftName": "急襲ファイアバギー",
+    "description": "武器: 鉄球",
+    "moveSpeed": 23,
+    "moveAccel": 29,
+    "moveResistPower": 35,
+    "moveBrake": 40,
+    "rotationSpeed": 840,
+    "respawnPositionSelectMoveSpeed": 80,
+    "defense": 10,
+    "searchHitRadius": 1,
+    "weaponPositionOffset": {
+      "x": 0,
+      "y": 3,
+      "z": 4.6
+    },
+    "pilotPositionOffset": {
+      "x": 0,
+      "y": 0.8,
+      "z": 0
+    },
+    "pilotScale": {
+      "x": 3,
+      "y": 3,
+      "z": 3
+    },
+    "avatarNeckPositionOffset": {
+      "x": 0,
+      "y": 4,
+      "z": -0.65
+    },
+    "avatarScale": {
+      "x": 14,
+      "y": 14,
+      "z": 14
+    },
+    "weaponSettings": {
+      "fileID": 11400000,
+      "guid": "f6140d528588164428de4325d44507e2",
+      "type": 2
+    },
+    "passiveSkills": [
+      {
+        "fileID": 11400000,
+        "guid": "d2cdec753a381fb408844fa7e1b61748",
+        "type": 2
+      }
+    ],
+    "resistantToBuffs": null,
+    "flickDashSettings": {
+      "fileID": 0
+    },
+    "ForceShowFlyGauge": 0
+  }
+}

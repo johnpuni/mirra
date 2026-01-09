@@ -1,0 +1,172 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "d184495426166bf33b770e65c75d7ddb",
+      "type": 3
+    },
+    "m_Name": "wp_harisen_02",
+    "m_EditorClassIdentifier": null,
+    "memo": "ハリセンダッシュ",
+    "weaponCategry": 1,
+    "enemySearchRadius": 7,
+    "enemySearchOffset": 6,
+    "attackPower": 53,
+    "attackStopPower": 10000,
+    "attackIgnoreDefense": 30,
+    "attackDisableBrakeTime": 1,
+    "additionalPower": 0,
+    "attackHitShape": 0,
+    "attackHitRadius": 4.5,
+    "attackHitSize": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "hitGrowingTimeRate": 0,
+    "attackHitPositionOffset": {
+      "x": 0,
+      "y": 0,
+      "z": 2.56
+    },
+    "attackMoveSpeed": 0,
+    "attackMoveAccel": 0,
+    "attackMoveSpeedY": 0,
+    "attackMoveAccelY": 0,
+    "attackDuration": 1,
+    "attackTimeSpan": 0.45,
+    "isBackCritical": 0,
+    "isSideCritical": 0,
+    "shieldBreak": 0,
+    "isReflector": 0,
+    "refrectionRate": 0,
+    "reflectionAddSpeedRate": 0,
+    "invalidRefrection": 0,
+    "isSelfRefrection": 0,
+    "selfRefrectionNum": 0,
+    "refrectionRandomRot": {
+      "x": 0,
+      "y": 0
+    },
+    "isHideHitEffect": 0,
+    "killComboRate": 0,
+    "useLimitMax": -1,
+    "spriteButtonIcon": {
+      "fileID": 0
+    },
+    "useClickWhenFire": 1,
+    "useChargeWhenFire": 1,
+    "useChargeWithoutFire": 0,
+    "weaponAutoChargeSettings": {
+      "fileID": 0
+    },
+    "maxChargeTime": 1,
+    "inChargeDeceleratingRate": 1,
+    "inChargeMoveSpeedRate": 0,
+    "inChargeSe": 63,
+    "chargeMaxFx": "Fx/Battle/fx_charge_dash_attack_max",
+    "inChargeFx": "Fx/Battle/fx_charge_punch_attack2",
+    "disableChargeEffectWhenMax": 0,
+    "isChargeBuffContext": {
+      "type": 10,
+      "power": 12,
+      "duration": -1,
+      "tag": "ChargeDefense",
+      "isRemoveOnTargetDie": 1,
+      "customSatelliteFxName": null
+    },
+    "buffContexts": [],
+    "punchExplosionInterval": 3,
+    "swingSettings": {
+      "fileID": 11400000,
+      "guid": "e00a998e7c06b484ab73382981097c33",
+      "type": 2
+    },
+    "dashExplosionInterval": 1,
+    "dashChargeTime": 1,
+    "dashChargeCancelTime": 0.5,
+    "attackPowerRateCurve": {
+      "serializedVersion": 2,
+      "m_Curve": [
+        {
+          "serializedVersion": 3,
+          "time": 0.00022485387,
+          "value": 1,
+          "inSlope": 0.5001197,
+          "outSlope": 0.5001197,
+          "weightedMode": 0,
+          "inWeight": 0,
+          "outWeight": 0.33333334
+        },
+        {
+          "serializedVersion": 3,
+          "time": 1,
+          "value": 1.5000073,
+          "inSlope": 0.5001197,
+          "outSlope": 0.5001197,
+          "weightedMode": 0,
+          "inWeight": 0.33333334,
+          "outWeight": 0
+        }
+      ],
+      "m_PreInfinity": 2,
+      "m_PostInfinity": 2,
+      "m_RotationOrder": 4
+    },
+    "frontMoveForce": 25,
+    "frontMoveForceRateCurve": {
+      "serializedVersion": 2,
+      "m_Curve": [
+        {
+          "serializedVersion": 3,
+          "time": -3.624102e-05,
+          "value": 1.0000279,
+          "inSlope": 1.9756081,
+          "outSlope": 1.9756081,
+          "weightedMode": 0,
+          "inWeight": 0,
+          "outWeight": 0.33333334
+        },
+        {
+          "serializedVersion": 3,
+          "time": 1.0054475,
+          "value": 2.9864697,
+          "inSlope": 1.9756081,
+          "outSlope": 1.9756081,
+          "weightedMode": 0,
+          "inWeight": 0.33333334,
+          "outWeight": 0
+        }
+      ],
+      "m_PreInfinity": 2,
+      "m_PostInfinity": 2,
+      "m_RotationOrder": 4
+    },
+    "bulletFx": "Fx/Battle/fx_dash_attack",
+    "shootSeType": 62,
+    "isdashEndBuffContext": {
+      "type": 0,
+      "power": 0,
+      "duration": 0,
+      "tag": null,
+      "isRemoveOnTargetDie": 1,
+      "customSatelliteFxName": null
+    },
+    "dashEndBuffRate": 0
+  }
+}

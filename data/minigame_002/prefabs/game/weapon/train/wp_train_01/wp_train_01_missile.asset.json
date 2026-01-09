@@ -1,0 +1,248 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "265dc53ff42abb7143782157ec47b6cf",
+      "type": 3
+    },
+    "m_Name": "wp_train_01_missile",
+    "m_EditorClassIdentifier": null,
+    "memo": "大砲",
+    "weaponCategry": 2,
+    "enemySearchRadius": 0,
+    "enemySearchOffset": 0,
+    "attackPower": 0,
+    "attackStopPower": 10000,
+    "attackIgnoreDefense": 30,
+    "attackDisableBrakeTime": 0,
+    "additionalPower": 0,
+    "attackHitShape": 0,
+    "attackHitRadius": 5,
+    "attackHitSize": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "hitGrowingTimeRate": 0,
+    "attackHitPositionOffset": {
+      "x": 0,
+      "y": -0.54,
+      "z": 6.25
+    },
+    "attackMoveSpeed": 20,
+    "attackMoveAccel": 0,
+    "attackMoveSpeedY": 0,
+    "attackMoveAccelY": 0,
+    "attackDuration": 4.5,
+    "attackTimeSpan": 0.6,
+    "isBackCritical": 0,
+    "isSideCritical": 0,
+    "shieldBreak": 0,
+    "isReflector": 0,
+    "refrectionRate": 0,
+    "reflectionAddSpeedRate": 0,
+    "invalidRefrection": 0,
+    "isSelfRefrection": 0,
+    "selfRefrectionNum": 0,
+    "refrectionRandomRot": {
+      "x": 0,
+      "y": 0
+    },
+    "isHideHitEffect": 0,
+    "killComboRate": 0,
+    "useLimitMax": -1,
+    "spriteButtonIcon": {
+      "fileID": 0
+    },
+    "useClickWhenFire": 1,
+    "useChargeWhenFire": 0,
+    "useChargeWithoutFire": 0,
+    "weaponAutoChargeSettings": {
+      "fileID": 0
+    },
+    "attackRotationSpeed": 23,
+    "bulletFx": "Fx/Bullet/bl_smokeBullet_01",
+    "shootSeType": 69,
+    "shootAnimName": "chr_hit",
+    "shootFx": null,
+    "hitSeType": 59,
+    "hitJudgeType": 3,
+    "canFireFx": null,
+    "canEffectHomingBuff": 1,
+    "isInfinitePenetrate": 0,
+    "isHitManyTime": 0,
+    "viewTargetMarker": 0,
+    "playerPenetrateNum": 0,
+    "isWallPenetrate": 1,
+    "bulletGeneratePositionOffset": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "shootingRecoil": 0,
+    "isChild": 0,
+    "isOverwriteDirection": 0,
+    "IsLookAtY": 0,
+    "IsWoofer": 0,
+    "IsFriendlyFireInvalid": 0,
+    "friendlyFireRate": 0.8,
+    "reflectionFx": null,
+    "bulletTeamColorSwitch": 0,
+    "bulletPowerZero": 0,
+    "bulletMoveStop": 0,
+    "overwriteDirectionType": 0,
+    "onGround": 0,
+    "onGroundOffsetY": 0.1,
+    "addPowerPerSec": 0,
+    "addPowerMin": 0,
+    "addPowerMax": 9999,
+    "yourselfBuffs": [
+      {
+        "type": 38,
+        "power": 0,
+        "duration": 0.05
+      }
+    ],
+    "buffType": 0,
+    "buffPower": 0,
+    "buffDuration": 0,
+    "buffProbability": 0,
+    "bufftag": null,
+    "buffUpdateOnManyHit": 0,
+    "isRemoveOnTargetDie": 1,
+    "buffManyHitShowFx": 0,
+    "buffDuplicationMax": 0,
+    "explosionTriggerType": 1,
+    "explosionPower": 0,
+    "explosionStopPower": 0,
+    "explosionDisableBrakeTime": 0,
+    "explosionHitShape": 0,
+    "explosionHitRadius": 15,
+    "explosionHitSize": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "explosionAttackMoveSpeed": 0,
+    "explosionAttackMoveAccel": 0,
+    "explosionHitGrowingTimeRate": 0,
+    "explosionDuration": 0.2,
+    "explosionSeType": 60,
+    "hitFx": null,
+    "explosionFx": "Fx/Bullet/bl_smokeBullet_explosion_01",
+    "enemyOtherExplosionFx": null,
+    "explosionGrowingFx": null,
+    "disableExplosionFx": null,
+    "withOutSelfFX": 0,
+    "explosionHitJudgeType": 3,
+    "hitPartyType": 2,
+    "explosionDirectionType": 2,
+    "IsExplosionFxPosY": 0,
+    "explosionFxPosY": 0,
+    "switchToAngers": [
+      {
+        "angerRateOrMore": 1,
+        "powerAddition": {
+          "isUse": 0,
+          "_float": 0
+        },
+        "attackHit": {
+          "isUse": 0,
+          "attackHitShape": 0,
+          "attackHitRadius": 0,
+          "attackHitSize": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "attackHitPositionOffset": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          }
+        },
+        "attackDuration": {
+          "isUse": 0,
+          "_float": 0
+        },
+        "attackTimeSpan": {
+          "isUse": 0,
+          "_float": 0
+        },
+        "bulletFx": {
+          "isUse": 0,
+          "_string": null
+        },
+        "canFireFx": {
+          "isUse": 0,
+          "_string": null
+        },
+        "shootingRecoil": {
+          "isUse": 0,
+          "_float": 0
+        },
+        "buff": {
+          "isUse": 0,
+          "probability": 0,
+          "buffType": 0,
+          "buffPower": 0,
+          "buffDuration": 0,
+          "bufftag": null,
+          "buffUpdateOnManyHit": 0,
+          "isRemoveOnTargetDie": 0,
+          "buffManyHitShowFx": 0,
+          "buffDuplicationMax": 0
+        },
+        "missileReloadTime": {
+          "isUse": 0,
+          "_float": 0
+        },
+        "yourselfBuff": {
+          "isUse": 0,
+          "yourselfBuffs": []
+        },
+        "shieldBreak": {
+          "isUse": 0,
+          "_bool": 0
+        }
+      }
+    ],
+    "angerBulletAmountRate": 1,
+    "angerBulletAmountPreMaxRate": 5,
+    "angerBulletAddStock": 1,
+    "angerBulletStockMax": 5,
+    "angerBulletStartStockNum": 1,
+    "angerBulletFirstBonusTime": 3,
+    "angerBulletStockModelPathTop": "Mark/Mark_",
+    "angerBulletStockModelPathFront": "accessory_machines_c_0030_01/pivot/wp_steamLocomotive/wp_mesh_number_",
+    "changeAngerFx": "Fx/Bullet/bl_electric_missile_explosion",
+    "changeAngerSe": 50,
+    "replacePower": 80,
+    "replaceScale": {
+      "x": 1.7,
+      "y": 1.7,
+      "z": 1.7
+    },
+    "replaceAttackMoveSpeed": 23,
+    "replaceAttackMoveAccel": 10,
+    "replaceAttackDuration": 8,
+    "replaceAttackRotationSpeed": 23,
+    "replaceViewTargetMarker": 1,
+    "replaceFriendlyFireRate": 0.6
+  }
+}

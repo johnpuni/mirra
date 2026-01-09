@@ -1,0 +1,72 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "353d3699e795a4f5b9c3a521ef46f9e1",
+      "type": 3
+    },
+    "m_Name": "accessory_machines_c_0039_01",
+    "m_EditorClassIdentifier": null,
+    "aircraftName": "パステルベアファミリー",
+    "description": "武器: わんぱくこぐま",
+    "moveSpeed": 26,
+    "moveAccel": 35,
+    "moveResistPower": 40,
+    "moveBrake": 45,
+    "rotationSpeed": 720,
+    "respawnPositionSelectMoveSpeed": 80,
+    "defense": 10,
+    "searchHitRadius": 1,
+    "weaponPositionOffset": {
+      "x": 0,
+      "y": 1.58,
+      "z": 5.1275
+    },
+    "pilotPositionOffset": {
+      "x": -4.543419e-13,
+      "y": 2.023324,
+      "z": -1.039134
+    },
+    "pilotScale": {
+      "x": 3.2,
+      "y": 3.2,
+      "z": 3.2
+    },
+    "avatarNeckPositionOffset": {
+      "x": 0.0032000002,
+      "y": 5.411228,
+      "z": -1.8801131
+    },
+    "avatarScale": {
+      "x": 14,
+      "y": 14,
+      "z": 14
+    },
+    "weaponSettings": {
+      "fileID": 11400000,
+      "guid": "781d7d3c0bf799b4bb6370b09b2eae48",
+      "type": 2
+    },
+    "passiveSkills": [],
+    "resistantToBuffs": null,
+    "flickDashSettings": {
+      "fileID": 0
+    },
+    "ForceShowFlyGauge": 0
+  }
+}

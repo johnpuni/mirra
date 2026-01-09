@@ -1,0 +1,137 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "f7773473da28f674e51d75df039f25cb",
+      "type": 3
+    },
+    "m_Name": "wp_kagamimochi_emocarx",
+    "m_EditorClassIdentifier": null,
+    "memo": "S47鏡餅:エモカーX",
+    "weaponCategry": 2,
+    "enemySearchRadius": 30,
+    "enemySearchOffset": 25,
+    "attackPower": 32,
+    "attackStopPower": 10000,
+    "attackIgnoreDefense": 0,
+    "attackDisableBrakeTime": 1,
+    "additionalPower": 0,
+    "attackHitShape": 0,
+    "attackHitRadius": 5,
+    "attackHitSize": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "hitGrowingTimeRate": 0,
+    "attackHitPositionOffset": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "attackMoveSpeed": 30,
+    "attackMoveAccel": 0,
+    "attackMoveSpeedY": 0,
+    "attackMoveAccelY": 0,
+    "attackDuration": 3,
+    "attackTimeSpan": 0.6,
+    "isBackCritical": 0,
+    "isSideCritical": 0,
+    "shieldBreak": 0,
+    "isReflector": 0,
+    "refrectionRate": 0,
+    "reflectionAddSpeedRate": 0,
+    "invalidRefrection": 0,
+    "isSelfRefrection": 0,
+    "selfRefrectionNum": 0,
+    "refrectionRandomRot": {
+      "x": 0,
+      "y": 0
+    },
+    "isHideHitEffect": 0,
+    "killComboRate": 0,
+    "useLimitMax": -1,
+    "spriteButtonIcon": {
+      "fileID": 0
+    },
+    "useClickWhenFire": 1,
+    "useChargeWhenFire": 0,
+    "useChargeWithoutFire": 0,
+    "weaponAutoChargeSettings": {
+      "fileID": 0
+    },
+    "maxChargeTime": 2,
+    "inChargeDeceleratingRate": 1,
+    "inChargeMoveSpeedRate": 0.8,
+    "inChargeSe": 63,
+    "chargeMaxFx": "Fx/Battle/fx_charge_dash_attack_max",
+    "inChargeFx": "Fx/Battle/fx_charge_dash_attack",
+    "disableChargeEffectWhenMax": 0,
+    "isChargeBuffContext": {
+      "type": 0,
+      "power": 0,
+      "duration": 0,
+      "tag": null,
+      "isRemoveOnTargetDie": 1,
+      "customSatelliteFxName": null
+    },
+    "buffContexts": [],
+    "HitPartyType": 3,
+    "Debuff": {
+      "Ratio": 30,
+      "Type": 8,
+      "Power": -10,
+      "Duration": 4,
+      "EnemyOnly": 1
+    },
+    "AttackRotationSpeed": 0,
+    "CanEffectHomingBuff": 0,
+    "IsWallPenetrate": 0,
+    "PlayerPenetrateNum": 0,
+    "FriendlyFireRate": 0,
+    "ShootSeType": 69,
+    "BulletFx": "Fx/Bullet/bl_kagamimochi",
+    "BulletFxOnMaxBulletNum": "Fx/Bullet/bl_handgun",
+    "ScalePowerOnMaxBulletNum": 1.3,
+    "MoveAnger": {
+      "StartBulletNum": 1,
+      "MaxBulletNum": 5,
+      "AngerAmountOnMaxBulletNum": 5,
+      "FirstBulletReloadSec": 2,
+      "FxOnMaxBulletNum": "Fx/Bullet/bl_electric_missile_explosion",
+      "SeOnMaxBulletNum": 50,
+      "SwitchLocatorTarget": 2
+    },
+    "ChargeBuff": {
+      "Ratio": 100,
+      "Type": 89,
+      "Power": 0,
+      "Duration": 8,
+      "EnemyOnly": 0
+    },
+    "ChargeBuffSeType": 53,
+    "ChargeBuffFx": "Fx/Battle/fx_skillshoot",
+    "ChargeBuffFxSelf": "Fx/Battle/fx_buff_halo",
+    "ChargeBuffFxSelfLocalOffset": {
+      "x": 0,
+      "y": 10,
+      "z": 0
+    },
+    "ChargeBuffFxSelfLocalScale": 1
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "353d3699e795a4f5b9c3a521ef46f9e1",
+      "type": 3
+    },
+    "m_Name": "accessory_machines_c_0025_02",
+    "m_EditorClassIdentifier": null,
+    "aircraftName": "宝戦丸・黒奏",
+    "description": "武器: 打ち出のハンマー",
+    "moveSpeed": 32,
+    "moveAccel": 36,
+    "moveResistPower": 30,
+    "moveBrake": 35,
+    "rotationSpeed": 1080,
+    "respawnPositionSelectMoveSpeed": 80,
+    "defense": 9,
+    "searchHitRadius": 1,
+    "weaponPositionOffset": {
+      "x": 0,
+      "y": 1.75,
+      "z": 1
+    },
+    "pilotPositionOffset": {
+      "x": 0,
+      "y": 2,
+      "z": 0
+    },
+    "pilotScale": {
+      "x": 3,
+      "y": 3,
+      "z": 3
+    },
+    "avatarNeckPositionOffset": {
+      "x": 0,
+      "y": 3.1,
+      "z": -0.75
+    },
+    "avatarScale": {
+      "x": 14,
+      "y": 14,
+      "z": 14
+    },
+    "weaponSettings": {
+      "fileID": 11400000,
+      "guid": "9a2ea73d50256fe409f4a40c94e4bbfb",
+      "type": 2
+    },
+    "passiveSkills": [
+      {
+        "fileID": 11400000,
+        "guid": "22517f10ff261f34999a118380fe1e06",
+        "type": 2
+      }
+    ],
+    "resistantToBuffs": null,
+    "flickDashSettings": {
+      "fileID": 0
+    },
+    "ForceShowFlyGauge": 0
+  }
+}

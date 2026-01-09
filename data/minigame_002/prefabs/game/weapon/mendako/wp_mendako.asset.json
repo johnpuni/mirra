@@ -1,0 +1,153 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "3d7fb127c8f351e5a36d37874296fd55",
+      "type": 3
+    },
+    "m_Name": "wp_mendako",
+    "m_EditorClassIdentifier": null,
+    "memo": "めんだこ",
+    "weaponCategry": 1,
+    "enemySearchRadius": 14,
+    "enemySearchOffset": 10,
+    "attackPower": 49,
+    "attackStopPower": 10000,
+    "attackIgnoreDefense": 0,
+    "attackDisableBrakeTime": 1,
+    "additionalPower": 0,
+    "attackHitShape": 0,
+    "attackHitRadius": 3,
+    "attackHitSize": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "hitGrowingTimeRate": 0,
+    "attackHitPositionOffset": {
+      "x": 0,
+      "y": 0,
+      "z": 2
+    },
+    "attackMoveSpeed": 0,
+    "attackMoveAccel": 0,
+    "attackMoveSpeedY": 0,
+    "attackMoveAccelY": 0,
+    "attackDuration": 1.5,
+    "attackTimeSpan": 1.8,
+    "isBackCritical": 0,
+    "isSideCritical": 0,
+    "shieldBreak": 0,
+    "isReflector": 0,
+    "refrectionRate": 0,
+    "reflectionAddSpeedRate": 0,
+    "invalidRefrection": 0,
+    "isSelfRefrection": 0,
+    "selfRefrectionNum": 0,
+    "refrectionRandomRot": {
+      "x": 0,
+      "y": 0
+    },
+    "isHideHitEffect": 0,
+    "killComboRate": 0,
+    "useLimitMax": -1,
+    "spriteButtonIcon": {
+      "fileID": 0
+    },
+    "useClickWhenFire": 1,
+    "useChargeWhenFire": 1,
+    "useChargeWithoutFire": 0,
+    "weaponAutoChargeSettings": {
+      "fileID": 0
+    },
+    "maxChargeTime": 2,
+    "inChargeDeceleratingRate": 1,
+    "inChargeMoveSpeedRate": 0.8,
+    "inChargeSe": 63,
+    "chargeMaxFx": "Fx/Battle/fx_charge_dash_attack_max",
+    "inChargeFx": "Fx/Battle/fx_charge_dash_attack",
+    "disableChargeEffectWhenMax": 0,
+    "isChargeBuffContext": {
+      "type": 0,
+      "power": 0,
+      "duration": 0,
+      "tag": null,
+      "isRemoveOnTargetDie": 1,
+      "customSatelliteFxName": null
+    },
+    "buffContexts": [],
+    "AttackDegrees": [
+      0,
+      180
+    ],
+    "PunchPrefab": {
+      "fileID": 1602248192904016,
+      "guid": "1605f8d132782e644b9c74083c304ef2",
+      "type": 2
+    },
+    "PunchData": {
+      "Enabled": 1,
+      "MoveRange": 5,
+      "AttackScaleAnimOffset": 0.5,
+      "Prefab_Spring": {
+        "fileID": 1770565901062834,
+        "guid": "01d4236fda4a3934dbce4f1b6557a0c6",
+        "type": 2
+      },
+      "SpringScaleXY": 0.6,
+      "SpringScaleZAdjuster": 0.1,
+      "ShootSeType": 55,
+      "ShootSeOctaRange": {
+        "x": 0,
+        "y": 2
+      },
+      "FireAnimDuration": 0.3,
+      "ReturnAnimDuration": 0.3,
+      "AnimatorStateName_Attack": "Attack",
+      "UseSameFireId": 0,
+      "DontReturn": 0
+    },
+    "DashAttackData": {
+      "AddBullet": 1,
+      "DashForce": 70,
+      "DashAttackSec": 1,
+      "DashAttackColliderR": 5,
+      "DashAttackPower": 0.01
+    },
+    "ChargeRotateYParam": {
+      "Enabled": 1,
+      "Param": {
+        "RotateCount": 20,
+        "RotateSec": 10,
+        "RotateBreakSecRate": 1
+      },
+      "LocatorIndex": 0,
+      "BuffDatas": [
+        {
+          "BuffType": 9,
+          "Power": 20
+        },
+        {
+          "BuffType": 10,
+          "Power": -20
+        }
+      ]
+    },
+    "StartChargeInterval": 10
+  }
+}

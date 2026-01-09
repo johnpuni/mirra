@@ -1,0 +1,120 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "2f1e093ed59c662c81e2f463423d3d82",
+      "type": 3
+    },
+    "m_Name": "wp_break_field_charge_01",
+    "m_EditorClassIdentifier": null,
+    "memo": "バリア破壊フィールド",
+    "weaponCategry": 2,
+    "enemySearchRadius": 50,
+    "enemySearchOffset": 20,
+    "attackPower": 65,
+    "attackStopPower": 10000,
+    "attackIgnoreDefense": 34.83,
+    "attackDisableBrakeTime": 1,
+    "additionalPower": 0,
+    "attackHitShape": 0,
+    "attackHitRadius": 15,
+    "attackHitSize": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "hitGrowingTimeRate": 0,
+    "attackHitPositionOffset": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "attackMoveSpeed": 0,
+    "attackMoveAccel": 0,
+    "attackMoveSpeedY": 0,
+    "attackMoveAccelY": 0,
+    "attackDuration": 60,
+    "attackTimeSpan": 1,
+    "isBackCritical": 0,
+    "isSideCritical": 0,
+    "shieldBreak": 1,
+    "isReflector": 0,
+    "refrectionRate": 0,
+    "reflectionAddSpeedRate": 0,
+    "invalidRefrection": 0,
+    "isSelfRefrection": 0,
+    "selfRefrectionNum": 0,
+    "refrectionRandomRot": {
+      "x": 0,
+      "y": 0
+    },
+    "isHideHitEffect": 0,
+    "killComboRate": 0,
+    "useLimitMax": -1,
+    "spriteButtonIcon": {
+      "fileID": 0
+    },
+    "useClickWhenFire": 1,
+    "useChargeWhenFire": 1,
+    "useChargeWithoutFire": 0,
+    "weaponAutoChargeSettings": {
+      "fileID": 0
+    },
+    "maxChargeTime": 2.5,
+    "inChargeDeceleratingRate": 1,
+    "inChargeMoveSpeedRate": 0.3,
+    "inChargeSe": 63,
+    "chargeMaxFx": "Fx/Battle/fx_charge_dash_attack_max",
+    "inChargeFx": "Fx/Battle/fx_charge_dash_attack",
+    "disableChargeEffectWhenMax": 0,
+    "isChargeBuffContext": {
+      "type": 0,
+      "power": 0,
+      "duration": 0,
+      "tag": null,
+      "isRemoveOnTargetDie": 1,
+      "customSatelliteFxName": null
+    },
+    "buffContexts": [],
+    "normalWeapon": {
+      "fileID": 11400000,
+      "guid": "dc4f43bbe672a4640bf3a738580a17d0",
+      "type": 2
+    },
+    "dashExplosionInterval": 0,
+    "dashChargeTime": 0,
+    "attackPowerRateCurve": {
+      "serializedVersion": 2,
+      "m_Curve": [],
+      "m_PreInfinity": 2,
+      "m_PostInfinity": 2,
+      "m_RotationOrder": 4
+    },
+    "frontMoveForce": 0,
+    "frontMoveForceRateCurve": {
+      "serializedVersion": 2,
+      "m_Curve": [],
+      "m_PreInfinity": 2,
+      "m_PostInfinity": 2,
+      "m_RotationOrder": 4
+    },
+    "dashAngerAmount": 0,
+    "bulletFx": "Fx/Bullet/bl_DestructionField",
+    "shootSeType": 0
+  }
+}

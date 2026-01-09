@@ -1,0 +1,74 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "353d3699e795a4f5b9c3a521ef46f9e1",
+      "type": 3
+    },
+    "m_Name": "accessory_machines_c_0001_68",
+    "m_EditorClassIdentifier": null,
+    "aircraftName": "エモカーX　マシンガン型",
+    "description": "武器: 3WAYレーザー(エモカー用)",
+    "moveSpeed": 30,
+    "moveAccel": 20,
+    "moveResistPower": 40,
+    "moveBrake": 35,
+    "rotationSpeed": 540,
+    "respawnPositionSelectMoveSpeed": 80,
+    "defense": 5,
+    "searchHitRadius": 1,
+    "weaponPositionOffset": {
+      "x": 0,
+      "y": 1.58,
+      "z": 10
+    },
+    "pilotPositionOffset": {
+      "x": -4.543419e-13,
+      "y": -0.62667596,
+      "z": -0.009134062
+    },
+    "pilotScale": {
+      "x": 3,
+      "y": 3,
+      "z": 3
+    },
+    "avatarNeckPositionOffset": {
+      "x": 0.0032000002,
+      "y": 2.761228,
+      "z": -0.85011303
+    },
+    "avatarScale": {
+      "x": 14,
+      "y": 14,
+      "z": 14
+    },
+    "weaponSettings": {
+      "fileID": 11400000,
+      "guid": "51a594c24d0f0b246abe4913dea26d0c",
+      "type": 2
+    },
+    "passiveSkills": [],
+    "resistantToBuffs": null,
+    "flickDashSettings": {
+      "fileID": 11400000,
+      "guid": "9325f8d3b4d3e224abe0002a6a1e67d0",
+      "type": 2
+    },
+    "ForceShowFlyGauge": 0
+  }
+}

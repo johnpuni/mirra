@@ -1,0 +1,238 @@
+{
+  "Mesh": {
+    "serializedVersion": 11,
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_Name": "keyboard_blk05",
+    "m_SubMeshes": [
+      {
+        "serializedVersion": 2,
+        "firstByte": 0,
+        "indexCount": 60,
+        "topology": 0,
+        "baseVertex": 0,
+        "firstVertex": 0,
+        "vertexCount": 40,
+        "localAABB": {
+          "m_Center": {
+            "x": -0.007558441,
+            "y": 0.0029575508,
+            "z": -0.15354857
+          },
+          "m_Extent": {
+            "x": 0.048493482,
+            "y": 0.024546565,
+            "z": 0.1535488
+          }
+        }
+      }
+    ],
+    "m_Shapes": {
+      "vertices": [],
+      "shapes": [],
+      "channels": [],
+      "fullWeights": []
+    },
+    "m_BindPose": [],
+    "m_BoneNameHashes": null,
+    "m_RootBoneNameHash": 0,
+    "m_BonesAABB": [],
+    "m_VariableBoneCountWeights": {
+      "m_Data": null
+    },
+    "m_MeshCompression": 0,
+    "m_IsReadable": 0,
+    "m_KeepVertices": 0,
+    "m_KeepIndices": 0,
+    "m_IndexFormat": 0,
+    "m_IndexBuffer": "000001000200000002000300040005000600040006000700080009000a0008000a000b000c000d000e000c000e000f00100011001200100012001300140015001600140016001700180019001a0018001a001b001c001d001e001c001e001f00200021002200200022002300240025002600240026002700",
+    "m_VertexData": {
+      "serializedVersion": 3,
+      "m_VertexCount": 40,
+      "m_Channels": [
+        {
+          "stream": 0,
+          "offset": 0,
+          "format": 0,
+          "dimension": 3
+        },
+        {
+          "stream": 0,
+          "offset": 12,
+          "format": 1,
+          "dimension": 52
+        },
+        {
+          "stream": 0,
+          "offset": 20,
+          "format": 1,
+          "dimension": 4
+        },
+        {
+          "stream": 0,
+          "offset": 28,
+          "format": 2,
+          "dimension": 4
+        },
+        {
+          "stream": 0,
+          "offset": 32,
+          "format": 1,
+          "dimension": 2
+        },
+        {
+          "stream": 0,
+          "offset": 0,
+          "format": 0,
+          "dimension": 0
+        },
+        {
+          "stream": 0,
+          "offset": 0,
+          "format": 0,
+          "dimension": 0
+        },
+        {
+          "stream": 0,
+          "offset": 0,
+          "format": 0,
+          "dimension": 0
+        },
+        {
+          "stream": 0,
+          "offset": 0,
+          "format": 0,
+          "dimension": 0
+        },
+        {
+          "stream": 0,
+          "offset": 0,
+          "format": 0,
+          "dimension": 0
+        },
+        {
+          "stream": 0,
+          "offset": 0,
+          "format": 0,
+          "dimension": 0
+        },
+        {
+          "stream": 0,
+          "offset": 0,
+          "format": 0,
+          "dimension": 0
+        },
+        {
+          "stream": 0,
+          "offset": 0,
+          "format": 0,
+          "dimension": 0
+        },
+        {
+          "stream": 0,
+          "offset": 0,
+          "format": 0,
+          "dimension": 0
+        }
+      ],
+      "m_DataSize": 1440,
+      "_typelessdata": "8aab27bd72dbb0bc0c127334000000bc00000000003c0000000000bcfffffffff9315134b39665bd72dbb0bcde3b9dbe000000bc00000000003c0000000000bcfffffffff931ee341e80d33c72dbb0bcde3b9dbe000000bc00000000003c0000000000bcffffffff4c32ee3480ab273d72dbb0bc0c127334000000bc00000000003c0000000000bcffffffff4c3251344d380e3d3c50e13c4dd1c1bb0000a839a8390000003c0000000000bcffffffff46323634f09a10bd3c50e13c4dd1c1bb0000a839a8390000003c0000000000bcffffffffff3136348aab27bd98dbb03c04769e330000a839a8390000003c0000000000bcfffffffff9313a3480ab273d98dbb03c04769e330000a839a8390000003c0000000000bcffffffff4c323a3480ab273d98dbb03c04769e33a639a83973a80000a8b9a839412400bcffffffff773251341e80d33c98dbb03cde3b9dbea639a83973a80000aab9a2393bab00bcffffffff7732ee34295fa53c5050e13c92349abea639a83973a80000aab9a2391bab00bcffffffff8032eb344d380e3d3c50e13c4dd1c1bba639a83973a80000a8b9a839d42400bcffffffff80325434f09a10bd3c50e13c4dd1c1bba6b9a83973280000aab9a6b9d2a400bcffffffffc43154348a234cbd5050e13c92349abea6b9a83973280000a4b9a8b9232b00bcffffffffc431eb34b39665bd98dbb03cde3b9dbea6b9a83973280000a4b9a8b9422b00bcffffffffcd31ee348aab27bd98dbb03c04769e33a6b9a83973280000aab9a6b946a400bcffffffffcd3151341e80d33c98dbb03cde3b9dbe0000a839a8b90000003c0000000000bcffffffff4c320435b39665bd98dbb03cde3b9dbe0000a839a8b90000003c0000000000bcfffffffff93104358a234cbd5050e13c92349abe0000a839a8b90000003c0000000000bcffffffffff310835295fa53c5050e13c92349abe0000a839a8b90000003c0000000000bcffffffff46320835f09a10bd3c50e13c4dd1c1bb0000003c0200000000bc0000000000bcfffffffff4302b344d380e3d3c50e13c4dd1c1bb0000003c0200000000bc0000000000bcffffffff8c302b34295fa53c5050e13c92349abe0000003c0200000000bc0000000000bcffffffff8c300d358a234cbd5050e13c92349abe0000003c0200000000bc0000000000bcfffffffff4300d358aab27bd98dbb03c04769e33febb00004b2a0000000000bc000000bcffffffffcd315134b39665bd98dbb03cde3b9dbefebb00004b2a0000000000bc000000bcffffffffcd31ee34b39665bd72dbb0bcde3b9dbefebb00004b2a0000000000bc000000bcfffffffff931ee348aab27bd72dbb0bc0c127334febb00004b2a0000000000bc000000bcfffffffff9315134b39665bd98dbb03cde3b9dbe0000000000bc0000003c0000000000bcfffffffff93104351e80d33c98dbb03cde3b9dbe0000000000bc0000003c0000000000bcffffffff4c3204351e80d33c72dbb0bcde3b9dbe0000000000bc0000003c0000000000bcffffffff4c32ee34b39665bd72dbb0bcde3b9dbe0000000000bc0000003c0000000000bcfffffffff931ee341e80d33c98dbb03cde3b9dbefe3b00004baa00000000003c000000bcffffffff7732ee3480ab273d98dbb03c04769e33fe3b00004baa00000000003c000000bcffffffff7732513480ab273d72dbb0bc0c127334fe3b00004baa00000000003c000000bcffffffff4c3251341e80d33c72dbb0bcde3b9dbefe3b00004baa00000000003c000000bcffffffff4c32ee3480ab273d98dbb03c04769e3300003b00003c0000003c0000000000bcffffffff4c323a348aab27bd98dbb03c04769e3300003b00003c0000003c0000000000bcfffffffff9313a348aab27bd72dbb0bc0c12733400003b00003c0000003c0000000000bcfffffffff931513480ab273d72dbb0bc0c12733400003b00003c0000003c0000000000bcffffffff4c325134"
+    },
+    "m_CompressedMesh": {
+      "m_Vertices": {
+        "m_NumItems": 0,
+        "m_Range": 0,
+        "m_Start": 0,
+        "m_Data": null,
+        "m_BitSize": 0
+      },
+      "m_UV": {
+        "m_NumItems": 0,
+        "m_Range": 0,
+        "m_Start": 0,
+        "m_Data": null,
+        "m_BitSize": 0
+      },
+      "m_Normals": {
+        "m_NumItems": 0,
+        "m_Range": 0,
+        "m_Start": 0,
+        "m_Data": null,
+        "m_BitSize": 0
+      },
+      "m_Tangents": {
+        "m_NumItems": 0,
+        "m_Range": 0,
+        "m_Start": 0,
+        "m_Data": null,
+        "m_BitSize": 0
+      },
+      "m_Weights": {
+        "m_NumItems": 0,
+        "m_Data": null,
+        "m_BitSize": 0
+      },
+      "m_NormalSigns": {
+        "m_NumItems": 0,
+        "m_Data": null,
+        "m_BitSize": 0
+      },
+      "m_TangentSigns": {
+        "m_NumItems": 0,
+        "m_Data": null,
+        "m_BitSize": 0
+      },
+      "m_FloatColors": {
+        "m_NumItems": 0,
+        "m_Range": 0,
+        "m_Start": 0,
+        "m_Data": null,
+        "m_BitSize": 0
+      },
+      "m_BoneIndices": {
+        "m_NumItems": 0,
+        "m_Data": null,
+        "m_BitSize": 0
+      },
+      "m_Triangles": {
+        "m_NumItems": 0,
+        "m_Data": null,
+        "m_BitSize": 0
+      },
+      "m_UVInfo": 0
+    },
+    "m_LocalAABB": {
+      "m_Center": {
+        "x": -0.007558441,
+        "y": 0.0029575508,
+        "z": -0.15354857
+      },
+      "m_Extent": {
+        "x": 0.048493482,
+        "y": 0.024546565,
+        "z": 0.1535488
+      }
+    },
+    "m_MeshUsageFlags": 0,
+    "m_CookingOptions": 30,
+    "m_BakedConvexCollisionMesh": null,
+    "m_BakedTriangleCollisionMesh": null,
+    "m_MeshMetrics[0]": 64.71373,
+    "m_MeshMetrics[1]": 1,
+    "m_MeshOptimizationFlags": -1,
+    "m_StreamData": {
+      "serializedVersion": 2,
+      "offset": 0,
+      "size": 0,
+      "path": null
+    }
+  }
+}

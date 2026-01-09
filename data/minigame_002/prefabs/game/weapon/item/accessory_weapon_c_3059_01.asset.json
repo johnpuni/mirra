@@ -1,0 +1,92 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "49fa1351bc7067d3b88600fa973534bd",
+      "type": 3
+    },
+    "m_Name": "accessory_weapon_c_3059_01",
+    "m_EditorClassIdentifier": null,
+    "memo": "装備アイテム-不思議な時計",
+    "weaponCategry": 0,
+    "enemySearchRadius": 0,
+    "enemySearchOffset": 0,
+    "attackPower": 50,
+    "attackStopPower": 0,
+    "attackIgnoreDefense": 0,
+    "attackDisableBrakeTime": 0,
+    "additionalPower": 4,
+    "attackHitShape": 1,
+    "attackHitRadius": 0,
+    "attackHitSize": {
+      "x": 15,
+      "y": 3,
+      "z": 3
+    },
+    "hitGrowingTimeRate": 0,
+    "attackHitPositionOffset": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "attackMoveSpeed": -5,
+    "attackMoveAccel": 0,
+    "attackMoveSpeedY": 0,
+    "attackMoveAccelY": 0,
+    "attackDuration": 15,
+    "attackTimeSpan": 20,
+    "isBackCritical": 0,
+    "isSideCritical": 0,
+    "shieldBreak": 0,
+    "isReflector": 0,
+    "refrectionRate": 0,
+    "reflectionAddSpeedRate": 0,
+    "invalidRefrection": 0,
+    "isSelfRefrection": 0,
+    "selfRefrectionNum": 0,
+    "refrectionRandomRot": {
+      "x": 0,
+      "y": 0
+    },
+    "isHideHitEffect": 0,
+    "killComboRate": 0,
+    "useLimitMax": -1,
+    "spriteButtonIcon": {
+      "fileID": 21300000,
+      "guid": "986c4f4e646f0794e8d14a0e5d6842a6",
+      "type": 2
+    },
+    "useClickWhenFire": 1,
+    "useChargeWhenFire": 0,
+    "useChargeWithoutFire": 0,
+    "weaponAutoChargeSettings": {
+      "fileID": 0
+    },
+    "needlePrefab": {
+      "fileID": 1727031778327962,
+      "guid": "94318cbe21609e344912f099985b9428",
+      "type": 2
+    },
+    "hitOffsetPos": 8,
+    "orbitRadius": 2,
+    "playerPenetrateNum": 0,
+    "isWallPenetrate": 0,
+    "shortNeedleSizeRate": 0.6,
+    "shortNeedleSpeedRate": 0.4
+  }
+}

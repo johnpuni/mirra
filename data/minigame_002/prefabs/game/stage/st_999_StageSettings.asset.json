@@ -1,0 +1,99 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "a2c0ab091692274f872ea189ae5b76b2",
+      "type": 3
+    },
+    "m_Name": "st_999_StageSettings",
+    "m_EditorClassIdentifier": null,
+    "stageName": "ボーナスステージ",
+    "imageStageName": {
+      "fileID": 21300000,
+      "guid": "86fc8def00e049041832d4ae3adc6186",
+      "type": 2
+    },
+    "stageBuffSettings": {
+      "fileID": 0
+    },
+    "stageViewCameraOrthographicSize": 270,
+    "cameraOrthographicSize": 50,
+    "useCameraRotation": 0,
+    "cameraRotation": {
+      "x": 45,
+      "y": 45,
+      "z": 0
+    },
+    "bgmType": 1,
+    "maxBumperNum": 0,
+    "prefabBumper": {
+      "fileID": 1004342066716500,
+      "guid": "2868e3eab4798ce45ac0d332ef9908e8",
+      "type": 2
+    },
+    "prefabWallBumper": {
+      "fileID": 1996213658169542,
+      "guid": "90e33c8790bf0fa45b5c19dad779a8f5",
+      "type": 2
+    },
+    "prefabHypotenuseWallBumper": {
+      "fileID": 1279546156848241,
+      "guid": "73762637a1cabe749afcbcedcd44835d",
+      "type": 2
+    },
+    "stageLimitMin": {
+      "x": -50000,
+      "y": 0,
+      "z": -50000
+    },
+    "stageLimitMax": {
+      "x": 50000,
+      "y": 0,
+      "z": 50000
+    },
+    "stageLimitPushBackSize": 1,
+    "stageObjectLaunchTimeInterval": 0,
+    "stageObjectLaunchProbabilityOnPlayerDie": 0,
+    "gameType": 1,
+    "subType": 1,
+    "subRuleParam": {
+      "dropItems": [
+        {
+          "fileID": 11400000,
+          "guid": "0b463c6cb9cd691499c618fcd021d10d",
+          "type": 2
+        },
+        {
+          "fileID": 11400000,
+          "guid": "cad1cdc9e82122144947ae20dd817556",
+          "type": 2
+        },
+        {
+          "fileID": 11400000,
+          "guid": "38fbf537bec045843889138afde0b41e",
+          "type": 2
+        }
+      ]
+    },
+    "flagItem": {
+      "fileID": 11400000,
+      "guid": "ed835144e48e4df4a99bd785221d633f",
+      "type": 2
+    }
+  }
+}

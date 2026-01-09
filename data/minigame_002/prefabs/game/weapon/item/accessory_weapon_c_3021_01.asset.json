@@ -1,0 +1,147 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "28f0f82c9d93d4d70576ceecdb0c4a51",
+      "type": 3
+    },
+    "m_Name": "accessory_weapon_c_3021_01",
+    "m_EditorClassIdentifier": null,
+    "memo": "装備アイテム_スプリングハート(背面隠しパンチ)",
+    "weaponCategry": 0,
+    "enemySearchRadius": 14,
+    "enemySearchOffset": 10,
+    "attackPower": 45,
+    "attackStopPower": 10000,
+    "attackIgnoreDefense": 0,
+    "attackDisableBrakeTime": 1,
+    "additionalPower": 20,
+    "attackHitShape": 0,
+    "attackHitRadius": 6,
+    "attackHitSize": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "hitGrowingTimeRate": 0,
+    "attackHitPositionOffset": {
+      "x": 0,
+      "y": 0,
+      "z": 1
+    },
+    "attackMoveSpeed": 0,
+    "attackMoveAccel": 0,
+    "attackMoveSpeedY": 0,
+    "attackMoveAccelY": 0,
+    "attackDuration": 0.05,
+    "attackTimeSpan": 3,
+    "isBackCritical": 0,
+    "isSideCritical": 0,
+    "shieldBreak": 0,
+    "isReflector": 0,
+    "refrectionRate": 0,
+    "reflectionAddSpeedRate": 0,
+    "invalidRefrection": 0,
+    "isSelfRefrection": 0,
+    "selfRefrectionNum": 0,
+    "refrectionRandomRot": {
+      "x": 0,
+      "y": 0
+    },
+    "isHideHitEffect": 0,
+    "killComboRate": 0,
+    "useLimitMax": -1,
+    "spriteButtonIcon": {
+      "fileID": 21300000,
+      "guid": "cc24c420bef8f194b96bf902e51cc615",
+      "type": 2
+    },
+    "useClickWhenFire": 1,
+    "useChargeWhenFire": 0,
+    "useChargeWithoutFire": 0,
+    "weaponAutoChargeSettings": {
+      "fileID": 0
+    },
+    "prefabWeapon": {
+      "fileID": 1602481543219541,
+      "guid": "08d837b7da8f47b4b994aec5cc887abc",
+      "type": 2
+    },
+    "prefabWeaponBase": {
+      "fileID": 1813221124340532,
+      "guid": "d869c8fc8bd069d458bf418362f4859b",
+      "type": 2
+    },
+    "prefabSpring": {
+      "fileID": 1963954103742357,
+      "guid": "52f91cf029f793f4ba4e21798b91b3d5",
+      "type": 2
+    },
+    "weaponObjectRotate": {
+      "x": 0,
+      "y": 1,
+      "z": 0,
+      "w": -4.371139e-08
+    },
+    "attackMoveRange": 18,
+    "curveTimeToPosition": {
+      "serializedVersion": 2,
+      "m_Curve": [
+        {
+          "serializedVersion": 3,
+          "time": 0,
+          "value": 0,
+          "inSlope": 0,
+          "outSlope": 0,
+          "weightedMode": 0,
+          "inWeight": 0,
+          "outWeight": 0
+        },
+        {
+          "serializedVersion": 3,
+          "time": 1,
+          "value": 1,
+          "inSlope": 2,
+          "outSlope": 2,
+          "weightedMode": 0,
+          "inWeight": 0,
+          "outWeight": 0
+        }
+      ],
+      "m_PreInfinity": 2,
+      "m_PostInfinity": 2,
+      "m_RotationOrder": 4
+    },
+    "frontMoveForce": 0,
+    "frontMoveStopPower": 0,
+    "defense": 0,
+    "defensiveAngle": 0,
+    "shootSeType": 37,
+    "isDrill": 0,
+    "canGrabItem": 0,
+    "isPenguin": 0,
+    "hideWeaponWhenIdleForPuppet": 1,
+    "hideWeaponDelay": 0.5,
+    "useReturnHandDurationLimit": 1,
+    "returnHandDurationLimit": 0.5,
+    "itemDestroyTime": 0,
+    "itemDuplicationLimit": -1,
+    "itemBaseBuffTagName": null,
+    "dropItems": []
+  }
+}

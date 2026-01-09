@@ -1,0 +1,58 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "c494d21d2b40f696407d7996dd333020",
+      "type": 3
+    },
+    "m_Name": "auto_charge_drill_02",
+    "m_EditorClassIdentifier": null,
+    "maxChargeDuration": 28,
+    "chargeEffectContexts": [
+      {
+        "chargeRateOrMore": 0.25,
+        "attackBuffRate": 1.1,
+        "spinSpeed": 360,
+        "ef": 0
+      },
+      {
+        "chargeRateOrMore": 0.5,
+        "attackBuffRate": 1.2,
+        "spinSpeed": 720,
+        "ef": 0
+      },
+      {
+        "chargeRateOrMore": 0.75,
+        "attackBuffRate": 1.3,
+        "spinSpeed": 1440,
+        "ef": 0
+      },
+      {
+        "chargeRateOrMore": 1,
+        "attackBuffRate": 1.4,
+        "spinSpeed": 1440,
+        "ef": 1
+      }
+    ],
+    "spinAxis": {
+      "x": 0,
+      "y": 0,
+      "z": 1
+    }
+  }
+}

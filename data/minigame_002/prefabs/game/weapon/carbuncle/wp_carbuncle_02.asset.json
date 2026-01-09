@@ -1,0 +1,169 @@
+{
+  "MonoBehaviour": {
+    "m_ObjectHideFlags": 0,
+    "m_CorrespondingSourceObject": {
+      "fileID": 0
+    },
+    "m_PrefabInstance": {
+      "fileID": 0
+    },
+    "m_PrefabAsset": {
+      "fileID": 0
+    },
+    "m_GameObject": {
+      "fileID": 0
+    },
+    "m_Enabled": 1,
+    "m_EditorHideFlags": 0,
+    "m_Script": {
+      "fileID": 11500000,
+      "guid": "2d6574737071b23a83d506fa5ee0b14a",
+      "type": 3
+    },
+    "m_Name": "wp_carbuncle_02",
+    "m_EditorClassIdentifier": null,
+    "memo": "S49カーバンクル機体",
+    "weaponCategry": 1,
+    "enemySearchRadius": 14,
+    "enemySearchOffset": 10,
+    "attackPower": 61,
+    "attackStopPower": 10000,
+    "attackIgnoreDefense": 0,
+    "attackDisableBrakeTime": 1,
+    "additionalPower": 0,
+    "attackHitShape": 0,
+    "attackHitRadius": 3,
+    "attackHitSize": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "hitGrowingTimeRate": 0,
+    "attackHitPositionOffset": {
+      "x": 0,
+      "y": 0,
+      "z": 1
+    },
+    "attackMoveSpeed": 0,
+    "attackMoveAccel": 0,
+    "attackMoveSpeedY": 0,
+    "attackMoveAccelY": 0,
+    "attackDuration": 0.1,
+    "attackTimeSpan": 0.45,
+    "isBackCritical": 0,
+    "isSideCritical": 0,
+    "shieldBreak": 0,
+    "isReflector": 0,
+    "refrectionRate": 0,
+    "reflectionAddSpeedRate": 0,
+    "invalidRefrection": 0,
+    "isSelfRefrection": 0,
+    "selfRefrectionNum": 0,
+    "refrectionRandomRot": {
+      "x": 0,
+      "y": 0
+    },
+    "isHideHitEffect": 0,
+    "killComboRate": 0,
+    "useLimitMax": -1,
+    "spriteButtonIcon": {
+      "fileID": 0
+    },
+    "useClickWhenFire": 1,
+    "useChargeWhenFire": 0,
+    "useChargeWithoutFire": 0,
+    "weaponAutoChargeSettings": {
+      "fileID": 0
+    },
+    "weaponPrefab": {
+      "fileID": 1998568938006616,
+      "guid": "535baf5564e742c4297c9ad6e1fd6284",
+      "type": 2
+    },
+    "punchData": {
+      "Enabled": 1,
+      "MoveRange": 5,
+      "AttackScaleAnimOffset": 0,
+      "Prefab_Spring": {
+        "fileID": 1770565901062834,
+        "guid": "01d4236fda4a3934dbce4f1b6557a0c6",
+        "type": 2
+      },
+      "SpringScaleXY": 0.6,
+      "SpringScaleZAdjuster": 0.1,
+      "ShootSeType": 55,
+      "ShootSeOctaRange": {
+        "x": 0,
+        "y": 2
+      },
+      "FireAnimDuration": 0.3,
+      "ReturnAnimDuration": 0.3,
+      "AnimatorStateName_Attack": "Attack",
+      "UseSameFireId": 0,
+      "DontReturn": 0
+    },
+    "friendlyFireDamageRate": 10,
+    "carbuncleBuffSettings": [
+      {
+        "pickRate": 30,
+        "buffSettings": [
+          {
+            "buffType": 6,
+            "effectValue": 30,
+            "isPercentUp": 1
+          }
+        ],
+        "duration": 15
+      },
+      {
+        "pickRate": 30,
+        "buffSettings": [
+          {
+            "buffType": 10,
+            "effectValue": 20,
+            "isPercentUp": 0
+          }
+        ],
+        "duration": 15
+      },
+      {
+        "pickRate": 30,
+        "buffSettings": [
+          {
+            "buffType": 8,
+            "effectValue": 15,
+            "isPercentUp": 0
+          },
+          {
+            "buffType": 78,
+            "effectValue": 30,
+            "isPercentUp": 0
+          }
+        ],
+        "duration": 15
+      },
+      {
+        "pickRate": 15,
+        "buffSettings": [
+          {
+            "buffType": 21,
+            "effectValue": 10,
+            "isPercentUp": 0
+          }
+        ],
+        "duration": 10
+      },
+      {
+        "pickRate": 10,
+        "buffSettings": [
+          {
+            "buffType": 2,
+            "effectValue": 10,
+            "isPercentUp": 0
+          }
+        ],
+        "duration": 10
+      }
+    ]
+  }
+}
