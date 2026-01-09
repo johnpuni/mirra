@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>Mirrativ Web Viewer</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+</head>
+<body>
+
+<div class="top">
+  <input id="userId" placeholder="Mirrativ User ID">
+  <button onclick="loadLive()">接続</button>
+</div>
+
+<video id="player" controls autoplay></video>
+
+<div class="controls">
+  <button onclick="toggle('comments')">💬 コメント</button>
+  <button onclick="toggle('gifts')">🎁 ギフト</button>
+</div>
+
+<div class="panel">
+  <div id="comments" class="box"></div>
+  <div id="gifts" class="box"></div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
