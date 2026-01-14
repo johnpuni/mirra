@@ -3,52 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mirrativ Player Installer</title>
+    <title>Mirrativ Lite Player</title>
     <style>
-        body { font-family: -apple-system, sans-serif; background: #111; color: #fff; padding: 20px; text-align: center; }
-        .card { background: #222; border-radius: 15px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); margin-bottom: 20px; }
-        h1 { color: #ff005c; font-size: 1.5rem; }
-        .btn { background: #ff005c; color: #fff; border: none; padding: 15px 30px; border-radius: 30px; font-weight: bold; font-size: 1.1rem; width: 100%; cursor: pointer; margin: 10px 0; }
+        body { font-family: -apple-system, sans-serif; background: #111; color: #fff; padding: 20px; text-align: center; line-height: 1.6; }
+        .card { background: #222; border-radius: 15px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); margin-bottom: 20px; border: 1px solid #333; }
+        h1 { color: #ff005c; font-size: 1.5rem; margin-bottom: 5px; }
+        .btn { background: #ff005c; color: #fff; border: none; padding: 15px 30px; border-radius: 30px; font-weight: bold; font-size: 1.1rem; width: 100%; cursor: pointer; margin: 10px 0; transition: 0.2s; }
+        .btn:active { transform: scale(0.98); opacity: 0.8; }
         .step { text-align: left; background: #333; padding: 15px; border-radius: 10px; margin-bottom: 10px; font-size: 0.9rem; }
-        .code-box { background: #000; padding: 10px; font-size: 0.7rem; color: #aaa; word-break: break-all; border-radius: 5px; max-height: 100px; overflow-y: auto; }
         .important { color: #ffeb3b; font-weight: bold; }
+        a { color: #03a9f4; text-decoration: none; }
     </style>
 </head>
 <body>
 
     <h1>Mirrativ Lite Player</h1>
-    <p>スマホのブラウザで動く軽量視聴ツール</p>
+    <p style="font-size: 0.8rem; color: #aaa;">スマホブラウザ専用・軽量視聴ツール</p>
 
     <div class="card">
-        <button class="btn" onclick="copyCode()">1. ツールをコピーする</button>
-        <p id="msg" style="color:#4caf50; font-size:0.8rem; display:none;">コピーしました！</p>
+        <button class="btn" onclick="copyCode()">ツールをコピーする</button>
+        <p id="msg" style="color:#4caf50; font-size:0.8rem; display:none; font-weight:bold;">✅ コピー成功！</p>
     </div>
 
     <div class="step">
-        <b style="color:#ff005c;">使い方（スマホ版）</b><br><br>
+        <b style="color:#ff005c;">設定方法（最初の一回だけ）</b><br>
         1. 上のボタンでコードをコピー<br>
-        2. ブラウザで<b>適当なページをブックマーク</b>する<br>
-        3. ブックマーク編集を開き、URL欄を消して<b>コピーしたコードを貼り付け</b>、保存する<br>
-        4. <a href="https://www.mirrativ.com/" style="color:#03a9f4;">ミラティブ公式サイト</a>を開く<br>
-        5. 保存したブックマークを<b>アドレス欄から検索して実行</b>！
+        2. このページを<b>ブックマーク登録</b>する<br>
+        3. ブックマーク編集で、URL欄の中身を全部消して<b>コピーしたコードを貼り付け</b>て保存。名前を「ミラ再生」などにする。
     </div>
 
     <div class="step">
-        <span class="important">注意:</span> ミラティブのページを直接開いた状態でないと、セキュリティ制限で動きません。
+        <b style="color:#ff005c;">使い方</b><br>
+        1. <a href="https://www.mirrativ.com/">ミラティブ公式サイト</a>を開く<br>
+        2. アドレスバーに「ミラ再生」と打ち、保存したブックマークを実行<br>
+        3. ID入力欄が出るので、IDを入れて再生！
     </div>
 
-    <div style="display:none;">
-        <textarea id="targetCode">javascript:(function(){const uid=prompt("配信者IDを入力","110544066");if(!uid)return;fetch(`https://www.mirrativ.com/api/live/live_history?user_id=${uid}`).then(r=>r.json()).then(h=>{if(!h.lives||!h.lives.length)throw "配信外";const lId=h.lives[0].live_id;return fetch(`https://www.mirrativ.com/api/live/get_streaming_url?live_id=${lId}`).then(r=>r.json()).then(s=>{return {m:s.streaming_url_hls, lId:lId}})}).then(data=>{const m=data.m; const lId=data.lId; if(!m)throw "URLなし";const base=document.createElement('div');base.style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:999999;background:#000;display:flex;flex-direction:column;";const col=document.createElement('div');col.id="m-log";col.style="height:30%;overflow-y:auto;background:#222;color:#fff;font-size:12px;padding:5px;border-bottom:1px solid #444;";const v=document.createElement('video');v.src=m;v.controls=true;v.style="flex:1;width:100%;background:#000;";const close=document.createElement('button');close.innerText="✕ 閉じる";close.style="position:fixed;top:10px;right:10px;z-index:1000000;padding:5px 10px;background:rgba(0,0,0,0.5);color:#fff;border:none;border-radius:5px;";close.onclick=()=>base.remove();base.appendChild(col);base.appendChild(v);base.appendChild(close);document.body.appendChild(base);v.play();const ws=new WebSocket(`wss://www.mirrativ.com/api/live/live_comments?live_id=${lId}`);ws.onmessage=(e)=>{const d=JSON.parse(e.data);const line=document.createElement('div');if(d.type===1)line.innerText=`${d.handle}: ${d.comment}`;if(d.type===2){line.innerText=`🎁 ${d.handle}: ${d.gift_item_name}`;line.style.color="#ff005c";}col.appendChild(line);col.scrollTop=col.scrollHeight;};}).catch(e=>alert("エラー: "+e))})();</textarea>
-    </div>
+    <textarea id="targetCode" style="display:none;">javascript:(function(){const uid=prompt("配信者IDを入力してください","");if(!uid)return;fetch(`https://www.mirrativ.com/api/live/live_history?user_id=${uid}`).then(r=>r.json()).then(h=>{if(!h.lives||!h.lives.length)throw "配信外";const lId=h.lives[0].live_id;return fetch(`https://www.mirrativ.com/api/live/get_streaming_url?live_id=${lId}`).then(r=>r.json()).then(s=>{return {m:s.streaming_url_hls, lId:lId}})}).then(data=>{const m=data.m; const lId=data.lId; if(!m)throw "URLなし";const base=document.createElement('div');base.style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:999999;background:#000;display:flex;flex-direction:column;";const col=document.createElement('div');col.id="m-log";col.style="height:35%;overflow-y:auto;background:#1a1a1a;color:#fff;font-size:12px;padding:8px;border-bottom:1px solid #333;text-align:left;";const v=document.createElement('video');v.src=m;v.controls=true;v.playsinline=true;v.style="flex:1;width:100%;background:#000;";const close=document.createElement('button');close.innerText="✕ 閉じる";close.style="position:fixed;top:10px;right:10px;z-index:1000000;padding:8px 12px;background:rgba(255,0,92,0.8);color:#fff;border:none;border-radius:20px;font-weight:bold;";close.onclick=()=>base.remove();const pasteBtn=document.createElement('button');pasteBtn.innerText="📋 IDを貼り付け";pasteBtn.style="margin-bottom:10px;padding:5px;background:#444;color:#fff;border:none;border-radius:5px;width:100%;";pasteBtn.onclick=async()=>{try{const text=await navigator.clipboard.readText();const newId=prompt("貼り付けられたIDを確認:",text);if(newId)location.href='javascript:window.miraStart("'+newId+'")';}catch(e){alert("ペースト権限がありません");}};/* 初期化処理 */base.appendChild(col);base.appendChild(v);base.appendChild(close);document.body.appendChild(base);v.play();const ws=new WebSocket(`wss://www.mirrativ.com/api/live/live_comments?live_id=${lId}`);ws.onmessage=(e)=>{const d=JSON.parse(e.data);const line=document.createElement('div');line.style.marginBottom="4px";if(d.type===1)line.innerText=`${d.handle}: ${d.comment}`;if(d.type===2){line.innerText=`🎁 ${d.handle}: ${d.gift_item_name}`;line.style.color="#ff005c";line.style.fontWeight="bold";}col.appendChild(line);col.scrollTop=col.scrollHeight;};}).catch(e=>alert("エラー: "+e))})();</textarea>
 
     <script>
         function copyCode() {
             const copyTarget = document.getElementById("targetCode");
+            copyTarget.style.display = "block";
             copyTarget.select();
             document.execCommand("Copy");
+            copyTarget.style.display = "none";
             const msg = document.getElementById("msg");
             msg.style.display = "block";
-            setTimeout(() => { msg.style.display = "none"; }, 2000);
+            setTimeout(() => { msg.style.display = "none"; }, 3000);
         }
     </script>
 </body>
