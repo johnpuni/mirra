@@ -1,27 +1,164 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<title>Mirrativ API Test</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mirrativ Web Player</title>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <style>
+        body { background-color: #1a1a1a; color: white; font-family: sans-serif; margin: 0; display: flex; flex-direction: column; height: 100vh; }
+        header { padding: 10px; background: #333; display: flex; gap: 10px; align-items: center; }
+        input { padding: 8px; border-radius: 4px; border: none; width: 150px; }
+        button { padding: 8px 15px; background: #00c3ff; border: none; border-radius: 4px; color: white; cursor: pointer; font-weight: bold; }
+        
+        #main-container { display: flex; flex: 1; overflow: hidden; }
+        #video-section { flex: 3; background: black; position: relative; display: flex; align-items: center; justify-content: center; }
+        video { width: 100%; height: 100%; max-height: 80vh; }
+
+        #side-panel { flex: 1; display: flex; flex-direction: column; background: #252525; border-left: 1px solid #444; transition: 0.3s; }
+        .hidden { display: none !important; }
+
+        .tab-menu { display: flex; background: #333; }
+        .tab-menu button { flex: 1; background: transparent; border-bottom: 2px solid transparent; }
+        .tab-menu button.active { border-bottom: 2px solid #00c3ff; }
+
+        #comment-list, #gift-list { flex: 1; overflow-y: auto; padding: 10px; font-size: 14px; }
+        .comment-item { margin-bottom: 10px; display: flex; gap: 8px; align-items: flex-start; }
+        .avatar { width: 32px; height: 32px; border-radius: 50%; }
+        .cheer-lv { color: #ffcc00; font-size: 10px; font-weight: bold; }
+        .user-name { font-weight: bold; color: #aaa; font-size: 12px; }
+    </style>
 </head>
 <body>
-<h1>Mirrativ API Test</h1>
-<button id="checkBtn">APIチェック</button>
-<pre id="result"></pre>
+
+<header>
+    <input type="text" id="userId" placeholder="ユーザーID (例: 110544066)">
+    <button onclick="startApp()">視聴開始</button>
+    <button onclick="togglePanel('side-panel')">コメント/ギフト切替</button>
+</header>
+
+<div id="main-container">
+    <div id="video-section">
+        <video id="video" controls autoplay></video>
+    </div>
+
+    <div id="side-panel">
+        <div class="tab-menu">
+            <button onclick="showTab('comment-list')" id="tab-cmt" class="active">コメント</button>
+            <button onclick="showTab('gift-list')" id="tab-gift">ギフト</button>
+        </div>
+        <div id="comment-list"></div>
+        <div id="gift-list" class="hidden"></div>
+    </div>
+</div>
 
 <script>
-document.getElementById('checkBtn').onclick = async () => {
-  const userId = "110179176"; // 適当なユーザーID
-  const resultDiv = document.getElementById('result');
+    const PROXY = "https://corsproxy.io/?";
+    let currentLiveId = "";
+    let commentTimer = null;
 
-  try {
-    const res = await fetch(`https://www.mirrativ.com/api/live/live_history?page=1&user_id=${userId}`);
-    const data = await res.json();
-    resultDiv.textContent = JSON.stringify(data, null, 2);
-  } catch(e) {
-    resultDiv.textContent = e.toString();
-  }
-};
+    async function startApp() {
+        const userId = document.getElementById('userId').value;
+        if (!userId) return alert("ユーザーIDを入力してください");
+
+        try {
+            // 1. Live IDの取得
+            const historyRes = await fetch(`${PROXY}https://www.mirrativ.com/api/live/live_history?user_id=${userId}`);
+            const historyData = await historyRes.json();
+            if (!historyData.lives || historyData.lives.length === 0) throw "配信履歴が見つかりません";
+            
+            currentLiveId = historyData.lives[0].live_id;
+
+            // 2. ストリーミングURLの取得
+            const streamRes = await fetch(`${PROXY}https://www.mirrativ.com/api/live/get_streaming_url?live_id=${currentLiveId}`);
+            const streamData = await streamRes.json();
+            const hlsUrl = streamData.streaming_url_hls;
+
+            if (!hlsUrl) throw "配信中ではない可能性があります";
+
+            // 3. 動画再生
+            setupVideo(hlsUrl);
+
+            // 4. コメント・ギフト取得開始
+            startPolling();
+
+        } catch (err) {
+            alert("エラー: " + err);
+        }
+    }
+
+    function setupVideo(url) {
+        const video = document.getElementById('video');
+        if (Hls.isSupported()) {
+            const hls = new Hls();
+            hls.loadSource(url);
+            hls.attachMedia(video);
+        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+            video.src = url;
+        }
+    }
+
+    function startPolling() {
+        if (commentTimer) clearInterval(commentTimer);
+        fetchData();
+        commentTimer = setInterval(fetchData, 5000); // 5秒おきに更新
+    }
+
+    async function fetchData() {
+        if (!currentLiveId) return;
+
+        // コメント取得
+        const cmtRes = await fetch(`${PROXY}https://www.mirrativ.com/api/live/live_comments?live_id=${currentLiveId}`);
+        const cmtData = await cmtRes.json();
+        renderComments(cmtData.comments);
+
+        // ギフト取得
+        const giftRes = await fetch(`${PROXY}https://www.mirrativ.com/api/gift/ranking?live_id=${currentLiveId}`);
+        const giftData = await giftRes.json();
+        renderGifts(giftData.ranking);
+    }
+
+    function renderComments(comments) {
+        const list = document.getElementById('comment-list');
+        list.innerHTML = comments.map(c => `
+            <div class="comment-item">
+                <img src="${c.profile_image_url}" class="avatar">
+                <div>
+                    <div class="user-name">
+                        ${c.cheer_level > 0 ? `<span class="cheer-lv">Lv.${c.cheer_level}</span>` : ''} 
+                        ${c.name}
+                    </div>
+                    <div>${c.comment}</div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function renderGifts(ranking) {
+        const list = document.getElementById('gift-list');
+        if(!ranking) { list.innerHTML = "ギフトデータなし"; return; }
+        list.innerHTML = ranking.map(g => `
+            <div class="comment-item">
+                <img src="${g.profile_image_url}" class="avatar">
+                <div>
+                    <strong>${g.name}</strong><br>
+                    <span>貢献度: ${g.point}</span>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function togglePanel(id) {
+        document.getElementById(id).classList.toggle('hidden');
+    }
+
+    function showTab(tabId) {
+        document.getElementById('comment-list').classList.add('hidden');
+        document.getElementById('gift-list').classList.add('hidden');
+        document.getElementById(tabId).classList.remove('hidden');
+        document.getElementById('tab-cmt').classList.toggle('active', tabId === 'comment-list');
+        document.getElementById('tab-gift').classList.toggle('active', tabId === 'gift-list');
+    }
 </script>
 </body>
 </html>
