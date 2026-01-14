@@ -2,84 +2,152 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>Mirrativ Custom Web Player</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mirrativ Web Player Custom</title>
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <style>
-        body { background: #1a1a1a; color: white; font-family: sans-serif; }
-        .container { display: flex; gap: 20px; padding: 20px; }
-        #video-container { flex: 2; }
-        #sidebar { flex: 1; display: flex; flex-direction: column; height: 90vh; }
-        #comments, #gifts { overflow-y: auto; background: #2a2a2a; padding: 10px; margin-bottom: 10px; border-radius: 8px; }
-        #comments { height: 60%; }
-        #gifts { height: 30%; }
-        .hidden { display: none; }
-        video { width: 100%; border-radius: 8px; }
-        .comment-item { margin-bottom: 8px; font-size: 14px; border-bottom: 1px solid #333; padding-bottom: 4px; }
+        :root { --bg: #121212; --panel: #1e1e1e; --accent: #ff0050; --text: #ffffff; }
+        body { background-color: var(--bg); color: var(--text); font-family: "Helvetica Neue", Arial, sans-serif; margin: 0; display: flex; flex-direction: column; height: 100vh; }
+        
+        /* ヘッダー・入力部 */
+        header { padding: 15px; background: var(--panel); display: flex; gap: 10px; border-bottom: 1px solid #333; }
+        input { flex: 1; padding: 10px; border-radius: 5px; border: none; background: #333; color: white; }
+        button { padding: 10px 20px; border-radius: 5px; border: none; background: var(--accent); color: white; cursor: pointer; font-weight: bold; }
+
+        /* メインレイアウト */
+        .main-content { display: flex; flex: 1; overflow: hidden; }
+        #video-wrapper { flex: 3; background: #000; display: flex; align-items: center; justify-content: center; position: relative; }
+        video { width: 100%; max-height: 100%; }
+
+        /* サイドパネル（コメント・ギフト） */
+        #side-panel { flex: 1; display: flex; flex-direction: column; border-left: 1px solid #333; min-width: 300px; transition: 0.3s; }
+        .panel-section { flex: 1; display: flex; flex-direction: column; overflow: hidden; border-bottom: 1px solid #333; }
+        .panel-header { padding: 10px; background: #252525; display: flex; justify-content: space-between; align-items: center; font-size: 0.9em; }
+        .list-container { flex: 1; overflow-y: auto; padding: 10px; font-size: 0.85em; }
+
+        /* コメントスタイル */
+        .comment-item { display: flex; gap: 8px; margin-bottom: 10px; line-height: 1.4; }
+        .user-icon { width: 32px; height: 32px; border-radius: 50%; }
+        .user-info { display: flex; flex-direction: column; }
+        .user-name { font-weight: bold; color: #bbb; font-size: 0.8em; }
+        .cheer-lv { color: #ffcc00; font-size: 0.7em; margin-left: 5px; }
+        
+        /* 非表示クラス */
+        .hidden { display: none !important; }
     </style>
 </head>
 <body>
 
-<div>
-    <input type="text" id="userId" placeholder="User IDを入力 (例: 110544066)">
-    <button onclick="startWatch()">視聴開始</button>
-</div>
+<header>
+    <input type="text" id="userId" placeholder="ミラティブ ユーザーIDを入力 (例: 110544066)">
+    <button onclick="initPlayer()">視聴開始</button>
+</header>
 
-<div class="container">
-    <div id="video-container">
+<div class="main-content">
+    <div id="video-wrapper">
         <video id="video" controls></video>
     </div>
 
-    <div id="sidebar">
-        <button onclick="toggleSection('comments')">コメント表示切替</button>
-        <div id="comments"></div>
-        
-        <button onclick="toggleSection('gifts')">ギフト表示切替</button>
-        <div id="gifts"></div>
+    <div id="side-panel">
+        <div class="panel-section" id="section-comments">
+            <div class="panel-header">
+                <span>コメント</span>
+                <button onclick="toggleSection('section-comments')">閉じる</button>
+            </div>
+            <div id="commentList" class="list-container"></div>
+        </div>
+
+        <div class="panel-section" id="section-gifts">
+            <div class="panel-header">
+                <span>ギフト/ランキング</span>
+                <button onclick="toggleSection('section-gifts')">閉じる</button>
+            </div>
+            <div id="giftList" class="list-container">ギフト情報はランキングAPIから取得します</div>
+        </div>
     </div>
 </div>
 
 <script>
-async function startWatch() {
-    const userId = document.getElementById('userId').value;
-    
-    // 1. Live IDの取得
-    const historyRes = await fetch(`YOUR_PROXY_URL/api/live/live_history?user_id=${userId}`);
-    const historyData = await historyRes.json();
-    const liveId = historyData.lives[0].live_id;
+    // --- 設定：ここに自分の中継サーバーURLを入れる ---
+    // ステップ1の「拡張機能」を使う場合は空文字 "" でOK
+    const PROXY_URL = ""; 
 
-    // 2. ストリーミングURLの取得
-    const streamRes = await fetch(`YOUR_PROXY_URL/api/live/get_streaming_url?live_id=${liveId}`);
-    const streamData = await streamRes.json();
-    const hlsUrl = streamData.streaming_url_hls;
+    let currentLiveId = null;
+    let commentTimer = null;
 
-    // 3. 動画再生 (Hls.js)
-    const video = document.getElementById('video');
-    if (Hls.isSupported()) {
-        const hls = new Hls();
-        hls.loadSource(hlsUrl);
-        hls.attachMedia(video);
-        video.play();
+    async function apiFetch(path) {
+        const target = `https://www.mirrativ.com${path}`;
+        // プロキシURLがある場合はそれを通す
+        const url = PROXY_URL ? `${PROXY_URL}${target}` : target;
+        const res = await fetch(url);
+        return await res.json();
     }
 
-    // 4. コメント・ギフトの定期取得開始
-    setInterval(() => updateComments(liveId), 3000);
-}
+    async function initPlayer() {
+        const uid = document.getElementById('userId').value;
+        if(!uid) return alert("ユーザーIDを入力してください");
 
-async function updateComments(liveId) {
-    const res = await fetch(`YOUR_PROXY_URL/api/live/live_comments?live_id=${liveId}`);
-    const data = await res.json();
-    const container = document.getElementById('comments');
-    container.innerHTML = data.comments.map(c => `
-        <div class="comment-item">
-            <img src="${c.user_icon_url}" width="20">
-            <strong>${c.user_name} (Lv.${c.cheer_level}):</strong> ${c.comment}
-        </div>
-    `).join('');
-}
+        try {
+            // 1. 配信履歴から最新のLiveIDを取得
+            const history = await apiFetch(`/api/live/live_history?user_id=${uid}`);
+            if(!history.lives || history.lives.length === 0) throw new Error("配信が見つかりません");
+            currentLiveId = history.lives[0].live_id;
 
-function toggleSection(id) {
-    document.getElementById(id).classList.toggle('hidden');
-}
+            // 2. 視聴用URL(HLS)を取得
+            const stream = await apiFetch(`/api/live/get_streaming_url?live_id=${currentLiveId}`);
+            const m3u8Url = stream.streaming_url_hls;
+
+            // 3. 再生開始
+            const video = document.getElementById('video');
+            if (Hls.isSupported()) {
+                const hls = new Hls();
+                hls.loadSource(m3u8Url);
+                hls.attachMedia(video);
+                video.play();
+            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                video.src = m3u8Url;
+                video.play();
+            }
+
+            // 4. 定期取得開始
+            if(commentTimer) clearInterval(commentTimer);
+            updateLoop();
+            commentTimer = setInterval(updateLoop, 4000);
+
+        } catch (err) {
+            console.error(err);
+            alert("エラー: " + err.message + "\n※CORS制限を確認してください。");
+        }
+    }
+
+    async function updateLoop() {
+        if(!currentLiveId) return;
+
+        // コメント取得
+        const commentData = await apiFetch(`/api/live/live_comments?live_id=${currentLiveId}`);
+        const cList = document.getElementById('commentList');
+        cList.innerHTML = commentData.comments.map(c => `
+            <div class="comment-item">
+                <img class="user-icon" src="${c.user_icon_url}">
+                <div class="user-info">
+                    <span class="user-name">${c.user_name} <span class="cheer-lv">Lv.${c.cheer_level}</span></span>
+                    <span class="comment-text">${c.comment}</span>
+                </div>
+            </div>
+        `).join('');
+
+        // ギフト(ランキング)取得
+        const giftData = await apiFetch(`/api/gift/ranking?live_id=${currentLiveId}`);
+        // ※ギフトAPIの結果構造に合わせて調整が必要
+        const gList = document.getElementById('giftList');
+        if(giftData.ranks) {
+            gList.innerHTML = giftData.ranks.map(r => `<div>${r.user_name}: ${r.point}pt</div>`).join('');
+        }
+    }
+
+    function toggleSection(id) {
+        document.getElementById(id).classList.toggle('hidden');
+    }
 </script>
 </body>
 </html>
