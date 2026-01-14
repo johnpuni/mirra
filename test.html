@@ -1,81 +1,50 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <title>Mirrativ Simple Viewer</title>
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-    <style>
-        body { background: #111; color: #eee; font-family: sans-serif; text-align: center; padding: 20px; }
-        #v-container { max-width: 800px; margin: 20px auto; background: #000; border-radius: 8px; overflow: hidden; }
-        video { width: 100%; display: block; }
-        input { padding: 10px; border-radius: 5px; border: none; width: 200px; }
-        button { padding: 10px 20px; border-radius: 5px; border: none; background: #ff005c; color: white; cursor: pointer; font-weight: bold; }
-        #status { margin-top: 10px; color: #888; font-size: 0.8rem; }
-    </style>
-</head>
-<body>
+javascript:(async(()=>{
+    const uid = prompt("視聴したい配信者のIDを入力してください", "110544066");
+    if(!uid) return;
 
-    <h2>Mirrativ Web Viewer</h2>
-    <input type="text" id="uid" placeholder="配信者IDを入力" value="110544066">
-    <button onclick="start()">視聴開始</button>
-    <div id="status">IDを入力して開始を押してください</div>
-
-    <div id="v-container">
-        <video id="video" controls></video>
-    </div>
-
-<script>
-    // 中継用プロキシ（これがミラティブの壁を代わりに越えてくれます）
-    const PROXY = "https://api.allorigins.win/raw?url=";
-
-    async function start() {
-        const uid = document.getElementById('uid').value;
-        const status = document.getElementById('status');
+    try {
+        console.log("データ取得中...");
+        // 1. 配信履歴からLiveIDを取得
+        const hRes = await fetch(`https://www.mirrativ.com/api/live/live_history?user_id=${uid}`);
+        const hData = await hRes.json();
+        if(!hData.lives || hData.lives.length === 0) return alert("配信が見つかりませんでした。");
         
-        try {
-            status.innerText = "配信情報を確認中...";
-            // 1. 履歴から最新のLiveIDを取得
-            const hUrl = encodeURIComponent(`https://www.mirrativ.com/api/live/live_history?user_id=${uid}`);
-            const hRes = await fetch(PROXY + hUrl);
-            const hData = await hRes.json();
+        const liveId = hData.lives[0].live_id;
 
-            if (!hData.lives || hData.lives.length === 0) {
-                status.innerText = "配信が見つかりませんでした。";
-                return;
-            }
+        // 2. 配信URLを取得
+        const sRes = await fetch(`https://www.mirrativ.com/api/live/get_streaming_url?live_id=${liveId}`);
+        const sData = await sRes.json();
+        const m3u8 = sData.streaming_url_hls;
 
-            const liveId = hData.lives[0].live_id;
-            status.innerText = "映像URLを取得中...";
+        if(!m3u8) return alert("映像URLが取得できませんでした。");
 
-            // 2. 配信URLを取得
-            const sUrl = encodeURIComponent(`https://www.mirrativ.com/api/live/get_streaming_url?live_id=${liveId}`);
-            const sRes = await fetch(PROXY + sUrl);
-            const sData = await sRes.json();
-
-            if (sData.streaming_url_hls) {
-                play(sData.streaming_url_hls);
-                status.innerText = "再生中: " + liveId;
-            } else {
-                status.innerText = "映像URLが見つかりませんでした。";
-            }
-        } catch (e) {
-            status.innerText = "エラーが発生しました。時間を置いて試してください。";
-            console.error(e);
+        // 3. 簡易プレイヤーを画面上に表示
+        let v = document.getElementById('mira-player');
+        if(!v){
+            v = document.createElement('video');
+            v.id = 'mira-player';
+            v.controls = true;
+            v.style = "position:fixed; top:10px; right:10px; width:400px; z-index:999999; border:2px solid #ff005c; background:#000;";
+            document.body.appendChild(v);
         }
-    }
 
-    function play(m3u8) {
-        const video = document.getElementById('video');
-        if (Hls.isSupported()) {
-            const hls = new Hls();
-            hls.loadSource(m3u8);
-            hls.attachMedia(video);
-            hls.on(Hls.Events.MANIFEST_PARSED, () => video.play());
-        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-            video.src = m3u8;
-            video.play();
+        if (v.canPlayType('application/vnd.apple.mpegurl')) {
+            v.src = m3u8;
+        } else {
+            const script = document.createElement('script');
+            script.src = "https://cdn.jsdelivr.net/npm/hls.js@latest";
+            script.onload = () => {
+                const hls = new Hls();
+                hls.loadSource(m3u8);
+                hls.attachMedia(v);
+                hls.on(Hls.Events.MANIFEST_PARSED, () => v.play());
+            };
+            document.head.appendChild(script);
         }
+        alert("再生を開始します！画面右上のプレイヤーを確認してください。");
+
+    } catch (e) {
+        alert("エラーが発生しました。ミラティブのサイトを一度開いてから試してください。");
+        console.error(e);
     }
-</script>
-</body>
-</html>
+}))();
