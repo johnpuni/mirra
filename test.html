@@ -2,157 +2,76 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mirrativ Web Viewer (GAS Proxy)</title>
+    <title>Mirrativ GAS Viewer</title>
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <style>
-        :root {
-            --mira-pink: #ff005c;
-            --bg-dark: #0f1012;
-            --panel-dark: #1a1c20;
-            --text-main: #ffffff;
-            --text-sub: #a0a0a0;
-        }
-        body { background: var(--bg-dark); color: var(--text-main); font-family: sans-serif; margin: 0; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
-        header { background: var(--panel-dark); padding: 12px 20px; display: flex; align-items: center; gap: 15px; border-bottom: 1px solid #333; }
-        input { background: #2a2d34; border: 1px solid #444; color: white; padding: 10px 15px; border-radius: 20px; flex: 1; outline: none; }
-        button { background: var(--mira-pink); border: none; color: white; padding: 10px 25px; border-radius: 20px; font-weight: bold; cursor: pointer; }
-        .main-layout { display: flex; flex: 1; overflow: hidden; }
-        #video-area { flex: 3; background: #000; display: flex; align-items: center; justify-content: center; }
-        video { width: 100%; max-height: 100%; }
-        #sidebar { flex: 1; min-width: 320px; background: var(--panel-dark); display: flex; flex-direction: column; border-left: 1px solid #333; }
-        .tab-header { display: flex; background: #111; }
-        .tab-btn { flex: 1; padding: 12px; border: none; background: none; color: var(--text-sub); cursor: pointer; border-bottom: 2px solid transparent; }
-        .tab-btn.active { color: var(--mira-pink); border-bottom-color: var(--mira-pink); }
-        .content-scroll { flex: 1; overflow-y: auto; padding: 10px; scroll-behavior: smooth; }
-        .comment-card { display: flex; gap: 10px; margin-bottom: 12px; }
-        .avatar { width: 36px; height: 36px; border-radius: 50%; }
-        .u-name { font-size: 0.75rem; color: var(--text-sub); font-weight: bold; }
-        .u-msg { font-size: 0.9rem; background: #2a2d34; padding: 8px 12px; border-radius: 0 15px 15px 15px; margin-top: 2px; display: inline-block; }
-        .hidden { display: none; }
+        body { background: #121212; color: white; font-family: sans-serif; margin: 0; }
+        .header { padding: 15px; background: #1e1e1e; display: flex; gap: 10px; }
+        input { flex: 1; padding: 8px; border-radius: 5px; border: 1px solid #444; background: #222; color: white; }
+        button { padding: 8px 20px; background: #ff005c; border: none; color: white; border-radius: 5px; cursor: pointer; }
+        .content { display: flex; height: calc(100vh - 60px); }
+        #video-area { flex: 3; background: #000; display: flex; align-items: center; }
+        #sidebar { flex: 1; border-left: 1px solid #333; overflow-y: auto; padding: 10px; }
+        .comment { margin-bottom: 10px; font-size: 13px; border-bottom: 1px solid #222; padding-bottom: 5px; }
+        video { width: 100%; }
     </style>
 </head>
 <body>
 
-<header>
-    <div style="font-weight: bold; color: var(--mira-pink);">MiraWeb (GAS)</div>
+<div class="header">
     <input type="text" id="userId" placeholder="ユーザーID (例: 110544066)" value="110544066">
     <button onclick="startApp()">視聴開始</button>
-</header>
+</div>
 
-<div class="main-layout">
+<div class="content">
     <div id="video-area">
-        <video id="video" controls playsinline></video>
+        <video id="video" controls autoplay></video>
     </div>
     <div id="sidebar">
-        <div class="tab-header">
-            <button class="tab-btn active" id="btn-c" onclick="switchTab('comments')">コメント</button>
-            <button class="tab-btn" id="btn-g" onclick="switchTab('gifts')">ギフト</button>
-        </div>
-        <div id="comments-box" class="content-scroll"></div>
-        <div id="gifts-box" class="content-scroll hidden"></div>
+        <div id="comment-list">ここにコメントが表示されます</div>
     </div>
 </div>
 
 <script>
-    // あなたが発行したGASのURL
-    const GAS_URL = "https://script.google.com/macros/s/AKfycbzfVExWsDYicZbbK1s4uGkEPeLiEQJtW15PQoRoB9FPxftLhQ-Sj1n0Qx4_VWyINASx/exec";
+    // ★ここに新しいGASのURLを貼り付けてください
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbzM72STzd28KPYTZitJvn3tWi__CIk2Qg6ChyGbXd2evAmZs-yr4cvpx40i_7OFDgA/exec";
 
-    let currentLiveId = null;
-    let pollInterval = null;
-
-    // GAS経由でデータを取得する共通関数
-    async function fetchViaGas(apiPath, params = {}) {
-        const queryParams = new URLSearchParams({ path: apiPath, ...params }).toString();
-        const response = await fetch(`${GAS_URL}?${queryParams}`);
-        if (!response.ok) throw new Error("Network response was not ok");
-        return await response.json();
+    async function apiRequest(path, params) {
+        const query = new URLSearchParams({ path, ...params }).toString();
+        const res = await fetch(`${GAS_URL}?${query}`, { redirect: 'follow' });
+        return await res.json();
     }
 
     async function startApp() {
-        const userId = document.getElementById('userId').value;
-        if(!userId) return;
-
+        const uid = document.getElementById('userId').value;
         try {
-            // 1. 配信履歴取得
-            const hData = await fetchViaGas("/api/live/live_history", { user_id: userId });
-            if(!hData.lives || hData.lives.length === 0) return alert("現在配信中ではないようです");
-            currentLiveId = hData.lives[0].live_id;
+            // 1. Live ID取得
+            const history = await apiRequest("/api/live/live_history", { user_id: uid });
+            const liveId = history.lives[0].live_id;
 
-            // 2. 視聴URL取得
-            const sData = await fetchViaGas("/api/live/get_streaming_url", { live_id: currentLiveId });
-            if(!sData.streaming_url_hls) throw new Error("URL取得失敗");
-
-            // 3. 再生
-            playHls(sData.streaming_url_hls);
-
-            // 4. 更新ループ
-            if(pollInterval) clearInterval(pollInterval);
-            updateData();
-            pollInterval = setInterval(updateData, 4000);
-
-        } catch(e) {
-            console.error(e);
-            alert("エラー: 配信情報を取得できませんでした。GASのデプロイ設定(全員に公開)を確認してください。");
-        }
-    }
-
-    function playHls(url) {
-        const video = document.getElementById('video');
-        if (Hls.isSupported()) {
-            const hls = new Hls();
-            hls.loadSource(url);
-            hls.attachMedia(video);
-            hls.on(Hls.Events.MANIFEST_PARSED, () => video.play());
-        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-            video.src = url;
-            video.play();
-        }
-    }
-
-    async function updateData() {
-        if(!currentLiveId) return;
-        try {
-            const [cData, gData] = await Promise.all([
-                fetchViaGas("/api/live/live_comments", { live_id: currentLiveId }),
-                fetchViaGas("/api/gift/ranking", { live_id: currentLiveId })
-            ]);
-
-            if(cData.comments) {
-                const cBox = document.getElementById('comments-box');
-                cBox.innerHTML = cData.comments.map(c => `
-                    <div class="comment-card">
-                        <img src="${c.user_icon_url}" class="avatar">
-                        <div class="msg-body">
-                            <span class="u-name">${c.user_name} <span style="color:#ffcc00">Lv.${c.cheer_level}</span></span><br>
-                            <div class="u-msg">${c.comment}</div>
-                        </div>
-                    </div>
-                `).join('');
-                cBox.scrollTop = cBox.scrollHeight;
+            // 2. 配信URL取得
+            const stream = await apiRequest("/api/live/get_streaming_url", { live_id: liveId });
+            const video = document.getElementById('video');
+            
+            if (Hls.isSupported()) {
+                const hls = new Hls();
+                hls.loadSource(stream.streaming_url_hls);
+                hls.attachMedia(video);
             }
 
-            if(gData.ranks) {
-                const gBox = document.getElementById('gifts-box');
-                gBox.innerHTML = gData.ranks.map(r => `
-                    <div style="padding:10px; border-bottom:1px solid #333; display:flex; justify-content:space-between;">
-                        <span style="font-size:0.85rem">${r.user_name}</span>
-                        <span style="color:var(--mira-pink); font-weight:bold;">${r.point} pt</span>
+            // 3. コメント取得ループ
+            setInterval(async () => {
+                const cData = await apiRequest("/api/live/live_comments", { live_id: liveId });
+                const list = document.getElementById('comment-list');
+                list.innerHTML = cData.comments.map(c => `
+                    <div class="comment">
+                        <strong style="color:#ffcc00">${c.user_name}</strong>: ${c.comment}
                     </div>
                 `).join('');
-            }
-        } catch(e) { console.log("Update error", e); }
-    }
+            }, 3000);
 
-    function switchTab(type) {
-        const c = document.getElementById('comments-box'), g = document.getElementById('gifts-box');
-        const bc = document.getElementById('btn-c'), bg = document.getElementById('btn-g');
-        if(type === 'comments') {
-            c.classList.remove('hidden'); g.classList.add('hidden');
-            bc.classList.add('active'); bg.classList.remove('active');
-        } else {
-            g.classList.remove('hidden'); c.classList.add('hidden');
-            bg.classList.add('active'); bc.classList.remove('active');
+        } catch (e) {
+            alert("エラーが発生しました。GASの設定（全員に公開）を確認してください。");
         }
     }
 </script>
