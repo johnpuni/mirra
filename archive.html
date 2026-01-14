@@ -1,26 +1,167 @@
-<input id="uid" placeholder="Mirrativ ID">
-<button onclick="load()">取得</button>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mirrativ 最近の配信チェック（live_history API版）</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      background: #0d001a;
+      color: #e0d0ff;
+      margin: 0;
+      padding: 30px 20px;
+      line-height: 1.6;
+    }
+    .container { max-width: 960px; margin: 0 auto; }
+    h1 { color: #bb86fc; text-align: center; margin-bottom: 0.6em; }
+    .input-area { text-align: center; margin: 2rem 0; }
+    input, button {
+      padding: 14px 18px;
+      font-size: 1.15rem;
+      border-radius: 10px;
+      border: none;
+    }
+    input { background: #1a0033; color: #fff; width: 280px; }
+    button {
+      background: #9b59b6;
+      color: white;
+      cursor: pointer;
+      margin-left: 12px;
+    }
+    button:hover { background: #8e44ad; }
+    #status { margin: 1.5rem 0; font-weight: bold; text-align: center; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #140028;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-top: 1rem;
+    }
+    th, td { padding: 14px; text-align: left; border-bottom: 1px solid #3a1a5c; }
+    th { background: #2a004f; color: #d7bdeb; }
+    .ok    { color: #00e676; font-weight: bold; }
+    .no    { color: #ff5252; }
+    .date  { color: #a78bfa; }
+    .title { max-width: 420px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    a { color: #ce93d8; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .footer {
+      margin-top: 3rem;
+      text-align: center;
+      color: #9575cd;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
 
-<ul id="list"></ul>
+<div class="container">
+  <h1>Mirrativ 最近の配信チェックツール</h1>
+
+  <div class="input-area">
+    <input type="text" id="userid" placeholder="ユーザーID（数字のみ）" />
+    <button onclick="fetchLives()">調べる</button>
+  </div>
+
+  <div id="status"></div>
+
+  <table id="resultTable" style="display:none;">
+    <thead>
+      <tr>
+        <th>状態</th>
+        <th>終了日時</th>
+        <th>タイトル</th>
+        <th>Live ID</th>
+        <th>公式ページ</th>
+      </tr>
+    </thead>
+    <tbody id="resultBody"></tbody>
+  </table>
+
+  <div class="footer">
+    ※ 2026年1月現在、このAPIは認証なしで利用可能です。<br>
+    ただしアーカイブの直接再生URL（m3u8）は公式以外ではほぼ取得不可です。<br>
+    再生したい場合は公式サイト/アプリをご利用ください。
+  </div>
+</div>
 
 <script>
-async function load() {
-  const id = document.getElementById("uid").value.trim()
-  const res = await fetch(`https://api.allorigins.win/raw?url=https://www.mirrativ.com/user/${id}`)
-  const html = await res.text()
+async function fetchLives() {
+  const userid = document.getElementById("userid").value.trim();
+  const status = document.getElementById("status");
+  const table = document.getElementById("resultTable");
+  const tbody = document.getElementById("resultBody");
 
-  const doc = new DOMParser().parseFromString(html, "text/html")
-  const items = [...doc.querySelectorAll("a[href*='/live/']")]
+  if (!/^\d+$/.test(userid)) {
+    status.textContent = "数字のみのユーザーIDを入力してください";
+    status.style.color = "#ff5252";
+    return;
+  }
 
-  const list = document.getElementById("list")
-  list.innerHTML = ""
+  status.textContent = "取得中...";
+  status.style.color = "#bb86fc";
+  tbody.innerHTML = "";
+  table.style.display = "none";
 
-  items.forEach(a => {
-    const li = document.createElement("li")
-    const cb = document.createElement("input")
-    cb.type = "checkbox"
-    li.append(cb, a.textContent)
-    list.appendChild(li)
-  })
+  try {
+    // page=1 で最新から取得（必要ならpage=2,3...と増やせます）
+    const url = `https://www.mirrativ.com/api/live/live_history?page=1&user_id=${userid}`;
+    
+    const res = await fetch(url, {
+      headers: { "Accept": "application/json" },
+      cache: "no-store"
+    });
+
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status}`);
+    }
+
+    const data = await res.json();
+
+    if (!data.lives || !Array.isArray(data.lives) || data.lives.length === 0) {
+      status.textContent = "このユーザーの最近の配信履歴が見つかりませんでした";
+      status.style.color = "#ffca28";
+      return;
+    }
+
+    status.textContent = `最近の配信：${data.lives.length}件 見つかりました`;
+    status.style.color = "#00e676";
+    table.style.display = "table";
+
+    data.lives.forEach(live => {
+      const liveId = live.live_id || "不明";
+      const title = (live.title || "(タイトルなし)").slice(0, 70);
+      
+      let dateStr = "不明";
+      if (live.finished_at) {
+        try {
+          const d = new Date(live.finished_at);
+          dateStr = d.toLocaleString("ja-JP", {
+            year: "numeric", month: "2-digit", day: "2-digit",
+            hour: "2-digit", minute: "2-digit"
+          });
+        } catch {}
+      }
+
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td><span class="ok">○</span></td>
+        <td class="date">${dateStr}</td>
+        <td class="title">${title}</td>
+        <td>${liveId}</td>
+        <td><a href="https://www.mirrativ.com/live/${liveId}" target="_blank">開く</a></td>
+      `;
+      tbody.appendChild(row);
+    });
+
+  } catch (err) {
+    status.textContent = "取得に失敗しました（API変更・制限・ネットワークエラーの可能性）";
+    status.style.color = "#ff5252";
+    console.error(err);
+  }
 }
 </script>
+</body>
+</html>
