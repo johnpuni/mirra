@@ -2,149 +2,84 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mirrativ Player Pro</title>
+    <title>Mirrativ Custom Web Player</title>
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <style>
-        :root { --main-blue: #00c3ff; --bg-dark: #121212; --panel-bg: #1e1e1e; }
-        body { background-color: var(--bg-dark); color: white; font-family: 'Helvetica Neue', Arial, sans-serif; margin: 0; overflow: hidden; display: flex; flex-direction: column; height: 100vh; }
-        header { padding: 12px; background: #222; display: flex; gap: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.5); z-index: 10; }
-        input { flex: 1; max-width: 250px; padding: 10px; border-radius: 6px; border: 1px solid #444; background: #333; color: white; }
-        button { padding: 10px 18px; background: var(--main-blue); border: none; border-radius: 6px; color: white; cursor: pointer; font-weight: bold; transition: 0.2s; }
-        button:hover { opacity: 0.8; }
-        .btn-toggle { background: #444; }
-        #main { display: flex; flex: 1; position: relative; overflow: hidden; }
-        #video-container { flex: 3; background: #000; display: flex; align-items: center; justify-content: center; }
-        video { width: 100%; height: 100%; object-fit: contain; }
-        #sidebar { width: 350px; background: var(--panel-bg); display: flex; flex-direction: column; border-left: 1px solid #333; transition: transform 0.3s ease; }
-        .hidden { display: none !important; }
-        .tabs { display: flex; border-bottom: 1px solid #333; }
-        .tab-btn { flex: 1; padding: 12px; background: none; border: none; color: #888; cursor: pointer; font-weight: bold; }
-        .tab-btn.active { color: var(--main-blue); border-bottom: 2px solid var(--main-blue); }
-        .list-container { flex: 1; overflow-y: auto; padding: 10px; scroll-behavior: smooth; }
-        .item { display: flex; gap: 10px; margin-bottom: 12px; font-size: 13px; animation: fadeIn 0.3s; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-        .avatar { width: 36px; height: 36px; border-radius: 50%; border: 1px solid #444; }
-        .name { font-size: 11px; color: #aaa; font-weight: bold; }
-        .cheer { color: #ffcc00; font-size: 10px; margin-right: 4px; }
-        .comment-text { background: #333; padding: 6px 10px; border-radius: 8px; margin-top: 2px; display: inline-block; width: fit-content; max-width: 240px; word-wrap: break-word;}
-        @media (max-width: 768px) { #main { flex-direction: column; } #sidebar { width: 100%; height: 40%; } }
+        body { background: #1a1a1a; color: white; font-family: sans-serif; }
+        .container { display: flex; gap: 20px; padding: 20px; }
+        #video-container { flex: 2; }
+        #sidebar { flex: 1; display: flex; flex-direction: column; height: 90vh; }
+        #comments, #gifts { overflow-y: auto; background: #2a2a2a; padding: 10px; margin-bottom: 10px; border-radius: 8px; }
+        #comments { height: 60%; }
+        #gifts { height: 30%; }
+        .hidden { display: none; }
+        video { width: 100%; border-radius: 8px; }
+        .comment-item { margin-bottom: 8px; font-size: 14px; border-bottom: 1px solid #333; padding-bottom: 4px; }
     </style>
 </head>
 <body>
 
-<header>
-    <input type="text" id="userId" placeholder="ユーザーID (例: 110544066)" value="110544066">
-    <button onclick="launch()">視聴開始</button>
-    <button class="btn-toggle" onclick="toggleSidebar()">表示切替</button>
-</header>
+<div>
+    <input type="text" id="userId" placeholder="User IDを入力 (例: 110544066)">
+    <button onclick="startWatch()">視聴開始</button>
+</div>
 
-<div id="main">
+<div class="container">
     <div id="video-container">
-        <video id="video" controls autoplay playsinline></video>
+        <video id="video" controls></video>
     </div>
+
     <div id="sidebar">
-        <div class="tabs">
-            <button class="tab-btn active" id="tab-c" onclick="switchTab('comments')">コメント</button>
-            <button class="tab-btn" id="tab-g" onclick="switchTab('gifts')">ランキング</button>
-        </div>
-        <div id="comments" class="list-container"></div>
-        <div id="gifts" class="list-container" style="display:none"></div>
+        <button onclick="toggleSection('comments')">コメント表示切替</button>
+        <div id="comments"></div>
+        
+        <button onclick="toggleSection('gifts')">ギフト表示切替</button>
+        <div id="gifts"></div>
     </div>
 </div>
 
 <script>
-    // あなたが作成した専用プロキシURLを適用しました
-    const PROXY = "https://mirrativ-proxy.luhyu410.workers.dev/?url=";
-    let liveId = "";
-    let pollInterval = null;
+async function startWatch() {
+    const userId = document.getElementById('userId').value;
+    
+    // 1. Live IDの取得
+    const historyRes = await fetch(`YOUR_PROXY_URL/api/live/live_history?user_id=${userId}`);
+    const historyData = await historyRes.json();
+    const liveId = historyData.lives[0].live_id;
 
-    async function fetchMirrativ(url) {
-        const response = await fetch(PROXY + encodeURIComponent(url));
-        if (!response.ok) throw new Error("中継サーバーでエラーが発生しました");
-        return await response.json();
+    // 2. ストリーミングURLの取得
+    const streamRes = await fetch(`YOUR_PROXY_URL/api/live/get_streaming_url?live_id=${liveId}`);
+    const streamData = await streamRes.json();
+    const hlsUrl = streamData.streaming_url_hls;
+
+    // 3. 動画再生 (Hls.js)
+    const video = document.getElementById('video');
+    if (Hls.isSupported()) {
+        const hls = new Hls();
+        hls.loadSource(hlsUrl);
+        hls.attachMedia(video);
+        video.play();
     }
 
-    async function launch() {
-        const id = document.getElementById('userId').value;
-        if (!id) return alert("ユーザーIDを入力してね！");
+    // 4. コメント・ギフトの定期取得開始
+    setInterval(() => updateComments(liveId), 3000);
+}
 
-        try {
-            const history = await fetchMirrativ(`https://www.mirrativ.com/api/live/live_history?user_id=${id}`);
-            if (!history.lives || history.lives.length === 0) throw new Error("配信履歴が見つかりませんでした");
-            liveId = history.lives[0].live_id;
+async function updateComments(liveId) {
+    const res = await fetch(`YOUR_PROXY_URL/api/live/live_comments?live_id=${liveId}`);
+    const data = await res.json();
+    const container = document.getElementById('comments');
+    container.innerHTML = data.comments.map(c => `
+        <div class="comment-item">
+            <img src="${c.user_icon_url}" width="20">
+            <strong>${c.user_name} (Lv.${c.cheer_level}):</strong> ${c.comment}
+        </div>
+    `).join('');
+}
 
-            const stream = await fetchMirrativ(`https://www.mirrativ.com/api/live/get_streaming_url?live_id=${liveId}`);
-            if (!stream.streaming_url_hls) throw new Error("現在、ライブ配信中ではないようです。");
-
-            playHLS(stream.streaming_url_hls);
-
-            if (pollInterval) clearInterval(pollInterval);
-            updateData();
-            pollInterval = setInterval(updateData, 5000);
-
-        } catch (e) {
-            alert("エラー: " + e.message);
-        }
-    }
-
-    function playHLS(url) {
-        const video = document.getElementById('video');
-        if (Hls.isSupported()) {
-            const hls = new Hls();
-            hls.loadSource(url);
-            hls.attachMedia(video);
-        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-            video.src = url;
-        }
-    }
-
-    async function updateData() {
-        if (!liveId) return;
-        try {
-            const [cData, gData] = await Promise.all([
-                fetchMirrativ(`https://www.mirrativ.com/api/live/live_comments?live_id=${liveId}`),
-                fetchMirrativ(`https://www.mirrativ.com/api/gift/ranking?live_id=${liveId}`)
-            ]);
-            renderComments(cData.comments || []);
-            renderGifts(gData.ranking || []);
-        } catch (e) { console.error("データ更新失敗", e); }
-    }
-
-    function renderComments(list) {
-        const container = document.getElementById('comments');
-        container.innerHTML = list.map(c => `
-            <div class="item">
-                <img src="${c.profile_image_url}" class="avatar">
-                <div>
-                    <div class="name">${c.cheer_level > 0 ? `<span class="cheer">Lv.${c.cheer_level}</span>` : ''}${c.name}</div>
-                    <div class="comment-text">${c.comment}</div>
-                </div>
-            </div>
-        `).join('');
-    }
-
-    function renderGifts(list) {
-        const container = document.getElementById('gifts');
-        container.innerHTML = list.map((g, i) => `
-            <div class="item">
-                <div style="font-weight:bold; color:#00c3ff; width:20px;">${i+1}</div>
-                <img src="${g.profile_image_url}" class="avatar">
-                <div>
-                    <div class="name">${g.name}</div>
-                    <div style="color:#ffcc00">💎 ${g.point.toLocaleString()} pt</div>
-                </div>
-            </div>
-        `).join('');
-    }
-
-    function toggleSidebar() { document.getElementById('sidebar').classList.toggle('hidden'); }
-    function switchTab(type) {
-        document.getElementById('comments').style.display = type === 'comments' ? 'block' : 'none';
-        document.getElementById('gifts').style.display = type === 'gifts' ? 'block' : 'none';
-        document.getElementById('tab-c').classList.toggle('active', type === 'comments');
-        document.getElementById('tab-g').classList.toggle('active', type === 'gifts');
-    }
+function toggleSection(id) {
+    document.getElementById(id).classList.toggle('hidden');
+}
 </script>
 </body>
 </html>
