@@ -1,0 +1,26 @@
+<input id="uid" placeholder="Mirrativ ID">
+<button onclick="load()">取得</button>
+
+<ul id="list"></ul>
+
+<script>
+async function load() {
+  const id = document.getElementById("uid").value.trim()
+  const res = await fetch(`https://api.allorigins.win/raw?url=https://www.mirrativ.com/user/${id}`)
+  const html = await res.text()
+
+  const doc = new DOMParser().parseFromString(html, "text/html")
+  const items = [...doc.querySelectorAll("a[href*='/live/']")]
+
+  const list = document.getElementById("list")
+  list.innerHTML = ""
+
+  items.forEach(a => {
+    const li = document.createElement("li")
+    const cb = document.createElement("input")
+    cb.type = "checkbox"
+    li.append(cb, a.textContent)
+    list.appendChild(li)
+  })
+}
+</script>
