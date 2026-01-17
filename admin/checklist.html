@@ -11,19 +11,14 @@
       margin: 0;
       padding: 12px;
     }
-    h2 {
-      margin: 12px 0 6px;
-    }
+    h2 { margin: 12px 0 6px; }
     .box {
       background: #fff;
       border-radius: 8px;
       padding: 12px;
       margin-bottom: 12px;
     }
-    label {
-      display: block;
-      margin: 6px 0;
-    }
+    label { display: block; margin: 6px 0; }
     textarea {
       width: 100%;
       height: 60px;
@@ -50,7 +45,7 @@
 <h2>📱 成長チェックリスト</h2>
 
 <div class="box" id="checks">
-  <label><input type="checkbox" data-key="出発−15分"> 出発 −15分</label>
+  <label><input type="checkbox" data-key="現着−15分前"> 現着 −15分前</label>
   <label><input type="checkbox" data-key="睡眠6時間以上"> 睡眠6時間以上</label>
   <label><input type="checkbox" data-key="挨拶＋業務宣言"> 挨拶＋業務宣言</label>
   <label><input type="checkbox" data-key="言葉遣い（です・ます）"> 言葉遣い（です・ます）</label>
@@ -68,6 +63,10 @@
   <h2>💬 他フィードバック</h2>
   <textarea id="other"></textarea>
 
+  <h2>🔁 チェックリスト更新依頼</h2>
+  <label><input type="checkbox" id="weekly"> 週1レビューを依頼（出来てきてたら項目削除OK）</label>
+  <label><input type="checkbox" id="urgent"> 🚨 緊急で見てほしい</label>
+
   <button onclick="saveLog()">保存する</button>
   <button onclick="copyToday()">📋 今日の内容をコピー</button>
 </div>
@@ -80,8 +79,7 @@
 <script>
   const dateKey = new Date().toISOString().slice(0,10);
 
-  // チェック保存
-  document.querySelectorAll("input[type=checkbox]").forEach(cb => {
+  document.querySelectorAll("input[type=checkbox][data-key]").forEach(cb => {
     const key = dateKey + "_check_" + cb.dataset.key;
     cb.checked = localStorage.getItem(key) === "1";
     cb.addEventListener("change", () => {
@@ -89,22 +87,28 @@
     });
   });
 
-  // ログ保存
   function saveLog() {
     const data = {
       good: good.value,
       bad: bad.value,
-      other: other.value
+      other: other.value,
+      weekly: weekly.checked,
+      urgent: urgent.checked
     };
     localStorage.setItem("log_" + dateKey, JSON.stringify(data));
     loadHistory();
   }
 
-  // コピー用テキスト生成
   function copyToday() {
     let text = `【成長チェック ${dateKey}】\n\n`;
 
-    document.querySelectorAll("input[type=checkbox]").forEach(cb => {
+    if (urgent.checked) {
+      text += "🚨【緊急レビュー依頼】今すぐチェックリストの見直しをお願いします。\n\n";
+    } else if (weekly.checked) {
+      text += "🔁【週1レビュー依頼】出来てきている項目は削除してもらってOKです。\n\n";
+    }
+
+    document.querySelectorAll("input[type=checkbox][data-key]").forEach(cb => {
       text += `${cb.checked ? "☑" : "☐"} ${cb.dataset.key}\n`;
     });
 
@@ -116,7 +120,6 @@
     alert("今日の内容をコピーしました");
   }
 
-  // 履歴表示
   function loadHistory() {
     history.innerHTML = "";
     Object.keys(localStorage)
@@ -130,7 +133,8 @@
             <strong>${d}</strong><br>
             ✅ ${v.good || "なし"}<br>
             ⚠️ ${v.bad || "なし"}<br>
-            💬 ${v.other || "なし"}
+            💬 ${v.other || "なし"}<br>
+            🔁 週1依頼: ${v.weekly ? "あり" : "なし"} / 🚨 緊急: ${v.urgent ? "あり" : "なし"}
           </div>
         `;
       });
