@@ -2,139 +2,88 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
-  <title>Emomo 衣装データベース</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Emomo Costume Viewer</title>
   <style>
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #0f1115;
-      color: #eee;
-      margin: 0;
-      padding: 16px;
-    }
-    h1 {
-      font-size: 1.4rem;
-      margin-bottom: 12px;
-    }
-    .controls {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 16px;
-    }
-    input, select {
-      padding: 6px 8px;
-      border-radius: 6px;
-      border: none;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-      gap: 12px;
-    }
-    .card {
-      background: #1a1d24;
-      border-radius: 10px;
-      padding: 8px;
-      text-align: center;
-      cursor: pointer;
-    }
-    .card img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 6px;
-      background: #000;
-    }
-    .name {
-      font-size: 0.75rem;
-      margin-top: 6px;
-      line-height: 1.2;
-    }
-    .meta {
-      font-size: 0.65rem;
-      opacity: 0.7;
-    }
+    body { font-family: system-ui, sans-serif; margin: 0; background: #0f172a; color: #e5e7eb; }
+    header { padding: 12px; background: #020617; position: sticky; top: 0; z-index: 10; }
+    .filters { display: flex; gap: 8px; flex-wrap: wrap; }
+    select { padding: 6px; border-radius: 6px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; padding: 12px; }
+    .item { background: #020617; border-radius: 12px; padding: 8px; text-align: center; }
+    .item-img { width: 100%; border-radius: 8px; }
+    .meta { display: flex; justify-content: space-between; align-items: center; margin-top: 4px; }
+    .part-icon { width: 24px; height: 24px; }
+    .rarity { font-size: 12px; opacity: 0.9; }
+    .title { font-size: 12px; margin-top: 4px; }
   </style>
 </head>
 <body>
+  <header>
+    <div class="filters">
+      <select id="rarityFilter">
+        <option value="">レアリティ全て</option>
+        <option value="4">★4</option>
+        <option value="5">★5</option>
+      </select>
+      <select id="partFilter">
+        <option value="">部位全て</option>
+      </select>
+    </div>
+  </header>
 
-<h1>Emomo 衣装データベース</h1>
+  <main class="grid" id="grid"></main>
 
-<div class="controls">
-  <input id="search" placeholder="名前検索" />
-  <select id="partType">
-    <option value="">部位すべて</option>
-  </select>
-  <select id="rarity">
-    <option value="">レア度すべて</option>
-  </select>
-</div>
+  <script>
+    let allItems = [];
 
-<div id="grid" class="grid"></div>
+    async function load() {
+      const res = await fetch('index_data.json');
+      allItems = await res.json();
+      buildPartFilter();
+      render();
+    }
 
-<script>
-let data = [];
+    function buildPartFilter() {
+      const set = new Set(allItems.map(i => i.part_type));
+      const sel = document.getElementById('partFilter');
+      [...set].sort((a,b)=>a-b).forEach(p => {
+        const o = document.createElement('option');
+        o.value = p;
+        o.textContent = `part_type ${p}`;
+        sel.appendChild(o);
+      });
+    }
 
-fetch('index_data.json')
-  .then(r => r.json())
-  .then(json => {
-    data = json;
-    initFilters();
-    render();
-  });
+    function render() {
+      const rarity = document.getElementById('rarityFilter').value;
+      const part = document.getElementById('partFilter').value;
+      const grid = document.getElementById('grid');
+      grid.innerHTML = '';
 
-function initFilters() {
-  const partSel = document.getElementById('partType');
-  const raritySel = document.getElementById('rarity');
+      allItems.filter(i => {
+        if (rarity && String(i.rarity) !== rarity) return false;
+        if (part && String(i.part_type) !== part) return false;
+        return true;
+      }).forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'item';
+        div.innerHTML = `
+          <img class="item-img" src="${item.image}" alt="${item.name}">
+          <div class="meta">
+            <img class="part-icon" src="https://cdn.mirrativ.com/mirrativ-prod-assets/img/closet/part_type_icon/${item.part_type}.png" alt="part ${item.part_type}">
+            <span class="rarity">★${item.rarity ?? '-'}</span>
+          </div>
+          <div class="title">${item.name}</div>
+        `;
+        grid.appendChild(div);
+      });
+    }
 
-  [...new Set(data.map(d => d.part_type))]
-    .sort()
-    .forEach(p => {
-      const o = document.createElement('option');
-      o.value = p;
-      o.textContent = `part_type ${p}`;
-      partSel.appendChild(o);
-    });
+    document.getElementById('rarityFilter').onchange = render;
+    document.getElementById('partFilter').onchange = render;
 
-  [...new Set(data.map(d => d.rarity).filter(r => r != null))]
-    .sort()
-    .forEach(r => {
-      const o = document.createElement('option');
-      o.value = r;
-      o.textContent = `★${r}`;
-      raritySel.appendChild(o);
-    });
-}
-
-['search', 'partType', 'rarity'].forEach(id =>
-  document.getElementById(id).addEventListener('input', render)
-);
-
-function render() {
-  const grid = document.getElementById('grid');
-  grid.innerHTML = '';
-
-  const q = document.getElementById('search').value.toLowerCase();
-  const part = document.getElementById('partType').value;
-  const rarity = document.getElementById('rarity').value;
-
-  data.filter(d => {
-    if (q && !d.name.toLowerCase().includes(q)) return false;
-    if (part && String(d.part_type) !== part) return false;
-    if (rarity && String(d.rarity) !== rarity) return false;
-    return true;
-  }).forEach(d => {
-    const div = document.createElement('div');
-    div.className = 'card';
-    div.innerHTML = `
-      <img src="${d.image}" loading="lazy">
-      <div class="name">${d.name}</div>
-      <div class="meta">★${d.rarity ?? '-'} / part ${d.part_type}</div>
-    `;
-    grid.appendChild(div);
-  });
-}
-</script>
-
+    load();
+  </script>
 </body>
 </html>
