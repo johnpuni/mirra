@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>成長チェックリスト</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont;
+      background: #f5f5f5;
+      margin: 0;
+      padding: 12px;
+    }
+    h2 {
+      margin: 12px 0 6px;
+    }
+    .box {
+      background: #fff;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+    label {
+      display: block;
+      margin: 6px 0;
+    }
+    textarea {
+      width: 100%;
+      height: 60px;
+      box-sizing: border-box;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      margin-top: 8px;
+    }
+    .log {
+      font-size: 14px;
+      background: #eee;
+      padding: 8px;
+      border-radius: 6px;
+      margin-top: 6px;
+    }
+  </style>
+</head>
+<body>
+
+<h2>📱 成長チェックリスト</h2>
+
+<div class="box">
+  <label><input type="checkbox" data-key="depart"> 出発 −15分</label>
+  <label><input type="checkbox" data-key="sleep"> 睡眠6時間以上</label>
+  <label><input type="checkbox" data-key="greeting"> 挨拶＋業務宣言</label>
+  <label><input type="checkbox" data-key="polite"> 言葉遣い（です・ます）</label>
+  <label><input type="checkbox" data-key="repeat"> 指示を復唱</label>
+  <label><input type="checkbox" data-key="sleepy"> 居眠り対策した</label>
+</div>
+
+<div class="box">
+  <h2>📝 今日できたこと</h2>
+  <textarea id="good"></textarea>
+
+  <h2>⚠️ 不満だったこと</h2>
+  <textarea id="bad"></textarea>
+
+  <button onclick="saveLog()">保存する</button>
+</div>
+
+<div class="box">
+  <h2>📅 履歴</h2>
+  <div id="history"></div>
+</div>
+
+<script>
+  const dateKey = new Date().toISOString().slice(0,10);
+
+  // チェック保存
+  document.querySelectorAll("input[type=checkbox]").forEach(cb => {
+    const key = dateKey + "_" + cb.dataset.key;
+    cb.checked = localStorage.getItem(key) === "1";
+    cb.addEventListener("change", () => {
+      localStorage.setItem(key, cb.checked ? "1" : "0");
+    });
+  });
+
+  // ログ保存
+  function saveLog() {
+    const good = document.getElementById("good").value;
+    const bad = document.getElementById("bad").value;
+    localStorage.setItem("log_" + dateKey, JSON.stringify({ good, bad }));
+    loadHistory();
+  }
+
+  function loadHistory() {
+    const area = document.getElementById("history");
+    area.innerHTML = "";
+    Object.keys(localStorage)
+      .filter(k => k.startsWith("log_"))
+      .sort().reverse()
+      .forEach(k => {
+        const d = k.replace("log_", "");
+        const v = JSON.parse(localStorage.getItem(k));
+        area.innerHTML += `
+          <div class="log">
+            <strong>${d}</strong><br>
+            ✅ ${v.good || "なし"}<br>
+            ⚠️ ${v.bad || "なし"}
+          </div>
+        `;
+      });
+  }
+
+  loadHistory();
+</script>
+
+</body>
+</html>
