@@ -8,3 +8,36 @@ video { width:100%; max-height:40vh; background:black }
 .controls { padding:8px; }
 .panel { display:flex }
 .box { flex:1; max-height:50vh; overflow-y:auto; padding:10px; display:none }
+<style>
+
+.part-icons {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 6px 4px;
+}
+
+.part-btn {
+  flex: 0 0 auto;
+  width: 42px;
+  height: 42px;
+  background: #fff;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 4px rgba(0,0,0,.15);
+}
+
+.part-btn img {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+
+.part-btn.active {
+  border-color: var(--primary);
+  background: #fff3f3;
+}
+</style>

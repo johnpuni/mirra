@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>イベントアーカイブ</title>
+
+<style>
+body{
+  margin:0;
+  background:#0e0e11;
+  color:#fff;
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+h1{font-size:20px;margin:12px;}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+  gap:12px;
+  padding:12px;
+}
+.banner{
+  border-radius:14px;
+  overflow:hidden;
+  cursor:pointer;
+  background:#111;
+}
+.banner img{
+  width:100%;
+  display:block;
+}
+#ranking{
+  padding:12px;
+}
+.rank-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background:#1a1b20;
+  border-radius:12px;
+  padding:10px;
+  margin-bottom:8px;
+}
+.rank{
+  width:44px;
+  text-align:center;
+  font-weight:800;
+  background:#ff0;
+  color:#000;
+  border-radius:10px;
+  padding:8px 0;
+}
+.icon{
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  object-fit:cover;
+  background:#333;
+}
+.name{
+  font-weight:700;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.points{
+  margin-left:auto;
+  opacity:.85;
+  font-size:13px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>イベントアーカイブ</h1>
+
+<!-- バナー一覧（今回は1件） -->
+<div class="grid">
+  <div class="banner" onclick="openRanking()">
+    <img src="./bGO2XBBkrLk.png" alt="bGO2XBBkrLk">
+  </div>
+</div>
+
+<!-- ランキング表示 -->
+<div id="ranking"></div>
+
+<script>
+async function openRanking(){
+  const res = await fetch("./data/ranking/bGO2XBBkrLk.json");
+  const data = await res.json();
+
+  const list = (data.group_ranking || []).slice(0, 11); // 0〜10
+
+  document.getElementById("ranking").innerHTML = `
+    <h2>ランキング（0〜10）</h2>
+    ${list.map(r => `
+      <div class="rank-row">
+        <div class="rank">${r.rank}位</div>
+        <img class="icon" src="${r.user.profile_image_url}">
+        <div class="name">${escapeHtml(r.user.name)}</div>
+        <div class="points">${Number(r.points).toLocaleString()} pt</div>
+      </div>
+    `).join("")}
+  `;
+}
+
+function escapeHtml(str){
+  return String(str)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+</script>
+
+</body>
+</html>

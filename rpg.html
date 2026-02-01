@@ -1,1 +1,542 @@
-あああ
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>エモモランRPG 攻略</title>
+  <style>
+    :root { --bg:#0b0f14; --card:#111825; --muted:#9aa7b4; --text:#e6edf3; --line:#213043; --chip:#1b2a3c; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif; background:var(--bg); color:var(--text); }
+    header { position: sticky; top: 0; z-index: 10; background: rgba(11,15,20,.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 14px 14px; }
+    h1 { font-size: 18px; margin: 0 0 8px; }
+    .sub { color: var(--muted); font-size: 12px; }
+    .controls { display:flex; gap:10px; flex-wrap: wrap; align-items: center; margin-top: 10px; }
+    .controls input[type="search"]{
+      flex: 1 1 260px; min-width: 220px;
+      padding: 10px 12px; border-radius: 10px;
+      border: 1px solid var(--line); background: #0f1622; color: var(--text);
+      outline: none;
+    }
+    .seg { display:flex; gap:6px; flex-wrap: wrap; }
+    .btn {
+      padding: 8px 10px; border: 1px solid var(--line); background: #0f1622; color: var(--text);
+      border-radius: 999px; cursor: pointer; font-size: 13px;
+      user-select: none;
+    }
+    .btn.active { background: #1b2a3c; border-color: #2e4664; }
+    .chk { display:flex; gap:8px; align-items: center; font-size: 13px; color: var(--muted); }
+    .grid {
+      display: grid; gap: 12px;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      padding: 16px 0 40px;
+    }
+    .card {
+      background: var(--card); border: 1px solid var(--line); border-radius: 14px; overflow: hidden;
+      display:flex; flex-direction: column;
+    }
+    .cardTop { display:flex; gap:12px; padding: 12px; }
+    .thumb {
+      width: 64px; height: 64px; border-radius: 12px;
+      background: #0f1622; border: 1px solid var(--line);
+      overflow: hidden; flex: 0 0 auto;
+      display:flex; align-items:center; justify-content:center;
+    }
+    .thumb img { width:100%; height:100%; object-fit: cover; }
+    .meta { min-width: 0; }
+    .name { font-weight: 700; font-size: 15px; line-height: 1.2; }
+    .desc { margin-top: 6px; color: var(--muted); font-size: 12px; line-height: 1.45; }
+    .chips { display:flex; gap:6px; flex-wrap: wrap; margin-top: 8px; }
+    .chip { font-size: 11px; padding: 4px 8px; border-radius: 999px; background: var(--chip); border: 1px solid #2a3b52; color: #cfe3ff; }
+    .chip.muted { color: var(--muted); background: transparent; border: 1px dashed #2a3b52; }
+    .effects { border-top: 1px solid var(--line); padding: 10px 12px 12px; }
+    .effectsTitle { font-size: 12px; color: var(--muted); margin-bottom: 8px; display:flex; justify-content: space-between; gap: 8px; }
+    .effectsList { display:flex; flex-direction: column; gap: 6px; }
+    .effRow { display:flex; justify-content: space-between; gap: 10px; font-size: 13px; }
+    .effKey { color: #d7e5f5; }
+    .effVal { color: #cfe3ff; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .smallBtn { cursor: pointer; text-decoration: underline; }
+    .empty { padding: 18px 0; color: var(--muted); }
+    .err { color: #ff9aa2; }
+
+    .tabs { display:flex; gap:8px; flex-wrap: wrap; margin-top: 10px; }
+    .section { display:none; }
+    .section.active { display:block; }
+
+    /* stats badges */
+    .statRow { margin-top: 6px; display:flex; gap:6px; flex-wrap: wrap; }
+    .statBadge {
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid #2a3b52;
+      background: #0f1622;
+      color: #cfe3ff;
+      font-variant-numeric: tabular-nums;
+    }
+    .statBadge.muted { color: var(--muted); border-style: dashed; background: transparent; }
+  </style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1>エモモランRPG 攻略</h1>
+    <div class="sub" id="topHint">読み込み中…</div>
+
+    <div class="tabs" id="tabs">
+      <button class="btn active" data-tab="skills">🧠 スキル</button>
+      <button class="btn" data-tab="bosses">🐲 ボス（2026/01/31〜）</button>
+    </div>
+
+    <!-- スキル用 -->
+    <div class="controls section active" id="skillsControls">
+      <input id="q" type="search" placeholder="検索：名前 / 説明 / 効果（例：攻撃力, スコア, ジャンプ）" />
+      <div class="seg" id="typeSeg">
+        <button class="btn active" data-type="all">全て</button>
+        <button class="btn" data-type="normal">normal</button>
+        <button class="btn" data-type="devil">devil</button>
+        <button class="btn" data-type="test">test</button>
+      </div>
+      <label class="chk">
+        <input type="checkbox" id="dupOnly" />
+        重複可のみ（canDuplicate）
+      </label>
+    </div>
+
+    <!-- ボス用 -->
+    <div class="controls section" id="bossControls">
+      <input id="bq" type="search" placeholder="検索：ボス名 / bossVariant / stage / area / HP" />
+      <div class="seg" id="areaSeg">
+        <button class="btn active" data-area="all">全エリア</button>
+        <button class="btn" data-area="toge_01">toge_01</button>
+        <button class="btn" data-area="toge_02">toge_02</button>
+        <button class="btn" data-area="toge_03">toge_03</button>
+        <button class="btn" data-area="toge_04">toge_04</button>
+        <button class="btn" data-area="toge_05">toge_05</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <!-- スキル -->
+  <section class="section active" id="skillsSection">
+    <div class="sub" id="ruleText">読み込み中…</div>
+    <div class="sub" id="countText"></div>
+    <div class="grid" id="grid"></div>
+    <div class="empty" id="empty" style="display:none;">該当するスキルがありません。</div>
+  </section>
+
+  <!-- ボス -->
+  <section class="section" id="bossesSection">
+    <div class="sub" id="bossMeta">読み込み中…</div>
+    <div class="sub" id="bossCount"></div>
+    <div class="grid" id="bossGrid"></div>
+    <div class="empty" id="bossEmpty" style="display:none;">該当するボスがありません。</div>
+  </section>
+
+  <div class="empty err" id="error" style="display:none;"></div>
+</main>
+
+<script>
+  // =============================
+  // 効果タイプ → 日本語ラベル（HTML内で完結）
+  // =============================
+  const EFFECT_LABEL = {
+    attackPower: "攻撃力",
+    enemyDamageTaken: "敵からの被ダメ",
+    spikeDamageTaken: "トゲ被ダメ",
+    moveSpeed: "移動速度",
+    attackSpeed: "攻撃速度",
+    maxHP: "最大HP",
+    jumpPower: "ジャンプ力",
+    fallResistance: "落下耐性",
+    bulletSize: "弾サイズ",
+    bossDamage: "ボスへの与ダメ",
+    mobDamage: "モブへの与ダメ",
+    scoreMultiplier: "スコア倍率",
+    extraJump: "追加ジャンプ回数",
+    potion: "回復ポーション",
+    levelUpHealBoost: "レベルUP時のHP回復量",
+    diagonalShot: "斜めショット"
+  };
+
+  const EFFECT_UNIT = {
+    attackPower: "%", enemyDamageTaken: "%", spikeDamageTaken: "%", moveSpeed: "%", attackSpeed: "%", maxHP: "%", jumpPower: "%", fallResistance: "%", bulletSize: "%",
+    bossDamage: "%", mobDamage: "%", scoreMultiplier: "%", extraJump: "", potion: "個", levelUpHealBoost: "%", diagonalShot: ""
+  };
+
+  function formatValue(type, value) {
+    const unit = EFFECT_UNIT[type] ?? "";
+    const v = (typeof value === "number") ? value : Number(value);
+    const sign = (v > 0) ? "+" : "";
+    return `${sign}${v}${unit}`;
+  }
+
+  function typeChip(type) {
+    if (type === "devil") return "DEVIL";
+    if (type === "test") return "TEST";
+    return "NORMAL";
+  }
+
+  const elErr = document.getElementById("error");
+  const topHint = document.getElementById("topHint");
+
+  function escapeHtml(s) {
+    return String(s)
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
+
+  function fmtNum(n) {
+    if (n === null || n === undefined || n === "") return "-";
+    const x = Number(n);
+    if (!Number.isFinite(x)) return String(n);
+    return x.toLocaleString("ja-JP");
+  }
+
+  // =============================
+  // タブ切り替え
+  // =============================
+  function setActiveTab(tab) {
+    document.querySelectorAll("#tabs .btn").forEach(b => b.classList.remove("active"));
+    document.querySelector(`#tabs .btn[data-tab="${tab}"]`)?.classList.add("active");
+
+    document.getElementById("skillsSection").classList.toggle("active", tab === "skills");
+    document.getElementById("bossesSection").classList.toggle("active", tab === "bosses");
+
+    document.getElementById("skillsControls").classList.toggle("active", tab === "skills");
+    document.getElementById("bossControls").classList.toggle("active", tab === "bosses");
+  }
+
+  document.getElementById("tabs").addEventListener("click", (e) => {
+    const btn = e.target.closest("button[data-tab]");
+    if (!btn) return;
+    setActiveTab(btn.getAttribute("data-tab"));
+  });
+
+  // =============================
+  // スキル読み込み＆表示
+  // =============================
+  const skillState = { all: [], type: "all", q: "", dupOnly: false };
+
+  const elGrid = document.getElementById("grid");
+  const elEmpty = document.getElementById("empty");
+  const elCount = document.getElementById("countText");
+  const elRule = document.getElementById("ruleText");
+
+  async function loadSkills() {
+    const res = await fetch("RPG/skills.json", { cache: "no-store" });
+    if (!res.ok) throw new Error(`skills.json を読み込めませんでした（HTTP ${res.status}）`);
+    const json = await res.json();
+
+    const name = json.settingsName ?? "Settings";
+    const sc = json.selectionCount ?? "-";
+    const dc = json.selectionDevilCount ?? "-";
+    elRule.textContent = `設定: ${name} / 選択数: ${sc} / デビル枠: ${dc}`;
+
+    skillState.all = Array.isArray(json.enhances) ? json.enhances : [];
+    renderSkills();
+  }
+
+  function matchesSkill(item) {
+    if (skillState.type !== "all" && item.type !== skillState.type) return false;
+    if (skillState.dupOnly && !item.canDuplicate) return false;
+
+    const q = skillState.q.trim().toLowerCase();
+    if (!q) return true;
+
+    const name = (item.name ?? "").toLowerCase();
+    const desc = (item.description ?? "").toLowerCase();
+
+    const effText = (item.effects ?? []).map(e => {
+      const key = EFFECT_LABEL[e.type] ?? e.type ?? "";
+      const val = e.value ?? "";
+      return `${key}${val}`;
+    }).join(" ").toLowerCase();
+
+    return (name.includes(q) || desc.includes(q) || effText.includes(q));
+  }
+
+  function renderSkills() {
+    elGrid.innerHTML = "";
+    elEmpty.style.display = "none";
+
+    const list = skillState.all.filter(matchesSkill);
+    elCount.textContent = `表示：${list.length} 件 / 全体：${skillState.all.length} 件`;
+
+    if (list.length === 0) { elEmpty.style.display = "block"; return; }
+    for (const item of list) elGrid.appendChild(renderSkillCard(item));
+  }
+
+  function renderSkillCard(item) {
+    const card = document.createElement("div");
+    card.className = "card";
+
+    const top = document.createElement("div");
+    top.className = "cardTop";
+
+    const thumb = document.createElement("div");
+    thumb.className = "thumb";
+
+    const img = document.createElement("img");
+    img.alt = item.name ?? "";
+    img.loading = "lazy";
+    img.src = item.image ?? "";
+    img.onerror = () => { thumb.innerHTML = "🖼️"; };
+    thumb.appendChild(img);
+
+    const meta = document.createElement("div");
+    meta.className = "meta";
+
+    const name = document.createElement("div");
+    name.className = "name";
+    name.textContent = item.name ?? "(no name)";
+
+    const desc = document.createElement("div");
+    desc.className = "desc";
+    desc.textContent = item.description ?? "";
+
+    const chips = document.createElement("div");
+    chips.className = "chips";
+
+    const c1 = document.createElement("span");
+    c1.className = "chip";
+    c1.textContent = typeChip(item.type);
+
+    const c2 = document.createElement("span");
+    c2.className = "chip muted";
+    c2.textContent = item.canDuplicate ? "重複可" : "重複不可";
+
+    const c3 = document.createElement("span");
+    c3.className = "chip muted";
+    c3.textContent = `ID: ${item.id}`;
+
+    chips.appendChild(c1); chips.appendChild(c2); chips.appendChild(c3);
+    meta.appendChild(name); meta.appendChild(desc); meta.appendChild(chips);
+
+    top.appendChild(thumb); top.appendChild(meta);
+
+    const effects = document.createElement("div");
+    effects.className = "effects";
+
+    const effectsTitle = document.createElement("div");
+    effectsTitle.className = "effectsTitle";
+    effectsTitle.innerHTML = `<span>効果</span><span><span class="smallBtn" title="このカードの情報をコピー">コピー</span></span>`;
+
+    effectsTitle.querySelector(".smallBtn").addEventListener("click", async () => {
+      const text = [
+        `【${item.name}】`,
+        item.description ?? "",
+        `type=${item.type}, canDuplicate=${item.canDuplicate}, id=${item.id}`,
+        "効果:",
+        ...(item.effects ?? []).map(e => {
+          const label = EFFECT_LABEL[e.type] ?? e.type ?? "unknown";
+          const v = formatValue(e.type, e.value);
+          return `- ${label}: ${v}`;
+        })
+      ].join("\n");
+
+      try {
+        await navigator.clipboard.writeText(text);
+        effectsTitle.querySelector(".smallBtn").textContent = "コピー済み";
+        setTimeout(()=> effectsTitle.querySelector(".smallBtn").textContent = "コピー", 1200);
+      } catch {
+        effectsTitle.querySelector(".smallBtn").textContent = "コピー失敗";
+        setTimeout(()=> effectsTitle.querySelector(".smallBtn").textContent = "コピー", 1200);
+      }
+    });
+
+    const list = document.createElement("div");
+    list.className = "effectsList";
+
+    const effs = Array.isArray(item.effects) ? item.effects : [];
+    if (effs.length === 0) {
+      const row = document.createElement("div");
+      row.className = "effRow";
+      row.innerHTML = `<span class="effKey">（効果なし）</span><span class="effVal"></span>`;
+      list.appendChild(row);
+    } else {
+      for (const e of effs) {
+        const row = document.createElement("div");
+        row.className = "effRow";
+        const label = EFFECT_LABEL[e.type] ?? e.type ?? "unknown";
+        const val = formatValue(e.type, e.value);
+        row.innerHTML = `<span class="effKey">${escapeHtml(label)}</span><span class="effVal">${escapeHtml(val)}</span>`;
+        list.appendChild(row);
+      }
+    }
+
+    effects.appendChild(effectsTitle);
+    effects.appendChild(list);
+
+    card.appendChild(top);
+    card.appendChild(effects);
+    return card;
+  }
+
+  document.getElementById("q").addEventListener("input", (e) => { skillState.q = e.target.value; renderSkills(); });
+  document.getElementById("dupOnly").addEventListener("change", (e) => { skillState.dupOnly = e.target.checked; renderSkills(); });
+  document.getElementById("typeSeg").addEventListener("click", (e) => {
+    const btn = e.target.closest("button[data-type]");
+    if (!btn) return;
+    const type = btn.getAttribute("data-type");
+    skillState.type = type;
+    document.querySelectorAll("#typeSeg .btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    renderSkills();
+  });
+
+  // =============================
+  // ボス読み込み＆表示（bossesは無編集 / statsを別ファイルでJOIN）
+  // =============================
+  const bossState = { all: [], q: "", area: "all", eventVariant: "1" };
+
+  const bossGrid = document.getElementById("bossGrid");
+  const bossMeta = document.getElementById("bossMeta");
+  const bossCount = document.getElementById("bossCount");
+  const bossEmpty = document.getElementById("bossEmpty");
+
+  async function loadBosses() {
+    const [bossRes, statRes, metaRes] = await Promise.all([
+      fetch("RPG/bosses_20260131.json", { cache: "no-store" }),
+      fetch("RPG/enemy_stage_stats_boss_test.json", { cache: "no-store" }),
+      fetch("RPG/season_20260131_meta.json", { cache: "no-store" })
+    ]);
+
+    if (!bossRes.ok) throw new Error(`bosses_20260131.json を読み込めませんでした（HTTP ${bossRes.status}）`);
+    if (!statRes.ok) throw new Error(`enemy_stage_stats_boss_test.json を読み込めませんでした（HTTP ${statRes.status}）`);
+    if (!metaRes.ok) throw new Error(`season_20260131_meta.json を読み込めませんでした（HTTP ${metaRes.status}）`);
+
+    const bossesJson = await bossRes.json();
+    const statsJson = await statRes.json();
+    const metaJson = await metaRes.json();
+
+    const eventVariant = String(metaJson.eventVariant ?? 1);
+    bossState.eventVariant = eventVariant;
+
+    const byEv = (statsJson.byEventVariant && statsJson.byEventVariant[eventVariant]) ? statsJson.byEventVariant[eventVariant] : {};
+
+    bossState.all = (bossesJson.bosses || []).map(b => {
+      const sv = String(b.enemyStageVariant ?? "");
+      const stat = byEv[sv] ?? null; // {hp,power,gold} or null
+      return { ...b, stat };
+    });
+
+    bossMeta.textContent = `${bossesJson.title ?? "ボス一覧"} / eventVariant=${eventVariant} / bosses: ${bossState.all.length}`;
+    renderBosses();
+  }
+
+  function matchesBoss(b) {
+    if (bossState.area !== "all" && b.areaKey !== bossState.area) return false;
+
+    const q = bossState.q.trim().toLowerCase();
+    if (!q) return true;
+
+    const statText = b.stat ? `${b.stat.hp} ${b.stat.power} ${b.stat.gold}` : "";
+
+    const hay = [
+      b.name,
+      String(b.bossVariant),
+      String(b.stage),
+      b.areaKey,
+      String(b.enemyStageVariant ?? ""),
+      String(b.enhanceVariant ?? ""),
+      statText
+    ].filter(Boolean).join(" ").toLowerCase();
+
+    return hay.includes(q);
+  }
+
+  function renderBosses() {
+    bossGrid.innerHTML = "";
+    bossEmpty.style.display = "none";
+
+    const list = bossState.all.filter(matchesBoss);
+    bossCount.textContent = `表示：${list.length} 件 / 全体：${bossState.all.length} 件`;
+
+    if (list.length === 0) { bossEmpty.style.display = "block"; return; }
+    for (const b of list) bossGrid.appendChild(renderBossCard(b));
+  }
+
+  function renderBossCard(b) {
+    const card = document.createElement("div");
+    card.className = "card";
+
+    const imgHtml = b.image
+      ? `<img src="${escapeHtml(b.image)}" alt="${escapeHtml(b.name ?? "")}" loading="lazy" />`
+      : "🖼️";
+
+    const statBadges = b.stat
+      ? `
+        <div class="statRow">
+          <span class="statBadge">HP: ${escapeHtml(fmtNum(b.stat.hp))}</span>
+          <span class="statBadge">攻撃(power): ${escapeHtml(fmtNum(b.stat.power))}</span>
+          <span class="statBadge">gold: ${escapeHtml(fmtNum(b.stat.gold))}</span>
+        </div>
+      `
+      : `
+        <div class="statRow">
+          <span class="statBadge muted">HP/攻撃: 未取得（eventVariant=${escapeHtml(bossState.eventVariant)}, enemyStageVariant=${escapeHtml(String(b.enemyStageVariant ?? "-"))}）</span>
+        </div>
+      `;
+
+    card.innerHTML = `
+      <div class="cardTop">
+        <div class="thumb">${imgHtml}</div>
+        <div class="meta">
+          <div class="name">Stage ${escapeHtml(String(b.stage ?? "-"))}：${escapeHtml(b.name ?? "")}</div>
+
+          ${statBadges}
+
+          <div class="desc">
+            area: ${escapeHtml(b.areaKey ?? "-")} / limit: ${escapeHtml(String(b.limitTimeSec ?? "-"))}s<br>
+            runSpeedUp: ${escapeHtml(String(b.runSpeedUp ?? "-"))} / fallDamageUp: ${escapeHtml(String(b.fallDamageUp ?? "-"))}
+          </div>
+
+          <div class="chips">
+            <span class="chip">bossVariant: ${escapeHtml(String(b.bossVariant ?? "-"))}</span>
+            <span class="chip muted">enemyStageVariant: ${escapeHtml(String(b.enemyStageVariant ?? "-"))}</span>
+            <span class="chip muted">enhanceVariant: ${escapeHtml(String(b.enhanceVariant ?? "-"))}</span>
+          </div>
+        </div>
+      </div>
+    `;
+    return card;
+  }
+
+  document.getElementById("bq").addEventListener("input", (e) => {
+    bossState.q = e.target.value;
+    renderBosses();
+  });
+
+  document.getElementById("areaSeg").addEventListener("click", (e) => {
+    const btn = e.target.closest("button[data-area]");
+    if (!btn) return;
+    bossState.area = btn.getAttribute("data-area");
+    document.querySelectorAll("#areaSeg .btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    renderBosses();
+  });
+
+  // =============================
+  // 起動
+  // =============================
+  (async () => {
+    try {
+      topHint.textContent = "skills.json / bosses_20260131.json / enemy_stage_stats_boss_test.json / season_20260131_meta.json を読み込みます";
+      await Promise.all([loadSkills(), loadBosses()]);
+      topHint.textContent = "読み込み完了";
+    } catch (e) {
+      elErr.style.display = "block";
+      elErr.textContent = String(e);
+      topHint.textContent = "読み込み失敗";
+    }
+  })();
+</script>
+</body>
+</html>

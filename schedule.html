@@ -48,7 +48,7 @@ h1{text-align:center;margin:16px 0;}
 <input type="password" id="pw" placeholder="Password">
 <button onclick="checkPassword()">Enter</button>
 <div class="info">このページには未公開情報・イベント内部情報が含まれています。<br>関係者以外の閲覧は禁止されています。</div>
-<div id="pw-version">Version 1.3.5</div>
+<div id="pw-version">Version 1.4.0</div>
 </div>
 
 <h1>イベントスケジュール</h1>
@@ -64,11 +64,11 @@ h1{text-align:center;margin:16px 0;}
   </div>
 </div>
 
-<div id="version">Version 1.3.5 / 更新日: 2026-01-06</div>
+<div id="version">Version 1.4.0 / 更新日: 2026-01-06</div>
 
 <script>
-const VERSION = "1.3.5";
-const PASSWORD = "johnleak";
+const VERSION = "1.4.0";
+const PASSWORD = "wsama";
 
 if(localStorage.getItem("pw_ok") !== "true_"+VERSION){
   document.getElementById("pw-screen").style.display="flex";
@@ -134,7 +134,7 @@ function render(events){
     // 🔹 catalog_banner を hero に置換してモーダル表示
     box.onclick=()=>{
       let hero = e.image ? e.image.replace("catalog_banner","hero") : null;
-      openModal(hero, e.images);
+      openModal(hero, e.images, e);
     };
 
     if(e.image){
@@ -160,16 +160,49 @@ function render(events){
 
 // モーダル
 let currentImages=[];
-function openModal(hero, images){
+function openModal(hero, images, eventData){
   const loader=document.getElementById("modal-loader");
   const img=document.getElementById("modal-img");
   const btnsWrap=document.getElementById("modal-btns");
 
   currentImages = [];
-  if(hero) currentImages.push({src:hero,name:"Hero"});
-  for(const key of ["featured_reward","map","topic","topic2","emomorun"]){
-    if(images && images[key]) currentImages.push({src:images[key],name:key});
+
+  const isGiftRanking = eventData && eventData.url && eventData.url.includes("gift_ranking");
+
+  // 🎁 gift_ranking 専用
+  if(isGiftRanking){
+
+    // mainbnr → hero
+    if(eventData.image){
+      const heroImg = eventData.image.replace("mainbnr","hero");
+      currentImages.push({src:heroImg,name:"Hero"});
+    }
+
+    const match = eventData.image.match(/gift_ranking\/([^/]+)/);
+    if(match){
+      const id = match[1];
+
+      currentImages.push({
+        src:`https://cdn.mirrativ.com/mirrorman-prod/assets/avatar/img/etc/gift_ranking/${id}/ranking/day_1.png`,
+        name:"奇数日"
+      });
+
+      currentImages.push({
+        src:`https://cdn.mirrativ.com/mirrorman-prod/assets/avatar/img/etc/gift_ranking/${id}/ranking/day_2.png`,
+        name:"偶数日"
+      });
+    }
   }
+
+  // 通常イベント
+  else{
+    if(hero) currentImages.push({src:hero,name:"Hero"});
+    for(const key of ["featured_reward","map","topic","topic2","emomorun"]){
+      if(images && images[key]) currentImages.push({src:images[key],name:key});
+    }
+  }
+
+  if(currentImages.length===0) return;
 
   btnsWrap.innerHTML="";
   currentImages.forEach((item,index)=>{
@@ -187,7 +220,6 @@ function openModal(hero, images){
   loadModalImage(currentImages[0].src);
   document.getElementById("modal").style.display="flex";
 }
-
 function loadModalImage(src){
   const loader=document.getElementById("modal-loader");
   const img=document.getElementById("modal-img");
