@@ -19,14 +19,14 @@ h1{text-align:center;margin:16px 0;}
 .open-btn{position:absolute;bottom:8px;right:8px;background:#ff0;color:#000;font-weight:bold;padding:6px 10px;border-radius:8px;cursor:pointer;font-size:14px;z-index:2;}
 .open-btn:hover{background:#ffd;}
 
-/* ✅ 追加：プレビューボタン */
+/* ✅ 追加：プレビュー按钮 */
 .preview-btn{
-  position:absolute;bottom:8px;right:72px;
+  position:absolute;bottom:8px;right:74px;
   background:#0ff;color:#000;font-weight:bold;
-  padding:6px 10px;border-radius:8px;
-  cursor:pointer;font-size:14px;z-index:2;
+  padding:6px 10px;border-radius:8px;cursor:pointer;
+  font-size:14px;z-index:2;
 }
-.preview-btn:hover{background:#cff;}
+.preview-btn:hover{background:#cfffff;}
 
 .overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);display:flex;align-items:center;justify-content:center;z-index:999;display:none;}
 .modal{position:relative;background:#000;border-radius:12px;max-width:90%;max-height:90%;overflow:hidden;display:flex;align-items:center;justify-content:center;flex-direction:column;}
@@ -48,15 +48,15 @@ h1{text-align:center;margin:16px 0;}
 #screenshot-warning{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);color:#f00;display:flex;align-items:center;justify-content:center;text-align:center;font-size:24px;padding:20px;z-index:2000;display:none;}
 #version{position:fixed;bottom:4px;right:8px;font-size:12px;color:#888;}
 
-/* ✅ 追加：サイトプレビュー用モーダル */
+/* ✅ 追加：サイトプレビューモーダル */
 .site-modal{
-  width:92vw; height:92vh; max-width:92vw; max-height:92vh;
-  background:#000; border-radius:12px; overflow:hidden;
-  display:flex; flex-direction:column;
+  position:relative;background:#000;border-radius:12px;
+  width:92vw;height:92vh;max-width:92vw;max-height:92vh;
+  overflow:hidden;display:flex;flex-direction:column;
 }
 .site-controls{
-  display:flex; gap:8px; flex-wrap:wrap; justify-content:center;
-  padding:10px; background:#111;
+  display:flex;gap:8px;flex-wrap:wrap;justify-content:center;
+  padding:10px;background:#111;
 }
 .site-controls button{
   padding:8px 14px;border:none;border-radius:6px;
@@ -64,8 +64,8 @@ h1{text-align:center;margin:16px 0;}
   transition:0.2s;font-size:14px;
 }
 .site-controls button:hover{background:#ffe;}
-#site-frame{flex:1;width:100%;border:none;background:#111;}
 #site-msg{display:none;color:#ff8080;padding:10px;text-align:center;font-weight:bold;}
+#site-frame{flex:1;width:100%;border:none;background:#111;}
 </style>
 </head>
 <body>
@@ -84,7 +84,7 @@ h1{text-align:center;margin:16px 0;}
 <div id="tabs"></div>
 <div id="schedule"></div>
 
-<!-- 画像モーダル（元のまま） -->
+<!-- 画像モーダル -->
 <div class="overlay" id="modal">
   <div class="modal">
     <span class="close-btn" onclick="closeModal()">×</span>
@@ -94,13 +94,14 @@ h1{text-align:center;margin:16px 0;}
   </div>
 </div>
 
-<!-- ✅ 追加：サイトプレビューモーダル -->
+<!-- ✅ サイトプレビューモーダル -->
 <div class="overlay" id="site-modal">
   <div class="site-modal">
     <span class="close-btn" onclick="closeSiteModal()">×</span>
     <div class="site-controls">
       <button onclick="reloadSitePreview()">更新</button>
       <button onclick="openSiteExternal()">外部で開く</button>
+      <button onclick="openSiteInApp()">アプリで開く</button>
     </div>
     <div id="site-msg"></div>
     <iframe id="site-frame"
@@ -132,52 +133,88 @@ function proxyImage(url){return "https://images.weserv.nl/?url="+encodeURICompon
 function directLink(url){return "mirr://webview/window/open?url="+encodeURIComponent(url);}
 
 /* =========================
-   ✅ サイトプレビュー（方式A）
+   ✅ サイトプレビュー（HTMLだけで完結）
+   - mirr:/// の一部は https に変換して iframe で表示を試す
+   - 無理ならメッセージ + 外部/アプリボタン
 ========================= */
-let currentPreviewUrl = "";
+let currentRawUrl = "";
+let currentHttpUrl = "";
 
-function pickPreviewUrl(e){
-  // ✅ まず preview_url があればそれを使う（推奨）
-  if(e && typeof e.preview_url === "string" && /^https?:\/\//.test(e.preview_url)) return e.preview_url;
+function toHttpUrl(mirrUrl){
+  if(!mirrUrl) return "";
 
-  // それが無ければ url を使う（https の時だけ）
-  if(e && typeof e.url === "string" && /^https?:\/\//.test(e.url)) return e.url;
+  // 既にhttpsならそのまま
+  if(/^https?:\/\//.test(mirrUrl)) return mirrUrl;
+
+  // mirr:///xxxx -> https://www.mirrativ.com/xxxx （変換できる可能性があるものだけ）
+  if(mirrUrl.startsWith("mirr:///")){
+    const path = mirrUrl.replace(/^mirr:\/\/\//, "");
+    // 例：notice/popup, notice/popup_click などはWebにも存在しがち
+    // gift_ranking / roulette / emomo 系はWebで見れない可能性が高い（この場合は失敗扱いにする）
+    if(path.startsWith("notice/") || path.startsWith("webview/")){
+      return "https://www.mirrativ.com/" + path;
+    }
+    // 一応試す（表示できない可能性高いが、試す価値はある）
+    return "https://www.mirrativ.com/" + path;
+  }
 
   return "";
 }
 
-function openSiteModal(eventObj){
+function openSiteModal(rawUrl){
+  currentRawUrl = rawUrl || "";
+  currentHttpUrl = toHttpUrl(currentRawUrl);
+
+  const modal = document.getElementById("site-modal");
   const frame = document.getElementById("site-frame");
   const msg = document.getElementById("site-msg");
-  const url = pickPreviewUrl(eventObj);
 
-  currentPreviewUrl = url;
-
-  if(!url){
+  // httpsが作れないならアウト
+  if(!currentHttpUrl){
     msg.style.display="block";
-    msg.textContent="このイベントはプレビューURL(https)が無いので表示できません。JSONに preview_url を追加してください。";
-    frame.src="about:blank";
-    document.getElementById("site-modal").style.display="flex";
+    msg.textContent="このURLはブラウザ表示できません（httpsに変換できない）。「アプリで開く」を使ってください。";
+    frame.src = "about:blank";
+    modal.style.display="flex";
     return;
   }
 
-  msg.style.display="none";
-  frame.src = url;
-  document.getElementById("site-modal").style.display="flex";
+  // iframeで読み込み試行
+  msg.style.display="block";
+  msg.textContent="プレビューを読み込み中…（表示されない場合は「外部で開く」 or 「アプリで開く」）";
+  frame.src = currentHttpUrl;
+  modal.style.display="flex";
 }
 
 function closeSiteModal(){
   document.getElementById("site-modal").style.display="none";
-  document.getElementById("site-frame").src="about:blank";
-  currentPreviewUrl = "";
+  document.getElementById("site-frame").src = "about:blank";
+  document.getElementById("site-msg").style.display="none";
+  currentRawUrl = "";
+  currentHttpUrl = "";
 }
+
 function reloadSitePreview(){
   const frame = document.getElementById("site-frame");
   if(frame.src && frame.src !== "about:blank") frame.src = frame.src;
 }
+
 function openSiteExternal(){
-  if(currentPreviewUrl) window.open(currentPreviewUrl, "_blank", "noopener");
+  // httpsがあればそっち優先
+  if(currentHttpUrl) window.open(currentHttpUrl, "_blank", "noopener");
 }
+
+function openSiteInApp(){
+  if(!currentRawUrl) return;
+  // アプリで確実に開く（あなたの既存ロジック利用）
+  location.href = directLink(currentRawUrl);
+}
+
+// iframeが読み込めたらメッセージ消す（同一オリジンじゃない場合も onload は来ることが多い）
+document.getElementById("site-frame").addEventListener("load", ()=>{
+  const msg = document.getElementById("site-msg");
+  if(msg) msg.style.display="none";
+});
+
 /* ========================= */
 
 async function loadSchedule(){
@@ -230,7 +267,7 @@ function render(events){
 
     const box=document.createElement("div"); box.className="image-box";
 
-    // 画像モーダル（元のまま）
+    // 画像モーダル
     box.onclick=()=>{
       let hero = e.image ? e.image.replace("catalog_banner","hero") : null;
       openModal(hero, e.images, e);
@@ -249,16 +286,15 @@ function render(events){
     dateText.style.textAlign="center"; dateText.style.fontSize="12px"; dateText.style.margin="6px 0 28px 0";
     dateText.textContent=`期間: ${e.start.substr(0,10)} ~ ${e.end.substr(0,10)}`;
 
-    // ✅ 追加：プレビュー
+    // ✅ サイトプレビュー（HTMLだけ）
     const preview=document.createElement("div");
     preview.className="preview-btn";
     preview.textContent="プレビュー";
     preview.onclick=(ev)=>{
       ev.stopPropagation();
-      openSiteModal(e);
+      openSiteModal(e.url);
     };
 
-    // 開く（元のまま）
     const btn=document.createElement("div"); btn.className="open-btn"; btn.textContent="開く";
     btn.onclick=(ev)=>{ev.stopPropagation(); location.href=directLink(e.url);};
 
@@ -272,8 +308,8 @@ let currentImages=[];
 function openModal(hero, images, eventData){
   const img=document.getElementById("modal-img");
   const btnsWrap=document.getElementById("modal-btns");
-
   currentImages = [];
+
   const isGiftRanking = eventData && eventData.url && eventData.url.includes("gift_ranking");
 
   if(isGiftRanking){
