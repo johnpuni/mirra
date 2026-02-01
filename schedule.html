@@ -18,16 +18,6 @@ h1{text-align:center;margin:16px 0;}
 .time-circle{position:absolute;top:6px;right:6px;width:48px;height:48px;background:rgba(255,255,255,0.8);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:bold;color:#000;text-align:center;line-height:1.2;pointer-events:none;}
 .open-btn{position:absolute;bottom:8px;right:8px;background:#ff0;color:#000;font-weight:bold;padding:6px 10px;border-radius:8px;cursor:pointer;font-size:14px;z-index:2;}
 .open-btn:hover{background:#ffd;}
-
-/* ✅ 追加：プレビュー按钮 */
-.preview-btn{
-  position:absolute;bottom:8px;right:74px;
-  background:#0ff;color:#000;font-weight:bold;
-  padding:6px 10px;border-radius:8px;cursor:pointer;
-  font-size:14px;z-index:2;
-}
-.preview-btn:hover{background:#cfffff;}
-
 .overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);display:flex;align-items:center;justify-content:center;z-index:999;display:none;}
 .modal{position:relative;background:#000;border-radius:12px;max-width:90%;max-height:90%;overflow:hidden;display:flex;align-items:center;justify-content:center;flex-direction:column;}
 .modal img{max-width:100%;max-height:100%;object-fit:contain;margin-bottom:8px;border-radius:6px;}
@@ -48,24 +38,72 @@ h1{text-align:center;margin:16px 0;}
 #screenshot-warning{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);color:#f00;display:flex;align-items:center;justify-content:center;text-align:center;font-size:24px;padding:20px;z-index:2000;display:none;}
 #version{position:fixed;bottom:4px;right:8px;font-size:12px;color:#888;}
 
-/* ✅ 追加：サイトプレビューモーダル */
+/* ✅ 追加：プレビューボタン */
+.preview-btn{
+  position:absolute;
+  bottom:8px;
+  right:74px;
+  background:#0ff;
+  color:#000;
+  font-weight:bold;
+  padding:6px 10px;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:14px;
+  z-index:2;
+}
+.preview-btn:hover{background:#cff;}
+
+/* ✅ 追加：サイトプレビュー用モーダル */
 .site-modal{
-  position:relative;background:#000;border-radius:12px;
-  width:92vw;height:92vh;max-width:92vw;max-height:92vh;
-  overflow:hidden;display:flex;flex-direction:column;
+  position:relative;
+  background:#000;
+  border-radius:12px;
+  width:92vw;
+  height:92vh;
+  max-width:92vw;
+  max-height:92vh;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
 }
 .site-controls{
-  display:flex;gap:8px;flex-wrap:wrap;justify-content:center;
-  padding:10px;background:#111;
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  justify-content:center;
+  padding:10px;
+  background:#111;
 }
 .site-controls button{
-  padding:8px 14px;border:none;border-radius:6px;
-  background:#ff0;color:#000;cursor:pointer;font-weight:bold;
-  transition:0.2s;font-size:14px;
+  padding:8px 14px;
+  border:none;
+  border-radius:6px;
+  background:#ff0;
+  color:#000;
+  cursor:pointer;
+  font-weight:bold;
+  transition:0.2s;
+  font-size:14px;
 }
 .site-controls button:hover{background:#ffe;}
-#site-msg{display:none;color:#ff8080;padding:10px;text-align:center;font-weight:bold;}
-#site-frame{flex:1;width:100%;border:none;background:#111;}
+#site-msg{
+  display:block;
+  color:#fff;
+  padding:10px;
+  text-align:center;
+  font-weight:bold;
+  background:#111;
+  border-bottom:1px solid #222;
+  word-break:break-all;
+  white-space:pre-wrap;
+}
+#site-frame{
+  flex:1;
+  width:100%;
+  border:none;
+  background:#111;
+}
 </style>
 </head>
 <body>
@@ -94,7 +132,7 @@ h1{text-align:center;margin:16px 0;}
   </div>
 </div>
 
-<!-- ✅ サイトプレビューモーダル -->
+<!-- ✅ 追加：サイトプレビューモーダル -->
 <div class="overlay" id="site-modal">
   <div class="site-modal">
     <span class="close-btn" onclick="closeSiteModal()">×</span>
@@ -103,7 +141,7 @@ h1{text-align:center;margin:16px 0;}
       <button onclick="openSiteExternal()">外部で開く</button>
       <button onclick="openSiteInApp()">アプリで開く</button>
     </div>
-    <div id="site-msg"></div>
+    <div id="site-msg">プレビューはまだ開かれていません</div>
     <iframe id="site-frame"
       sandbox="allow-scripts allow-forms allow-same-origin allow-popups"
       referrerpolicy="no-referrer">
@@ -134,30 +172,19 @@ function directLink(url){return "mirr://webview/window/open?url="+encodeURICompo
 
 /* =========================
    ✅ サイトプレビュー（HTMLだけで完結）
-   - mirr:/// の一部は https に変換して iframe で表示を試す
-   - 無理ならメッセージ + 外部/アプリボタン
 ========================= */
 let currentRawUrl = "";
 let currentHttpUrl = "";
 
-function toHttpUrl(mirrUrl){
-  if(!mirrUrl) return "";
+function toHttpUrl(u){
+  if(!u) return "";
+  if(/^https?:\/\//.test(u)) return u;
 
-  // 既にhttpsならそのまま
-  if(/^https?:\/\//.test(mirrUrl)) return mirrUrl;
-
-  // mirr:///xxxx -> https://www.mirrativ.com/xxxx （変換できる可能性があるものだけ）
-  if(mirrUrl.startsWith("mirr:///")){
-    const path = mirrUrl.replace(/^mirr:\/\/\//, "");
-    // 例：notice/popup, notice/popup_click などはWebにも存在しがち
-    // gift_ranking / roulette / emomo 系はWebで見れない可能性が高い（この場合は失敗扱いにする）
-    if(path.startsWith("notice/") || path.startsWith("webview/")){
-      return "https://www.mirrativ.com/" + path;
-    }
-    // 一応試す（表示できない可能性高いが、試す価値はある）
+  // mirr:///xxxx -> https://www.mirrativ.com/xxxx を試す
+  if(u.startsWith("mirr:///")){
+    const path = u.replace(/^mirr:\/\/\//, "");
     return "https://www.mirrativ.com/" + path;
   }
-
   return "";
 }
 
@@ -169,18 +196,16 @@ function openSiteModal(rawUrl){
   const frame = document.getElementById("site-frame");
   const msg = document.getElementById("site-msg");
 
-  // httpsが作れないならアウト
+  msg.textContent =
+    "プレビューURL: " + (currentHttpUrl || "(変換不可)") + "\n" +
+    "※iframeで表示できない場合があります。その時は「外部で開く」or「アプリで開く」を使ってね。";
+
   if(!currentHttpUrl){
-    msg.style.display="block";
-    msg.textContent="このURLはブラウザ表示できません（httpsに変換できない）。「アプリで開く」を使ってください。";
     frame.src = "about:blank";
     modal.style.display="flex";
     return;
   }
 
-  // iframeで読み込み試行
-  msg.style.display="block";
-  msg.textContent="プレビューを読み込み中…（表示されない場合は「外部で開く」 or 「アプリで開く」）";
   frame.src = currentHttpUrl;
   modal.style.display="flex";
 }
@@ -188,7 +213,6 @@ function openSiteModal(rawUrl){
 function closeSiteModal(){
   document.getElementById("site-modal").style.display="none";
   document.getElementById("site-frame").src = "about:blank";
-  document.getElementById("site-msg").style.display="none";
   currentRawUrl = "";
   currentHttpUrl = "";
 }
@@ -199,22 +223,14 @@ function reloadSitePreview(){
 }
 
 function openSiteExternal(){
-  // httpsがあればそっち優先
   if(currentHttpUrl) window.open(currentHttpUrl, "_blank", "noopener");
+  else alert("外部で開ける https URL がありません");
 }
 
 function openSiteInApp(){
   if(!currentRawUrl) return;
-  // アプリで確実に開く（あなたの既存ロジック利用）
   location.href = directLink(currentRawUrl);
 }
-
-// iframeが読み込めたらメッセージ消す（同一オリジンじゃない場合も onload は来ることが多い）
-document.getElementById("site-frame").addEventListener("load", ()=>{
-  const msg = document.getElementById("site-msg");
-  if(msg) msg.style.display="none";
-});
-
 /* ========================= */
 
 async function loadSchedule(){
@@ -286,7 +302,7 @@ function render(events){
     dateText.style.textAlign="center"; dateText.style.fontSize="12px"; dateText.style.margin="6px 0 28px 0";
     dateText.textContent=`期間: ${e.start.substr(0,10)} ~ ${e.end.substr(0,10)}`;
 
-    // ✅ サイトプレビュー（HTMLだけ）
+    // ✅ 追加：サイトプレビュー
     const preview=document.createElement("div");
     preview.className="preview-btn";
     preview.textContent="プレビュー";
@@ -306,8 +322,10 @@ function render(events){
 // 画像モーダル
 let currentImages=[];
 function openModal(hero, images, eventData){
+  const loader=document.getElementById("modal-loader");
   const img=document.getElementById("modal-img");
   const btnsWrap=document.getElementById("modal-btns");
+
   currentImages = [];
 
   const isGiftRanking = eventData && eventData.url && eventData.url.includes("gift_ranking");
