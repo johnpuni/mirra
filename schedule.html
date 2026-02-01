@@ -18,6 +18,16 @@ h1{text-align:center;margin:16px 0;}
 .time-circle{position:absolute;top:6px;right:6px;width:48px;height:48px;background:rgba(255,255,255,0.8);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:bold;color:#000;text-align:center;line-height:1.2;pointer-events:none;}
 .open-btn{position:absolute;bottom:8px;right:8px;background:#ff0;color:#000;font-weight:bold;padding:6px 10px;border-radius:8px;cursor:pointer;font-size:14px;z-index:2;}
 .open-btn:hover{background:#ffd;}
+
+/* ✅ 追加：プレビューボタン */
+.preview-btn{
+  position:absolute;bottom:8px;right:72px;
+  background:#0ff;color:#000;font-weight:bold;
+  padding:6px 10px;border-radius:8px;
+  cursor:pointer;font-size:14px;z-index:2;
+}
+.preview-btn:hover{background:#cff;}
+
 .overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);display:flex;align-items:center;justify-content:center;z-index:999;display:none;}
 .modal{position:relative;background:#000;border-radius:12px;max-width:90%;max-height:90%;overflow:hidden;display:flex;align-items:center;justify-content:center;flex-direction:column;}
 .modal img{max-width:100%;max-height:100%;object-fit:contain;margin-bottom:8px;border-radius:6px;}
@@ -37,6 +47,25 @@ h1{text-align:center;margin:16px 0;}
 #pw-screen #pw-version{position:absolute;bottom:10px;font-size:14px;color:#888;}
 #screenshot-warning{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);color:#f00;display:flex;align-items:center;justify-content:center;text-align:center;font-size:24px;padding:20px;z-index:2000;display:none;}
 #version{position:fixed;bottom:4px;right:8px;font-size:12px;color:#888;}
+
+/* ✅ 追加：サイトプレビュー用モーダル */
+.site-modal{
+  width:92vw; height:92vh; max-width:92vw; max-height:92vh;
+  background:#000; border-radius:12px; overflow:hidden;
+  display:flex; flex-direction:column;
+}
+.site-controls{
+  display:flex; gap:8px; flex-wrap:wrap; justify-content:center;
+  padding:10px; background:#111;
+}
+.site-controls button{
+  padding:8px 14px;border:none;border-radius:6px;
+  background:#ff0;color:#000;cursor:pointer;font-weight:bold;
+  transition:0.2s;font-size:14px;
+}
+.site-controls button:hover{background:#ffe;}
+#site-frame{flex:1;width:100%;border:none;background:#111;}
+#site-msg{display:none;color:#ff8080;padding:10px;text-align:center;font-weight:bold;}
 </style>
 </head>
 <body>
@@ -55,12 +84,29 @@ h1{text-align:center;margin:16px 0;}
 <div id="tabs"></div>
 <div id="schedule"></div>
 
+<!-- 画像モーダル（元のまま） -->
 <div class="overlay" id="modal">
   <div class="modal">
     <span class="close-btn" onclick="closeModal()">×</span>
     <img id="modal-img" src="" style="display:none;">
     <div class="loader" id="modal-loader">読み込み中...</div>
     <div class="modal-buttons" id="modal-btns"></div>
+  </div>
+</div>
+
+<!-- ✅ 追加：サイトプレビューモーダル -->
+<div class="overlay" id="site-modal">
+  <div class="site-modal">
+    <span class="close-btn" onclick="closeSiteModal()">×</span>
+    <div class="site-controls">
+      <button onclick="reloadSitePreview()">更新</button>
+      <button onclick="openSiteExternal()">外部で開く</button>
+    </div>
+    <div id="site-msg"></div>
+    <iframe id="site-frame"
+      sandbox="allow-scripts allow-forms allow-same-origin allow-popups"
+      referrerpolicy="no-referrer">
+    </iframe>
   </div>
 </div>
 
@@ -84,6 +130,55 @@ function checkPassword(){
 
 function proxyImage(url){return "https://images.weserv.nl/?url="+encodeURIComponent(url.replace(/^https?:\/\//,""));}
 function directLink(url){return "mirr://webview/window/open?url="+encodeURIComponent(url);}
+
+/* =========================
+   ✅ サイトプレビュー（方式A）
+========================= */
+let currentPreviewUrl = "";
+
+function pickPreviewUrl(e){
+  // ✅ まず preview_url があればそれを使う（推奨）
+  if(e && typeof e.preview_url === "string" && /^https?:\/\//.test(e.preview_url)) return e.preview_url;
+
+  // それが無ければ url を使う（https の時だけ）
+  if(e && typeof e.url === "string" && /^https?:\/\//.test(e.url)) return e.url;
+
+  return "";
+}
+
+function openSiteModal(eventObj){
+  const frame = document.getElementById("site-frame");
+  const msg = document.getElementById("site-msg");
+  const url = pickPreviewUrl(eventObj);
+
+  currentPreviewUrl = url;
+
+  if(!url){
+    msg.style.display="block";
+    msg.textContent="このイベントはプレビューURL(https)が無いので表示できません。JSONに preview_url を追加してください。";
+    frame.src="about:blank";
+    document.getElementById("site-modal").style.display="flex";
+    return;
+  }
+
+  msg.style.display="none";
+  frame.src = url;
+  document.getElementById("site-modal").style.display="flex";
+}
+
+function closeSiteModal(){
+  document.getElementById("site-modal").style.display="none";
+  document.getElementById("site-frame").src="about:blank";
+  currentPreviewUrl = "";
+}
+function reloadSitePreview(){
+  const frame = document.getElementById("site-frame");
+  if(frame.src && frame.src !== "about:blank") frame.src = frame.src;
+}
+function openSiteExternal(){
+  if(currentPreviewUrl) window.open(currentPreviewUrl, "_blank", "noopener");
+}
+/* ========================= */
 
 async function loadSchedule(){
   const listRes = await fetch("schedule/index.json");
@@ -111,7 +206,11 @@ function renderTabs(months,events){
     const tab=document.createElement("div");
     tab.className="tab"+(m===nowMonth?" active":"");
     tab.textContent=m;
-    tab.onclick=()=>{document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active")); tab.classList.add("active"); render(events.filter(ev=>ev.start.substr(0,7)===m));};
+    tab.onclick=()=>{
+      document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+      tab.classList.add("active");
+      render(events.filter(ev=>ev.start.substr(0,7)===m));
+    };
     tabsWrap.appendChild(tab);
   });
   const initialMonth=months.includes(nowMonth)?nowMonth:months[months.length-1];
@@ -131,7 +230,7 @@ function render(events){
 
     const box=document.createElement("div"); box.className="image-box";
 
-    // 🔹 catalog_banner を hero に置換してモーダル表示
+    // 画像モーダル（元のまま）
     box.onclick=()=>{
       let hero = e.image ? e.image.replace("catalog_banner","hero") : null;
       openModal(hero, e.images, e);
@@ -146,56 +245,49 @@ function render(events){
     else if(now>=start && now<=end){circle.textContent="終了\n"+Math.ceil((end-now)/86400000)+"日"; circle.style.color="red";}
     else{circle.textContent="終了"; circle.style.color="#888";}
 
-    const dateText=document.createElement("div"); 
-    dateText.style.textAlign="center"; dateText.style.fontSize="12px"; dateText.style.margin="6px 0 28px 0"; 
+    const dateText=document.createElement("div");
+    dateText.style.textAlign="center"; dateText.style.fontSize="12px"; dateText.style.margin="6px 0 28px 0";
     dateText.textContent=`期間: ${e.start.substr(0,10)} ~ ${e.end.substr(0,10)}`;
 
+    // ✅ 追加：プレビュー
+    const preview=document.createElement("div");
+    preview.className="preview-btn";
+    preview.textContent="プレビュー";
+    preview.onclick=(ev)=>{
+      ev.stopPropagation();
+      openSiteModal(e);
+    };
+
+    // 開く（元のまま）
     const btn=document.createElement("div"); btn.className="open-btn"; btn.textContent="開く";
     btn.onclick=(ev)=>{ev.stopPropagation(); location.href=directLink(e.url);};
 
-    card.append(box,circle,dateText,btn);
+    card.append(box,circle,dateText,preview,btn);
     wrap.appendChild(card);
   }
 }
 
-// モーダル
+// 画像モーダル
 let currentImages=[];
 function openModal(hero, images, eventData){
-  const loader=document.getElementById("modal-loader");
   const img=document.getElementById("modal-img");
   const btnsWrap=document.getElementById("modal-btns");
 
   currentImages = [];
-
   const isGiftRanking = eventData && eventData.url && eventData.url.includes("gift_ranking");
 
-  // 🎁 gift_ranking 専用
   if(isGiftRanking){
-
-    // mainbnr → hero
     if(eventData.image){
       const heroImg = eventData.image.replace("mainbnr","hero");
       currentImages.push({src:heroImg,name:"Hero"});
     }
-
     const match = eventData.image.match(/gift_ranking\/([^/]+)/);
     if(match){
       const id = match[1];
-
-      currentImages.push({
-        src:`https://cdn.mirrativ.com/mirrorman-prod/assets/avatar/img/etc/gift_ranking/${id}/ranking/day_1.png`,
-        name:"奇数日"
-      });
-
-      currentImages.push({
-        src:`https://cdn.mirrativ.com/mirrorman-prod/assets/avatar/img/etc/gift_ranking/${id}/ranking/day_2.png`,
-        name:"偶数日"
-      });
+      currentImages.push({src:`https://cdn.mirrativ.com/mirrorman-prod/assets/avatar/img/etc/gift_ranking/${id}/ranking/day_1.png`,name:"奇数日"});
+      currentImages.push({src:`https://cdn.mirrativ.com/mirrorman-prod/assets/avatar/img/etc/gift_ranking/${id}/ranking/day_2.png`,name:"偶数日"});
     }
-  }
-
-  // 通常イベント
-  else{
+  }else{
     if(hero) currentImages.push({src:hero,name:"Hero"});
     for(const key of ["featured_reward","map","topic","topic2","emomorun"]){
       if(images && images[key]) currentImages.push({src:images[key],name:key});
@@ -230,7 +322,13 @@ function loadModalImage(src){
 }
 
 function closeModal(){document.getElementById("modal").style.display="none";}
-document.addEventListener("keydown",e=>{if(e.key==="Escape") closeModal();});
+
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape"){
+    closeModal();
+    closeSiteModal();
+  }
+});
 
 // スケジュールロード
 loadSchedule();
@@ -239,7 +337,13 @@ loadSchedule();
 document.addEventListener('contextmenu',e=>e.preventDefault());
 document.addEventListener('selectstart',e=>e.preventDefault());
 document.addEventListener('copy',e=>e.preventDefault());
-document.addEventListener('keydown',e=>{if(e.ctrlKey && ["c","C","s","S","p","P"].includes(e.key)){e.preventDefault();document.getElementById("screenshot-warning").style.display="flex";setTimeout(()=>document.getElementById("screenshot-warning").style.display="none",3000);}});
+document.addEventListener('keydown',e=>{
+  if(e.ctrlKey && ["c","C","s","S","p","P"].includes(e.key)){
+    e.preventDefault();
+    document.getElementById("screenshot-warning").style.display="flex";
+    setTimeout(()=>document.getElementById("screenshot-warning").style.display="none",3000);
+  }
+});
 </script>
 </body>
 </html>
