@@ -3,204 +3,269 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Mirrativ 入室</title>
+<title>RPG 複数垢ダッシュボード</title>
 <style>
   body{margin:0;background:#0f1115;color:#fff;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
-  header{position:sticky;top:0;background:#141823;border-bottom:1px solid #222;padding:12px 14px}
+  header{position:sticky;top:0;background:#141823;border-bottom:1px solid #222;padding:12px 14px;z-index:10}
   h1{margin:0;font-size:16px}
-  .wrap{max-width:860px;margin:0 auto;padding:14px}
+  .wrap{max-width:920px;margin:0 auto;padding:14px}
   .card{background:#151a26;border:1px solid #222;border-radius:14px;padding:12px;margin:10px 0}
-  textarea,input{width:100%;box-sizing:border-box;background:#0f1320;color:#fff;border:1px solid #2a3147;border-radius:12px;padding:10px;font-size:15px}
-  textarea{min-height:120px;resize:vertical}
-  button{border:0;border-radius:12px;padding:10px 12px;font-size:15px;background:#3b82f6;color:#fff}
+  input,textarea,select{width:100%;box-sizing:border-box;background:#0f1320;color:#fff;border:1px solid #2a3147;border-radius:12px;padding:10px;font-size:15px}
+  textarea{min-height:80px;resize:vertical}
+  button{border:0;border-radius:12px;padding:10px 12px;font-size:15px;background:#3b82f6;color:#fff;cursor:pointer}
   button.sub{background:#263045}
   button.danger{background:#ef4444}
   .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
   .row>*{flex:1}
-  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-  .tab{padding:8px 10px;border-radius:999px;border:1px solid #2a3147;background:#0f1320;color:#cbd5e1;cursor:pointer}
-  .tab.active{background:#fbbf24;border-color:#fbbf24;color:#111827;font-weight:700}
+  .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:#0f1320;border:1px solid #2a3147;color:#cbd5e1;font-size:13px}
+  .pill.active{background:#fbbf24;border-color:#fbbf24;color:#111827;font-weight:700}
   .list{display:grid;gap:10px}
-  .item{display:flex;gap:8px;align-items:center;justify-content:space-between;background:#0f1320;border:1px solid #2a3147;border-radius:12px;padding:10px}
-  .meta{display:flex;flex-direction:column;gap:2px;min-width:0}
-  .meta b{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .meta small{color:#94a3b8}
-  .btns{display:flex;gap:8px;flex:0 0 auto}
+  .item{display:flex;gap:10px;align-items:flex-start;justify-content:space-between;background:#0f1320;border:1px solid #2a3147;border-radius:12px;padding:10px}
+  .meta{min-width:0;flex:1}
+  .meta b{display:block;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .meta small{display:block;color:#94a3b8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .meta .note{margin-top:6px;color:#cbd5e1;font-size:13px;white-space:pre-wrap}
+  .btns{display:flex;gap:8px;flex:0 0 auto;flex-wrap:wrap;justify-content:flex-end}
+  .btns button{padding:8px 10px;font-size:14px}
+  .check{transform:scale(1.2);margin-right:8px}
+  .hint{color:#94a3b8;font-size:13px;line-height:1.6}
 </style>
 </head>
 <body>
 <header>
-  <h1>Mirrativ 入室（ユーザーIDだけ）</h1>
-  <div class="tabs" id="tabs"></div>
+  <h1>RPG 複数垢ダッシュボード</h1>
 </header>
 
 <div class="wrap">
   <div class="card">
-    <div style="color:#94a3b8;font-size:13px;line-height:1.6">
-      ユーザーID（数字）を入れるだけ。配信中ならライブへ、配信してなければユーザーページへ飛びます。<br>
-      ※アカウント切替はMirrativ側で行います（サイト側からは切替不可）。
+    <div class="row">
+      <div>
+        <div class="hint">現在のアカウント（※自動判定はできないので、ここで選んだものを“現在”として扱う）</div>
+        <div style="margin-top:8px" id="activePills"></div>
+      </div>
     </div>
   </div>
 
   <div class="card">
     <div class="row">
-      <input id="presetName" placeholder="プリセット名（例：メイン垢 / サブ垢用 / 複数垢勢）" />
-      <button class="sub" id="savePreset">保存</button>
-      <button class="danger" id="deletePreset">削除</button>
+      <input id="name" placeholder="アカウント名（例：メイン / サブ1 / 周回用）" />
+      <input id="uid" placeholder="ゲームID / ユーザーID（任意）" />
     </div>
-    <div style="height:10px"></div>
-
-    <textarea id="input" placeholder="例）120504262&#10;142306302&#10;127864062"></textarea>
-
     <div style="height:10px"></div>
     <div class="row">
-      <button id="build">一覧を作る</button>
-      <button class="sub" id="openAll">上から順に入室</button>
+      <input id="link" placeholder="開きたいリンク（例：ログインページ/管理ページ/関連サイト）" />
+      <button class="sub" id="add">追加/更新</button>
     </div>
-    <div id="hint" style="margin-top:10px;color:#94a3b8;font-size:13px"></div>
+    <div style="height:10px"></div>
+    <textarea id="note" placeholder="メモ（例：編成・周回場所・注意点・今日やること）※パスワードは入れないでね"></textarea>
+    <div style="height:10px"></div>
+    <div class="row">
+      <button id="openSelected">選択した垢をまとめて開く</button>
+      <button class="sub" id="copySelected">選択したIDをコピー</button>
+      <button class="danger" id="deleteSelected">選択した垢を削除</button>
+    </div>
+    <div id="toast" style="margin-top:10px;color:#94a3b8;font-size:13px"></div>
   </div>
 
   <div class="card">
-    <div style="font-weight:700;margin-bottom:8px">入室リスト</div>
+    <div style="font-weight:700;margin-bottom:8px">アカウント一覧</div>
     <div class="list" id="list"></div>
+  </div>
+
+  <div class="card">
+    <div class="hint">
+      「裏で勝手にログイン切替・自動操作」は、相手サービスのログイン情報やセッションが必要になるので、あなたのサイトだけでは実現できません。<br>
+      その代わり、このダッシュボードを“司令塔”にして、開く・コピー・タスク管理を最短化するのが一番強いです。
+    </div>
   </div>
 </div>
 
 <script>
-const STORAGE_KEY = "mirrativ_enter_presets_v1";
-const tabsEl = document.getElementById("tabs");
-const presetNameEl = document.getElementById("presetName");
-const inputEl = document.getElementById("input");
-const listEl = document.getElementById("list");
-const hintEl = document.getElementById("hint");
+const KEY = "rpg_multi_accounts_v1";
+const KEY_ACTIVE = "rpg_multi_accounts_active_v1";
 
-function loadPresets(){ try{return JSON.parse(localStorage.getItem(STORAGE_KEY)||"{}")}catch{return{}} }
-function savePresets(p){ localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); }
+const el = (id)=>document.getElementById(id);
+const listEl = el("list");
+const pillsEl = el("activePills");
+const toastEl = el("toast");
 
 function toast(msg){
-  hintEl.textContent = msg;
+  toastEl.textContent = msg;
   clearTimeout(window.__t);
-  window.__t=setTimeout(()=>hintEl.textContent="",1600);
+  window.__t=setTimeout(()=>toastEl.textContent="",1500);
 }
 
-function parseUserIds(){
-  return inputEl.value.split(/\r?\n/).map(s=>s.trim()).filter(Boolean).map(s=>s.replace(/[^\d]/g,"")).filter(Boolean);
+function load(){
+  try{ return JSON.parse(localStorage.getItem(KEY)||"[]"); }catch{ return []; }
+}
+function save(arr){
+  localStorage.setItem(KEY, JSON.stringify(arr));
+}
+function getActive(){
+  return localStorage.getItem(KEY_ACTIVE)||"";
+}
+function setActive(id){
+  localStorage.setItem(KEY_ACTIVE, id);
 }
 
-function buildTabs(active){
-  const presets = loadPresets();
-  const names = Object.keys(presets);
-  tabsEl.innerHTML = "";
-
-  const makeTab = (name, isActive) => {
-    const b=document.createElement("button");
-    b.className="tab"+(isActive?" active":"");
-    b.textContent=name;
-    b.onclick=()=>{
-      presetNameEl.value=name;
-      inputEl.value=presets[name]||"";
-      buildTabs(name);
-      renderList(parseUserIds());
-    };
-    return b;
-  };
-
-  tabsEl.appendChild(makeTab("（未保存）", !active));
-  for(const n of names) tabsEl.appendChild(makeTab(n, active===n));
+function uid(){
+  return Math.random().toString(36).slice(2)+Date.now().toString(36);
 }
 
-function renderList(ids){
-  listEl.innerHTML="";
-  if(ids.length===0){
-    listEl.innerHTML=`<div style="color:#94a3b8">ユーザーIDを入れて「一覧を作る」</div>`;
+function render(){
+  const items = load();
+  const activeId = getActive();
+
+  // pills
+  pillsEl.innerHTML = "";
+  if(items.length===0){
+    pillsEl.innerHTML = `<span class="hint">まだアカウントがありません。下で追加してね。</span>`;
+  }else{
+    for(const it of items){
+      const b = document.createElement("button");
+      b.className = "pill" + (it.id===activeId ? " active" : "");
+      b.textContent = it.name || "(no name)";
+      b.onclick = ()=>{ setActive(it.id); render(); toast("現在の垢を切替！"); };
+      pillsEl.appendChild(b);
+    }
+  }
+
+  // list
+  listEl.innerHTML = "";
+  if(items.length===0){
+    listEl.innerHTML = `<div class="hint">アカウントを追加するとここに出ます。</div>`;
     return;
   }
 
-  for(const id of ids){
-    const div=document.createElement("div");
-    div.className="item";
-    div.innerHTML=`
+  for(const it of items){
+    const div = document.createElement("div");
+    div.className = "item";
+    div.innerHTML = `
       <div class="meta">
-        <b>ユーザーID: ${id}</b>
-        <small>配信中ならライブへ自動入室</small>
+        <label style="display:flex;align-items:center;gap:8px">
+          <input class="check" type="checkbox" data-check="${it.id}">
+          <b>${escapeHtml(it.name || "(no name)")} ${it.id===activeId ? "（現在）" : ""}</b>
+        </label>
+        <small>ID: ${escapeHtml(it.uid || "-")}</small>
+        <small>LINK: ${it.link ? escapeHtml(it.link) : "-"}</small>
+        ${it.note ? `<div class="note">${escapeHtml(it.note)}</div>` : ``}
       </div>
       <div class="btns">
-        <button class="sub" data-profile="${id}">プロフィール</button>
-        <button data-enter="${id}">入室</button>
+        <button class="sub" data-edit="${it.id}">編集</button>
+        <button class="sub" data-copy="${it.uid||""}">IDコピー</button>
+        <button ${it.link ? "" : "disabled"} data-open="${it.link||""}">開く</button>
       </div>
     `;
     listEl.appendChild(div);
   }
 
-  listEl.querySelectorAll("button[data-profile]").forEach(btn=>{
+  listEl.querySelectorAll("button[data-open]").forEach(btn=>{
     btn.onclick=()=>{
-      const id=btn.getAttribute("data-profile");
-      window.open(`https://www.mirrativ.com/user/${id}`, "_blank", "noopener");
+      const u=btn.getAttribute("data-open");
+      if(!u) return;
+      window.open(u, "_blank", "noopener");
     };
   });
 
-  listEl.querySelectorAll("button[data-enter]").forEach(btn=>{
-    btn.onclick=()=> enterByUserId(btn.getAttribute("data-enter"));
+  listEl.querySelectorAll("button[data-copy]").forEach(btn=>{
+    btn.onclick=async ()=>{
+      const t=btn.getAttribute("data-copy");
+      if(!t){ toast("コピーするIDがない"); return; }
+      await navigator.clipboard.writeText(t);
+      toast("IDをコピーした！");
+    };
+  });
+
+  listEl.querySelectorAll("button[data-edit]").forEach(btn=>{
+    btn.onclick=()=>{
+      const id=btn.getAttribute("data-edit");
+      const items=load();
+      const it=items.find(x=>x.id===id);
+      if(!it) return;
+      el("name").value = it.name||"";
+      el("uid").value  = it.uid||"";
+      el("link").value = it.link||"";
+      el("note").value = it.note||"";
+      el("add").setAttribute("data-editing", id);
+      toast("編集モードにした！");
+    };
   });
 }
 
-async function enterByUserId(userId){
-  try{
-    toast("確認中...");
-    // Pages Functionに投げる（ここが user_id→live_id 解決）
-    const r = await fetch(`/resolve?user_id=${encodeURIComponent(userId)}`, { cache: "no-store" });
-    if(!r.ok) throw new Error("resolve failed");
-    const data = await r.json();
-    const url = data.url || `https://www.mirrativ.com/user/${userId}`;
-    window.open(url, "_blank", "noopener");
-    toast(data.mode === "live" ? "ライブへ入室！" : "配信してないのでユーザーへ");
-  }catch(e){
-    // 失敗したら安全にユーザーページへ
-    window.open(`https://www.mirrativ.com/user/${userId}`, "_blank", "noopener");
-    toast("取得失敗→ユーザーページへ");
-  }
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
 
-document.getElementById("build").onclick=()=>{
-  renderList(parseUserIds());
-  toast("一覧更新！");
+el("add").onclick=()=>{
+  const name = el("name").value.trim();
+  const uidv = el("uid").value.trim();
+  const link = el("link").value.trim();
+  const note = el("note").value.trim();
+
+  let items = load();
+  const editingId = el("add").getAttribute("data-editing");
+
+  if(editingId){
+    const idx = items.findIndex(x=>x.id===editingId);
+    if(idx>=0){
+      items[idx] = { ...items[idx], name, uid: uidv, link, note };
+      save(items);
+      el("add").removeAttribute("data-editing");
+      toast("更新した！");
+    }
+  }else{
+    const id = uid();
+    items.unshift({ id, name, uid: uidv, link, note });
+    save(items);
+    if(items.length===1) setActive(id);
+    toast("追加した！");
+  }
+
+  el("name").value=""; el("uid").value=""; el("link").value=""; el("note").value="";
+  render();
 };
 
-document.getElementById("savePreset").onclick=()=>{
-  const name=presetNameEl.value.trim();
-  if(!name) return toast("プリセット名入れて！");
-  const presets=loadPresets();
-  presets[name]=inputEl.value;
-  savePresets(presets);
-  buildTabs(name);
-  toast("保存した！");
-};
+function selectedIds(){
+  return [...document.querySelectorAll("input[data-check]:checked")].map(x=>x.getAttribute("data-check"));
+}
 
-document.getElementById("deletePreset").onclick=()=>{
-  const name=presetNameEl.value.trim();
-  if(!name) return toast("削除する名前入れて！");
-  const presets=loadPresets();
-  delete presets[name];
-  savePresets(presets);
-  presetNameEl.value="";
-  buildTabs(null);
-  toast("削除した！");
-};
-
-document.getElementById("openAll").onclick=async ()=>{
-  const ids=parseUserIds();
-  if(ids.length===0) return toast("空だよ！");
-  // iOSのポップアップブロック回避のため、間隔を空ける
+el("openSelected").onclick=()=>{
+  const ids = selectedIds();
+  if(ids.length===0) return toast("選択してない！");
+  const items = load().filter(x=>ids.includes(x.id) && x.link);
+  if(items.length===0) return toast("開けるリンクがない！");
   let i=0;
   const timer=setInterval(()=>{
-    if(i>=ids.length){ clearInterval(timer); toast("完了！"); return; }
-    enterByUserId(ids[i]);
+    if(i>=items.length){ clearInterval(timer); toast("開いた！"); return; }
+    window.open(items[i].link, "_blank", "noopener");
     i++;
-  }, 700);
+  }, 600);
 };
 
-buildTabs(null);
-renderList(parseUserIds());
+el("copySelected").onclick=async ()=>{
+  const ids = selectedIds();
+  if(ids.length===0) return toast("選択してない！");
+  const items = load().filter(x=>ids.includes(x.id));
+  const text = items.map(x=>`${x.name||"(no name)"}: ${x.uid||""}`).join("\n");
+  await navigator.clipboard.writeText(text);
+  toast("まとめてコピーした！");
+};
+
+el("deleteSelected").onclick=()=>{
+  const ids = selectedIds();
+  if(ids.length===0) return toast("選択してない！");
+  let items = load().filter(x=>!ids.includes(x.id));
+  save(items);
+
+  const active = getActive();
+  if(ids.includes(active)){
+    setActive(items[0]?.id || "");
+  }
+  toast("削除した！");
+  render();
+};
+
+render();
 </script>
 </body>
 </html>
