@@ -186,23 +186,9 @@ function selectedJumpIds(){
  */
 async function enterByUserId(userId){
   try{
-    jToast("確認中...");
-    // 1) Functions経由（推奨）
-    let data = null;
-    try{
-      const r = await fetch(`/live?user_id=${encodeURIComponent(userId)}`, { cache:"no-store" });
-      if(r.ok) data = await r.json();
-    }catch{}
-
-    // 2) fallback: 直接 fetch（CORSで失敗する場合あり）
-    if(!data){
-      const r = await fetch(`https://www.mirrativ.com/api/live/live_history?user_id=${encodeURIComponent(userId)}`, { cache:"no-store" });
-      const h = await r.json();
-      const liveId = h?.lives?.[0]?.live_id || null;
-      data = liveId
-        ? { mode:"live", url:`https://www.mirrativ.com/live/${liveId}`, live_id: liveId }
-        : { mode:"user", url:`https://www.mirrativ.com/user/${userId}` };
-    }
+    jToast("判定中...");
+    const r = await fetch(`/live?user_id=${encodeURIComponent(userId)}`, { cache:"no-store" });
+    const data = await r.json();
 
     window.open(data.url, "_blank", "noopener");
     jToast(data.mode==="live" ? "配信中→ライブへ" : "配信外→ユーザーへ");
