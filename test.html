@@ -1,50 +1,258 @@
-javascript:(async(()=>{
-    const uid = prompt("視聴したい配信者のIDを入力してください", "110544066");
-    if(!uid) return;
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Mirrativ Jump</title>
+<style>
+  body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,"Hiragino Kaku Gothic ProN",Meiryo,sans-serif;background:#0f1115;color:#fff}
+  header{position:sticky;top:0;background:#141823;border-bottom:1px solid #222;padding:12px 14px;z-index:10}
+  h1{font-size:16px;margin:0}
+  .wrap{max-width:860px;margin:0 auto;padding:14px}
+  .card{background:#151a26;border:1px solid #222;border-radius:14px;padding:12px;margin:10px 0}
+  textarea,input{width:100%;box-sizing:border-box;background:#0f1320;color:#fff;border:1px solid #2a3147;border-radius:12px;padding:10px;font-size:15px}
+  textarea{min-height:120px;resize:vertical}
+  button{border:0;border-radius:12px;padding:10px 12px;font-size:15px;background:#3b82f6;color:#fff}
+  button.sub{background:#263045}
+  button.danger{background:#ef4444}
+  .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .row > *{flex:1}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  .tab{padding:8px 10px;border-radius:999px;border:1px solid #2a3147;background:#0f1320;color:#cbd5e1;cursor:pointer}
+  .tab.active{background:#fbbf24;border-color:#fbbf24;color:#111827;font-weight:700}
+  .list{display:grid;gap:10px}
+  .item{display:flex;gap:8px;align-items:center;justify-content:space-between;background:#0f1320;border:1px solid #2a3147;border-radius:12px;padding:10px}
+  .meta{display:flex;flex-direction:column;gap:2px;min-width:0}
+  .meta b{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .meta small{color:#94a3b8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .btns{display:flex;gap:8px;flex:0 0 auto}
+  a{color:#93c5fd;text-decoration:none}
+  footer{color:#64748b;font-size:12px;padding:10px 0}
+</style>
+</head>
+<body>
+<header>
+  <h1>Mirrativ Jump（配信/ユーザーへ一発）</h1>
+  <div class="tabs" id="tabs"></div>
+</header>
 
-    try {
-        console.log("データ取得中...");
-        // 1. 配信履歴からLiveIDを取得
-        const hRes = await fetch(`https://www.mirrativ.com/api/live/live_history?user_id=${uid}`);
-        const hData = await hRes.json();
-        if(!hData.lives || hData.lives.length === 0) return alert("配信が見つかりませんでした。");
-        
-        const liveId = hData.lives[0].live_id;
+<div class="wrap">
+  <div class="card">
+    <div style="font-size:13px;color:#94a3b8;line-height:1.5">
+      入力は「ユーザーID（数字）」「ライブID（英数字っぽい）」「URL」どれでもOK。改行で複数人。<br>
+      ※このサイトは“ジャンプ”用です。視聴やコメントの本体はMirrativ側で動きます。
+    </div>
+  </div>
 
-        // 2. 配信URLを取得
-        const sRes = await fetch(`https://www.mirrativ.com/api/live/get_streaming_url?live_id=${liveId}`);
-        const sData = await sRes.json();
-        const m3u8 = sData.streaming_url_hls;
+  <div class="card">
+    <div class="row">
+      <input id="presetName" placeholder="プリセット名（例：メイン垢 / サブ垢 / 店舗用）" />
+      <button class="sub" id="savePreset">この入力を保存</button>
+      <button class="danger" id="deletePreset">このプリセット削除</button>
+    </div>
+    <div style="height:10px"></div>
+    <textarea id="input" placeholder="例）142306302&#10;qHq6xWVVLb5DouHtntJBJA&#10;https://www.mirrativ.com/user/142306302"></textarea>
+    <div style="height:10px"></div>
+    <div class="row">
+      <button id="build">一覧を作る</button>
+      <button class="sub" id="copyShare">共有リンクをコピー</button>
+      <button class="sub" id="openAll">全部開く（注意）</button>
+    </div>
+    <div id="hint" style="margin-top:10px;color:#94a3b8;font-size:13px"></div>
+  </div>
 
-        if(!m3u8) return alert("映像URLが取得できませんでした。");
+  <div class="card">
+    <div style="font-weight:700;margin-bottom:8px">リンク一覧</div>
+    <div class="list" id="list"></div>
+  </div>
 
-        // 3. 簡易プレイヤーを画面上に表示
-        let v = document.getElementById('mira-player');
-        if(!v){
-            v = document.createElement('video');
-            v.id = 'mira-player';
-            v.controls = true;
-            v.style = "position:fixed; top:10px; right:10px; width:400px; z-index:999999; border:2px solid #ff005c; background:#000;";
-            document.body.appendChild(v);
-        }
+  <footer>
+    URL形式メモ：配信一覧などは Mirrativ のページに飛びます（例：/user/{id}, /live/{id}）。<br>
+    Cloudflare Pages に置くだけで動きます（サーバー不要）。
+  </footer>
+</div>
 
-        if (v.canPlayType('application/vnd.apple.mpegurl')) {
-            v.src = m3u8;
-        } else {
-            const script = document.createElement('script');
-            script.src = "https://cdn.jsdelivr.net/npm/hls.js@latest";
-            script.onload = () => {
-                const hls = new Hls();
-                hls.loadSource(m3u8);
-                hls.attachMedia(v);
-                hls.on(Hls.Events.MANIFEST_PARSED, () => v.play());
-            };
-            document.head.appendChild(script);
-        }
-        alert("再生を開始します！画面右上のプレイヤーを確認してください。");
+<script>
+  const STORAGE_KEY = "mirrativ_jump_presets_v1";
+  const tabsEl = document.getElementById("tabs");
+  const presetNameEl = document.getElementById("presetName");
+  const inputEl = document.getElementById("input");
+  const listEl = document.getElementById("list");
+  const hintEl = document.getElementById("hint");
 
-    } catch (e) {
-        alert("エラーが発生しました。ミラティブのサイトを一度開いてから試してください。");
-        console.error(e);
+  function loadPresets(){
+    try{ return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); }
+    catch{ return {}; }
+  }
+  function savePresets(p){ localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); }
+
+  function normalizeLine(line){
+    let s = (line || "").trim();
+    if(!s) return null;
+
+    // If it's already a URL
+    if(/^https?:\/\//i.test(s)) return { type:"url", raw:s, url:s };
+
+    // If looks like live id (usually non-numeric, includes letters/_/-)
+    if(/[a-zA-Z_-]/.test(s) && !/^\d+$/.test(s)){
+      return { type:"live", raw:s, url:`https://www.mirrativ.com/live/${encodeURIComponent(s)}` };
     }
-}))();
+
+    // Numeric -> user id
+    if(/^\d+$/.test(s)){
+      return { type:"user", raw:s, url:`https://www.mirrativ.com/user/${encodeURIComponent(s)}` };
+    }
+
+    // fallback -> search on site (as URL)
+    return { type:"unknown", raw:s, url:`https://www.mirrativ.com/search?query=${encodeURIComponent(s)}` };
+  }
+
+  function parseInput(){
+    const lines = inputEl.value.split(/\r?\n/).map(x=>x.trim()).filter(Boolean);
+    const items = [];
+    for(const line of lines){
+      const obj = normalizeLine(line);
+      if(obj) items.push(obj);
+    }
+    return items;
+  }
+
+  function renderList(items){
+    listEl.innerHTML = "";
+    if(items.length === 0){
+      listEl.innerHTML = `<div style="color:#94a3b8">まだ何もありません。上にID/URLを入れて「一覧を作る」</div>`;
+      return;
+    }
+    for(const it of items){
+      const label = it.type === "user" ? "ユーザー" :
+                    it.type === "live" ? "ライブ" :
+                    it.type === "url" ? "URL" : "検索";
+      const div = document.createElement("div");
+      div.className = "item";
+      div.innerHTML = `
+        <div class="meta">
+          <b>${label}: ${escapeHtml(it.raw)}</b>
+          <small><a href="${it.url}" target="_blank" rel="noopener">${escapeHtml(it.url)}</a></small>
+        </div>
+        <div class="btns">
+          <button class="sub" data-copy="${it.url}">コピー</button>
+          <button data-open="${it.url}">開く</button>
+        </div>
+      `;
+      listEl.appendChild(div);
+    }
+
+    listEl.querySelectorAll("button[data-open]").forEach(btn=>{
+      btn.addEventListener("click", ()=> window.open(btn.getAttribute("data-open"), "_blank", "noopener"));
+    });
+    listEl.querySelectorAll("button[data-copy]").forEach(btn=>{
+      btn.addEventListener("click", async ()=>{
+        const u = btn.getAttribute("data-copy");
+        await navigator.clipboard.writeText(u);
+        toast("コピーした！");
+      });
+    });
+  }
+
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  function toast(msg){
+    hintEl.textContent = msg;
+    clearTimeout(window.__t);
+    window.__t = setTimeout(()=> hintEl.textContent="", 1600);
+  }
+
+  function buildTabs(active){
+    const presets = loadPresets();
+    const names = Object.keys(presets);
+    tabsEl.innerHTML = "";
+
+    const makeTab = (name, isActive) => {
+      const b = document.createElement("button");
+      b.className = "tab" + (isActive ? " active" : "");
+      b.textContent = name;
+      b.addEventListener("click", ()=>{
+        presetNameEl.value = name;
+        inputEl.value = presets[name] || "";
+        buildTabs(name);
+        renderList(parseInput());
+      });
+      return b;
+    };
+
+    // default tab
+    tabsEl.appendChild(makeTab("（未保存）", !active));
+    for(const n of names){
+      tabsEl.appendChild(makeTab(n, active === n));
+    }
+  }
+
+  // Share link: ?v=... (compressed-ish: just encode)
+  function makeShareUrl(){
+    const v = encodeURIComponent(inputEl.value);
+    const u = new URL(location.href);
+    u.searchParams.set("v", v);
+    return u.toString();
+  }
+
+  document.getElementById("build").addEventListener("click", ()=>{
+    renderList(parseInput());
+    toast("一覧を更新！");
+  });
+
+  document.getElementById("savePreset").addEventListener("click", ()=>{
+    const name = presetNameEl.value.trim();
+    if(!name){ toast("プリセット名を入れて！"); return; }
+    const presets = loadPresets();
+    presets[name] = inputEl.value;
+    savePresets(presets);
+    buildTabs(name);
+    toast("保存した！");
+  });
+
+  document.getElementById("deletePreset").addEventListener("click", ()=>{
+    const name = presetNameEl.value.trim();
+    if(!name){ toast("削除するプリセット名を入れて！"); return; }
+    const presets = loadPresets();
+    if(!(name in presets)){ toast("そのプリセット無い！"); return; }
+    delete presets[name];
+    savePresets(presets);
+    presetNameEl.value = "";
+    buildTabs(null);
+    toast("削除した！");
+  });
+
+  document.getElementById("copyShare").addEventListener("click", async ()=>{
+    const url = makeShareUrl();
+    await navigator.clipboard.writeText(url);
+    toast("共有リンクをコピーした！");
+  });
+
+  document.getElementById("openAll").addEventListener("click", ()=>{
+    const items = parseInput();
+    if(items.length === 0){ toast("開くものが無い！"); return; }
+    // popup blocker 対策：1クリックで複数 open はブロックされやすい
+    // 少しだけ間隔を空ける
+    let i = 0;
+    const timer = setInterval(()=>{
+      if(i >= items.length){ clearInterval(timer); toast("全部開いた（ブロックされたら個別に）"); return; }
+      window.open(items[i].url, "_blank", "noopener");
+      i++;
+    }, 450);
+  });
+
+  // Load from share URL
+  (function init(){
+    const u = new URL(location.href);
+    const v = u.searchParams.get("v");
+    if(v){
+      try{ inputEl.value = decodeURIComponent(v); }catch{}
+    }
+    buildTabs(null);
+    renderList(parseInput());
+  })();
+</script>
+</body>
+</html>
