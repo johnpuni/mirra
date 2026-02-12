@@ -3,22 +3,24 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>RPG 複数垢ダッシュボード</title>
+<title>RPG垢管理 & Mirrativ配信ジャンプ</title>
 <style>
   body{margin:0;background:#0f1115;color:#fff;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
   header{position:sticky;top:0;background:#141823;border-bottom:1px solid #222;padding:12px 14px;z-index:10}
   h1{margin:0;font-size:16px}
-  .wrap{max-width:920px;margin:0 auto;padding:14px}
+  .wrap{max-width:980px;margin:0 auto;padding:14px}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  .tab{padding:8px 10px;border-radius:999px;border:1px solid #2a3147;background:#0f1320;color:#cbd5e1;cursor:pointer}
+  .tab.active{background:#fbbf24;border-color:#fbbf24;color:#111827;font-weight:700}
   .card{background:#151a26;border:1px solid #222;border-radius:14px;padding:12px;margin:10px 0}
-  input,textarea,select{width:100%;box-sizing:border-box;background:#0f1320;color:#fff;border:1px solid #2a3147;border-radius:12px;padding:10px;font-size:15px}
-  textarea{min-height:80px;resize:vertical}
+  input,textarea{width:100%;box-sizing:border-box;background:#0f1320;color:#fff;border:1px solid #2a3147;border-radius:12px;padding:10px;font-size:15px}
+  textarea{min-height:120px;resize:vertical}
   button{border:0;border-radius:12px;padding:10px 12px;font-size:15px;background:#3b82f6;color:#fff;cursor:pointer}
   button.sub{background:#263045}
   button.danger{background:#ef4444}
   .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
   .row>*{flex:1}
-  .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:#0f1320;border:1px solid #2a3147;color:#cbd5e1;font-size:13px}
-  .pill.active{background:#fbbf24;border-color:#fbbf24;color:#111827;font-weight:700}
+  .hint{color:#94a3b8;font-size:13px;line-height:1.6}
   .list{display:grid;gap:10px}
   .item{display:flex;gap:10px;align-items:flex-start;justify-content:space-between;background:#0f1320;border:1px solid #2a3147;border-radius:12px;padding:10px}
   .meta{min-width:0;flex:1}
@@ -27,245 +29,391 @@
   .meta .note{margin-top:6px;color:#cbd5e1;font-size:13px;white-space:pre-wrap}
   .btns{display:flex;gap:8px;flex:0 0 auto;flex-wrap:wrap;justify-content:flex-end}
   .btns button{padding:8px 10px;font-size:14px}
+  .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:#0f1320;border:1px solid #2a3147;color:#cbd5e1;font-size:13px}
+  .pill.active{background:#fbbf24;border-color:#fbbf24;color:#111827;font-weight:700}
   .check{transform:scale(1.2);margin-right:8px}
-  .hint{color:#94a3b8;font-size:13px;line-height:1.6}
 </style>
 </head>
 <body>
 <header>
-  <h1>RPG 複数垢ダッシュボード</h1>
+  <h1>RPG垢管理 & Mirrativ配信ジャンプ</h1>
+  <div class="tabs">
+    <button class="tab active" data-page="jump">配信ジャンプ</button>
+    <button class="tab" data-page="rpg">RPG複数垢</button>
+  </div>
 </header>
 
 <div class="wrap">
-  <div class="card">
-    <div class="row">
-      <div>
-        <div class="hint">現在のアカウント（※自動判定はできないので、ここで選んだものを“現在”として扱う）</div>
-        <div style="margin-top:8px" id="activePills"></div>
+  <!-- ============ 配信ジャンプ ============ -->
+  <section id="page-jump">
+    <div class="card">
+      <div class="hint">
+        ユーザーIDだけ入力。配信中なら「公式ライブページ」へ、配信外ならユーザーページへ。<br>
+        ※このサイトでログイン垢を読む/切替はできません。開いた先は “その端末でログイン中のMirrativ垢” が反映されます。
       </div>
     </div>
-  </div>
 
-  <div class="card">
-    <div class="row">
-      <input id="name" placeholder="アカウント名（例：メイン / サブ1 / 周回用）" />
-      <input id="uid" placeholder="ゲームID / ユーザーID（任意）" />
+    <div class="card">
+      <textarea id="j-input" placeholder="例）120504262&#10;142306302&#10;127864062"></textarea>
+      <div style="height:10px"></div>
+      <div class="row">
+        <button id="j-build">一覧を作る</button>
+        <button class="sub" id="j-open-selected">選択だけ入室</button>
+        <button class="sub" id="j-open-all">全部入室</button>
+      </div>
+      <div id="j-toast" style="margin-top:10px;color:#94a3b8;font-size:13px"></div>
     </div>
-    <div style="height:10px"></div>
-    <div class="row">
-      <input id="link" placeholder="開きたいリンク（例：ログインページ/管理ページ/関連サイト）" />
-      <button class="sub" id="add">追加/更新</button>
-    </div>
-    <div style="height:10px"></div>
-    <textarea id="note" placeholder="メモ（例：編成・周回場所・注意点・今日やること）※パスワードは入れないでね"></textarea>
-    <div style="height:10px"></div>
-    <div class="row">
-      <button id="openSelected">選択した垢をまとめて開く</button>
-      <button class="sub" id="copySelected">選択したIDをコピー</button>
-      <button class="danger" id="deleteSelected">選択した垢を削除</button>
-    </div>
-    <div id="toast" style="margin-top:10px;color:#94a3b8;font-size:13px"></div>
-  </div>
 
-  <div class="card">
-    <div style="font-weight:700;margin-bottom:8px">アカウント一覧</div>
-    <div class="list" id="list"></div>
-  </div>
-
-  <div class="card">
-    <div class="hint">
-      「裏で勝手にログイン切替・自動操作」は、相手サービスのログイン情報やセッションが必要になるので、あなたのサイトだけでは実現できません。<br>
-      その代わり、このダッシュボードを“司令塔”にして、開く・コピー・タスク管理を最短化するのが一番強いです。
+    <div class="card">
+      <div style="font-weight:700;margin-bottom:8px">配信リスト</div>
+      <div class="list" id="j-list"></div>
     </div>
-  </div>
+  </section>
+
+  <!-- ============ RPG複数垢 ============ -->
+  <section id="page-rpg" style="display:none">
+    <div class="card">
+      <div class="hint">現在のアカウント（自動検出は不可なので、ここで選んだものを“現在”として扱う）</div>
+      <div style="margin-top:8px" id="r-active"></div>
+    </div>
+
+    <div class="card">
+      <div class="row">
+        <input id="r-name" placeholder="アカウント名（例：メイン / サブ1 / 周回用）" />
+        <input id="r-uid" placeholder="ゲームID（任意）" />
+      </div>
+      <div style="height:10px"></div>
+      <div class="row">
+        <input id="r-link" placeholder="開きたいリンク（例：ゲームページ/引き継ぎ/管理/メモサイト）" />
+        <button class="sub" id="r-add">追加/更新</button>
+      </div>
+      <div style="height:10px"></div>
+      <textarea id="r-note" placeholder="メモ（編成・周回・今日やること等）※パスワードは入れない"></textarea>
+      <div style="height:10px"></div>
+      <div class="row">
+        <button id="r-open">選択した垢をまとめて開く</button>
+        <button class="sub" id="r-copy">選択したIDをコピー</button>
+        <button class="danger" id="r-del">選択した垢を削除</button>
+      </div>
+      <div id="r-toast" style="margin-top:10px;color:#94a3b8;font-size:13px"></div>
+    </div>
+
+    <div class="card">
+      <div style="font-weight:700;margin-bottom:8px">アカウント一覧</div>
+      <div class="list" id="r-list"></div>
+    </div>
+  </section>
 </div>
 
 <script>
-const KEY = "rpg_multi_accounts_v1";
-const KEY_ACTIVE = "rpg_multi_accounts_active_v1";
+/* ------------------ 共通 ------------------ */
+const $$ = (q)=>document.querySelector(q);
+const $$$ = (q)=>[...document.querySelectorAll(q)];
 
-const el = (id)=>document.getElementById(id);
-const listEl = el("list");
-const pillsEl = el("activePills");
-const toastEl = el("toast");
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]))}
+function sleep(ms){return new Promise(r=>setTimeout(r,ms))}
 
-function toast(msg){
-  toastEl.textContent = msg;
-  clearTimeout(window.__t);
-  window.__t=setTimeout(()=>toastEl.textContent="",1500);
+/* ------------------ タブ切替 ------------------ */
+$$$(".tab").forEach(b=>{
+  b.onclick=()=>{
+    $$$(".tab").forEach(x=>x.classList.remove("active"));
+    b.classList.add("active");
+    const p=b.dataset.page;
+    $$("#page-jump").style.display = (p==="jump") ? "" : "none";
+    $$("#page-rpg").style.display  = (p==="rpg")  ? "" : "none";
+  };
+});
+
+/* =========================================================
+   ① 配信ジャンプ（公式ページへ。再生URLは扱わない）
+   ========================================================= */
+const j = {
+  input: $$("#j-input"),
+  list: $$("#j-list"),
+  toast: $$("#j-toast"),
+};
+
+function jToast(msg){
+  j.toast.textContent = msg;
+  clearTimeout(window.__jt);
+  window.__jt = setTimeout(()=>j.toast.textContent="", 1600);
 }
 
-function load(){
-  try{ return JSON.parse(localStorage.getItem(KEY)||"[]"); }catch{ return []; }
-}
-function save(arr){
-  localStorage.setItem(KEY, JSON.stringify(arr));
-}
-function getActive(){
-  return localStorage.getItem(KEY_ACTIVE)||"";
-}
-function setActive(id){
-  localStorage.setItem(KEY_ACTIVE, id);
+function parseUserIds(text){
+  return text.split(/\r?\n/).map(s=>s.trim()).filter(Boolean).map(s=>s.replace(/[^\d]/g,"")).filter(Boolean);
 }
 
-function uid(){
-  return Math.random().toString(36).slice(2)+Date.now().toString(36);
+function renderJump(ids){
+  j.list.innerHTML="";
+  if(ids.length===0){
+    j.list.innerHTML = `<div class="hint">ユーザーIDを入れて「一覧を作る」</div>`;
+    return;
+  }
+  for(const id of ids){
+    const div=document.createElement("div");
+    div.className="item";
+    div.innerHTML = `
+      <div class="meta">
+        <label style="display:flex;align-items:center;gap:8px">
+          <input class="check" type="checkbox" data-jcheck="${id}">
+          <b>ユーザーID: ${id}</b>
+        </label>
+        <small>入室：配信中なら /live/{live_id}、配信外なら /user/{id}</small>
+      </div>
+      <div class="btns">
+        <button class="sub" data-juser="${id}">ユーザー</button>
+        <button data-jenter="${id}">入室</button>
+      </div>`;
+    j.list.appendChild(div);
+  }
+
+  $$$("button[data-juser]").forEach(btn=>{
+    btn.onclick=()=>window.open(`https://www.mirrativ.com/user/${btn.dataset.juser}`, "_blank", "noopener");
+  });
+  $$$("button[data-jenter]").forEach(btn=>{
+    btn.onclick=()=>enterByUserId(btn.dataset.jenter);
+  });
 }
 
-function render(){
-  const items = load();
-  const activeId = getActive();
+function selectedJumpIds(){
+  return $$$("input[data-jcheck]:checked").map(x=>x.dataset.jcheck);
+}
 
-  // pills
-  pillsEl.innerHTML = "";
+/**
+ * user_id -> 最新live_id を取れたら公式ライブへ。取れなければユーザーページへ。
+ * まず /live?user_id=... (Functions) を叩く。
+ * もし Functions を置いてない場合、直接Mirrativ APIを叩く fallback も入れてる。
+ */
+async function enterByUserId(userId){
+  try{
+    jToast("確認中...");
+    // 1) Functions経由（推奨）
+    let data = null;
+    try{
+      const r = await fetch(`/live?user_id=${encodeURIComponent(userId)}`, { cache:"no-store" });
+      if(r.ok) data = await r.json();
+    }catch{}
+
+    // 2) fallback: 直接 fetch（CORSで失敗する場合あり）
+    if(!data){
+      const r = await fetch(`https://www.mirrativ.com/api/live/live_history?user_id=${encodeURIComponent(userId)}`, { cache:"no-store" });
+      const h = await r.json();
+      const liveId = h?.lives?.[0]?.live_id || null;
+      data = liveId
+        ? { mode:"live", url:`https://www.mirrativ.com/live/${liveId}`, live_id: liveId }
+        : { mode:"user", url:`https://www.mirrativ.com/user/${userId}` };
+    }
+
+    window.open(data.url, "_blank", "noopener");
+    jToast(data.mode==="live" ? "配信中→ライブへ" : "配信外→ユーザーへ");
+  }catch(e){
+    window.open(`https://www.mirrativ.com/user/${userId}`, "_blank", "noopener");
+    jToast("失敗→ユーザーへ");
+  }
+}
+
+$$("#j-build").onclick=()=>{
+  renderJump(parseUserIds(j.input.value));
+  jToast("一覧を更新！");
+};
+
+$$("#j-open-selected").onclick=async ()=>{
+  const ids = selectedJumpIds();
+  if(ids.length===0) return jToast("選択してない！");
+  jToast("順番に開く（ブロックされる時は個別で）");
+  for(const id of ids){
+    await enterByUserId(id);
+    await sleep(700);
+  }
+};
+
+$$("#j-open-all").onclick=async ()=>{
+  const ids = parseUserIds(j.input.value);
+  if(ids.length===0) return jToast("空だよ！");
+  jToast("順番に開く（ブロックされる時は個別で）");
+  for(const id of ids){
+    await enterByUserId(id);
+    await sleep(700);
+  }
+};
+
+// init
+renderJump(parseUserIds(j.input.value));
+
+/* =========================================================
+   ② RPG複数垢ダッシュボード
+   ========================================================= */
+const R_KEY = "rpg_multi_accounts_v2";
+const R_ACTIVE = "rpg_multi_accounts_active_v2";
+
+const r = {
+  active: $$("#r-active"),
+  list: $$("#r-list"),
+  toast: $$("#r-toast"),
+  name: $$("#r-name"),
+  uid:  $$("#r-uid"),
+  link: $$("#r-link"),
+  note: $$("#r-note"),
+  add:  $$("#r-add"),
+};
+
+function rToast(msg){
+  r.toast.textContent = msg;
+  clearTimeout(window.__rt);
+  window.__rt = setTimeout(()=>r.toast.textContent="", 1600);
+}
+function rLoad(){ try{return JSON.parse(localStorage.getItem(R_KEY)||"[]")}catch{return[]} }
+function rSave(arr){ localStorage.setItem(R_KEY, JSON.stringify(arr)); }
+function rGetActive(){ return localStorage.getItem(R_ACTIVE)||""; }
+function rSetActive(id){ localStorage.setItem(R_ACTIVE, id); }
+function rid(){ return Math.random().toString(36).slice(2)+Date.now().toString(36); }
+
+function rSelectedIds(){
+  return $$$("input[data-rcheck]:checked").map(x=>x.dataset.rcheck);
+}
+
+function rRender(){
+  const items = rLoad();
+  const activeId = rGetActive();
+
+  // active pills
+  r.active.innerHTML="";
   if(items.length===0){
-    pillsEl.innerHTML = `<span class="hint">まだアカウントがありません。下で追加してね。</span>`;
+    r.active.innerHTML = `<span class="hint">まだアカウントがありません。下で追加してね。</span>`;
   }else{
     for(const it of items){
-      const b = document.createElement("button");
-      b.className = "pill" + (it.id===activeId ? " active" : "");
-      b.textContent = it.name || "(no name)";
-      b.onclick = ()=>{ setActive(it.id); render(); toast("現在の垢を切替！"); };
-      pillsEl.appendChild(b);
+      const b=document.createElement("button");
+      b.className="pill"+(it.id===activeId?" active":"");
+      b.textContent=it.name || "(no name)";
+      b.onclick=()=>{ rSetActive(it.id); rRender(); rToast("現在の垢を切替！"); };
+      r.active.appendChild(b);
     }
   }
 
   // list
-  listEl.innerHTML = "";
+  r.list.innerHTML="";
   if(items.length===0){
-    listEl.innerHTML = `<div class="hint">アカウントを追加するとここに出ます。</div>`;
+    r.list.innerHTML = `<div class="hint">アカウントを追加するとここに出ます。</div>`;
     return;
   }
 
   for(const it of items){
-    const div = document.createElement("div");
-    div.className = "item";
-    div.innerHTML = `
+    const div=document.createElement("div");
+    div.className="item";
+    div.innerHTML=`
       <div class="meta">
         <label style="display:flex;align-items:center;gap:8px">
-          <input class="check" type="checkbox" data-check="${it.id}">
-          <b>${escapeHtml(it.name || "(no name)")} ${it.id===activeId ? "（現在）" : ""}</b>
+          <input class="check" type="checkbox" data-rcheck="${it.id}">
+          <b>${esc(it.name||"(no name)")} ${it.id===activeId?"（現在）":""}</b>
         </label>
-        <small>ID: ${escapeHtml(it.uid || "-")}</small>
-        <small>LINK: ${it.link ? escapeHtml(it.link) : "-"}</small>
-        ${it.note ? `<div class="note">${escapeHtml(it.note)}</div>` : ``}
+        <small>ID: ${esc(it.uid||"-")}</small>
+        <small>LINK: ${it.link?esc(it.link):"-"}</small>
+        ${it.note?`<div class="note">${esc(it.note)}</div>`:""}
       </div>
       <div class="btns">
-        <button class="sub" data-edit="${it.id}">編集</button>
-        <button class="sub" data-copy="${it.uid||""}">IDコピー</button>
-        <button ${it.link ? "" : "disabled"} data-open="${it.link||""}">開く</button>
-      </div>
-    `;
-    listEl.appendChild(div);
+        <button class="sub" data-redit="${it.id}">編集</button>
+        <button class="sub" data-rcopy="${esc(it.uid||"")}">IDコピー</button>
+        <button ${it.link?"":"disabled"} data-ropen="${esc(it.link||"")}">開く</button>
+      </div>`;
+    r.list.appendChild(div);
   }
 
-  listEl.querySelectorAll("button[data-open]").forEach(btn=>{
+  $$$("button[data-ropen]").forEach(btn=>{
     btn.onclick=()=>{
-      const u=btn.getAttribute("data-open");
+      const u=btn.dataset.ropen;
       if(!u) return;
       window.open(u, "_blank", "noopener");
     };
   });
 
-  listEl.querySelectorAll("button[data-copy]").forEach(btn=>{
+  $$$("button[data-rcopy]").forEach(btn=>{
     btn.onclick=async ()=>{
-      const t=btn.getAttribute("data-copy");
-      if(!t){ toast("コピーするIDがない"); return; }
+      const t=btn.dataset.rcopy;
+      if(!t) return rToast("コピーするIDがない");
       await navigator.clipboard.writeText(t);
-      toast("IDをコピーした！");
+      rToast("IDをコピーした！");
     };
   });
 
-  listEl.querySelectorAll("button[data-edit]").forEach(btn=>{
+  $$$("button[data-redit]").forEach(btn=>{
     btn.onclick=()=>{
-      const id=btn.getAttribute("data-edit");
-      const items=load();
+      const id=btn.dataset.redit;
+      const items=rLoad();
       const it=items.find(x=>x.id===id);
       if(!it) return;
-      el("name").value = it.name||"";
-      el("uid").value  = it.uid||"";
-      el("link").value = it.link||"";
-      el("note").value = it.note||"";
-      el("add").setAttribute("data-editing", id);
-      toast("編集モードにした！");
+      r.name.value=it.name||"";
+      r.uid.value =it.uid||"";
+      r.link.value=it.link||"";
+      r.note.value=it.note||"";
+      r.add.dataset.editing=id;
+      rToast("編集モードにした！");
     };
   });
 }
 
-function escapeHtml(s){
-  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-}
+r.add.onclick=()=>{
+  const name=r.name.value.trim();
+  const uidv=r.uid.value.trim();
+  const link=r.link.value.trim();
+  const note=r.note.value.trim();
 
-el("add").onclick=()=>{
-  const name = el("name").value.trim();
-  const uidv = el("uid").value.trim();
-  const link = el("link").value.trim();
-  const note = el("note").value.trim();
+  let items=rLoad();
+  const editing=r.add.dataset.editing;
 
-  let items = load();
-  const editingId = el("add").getAttribute("data-editing");
-
-  if(editingId){
-    const idx = items.findIndex(x=>x.id===editingId);
+  if(editing){
+    const idx=items.findIndex(x=>x.id===editing);
     if(idx>=0){
-      items[idx] = { ...items[idx], name, uid: uidv, link, note };
-      save(items);
-      el("add").removeAttribute("data-editing");
-      toast("更新した！");
+      items[idx]={...items[idx], name, uid:uidv, link, note};
+      rSave(items);
+      delete r.add.dataset.editing;
+      rToast("更新した！");
     }
   }else{
-    const id = uid();
-    items.unshift({ id, name, uid: uidv, link, note });
-    save(items);
-    if(items.length===1) setActive(id);
-    toast("追加した！");
+    const id=rid();
+    items.unshift({id, name, uid:uidv, link, note});
+    rSave(items);
+    if(items.length===1) rSetActive(id);
+    rToast("追加した！");
   }
 
-  el("name").value=""; el("uid").value=""; el("link").value=""; el("note").value="";
-  render();
+  r.name.value=""; r.uid.value=""; r.link.value=""; r.note.value="";
+  rRender();
 };
 
-function selectedIds(){
-  return [...document.querySelectorAll("input[data-check]:checked")].map(x=>x.getAttribute("data-check"));
-}
-
-el("openSelected").onclick=()=>{
-  const ids = selectedIds();
-  if(ids.length===0) return toast("選択してない！");
-  const items = load().filter(x=>ids.includes(x.id) && x.link);
-  if(items.length===0) return toast("開けるリンクがない！");
-  let i=0;
-  const timer=setInterval(()=>{
-    if(i>=items.length){ clearInterval(timer); toast("開いた！"); return; }
-    window.open(items[i].link, "_blank", "noopener");
-    i++;
-  }, 600);
+$$("#r-open").onclick=async ()=>{
+  const ids=rSelectedIds();
+  if(ids.length===0) return rToast("選択してない！");
+  const items=rLoad().filter(x=>ids.includes(x.id) && x.link);
+  if(items.length===0) return rToast("開けるリンクがない！");
+  rToast("順番に開く（ブロックされる時は個別で）");
+  for(const it of items){
+    window.open(it.link, "_blank", "noopener");
+    await sleep(600);
+  }
 };
 
-el("copySelected").onclick=async ()=>{
-  const ids = selectedIds();
-  if(ids.length===0) return toast("選択してない！");
-  const items = load().filter(x=>ids.includes(x.id));
-  const text = items.map(x=>`${x.name||"(no name)"}: ${x.uid||""}`).join("\n");
+$$("#r-copy").onclick=async ()=>{
+  const ids=rSelectedIds();
+  if(ids.length===0) return rToast("選択してない！");
+  const items=rLoad().filter(x=>ids.includes(x.id));
+  const text=items.map(x=>`${x.name||"(no name)"}: ${x.uid||""}`).join("\n");
   await navigator.clipboard.writeText(text);
-  toast("まとめてコピーした！");
+  rToast("まとめてコピーした！");
 };
 
-el("deleteSelected").onclick=()=>{
-  const ids = selectedIds();
-  if(ids.length===0) return toast("選択してない！");
-  let items = load().filter(x=>!ids.includes(x.id));
-  save(items);
-
-  const active = getActive();
-  if(ids.includes(active)){
-    setActive(items[0]?.id || "");
-  }
-  toast("削除した！");
-  render();
+$$("#r-del").onclick=()=>{
+  const ids=rSelectedIds();
+  if(ids.length===0) return rToast("選択してない！");
+  let items=rLoad().filter(x=>!ids.includes(x.id));
+  rSave(items);
+  const active=rGetActive();
+  if(ids.includes(active)) rSetActive(items[0]?.id||"");
+  rToast("削除した！");
+  rRender();
 };
 
-render();
+// init
+rRender();
 </script>
 </body>
 </html>
