@@ -3,39 +3,38 @@ export async function onRequest({ request }) {
   const userId = String(u.searchParams.get("user_id") || "").replace(/[^\d]/g, "");
   if (!userId) return json({ mode: "error", url: null, reason: "missing_user_id" }, 400);
 
+  const userUrl = `https://www.mirrativ.com/user/${userId}`;
+
   try {
-    const api = `https://www.mirrativ.com/api/live/live_history?user_id=${userId}`;
-    const res = await fetch(api, {
+    // リダイレクトを“追わずに”Locationを見る
+    const res = await fetch(userUrl, {
+      redirect: "manual",
       headers: {
         "user-agent": "Mozilla/5.0",
-        "accept": "application/json,text/plain,*/*",
-        "referer": "https://www.mirrativ.com/",
+        "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
       },
-      cf: { cacheTtl: 3, cacheEverything: false },
+      cf: { cacheTtl: 2, cacheEverything: false },
     });
 
-    if (!res.ok) {
-      return json({ mode: "user", url: `https://www.mirrativ.com/user/${userId}`, reason: `status_${res.status}` });
+    const status = res.status;
+    const loc = res.headers.get("location") || res.headers.get("Location") || "";
+
+    // 30x で /live/ が返るなら配信中扱い
+    if ((status === 301 || status === 302 || status === 303 || status === 307 || status === 308) && loc.includes("/live/")) {
+      const liveUrl = loc.startsWith("http") ? loc : `https://www.mirrativ.com${loc}`;
+      return json({ mode: "live", url: liveUrl, location: loc, status });
     }
 
-    const h = await res.json();
-    const liveId = h?.lives?.[0]?.live_id || null;
-
-    if (liveId) {
-      return json({ mode: "live", url: `https://www.mirrativ.com/live/${liveId}`, live_id: liveId });
-    }
-    return json({ mode: "user", url: `https://www.mirrativ.com/user/${userId}` });
+    // リダイレクト無し or /live/じゃない → ユーザーページ
+    return json({ mode: "user", url: userUrl, location: loc, status });
   } catch (e) {
-    return json({ mode: "user", url: `https://www.mirrativ.com/user/${userId}`, reason: "fetch_error" });
+    return json({ mode: "user", url: userUrl, reason: "fetch_error" });
   }
 }
 
 function json(obj, status = 200) {
   return new Response(JSON.stringify(obj), {
     status,
-    headers: {
-      "content-type": "application/json; charset=utf-8",
-      "cache-control": "no-store",
-    },
+    headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" },
   });
 }
