@@ -3,403 +3,365 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>RPG垢管理 & Mirrativ配信ジャンプ</title>
+<title>Mr.Colosseum 画像/動画 一覧</title>
 <style>
-  body{margin:0;background:#0f1115;color:#fff;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
-  header{position:sticky;top:0;background:#141823;border-bottom:1px solid #222;padding:12px 14px;z-index:10}
-  h1{margin:0;font-size:16px}
-  .wrap{max-width:980px;margin:0 auto;padding:14px}
-  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-  .tab{padding:8px 10px;border-radius:999px;border:1px solid #2a3147;background:#0f1320;color:#cbd5e1;cursor:pointer}
-  .tab.active{background:#fbbf24;border-color:#fbbf24;color:#111827;font-weight:700}
-  .card{background:#151a26;border:1px solid #222;border-radius:14px;padding:12px;margin:10px 0}
-  input,textarea{width:100%;box-sizing:border-box;background:#0f1320;color:#fff;border:1px solid #2a3147;border-radius:12px;padding:10px;font-size:15px}
-  textarea{min-height:120px;resize:vertical}
-  button{border:0;border-radius:12px;padding:10px 12px;font-size:15px;background:#3b82f6;color:#fff;cursor:pointer}
-  button.sub{background:#263045}
-  button.danger{background:#ef4444}
-  .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-  .row>*{flex:1}
-  .hint{color:#94a3b8;font-size:13px;line-height:1.6}
-  .list{display:grid;gap:10px}
-  .item{display:flex;gap:10px;align-items:flex-start;justify-content:space-between;background:#0f1320;border:1px solid #2a3147;border-radius:12px;padding:10px}
-  .meta{min-width:0;flex:1}
-  .meta b{display:block;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .meta small{display:block;color:#94a3b8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .meta .note{margin-top:6px;color:#cbd5e1;font-size:13px;white-space:pre-wrap}
-  .btns{display:flex;gap:8px;flex:0 0 auto;flex-wrap:wrap;justify-content:flex-end}
-  .btns button{padding:8px 10px;font-size:14px}
-  .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:#0f1320;border:1px solid #2a3147;color:#cbd5e1;font-size:13px}
-  .pill.active{background:#fbbf24;border-color:#fbbf24;color:#111827;font-weight:700}
-  .check{transform:scale(1.2);margin-right:8px}
+  :root { color-scheme: dark; }
+  body{margin:0;background:#0e0e11;color:#fff;font-family:system-ui,-apple-system,Segoe UI,Roboto,"Hiragino Kaku Gothic ProN",Meiryo,sans-serif;}
+  header{position:sticky;top:0;z-index:10;background:#121218;border-bottom:1px solid rgba(255,255,255,.08);padding:10px;}
+  h1{margin:0 0 8px;font-size:16px;}
+  .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+  input,button,select{font:inherit;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:#1a1b20;color:#fff;padding:8px 10px}
+  button{cursor:pointer}
+  button.primary{background:#ffd400;color:#000;border-color:#ffd400;font-weight:700}
+  button.danger{background:#ff4d4d;border-color:#ff4d4d;color:#000;font-weight:700}
+  .hint{opacity:.8;font-size:12px;margin-top:6px;line-height:1.4}
+
+  .tabs{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+  .tab{padding:7px 10px;border-radius:999px;background:#1a1b20;border:1px solid rgba(255,255,255,.10);cursor:pointer}
+  .tab.active{background:#ffd400;color:#000;border-color:#ffd400;font-weight:800}
+
+  main{padding:10px}
+  .section{display:none}
+  .section.active{display:block}
+
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+  @media (min-width:720px){.grid{grid-template-columns:repeat(4,1fr)}}
+
+  .card{background:#1a1b20;border:1px solid rgba(255,255,255,.08);border-radius:14px;overflow:hidden}
+  .media{display:block;width:100%;aspect-ratio:1/1;object-fit:cover;background:#0b0b0d}
+  video.media{aspect-ratio:16/9}
+  .meta{padding:8px 10px;font-size:12px;opacity:.9;display:flex;justify-content:space-between;gap:8px}
+  .badge{font-size:11px;opacity:.9;padding:2px 8px;border-radius:999px;background:rgba(255,255,255,.08)}
+  .progress{margin-top:8px;font-size:12px;opacity:.85}
+  .mini{font-size:12px;opacity:.85}
+
+  /* monster 詳細モーダル */
+  .modal{position:fixed;inset:0;background:rgba(0,0,0,.65);display:none;align-items:flex-end;justify-content:center;z-index:50}
+  .modal.open{display:flex}
+  .sheet{width:min(920px,100%);max-height:92vh;background:#121218;border-top-left-radius:18px;border-top-right-radius:18px;border:1px solid rgba(255,255,255,.12);overflow:auto}
+  .sheetHeader{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.08);position:sticky;top:0;background:#121218}
+  .sheetHeader strong{font-size:14px}
+  .sheetBody{padding:12px;display:grid;gap:10px}
+  .sheetGrid{display:grid;grid-template-columns:repeat(1,1fr);gap:10px}
+  @media (min-width:720px){.sheetGrid{grid-template-columns:repeat(3,1fr)}}
+  .sheetGrid img{width:100%;border-radius:14px;background:#0b0b0d}
 </style>
 </head>
 <body>
 <header>
-  <h1>RPG垢管理 & Mirrativ配信ジャンプ</h1>
-  <div class="tabs">
-    <button class="tab active" data-page="jump">配信ジャンプ</button>
-    <button class="tab" data-page="rpg">RPG複数垢</button>
+  <h1>Mr.Colosseum：banner / monster / movie 一覧（存在するものだけ表示）</h1>
+
+  <div class="row">
+    <label class="mini">同時チェック
+      <select id="concurrency">
+        <option>6</option>
+        <option>10</option>
+        <option selected>16</option>
+        <option>24</option>
+        <option>32</option>
+      </select>
+    </label>
+
+    <button id="btnStart" class="primary">スキャン開始</button>
+    <button id="btnStop" class="danger">停止</button>
+    <button id="btnClear">結果クリア</button>
   </div>
+
+  <div class="row" style="margin-top:8px">
+    <div class="mini"><b>banner</b> id: <input id="bannerStart" type="number" value="1" style="width:92px"> 〜 <input id="bannerEnd" type="number" value="2000000" style="width:110px"></div>
+    <div class="mini"><b>monster</b> id: <input id="monsterStart" type="number" value="1" style="width:92px"> 〜 <input id="monsterEnd" type="number" value="6000" style="width:92px"></div>
+    <div class="mini"><b>movie</b> id: <input id="movieStart" type="number" value="1" style="width:92px"> 〜 <input id="movieEnd" type="number" value="20000" style="width:92px"></div>
+  </div>
+
+  <div class="hint">
+    ・「存在判定」は実際に読み込みを試して <code>onload/onerror</code> で決めます。<br>
+    ・範囲が大きいと通信量が増えます。まずは小さい範囲で当たりを見つけてから広げるのがおすすめ。
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="banner">banner</div>
+    <div class="tab" data-tab="monster">monster</div>
+    <div class="tab" data-tab="movie">movie</div>
+  </div>
+
+  <div id="progress" class="progress">待機中</div>
 </header>
 
-<div class="wrap">
-  <!-- ============ 配信ジャンプ ============ -->
-  <section id="page-jump">
-    <div class="card">
-      <div class="hint">
-        ユーザーIDだけ入力。配信中なら「公式ライブページ」へ、配信外ならユーザーページへ。<br>
-        ※このサイトでログイン垢を読む/切替はできません。開いた先は “その端末でログイン中のMirrativ垢” が反映されます。
-      </div>
-    </div>
-
-    <div class="card">
-      <textarea id="j-input" placeholder="例）120504262&#10;142306302&#10;127864062"></textarea>
-      <div style="height:10px"></div>
-      <div class="row">
-        <button id="j-build">一覧を作る</button>
-        <button class="sub" id="j-open-selected">選択だけ入室</button>
-        <button class="sub" id="j-open-all">全部入室</button>
-      </div>
-      <div id="j-toast" style="margin-top:10px;color:#94a3b8;font-size:13px"></div>
-    </div>
-
-    <div class="card">
-      <div style="font-weight:700;margin-bottom:8px">配信リスト</div>
-      <div class="list" id="j-list"></div>
-    </div>
+<main>
+  <section id="sec-banner" class="section active">
+    <div class="grid" id="grid-banner"></div>
   </section>
 
-  <!-- ============ RPG複数垢 ============ -->
-  <section id="page-rpg" style="display:none">
-    <div class="card">
-      <div class="hint">現在のアカウント（自動検出は不可なので、ここで選んだものを“現在”として扱う）</div>
-      <div style="margin-top:8px" id="r-active"></div>
-    </div>
-
-    <div class="card">
-      <div class="row">
-        <input id="r-name" placeholder="アカウント名（例：メイン / サブ1 / 周回用）" />
-        <input id="r-uid" placeholder="ゲームID（任意）" />
-      </div>
-      <div style="height:10px"></div>
-      <div class="row">
-        <input id="r-link" placeholder="開きたいリンク（例：ゲームページ/引き継ぎ/管理/メモサイト）" />
-        <button class="sub" id="r-add">追加/更新</button>
-      </div>
-      <div style="height:10px"></div>
-      <textarea id="r-note" placeholder="メモ（編成・周回・今日やること等）※パスワードは入れない"></textarea>
-      <div style="height:10px"></div>
-      <div class="row">
-        <button id="r-open">選択した垢をまとめて開く</button>
-        <button class="sub" id="r-copy">選択したIDをコピー</button>
-        <button class="danger" id="r-del">選択した垢を削除</button>
-      </div>
-      <div id="r-toast" style="margin-top:10px;color:#94a3b8;font-size:13px"></div>
-    </div>
-
-    <div class="card">
-      <div style="font-weight:700;margin-bottom:8px">アカウント一覧</div>
-      <div class="list" id="r-list"></div>
-    </div>
+  <section id="sec-monster" class="section">
+    <div class="grid" id="grid-monster"></div>
   </section>
+
+  <section id="sec-movie" class="section">
+    <div class="grid" id="grid-movie"></div>
+  </section>
+</main>
+
+<!-- monster詳細 -->
+<div class="modal" id="modal">
+  <div class="sheet">
+    <div class="sheetHeader">
+      <strong id="modalTitle">monster</strong>
+      <button id="modalClose">閉じる</button>
+    </div>
+    <div class="sheetBody">
+      <div class="sheetGrid" id="modalGrid"></div>
+    </div>
+  </div>
 </div>
 
 <script>
-/* ------------------ 共通 ------------------ */
-const $$ = (q)=>document.querySelector(q);
-const $$$ = (q)=>[...document.querySelectorAll(q)];
-
-function esc(s){return String(s).replace(/[&<>"']/g,c=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]))}
-function sleep(ms){return new Promise(r=>setTimeout(r,ms))}
-
-/* ------------------ タブ切替 ------------------ */
-$$$(".tab").forEach(b=>{
-  b.onclick=()=>{
-    $$$(".tab").forEach(x=>x.classList.remove("active"));
-    b.classList.add("active");
-    const p=b.dataset.page;
-    $$("#page-jump").style.display = (p==="jump") ? "" : "none";
-    $$("#page-rpg").style.display  = (p==="rpg")  ? "" : "none";
+(() => {
+  const BASE = "https://cdn-masterdata.mr-colosseum.com";
+  const URLS = {
+    banner: (id) => `${BASE}/image/banner_${id}.png`,
+    monster: (id) => `${BASE}/image/monster_${id}.png`,
+    monsterG: (id) => `${BASE}/image/monster_${id}_g.png`,
+    monsterD: (id) => `${BASE}/image/monster_${id}_d.png`,
+    movie: (id) => `${BASE}/movie/popup_${id}.mp4`,
   };
-});
 
-/* =========================================================
-   ① 配信ジャンプ（公式ページへ。再生URLは扱わない）
-   ========================================================= */
-const j = {
-  input: $$("#j-input"),
-  list: $$("#j-list"),
-  toast: $$("#j-toast"),
-};
+  const el = (id) => document.getElementById(id);
 
-function jToast(msg){
-  j.toast.textContent = msg;
-  clearTimeout(window.__jt);
-  window.__jt = setTimeout(()=>j.toast.textContent="", 1600);
-}
+  const grids = {
+    banner: el("grid-banner"),
+    monster: el("grid-monster"),
+    movie: el("grid-movie"),
+  };
 
-function parseUserIds(text){
-  return text.split(/\r?\n/).map(s=>s.trim()).filter(Boolean).map(s=>s.replace(/[^\d]/g,"")).filter(Boolean);
-}
+  const progressEl = el("progress");
 
-function renderJump(ids){
-  j.list.innerHTML="";
-  if(ids.length===0){
-    j.list.innerHTML = `<div class="hint">ユーザーIDを入れて「一覧を作る」</div>`;
-    return;
-  }
-  for(const id of ids){
-    const div=document.createElement("div");
-    div.className="item";
-    div.innerHTML = `
-      <div class="meta">
-        <label style="display:flex;align-items:center;gap:8px">
-          <input class="check" type="checkbox" data-jcheck="${id}">
-          <b>ユーザーID: ${id}</b>
-        </label>
-        <small>入室：配信中なら /live/{live_id}、配信外なら /user/{id}</small>
-      </div>
-      <div class="btns">
-        <button class="sub" data-juser="${id}">ユーザー</button>
-        <button data-jenter="${id}">入室</button>
-      </div>`;
-    j.list.appendChild(div);
-  }
+  let aborted = false;
 
-  $$$("button[data-juser]").forEach(btn=>{
-    btn.onclick=()=>window.open(`https://www.mirrativ.com/user/${btn.dataset.juser}`, "_blank", "noopener");
+  // ------- Tabs -------
+  document.querySelectorAll(".tab").forEach(t => {
+    t.addEventListener("click", () => {
+      document.querySelectorAll(".tab").forEach(x => x.classList.remove("active"));
+      t.classList.add("active");
+      const tab = t.dataset.tab;
+      document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
+      el(`sec-${tab}`).classList.add("active");
+    });
   });
-  $$$("button[data-jenter]").forEach(btn=>{
-    btn.onclick=()=>enterByUserId(btn.dataset.jenter);
-  });
-}
 
-function selectedJumpIds(){
-  return $$$("input[data-jcheck]:checked").map(x=>x.dataset.jcheck);
-}
+  // ------- Modal -------
+  const modal = el("modal");
+  const modalGrid = el("modalGrid");
+  const modalTitle = el("modalTitle");
+  const closeModal = () => modal.classList.remove("open");
+  el("modalClose").addEventListener("click", closeModal);
+  modal.addEventListener("click", (e) => { if (e.target === modal) closeModal(); });
 
-/**
- * user_id -> 最新live_id を取れたら公式ライブへ。取れなければユーザーページへ。
- * まず /live?user_id=... (Functions) を叩く。
- * もし Functions を置いてない場合、直接Mirrativ APIを叩く fallback も入れてる。
- */
-async function enterByUserId(userId){
-  try{
-    jToast("判定中...");
-    const r = await fetch(`/live?user_id=${encodeURIComponent(userId)}`, { cache:"no-store" });
-    const data = await r.json();
+  // ------- Existence checks (real load) -------
+  function checkImage(url, timeoutMs = 12000) {
+    return new Promise((resolve) => {
+      const img = new Image();
+      let done = false;
+      const t = setTimeout(() => { if (!done) { done = true; cleanup(false); } }, timeoutMs);
 
-    window.open(data.url, "_blank", "noopener");
-    jToast(data.mode==="live" ? "配信中→ライブへ" : "配信外→ユーザーへ");
-  }catch(e){
-    window.open(`https://www.mirrativ.com/user/${userId}`, "_blank", "noopener");
-    jToast("失敗→ユーザーへ");
+      function cleanup(ok) {
+        clearTimeout(t);
+        img.onload = null;
+        img.onerror = null;
+        // img.src を空にしてもリクエストは止まらない場合があるが、参照は切れる
+        img.src = "";
+        resolve(ok);
+      }
+      img.onload = () => { if (!done) { done = true; cleanup(true); } };
+      img.onerror = () => { if (!done) { done = true; cleanup(false); } };
+      // cache bust は不要（CDNの404キャッシュ回避したいなら付けられる）
+      img.decoding = "async";
+      img.loading = "eager";
+      img.src = url;
+    });
   }
-}
 
-$$("#j-build").onclick=()=>{
-  renderJump(parseUserIds(j.input.value));
-  jToast("一覧を更新！");
-};
+  function checkVideo(url, timeoutMs = 15000) {
+    return new Promise((resolve) => {
+      const v = document.createElement("video");
+      let done = false;
+      const t = setTimeout(() => { if (!done) { done = true; cleanup(false); } }, timeoutMs);
 
-$$("#j-open-selected").onclick=async ()=>{
-  const ids = selectedJumpIds();
-  if(ids.length===0) return jToast("選択してない！");
-  jToast("順番に開く（ブロックされる時は個別で）");
-  for(const id of ids){
-    await enterByUserId(id);
-    await sleep(700);
+      function cleanup(ok) {
+        clearTimeout(t);
+        v.onloadeddata = null;
+        v.onerror = null;
+        v.src = "";
+        resolve(ok);
+      }
+
+      v.onloadeddata = () => { if (!done) { done = true; cleanup(true); } };
+      v.onerror = () => { if (!done) { done = true; cleanup(false); } };
+      v.preload = "metadata";
+      v.muted = true;
+      v.playsInline = true;
+      v.src = url;
+      // iOSでmetadataロード促進
+      v.load();
+    });
   }
-};
 
-$$("#j-open-all").onclick=async ()=>{
-  const ids = parseUserIds(j.input.value);
-  if(ids.length===0) return jToast("空だよ！");
-  jToast("順番に開く（ブロックされる時は個別で）");
-  for(const id of ids){
-    await enterByUserId(id);
-    await sleep(700);
+  // ------- UI creators -------
+  function addCard(type, id, url) {
+    const card = document.createElement("div");
+    card.className = "card";
+
+    if (type === "movie") {
+      const v = document.createElement("video");
+      v.className = "media";
+      v.controls = true;
+      v.playsInline = true;
+      v.preload = "metadata";
+      v.src = url;
+      card.appendChild(v);
+    } else {
+      const img = document.createElement("img");
+      img.className = "media";
+      img.loading = "lazy";
+      img.decoding = "async";
+      img.src = url;
+      card.appendChild(img);
+    }
+
+    const meta = document.createElement("div");
+    meta.className = "meta";
+    meta.innerHTML = `<span>#${id}</span><span class="badge">${type}</span>`;
+    card.appendChild(meta);
+
+    if (type === "monster") {
+      card.style.cursor = "pointer";
+      card.addEventListener("click", () => openMonsterModal(id));
+    }
+
+    grids[type].appendChild(card);
   }
-};
 
-// init
-renderJump(parseUserIds(j.input.value));
+  async function openMonsterModal(id) {
+    modalTitle.textContent = `monster_${id}（存在するものだけ表示）`;
+    modalGrid.innerHTML = "";
 
-/* =========================================================
-   ② RPG複数垢ダッシュボード
-   ========================================================= */
-const R_KEY = "rpg_multi_accounts_v2";
-const R_ACTIVE = "rpg_multi_accounts_active_v2";
+    // まずメイン
+    const main = URLS.monster(id);
+    const g = URLS.monsterG(id);
+    const d = URLS.monsterD(id);
 
-const r = {
-  active: $$("#r-active"),
-  list: $$("#r-list"),
-  toast: $$("#r-toast"),
-  name: $$("#r-name"),
-  uid:  $$("#r-uid"),
-  link: $$("#r-link"),
-  note: $$("#r-note"),
-  add:  $$("#r-add"),
-};
+    // 表示順：main → g → d（存在するやつだけ）
+    const candidates = [
+      { label: "main", url: main, check: () => checkImage(main) },
+      { label: "_g", url: g, check: () => checkImage(g) },
+      { label: "_d", url: d, check: () => checkImage(d) },
+    ];
 
-function rToast(msg){
-  r.toast.textContent = msg;
-  clearTimeout(window.__rt);
-  window.__rt = setTimeout(()=>r.toast.textContent="", 1600);
-}
-function rLoad(){ try{return JSON.parse(localStorage.getItem(R_KEY)||"[]")}catch{return[]} }
-function rSave(arr){ localStorage.setItem(R_KEY, JSON.stringify(arr)); }
-function rGetActive(){ return localStorage.getItem(R_ACTIVE)||""; }
-function rSetActive(id){ localStorage.setItem(R_ACTIVE, id); }
-function rid(){ return Math.random().toString(36).slice(2)+Date.now().toString(36); }
+    modal.classList.add("open");
 
-function rSelectedIds(){
-  return $$$("input[data-rcheck]:checked").map(x=>x.dataset.rcheck);
-}
+    for (const c of candidates) {
+      const ok = await c.check();
+      if (!ok) continue;
+      const img = document.createElement("img");
+      img.src = c.url;
+      img.alt = `monster_${id}${c.label}`;
+      modalGrid.appendChild(img);
+    }
 
-function rRender(){
-  const items = rLoad();
-  const activeId = rGetActive();
-
-  // active pills
-  r.active.innerHTML="";
-  if(items.length===0){
-    r.active.innerHTML = `<span class="hint">まだアカウントがありません。下で追加してね。</span>`;
-  }else{
-    for(const it of items){
-      const b=document.createElement("button");
-      b.className="pill"+(it.id===activeId?" active":"");
-      b.textContent=it.name || "(no name)";
-      b.onclick=()=>{ rSetActive(it.id); rRender(); rToast("現在の垢を切替！"); };
-      r.active.appendChild(b);
+    if (!modalGrid.childElementCount) {
+      const p = document.createElement("div");
+      p.style.opacity = ".85";
+      p.textContent = "画像が見つからなかった（読み込み失敗/存在しない）";
+      modalGrid.appendChild(p);
     }
   }
 
-  // list
-  r.list.innerHTML="";
-  if(items.length===0){
-    r.list.innerHTML = `<div class="hint">アカウントを追加するとここに出ます。</div>`;
-    return;
-  }
+  // ------- Scanner (with concurrency) -------
+  async function runRange(type, start, end, concurrency) {
+    let checked = 0;
+    let found = 0;
 
-  for(const it of items){
-    const div=document.createElement("div");
-    div.className="item";
-    div.innerHTML=`
-      <div class="meta">
-        <label style="display:flex;align-items:center;gap:8px">
-          <input class="check" type="checkbox" data-rcheck="${it.id}">
-          <b>${esc(it.name||"(no name)")} ${it.id===activeId?"（現在）":""}</b>
-        </label>
-        <small>ID: ${esc(it.uid||"-")}</small>
-        <small>LINK: ${it.link?esc(it.link):"-"}</small>
-        ${it.note?`<div class="note">${esc(it.note)}</div>`:""}
-      </div>
-      <div class="btns">
-        <button class="sub" data-redit="${it.id}">編集</button>
-        <button class="sub" data-rcopy="${esc(it.uid||"")}">IDコピー</button>
-        <button ${it.link?"":"disabled"} data-ropen="${esc(it.link||"")}">開く</button>
-      </div>`;
-    r.list.appendChild(div);
-  }
+    // ワーカー方式
+    let nextId = start;
 
-  $$$("button[data-ropen]").forEach(btn=>{
-    btn.onclick=()=>{
-      const u=btn.dataset.ropen;
-      if(!u) return;
-      window.open(u, "_blank", "noopener");
+    const worker = async () => {
+      while (!aborted) {
+        const id = nextId++;
+        if (id > end) return;
+
+        const url = URLS[type](id);
+
+        let ok = false;
+        if (type === "movie") ok = await checkVideo(url);
+        else ok = await checkImage(url);
+
+        checked++;
+        if (ok) {
+          found++;
+          addCard(type, id, url);
+        }
+
+        // progress
+        if (checked % 20 === 0 || ok) {
+          progressEl.textContent =
+            `スキャン中… [${type}] ${start}〜${end} / チェック:${checked} / 見つかった数:${found} / 現在:${id}`;
+        }
+      }
     };
+
+    const workers = Array.from({ length: concurrency }, () => worker());
+    await Promise.all(workers);
+
+    return { checked, found };
+  }
+
+  function clearAll() {
+    Object.values(grids).forEach(g => g.innerHTML = "");
+  }
+
+  // ------- Buttons -------
+  el("btnStop").addEventListener("click", () => {
+    aborted = true;
+    progressEl.textContent = "停止しました";
   });
 
-  $$$("button[data-rcopy]").forEach(btn=>{
-    btn.onclick=async ()=>{
-      const t=btn.dataset.rcopy;
-      if(!t) return rToast("コピーするIDがない");
-      await navigator.clipboard.writeText(t);
-      rToast("IDをコピーした！");
-    };
+  el("btnClear").addEventListener("click", () => {
+    aborted = true;
+    clearAll();
+    progressEl.textContent = "結果をクリアしました";
   });
 
-  $$$("button[data-redit]").forEach(btn=>{
-    btn.onclick=()=>{
-      const id=btn.dataset.redit;
-      const items=rLoad();
-      const it=items.find(x=>x.id===id);
-      if(!it) return;
-      r.name.value=it.name||"";
-      r.uid.value =it.uid||"";
-      r.link.value=it.link||"";
-      r.note.value=it.note||"";
-      r.add.dataset.editing=id;
-      rToast("編集モードにした！");
-    };
+  el("btnStart").addEventListener("click", async () => {
+    aborted = false;
+    clearAll();
+
+    const concurrency = Number(el("concurrency").value) || 16;
+
+    const bannerStart = Number(el("bannerStart").value);
+    const bannerEnd = Number(el("bannerEnd").value);
+
+    const monsterStart = Number(el("monsterStart").value);
+    const monsterEnd = Number(el("monsterEnd").value);
+
+    const movieStart = Number(el("movieStart").value);
+    const movieEnd = Number(el("movieEnd").value);
+
+    progressEl.textContent = "開始…";
+
+    // 重すぎるとき用：順番にやる（同時に3種類回さない）
+    const r1 = await runRange("banner", bannerStart, bannerEnd, concurrency);
+    if (aborted) return;
+
+    const r2 = await runRange("monster", monsterStart, monsterEnd, concurrency);
+    if (aborted) return;
+
+    const r3 = await runRange("movie", movieStart, movieEnd, concurrency);
+    if (aborted) return;
+
+    progressEl.textContent =
+      `完了 ✅ banner: ${r1.found}/${r1.checked}, monster: ${r2.found}/${r2.checked}, movie: ${r3.found}/${r3.checked}`;
   });
-}
 
-r.add.onclick=()=>{
-  const name=r.name.value.trim();
-  const uidv=r.uid.value.trim();
-  const link=r.link.value.trim();
-  const note=r.note.value.trim();
-
-  let items=rLoad();
-  const editing=r.add.dataset.editing;
-
-  if(editing){
-    const idx=items.findIndex(x=>x.id===editing);
-    if(idx>=0){
-      items[idx]={...items[idx], name, uid:uidv, link, note};
-      rSave(items);
-      delete r.add.dataset.editing;
-      rToast("更新した！");
-    }
-  }else{
-    const id=rid();
-    items.unshift({id, name, uid:uidv, link, note});
-    rSave(items);
-    if(items.length===1) rSetActive(id);
-    rToast("追加した！");
-  }
-
-  r.name.value=""; r.uid.value=""; r.link.value=""; r.note.value="";
-  rRender();
-};
-
-$$("#r-open").onclick=async ()=>{
-  const ids=rSelectedIds();
-  if(ids.length===0) return rToast("選択してない！");
-  const items=rLoad().filter(x=>ids.includes(x.id) && x.link);
-  if(items.length===0) return rToast("開けるリンクがない！");
-  rToast("順番に開く（ブロックされる時は個別で）");
-  for(const it of items){
-    window.open(it.link, "_blank", "noopener");
-    await sleep(600);
-  }
-};
-
-$$("#r-copy").onclick=async ()=>{
-  const ids=rSelectedIds();
-  if(ids.length===0) return rToast("選択してない！");
-  const items=rLoad().filter(x=>ids.includes(x.id));
-  const text=items.map(x=>`${x.name||"(no name)"}: ${x.uid||""}`).join("\n");
-  await navigator.clipboard.writeText(text);
-  rToast("まとめてコピーした！");
-};
-
-$$("#r-del").onclick=()=>{
-  const ids=rSelectedIds();
-  if(ids.length===0) return rToast("選択してない！");
-  let items=rLoad().filter(x=>!ids.includes(x.id));
-  rSave(items);
-  const active=rGetActive();
-  if(ids.includes(active)) rSetActive(items[0]?.id||"");
-  rToast("削除した！");
-  rRender();
-};
-
-// init
-rRender();
+})();
 </script>
 </body>
 </html>
