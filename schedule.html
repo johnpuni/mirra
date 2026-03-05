@@ -11,15 +11,12 @@ h1{text-align:center;margin:16px 0;}
 .tab{padding:6px 12px;margin:2px;border-radius:6px;background:#222;cursor:pointer;transition:0.3s;}
 .tab.active{background:#ff0;color:#000;font-weight:bold;}
 #schedule{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:12px;}
-
 .card{background:#1a1b20;border-radius:14px;overflow:hidden;box-shadow:0 6px 14px rgba(0,0,0,.4);transition:transform .3s,box-shadow .3s;position:relative;padding-bottom:28px;}
 .card:hover{transform:scale(1.03);box-shadow:0 12px 20px rgba(0,0,0,.5);}
 
 .image-box{position:relative;cursor:pointer;overflow:hidden;width:100%;}
 .image-box img{width:100%;height:auto;display:block;}
-
 .time-circle{position:absolute;top:6px;right:6px;width:48px;height:48px;background:rgba(255,255,255,0.8);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:bold;color:#000;text-align:center;line-height:1.2;pointer-events:none;}
-
 .open-btn{position:absolute;bottom:8px;right:8px;background:#ff0;color:#000;font-weight:bold;padding:6px 10px;border-radius:8px;cursor:pointer;font-size:14px;z-index:2;}
 .open-btn:hover{background:#ffd;}
 
@@ -46,71 +43,16 @@ h1{text-align:center;margin:16px 0;}
 #screenshot-warning{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);color:#f00;display:flex;align-items:center;justify-content:center;text-align:center;font-size:24px;padding:20px;z-index:2000;display:none;}
 #version{position:fixed;bottom:4px;right:8px;font-size:12px;color:#888;}
 
-/* ===== タイトル表示 ===== */
+/* ★ タイトル表示 */
 .event-title{
   text-align:center;
   font-size:13px;
-  font-weight:700;
+  font-weight:800;
   padding:8px 10px 0 10px;
   line-height:1.25;
   color:#fff;
   opacity:.95;
   word-break:break-word;
-}
-
-/* ===== 新着バッジ ===== */
-.badges{
-  position:absolute;
-  top:8px;
-  left:8px;
-  display:flex;
-  gap:6px;
-  z-index:3;
-  pointer-events:none;
-}
-.badge{
-  font-size:11px;
-  font-weight:900;
-  padding:6px 10px;
-  border-radius:999px;
-  color:#000;
-  background:#ff0;
-  box-shadow:0 6px 14px rgba(0,0,0,.35);
-}
-.badge.new{
-  background:#00ff66;
-}
-
-/* ===== 上部コントロール ===== */
-#controls{
-  display:flex;
-  justify-content:center;
-  gap:10px;
-  flex-wrap:wrap;
-  padding:0 12px 6px 12px;
-}
-#search{
-  width:min(520px, calc(100vw - 24px));
-  padding:10px 12px;
-  border-radius:10px;
-  border:none;
-  outline:none;
-  font-size:14px;
-  background:#1a1b20;
-  color:#fff;
-}
-.ctrl-btn{
-  padding:10px 12px;
-  border-radius:10px;
-  border:none;
-  background:#222;
-  color:#fff;
-  cursor:pointer;
-  font-weight:800;
-}
-.ctrl-btn.active{
-  background:#ff0;
-  color:#000;
 }
 </style>
 </head>
@@ -119,21 +61,14 @@ h1{text-align:center;margin:16px 0;}
 <div id="screenshot-warning">スクリーンショットは許可されていません！</div>
 
 <div id="pw-screen">
-  <h1>リーク情報閲覧のためパスワードが必要です</h1>
-  <input type="password" id="pw" placeholder="Password">
-  <button onclick="checkPassword()">Enter</button>
-  <div class="info">このページには未公開情報・イベント内部情報が含まれています。<br>関係者以外の閲覧は禁止されています。</div>
-  <div id="pw-version">Version 1.5.0</div>
+<h1>リーク情報閲覧のためパスワードが必要です</h1>
+<input type="password" id="pw" placeholder="Password">
+<button onclick="checkPassword()">Enter</button>
+<div class="info">このページには未公開情報・イベント内部情報が含まれています。<br>関係者以外の閲覧は禁止されています。</div>
+<div id="pw-version">Version 1.5.0</div>
 </div>
 
 <h1>イベントスケジュール</h1>
-
-<!-- 検索 + 新着のみ（おまけ機能：邪魔なら消してOK） -->
-<div id="controls">
-  <input id="search" placeholder="タイトル検索（例：ギフト / ランキング / 〇〇）" />
-  <button id="onlyNewBtn" class="ctrl-btn">新着のみ</button>
-</div>
-
 <div id="tabs"></div>
 <div id="schedule"></div>
 
@@ -152,9 +87,6 @@ h1{text-align:center;margin:16px 0;}
 const VERSION = "1.5.0";
 const PASSWORD = "kamikaze";
 
-// ★新着判定：何時間以内をNEWにする？
-const NEW_HOURS = 48;
-
 // ===== パスワード =====
 if(localStorage.getItem("pw_ok") !== "true_"+VERSION){
   document.getElementById("pw-screen").style.display="flex";
@@ -168,68 +100,86 @@ function checkPassword(){
   }else{alert("パスワードが違います");}
 }
 
+// ===== util =====
 function proxyImage(url){return "https://images.weserv.nl/?url="+encodeURIComponent(url.replace(/^https?:\/\//,""));}
 // そのまま開く（あなたの仕様）
 function directLink(url){return "mirr://webview/window/open?url="+encodeURIComponent(url);}
 
-// ===== タイトル取得（キャッシュ付き） =====
-const TITLE_CACHE_KEY = "title_cache_v2";
+// ===== タイトル取得（og:title → title） =====
+const TITLE_CACHE_KEY = "title_cache_v3";
 const titleCache = (() => {
   try { return JSON.parse(localStorage.getItem(TITLE_CACHE_KEY) || "{}"); }
   catch { return {}; }
 })();
-function saveTitleCache(){
-  try{ localStorage.setItem(TITLE_CACHE_KEY, JSON.stringify(titleCache)); }catch{}
-}
+function saveTitleCache(){ try{ localStorage.setItem(TITLE_CACHE_KEY, JSON.stringify(titleCache)); }catch{} }
 
-// mirr://系から「取れそうな https URL」を抜く
-function extractWebUrl(mirrUrl){
-  if(!mirrUrl) return null;
-  if(/^https?:\/\//.test(mirrUrl)) return mirrUrl;
+// mirr:///roulette/xxxx などを https に変換（取れるものは全部ここで）
+function toMirrativWebUrl(u){
+  if(!u) return null;
 
+  // すでにhttps
+  if(/^https?:\/\//.test(u)) return u;
+
+  // mirr://webview/window/open?url=https...
   try{
-    if(mirrUrl.startsWith("mirr://webview/window/open?url=")){
-      const u = new URL(mirrUrl);
-      const inner = u.searchParams.get("url");
+    if(u.startsWith("mirr://webview/window/open?url=")){
+      const x = new URL(u);
+      const inner = x.searchParams.get("url");
       if(inner && /^https?:\/\//.test(inner)) return inner;
     }
   }catch{}
+
+  // mirr:///roulette/xxxxx → https://www.mirrativ.com/roulette/xxxxx
+  const m = u.match(/^mirr:\/\/\/([^?]+)(\?.*)?$/);
+  if(m){
+    const path = m[1].replace(/^\/+/, "");
+    return "https://www.mirrativ.com/" + path;
+  }
+
   return null;
 }
 
-// CORS回避：Jina Reader を使ってページを読む
-async function fetchTitleFromWeb(url){
+// Jina Reader 経由でHTML/テキスト取得（CORS回避）
+async function fetchHtmlText(url){
   const readerUrl = "https://r.jina.ai/" + url;
-  const txt = await fetch(readerUrl).then(r => r.text());
+  return await fetch(readerUrl).then(r => r.text());
+}
 
-  // Markdownの先頭見出し(# タイトル)優先
-  const m1 = txt.match(/^#\s+(.+)$/m);
-  if(m1) return m1[1].trim();
+// og:title を優先して抜く（あなたが欲しいやつ）
+function extractTitleFromHtml(txt){
+  if(!txt) return null;
 
-  // 次に<title>
-  const m2 = txt.match(/<title>([^<]+)<\/title>/i);
-  if(m2) return m2[1].trim();
+  // 1) og:title
+  let m = txt.match(/property=["']og:title["'][^>]*content=["']([^"']+)["']/i);
+  if(m && m[1]) return m[1].trim();
+
+  // 2) <title>
+  m = txt.match(/<title>([^<]+)<\/title>/i);
+  if(m && m[1]) return m[1].trim();
+
+  // 3) （JinaがMarkdown化してる時）# 見出し
+  m = txt.match(/^#\s+(.+)$/m);
+  if(m && m[1]) return m[1].trim();
 
   return null;
 }
 
-// URLからタイトル用意（取れない時のフォールバック）
 async function getEventTitle(e){
   const key = (e.url || "") + "|" + (e.start || "") + "|" + (e.end || "");
   if(titleCache[key]) return titleCache[key];
 
-  // 1) JSONに title があるなら最優先（将来的にこれが最強）
+  // JSONに title があるなら最優先
   if(e.title){
     titleCache[key] = e.title;
     saveTitleCache();
     return e.title;
   }
 
-  // 2) Web URLが取れるなら取得
-  const webUrl = extractWebUrl(e.url);
+  const webUrl = toMirrativWebUrl(e.url);
   if(webUrl){
     try{
-      const t = await fetchTitleFromWeb(webUrl);
+      const txt = await fetchHtmlText(webUrl);
+      const t = extractTitleFromHtml(txt);
       if(t){
         titleCache[key] = t;
         saveTitleCache();
@@ -238,202 +188,110 @@ async function getEventTitle(e){
     }catch{}
   }
 
-  // 3) mirr:///gift_ranking/xxx などは推測
+  // フォールバック
   if(e.url && e.url.includes("gift_ranking")){
     const mm = e.url.match(/gift_ranking\/(\d+)/);
     const id = mm ? mm[1] : "";
     const t = id ? `ギフトランキング（${id}）` : "ギフトランキング";
-    titleCache[key] = t;
-    saveTitleCache();
+    titleCache[key] = t; saveTitleCache();
     return t;
   }
 
   const fallback = "イベント";
-  titleCache[key] = fallback;
-  saveTitleCache();
+  titleCache[key] = fallback; saveTitleCache();
   return fallback;
 }
 
-// ===== 新着判定（added_at or created_at がある前提。なければ start を代用） =====
-function getAddedAtMs(e){
-  // 推奨：schedule JSONに added_at (unix秒) を入れてね
-  if(typeof e.added_at === "number") return e.added_at * 1000;
-  if(typeof e.created_at === "number") return e.created_at * 1000;
-
-  // ない場合：start日を代用（厳密な新着ではないけど、表示はできる）
-  if(e.start) {
-    const t = Date.parse(e.start);
-    if(!Number.isNaN(t)) return t;
-  }
-  return null;
-}
-function isNewEvent(e){
-  const t = getAddedAtMs(e);
-  if(!t) return false;
-  const diffH = (Date.now() - t) / 3600000;
-  return diffH >= 0 && diffH <= NEW_HOURS;
-}
-
-// ===== 状態 =====
-let allEvents = [];
-let currentMonth = null;
-let onlyNew = false;
-let searchText = "";
-
-// ===== スケジュール読み込み =====
+// ===== schedule load =====
 async function loadSchedule(){
   const listRes = await fetch("schedule/index.json");
   const files = await listRes.json();
   let events = [];
-
   for(const file of files){
     const data = await fetch("schedule/"+file).then(r=>r.json());
     events = events.concat(data);
   }
 
   // 重複排除
-  const seen = {};
+  const seen={};
   events = events.filter(e=>{
-    const key = e.url+"|"+e.start+"|"+e.end;
+    const key=e.url+"|"+e.start+"|"+e.end;
     if(seen[key]) return false;
     seen[key]=true;
     return true;
   });
 
-  // タイトルを先に埋め（軽めの並列）
+  // ★タイトルを先に埋める（og:title / title）
   await Promise.all(events.map(async (e)=>{
     e._title = await getEventTitle(e);
-    e._isNew = isNewEvent(e);
   }));
 
-  allEvents = events;
-
-  const months = Array.from(new Set(events.map(e=>e.start.substr(0,7)))).sort();
-  renderTabs(months);
-
-  const nowMonth = new Date().toISOString().substr(0,7);
-  currentMonth = months.includes(nowMonth) ? nowMonth : months[months.length-1];
-  applyAndRender();
+  const months=Array.from(new Set(events.map(e=>e.start.substr(0,7)))).sort();
+  renderTabs(months,events);
 }
 
-function renderTabs(months){
-  const tabsWrap = document.getElementById("tabs");
-  tabsWrap.innerHTML = "";
-
+function renderTabs(months,events){
+  const tabsWrap=document.getElementById("tabs"); tabsWrap.innerHTML="";
+  const nowMonth=new Date().toISOString().substr(0,7);
   months.forEach(m=>{
-    const tab = document.createElement("div");
-    tab.className = "tab" + (m === currentMonth ? " active" : "");
-    tab.textContent = m;
-    tab.onclick = ()=>{
-      currentMonth = m;
+    const tab=document.createElement("div");
+    tab.className="tab"+(m===nowMonth?" active":"");
+    tab.textContent=m;
+    tab.onclick=()=>{
       document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
       tab.classList.add("active");
-      applyAndRender();
+      render(events.filter(ev=>ev.start.substr(0,7)===m));
     };
     tabsWrap.appendChild(tab);
   });
-
-  // 初期描画のとき、currentMonthが未設定なら「今月or最新月」でactiveにする
-  const nowMonth = new Date().toISOString().substr(0,7);
-  if(!currentMonth){
-    currentMonth = months.includes(nowMonth) ? nowMonth : months[months.length-1];
-  }
-  // active反映
-  [...tabsWrap.children].forEach(ch=>{
-    if(ch.textContent === currentMonth) ch.classList.add("active");
-  });
-}
-
-function applyAndRender(){
-  let events = allEvents.slice();
-
-  // 月フィルタ
-  if(currentMonth){
-    events = events.filter(ev => ev.start.substr(0,7) === currentMonth);
-  }
-
-  // 新着のみ
-  if(onlyNew){
-    events = events.filter(ev => ev._isNew);
-  }
-
-  // 検索（タイトル優先）
-  if(searchText.trim()){
-    const q = searchText.trim().toLowerCase();
-    events = events.filter(ev => (ev._title || "").toLowerCase().includes(q));
-  }
-
-  render(events);
+  const initialMonth=months.includes(nowMonth)?nowMonth:months[months.length-1];
+  render(events.filter(ev=>ev.start.substr(0,7)===initialMonth));
 }
 
 // ===== カード描画 =====
 function render(events){
-  const wrap = document.getElementById("schedule");
-  wrap.innerHTML = "";
-
-  const now = new Date();
+  const wrap=document.getElementById("schedule"); wrap.innerHTML="";
+  const now=new Date();
   events.sort((a,b)=>new Date(a.start)-new Date(b.start));
 
   for(const e of events){
-    const start = new Date(e.start), end = new Date(e.end);
-    const card = document.createElement("div");
-    card.className = "card";
+    const start=new Date(e.start), end=new Date(e.end);
+    const card=document.createElement("div"); card.className="card";
     if(now>=start && now<=end) card.classList.add("glow");
 
-    // バッジ
-    const badges = document.createElement("div");
-    badges.className = "badges";
-    if(e._isNew){
-      const b = document.createElement("div");
-      b.className = "badge new";
-      b.textContent = "NEW";
-      badges.appendChild(b);
-    }
-    card.appendChild(badges);
+    const box=document.createElement("div"); box.className="image-box";
 
-    const box = document.createElement("div");
-    box.className = "image-box";
-
-    // 🔹 catalog_banner を hero に置換してモーダル表示
-    box.onclick = ()=>{
+    // catalog_banner → hero をモーダル
+    box.onclick=()=>{
       let hero = e.image ? e.image.replace("catalog_banner","hero") : null;
       openModal(hero, e.images, e);
     };
 
     if(e.image){
-      const img = document.createElement("img");
-      img.src = proxyImage(e.image);
-      box.appendChild(img);
+      const img=document.createElement("img"); img.src=proxyImage(e.image); box.appendChild(img);
     }else{
-      box.textContent = "No Image";
-      box.style.padding = "24px";
-      box.style.textAlign = "center";
-      box.style.color = "#aaa";
+      box.textContent="No Image";
+      box.style.padding="24px";
+      box.style.textAlign="center";
+      box.style.color="#aaa";
     }
 
-    const circle = document.createElement("div");
-    circle.className = "time-circle";
+    const circle=document.createElement("div"); circle.className="time-circle";
     if(now<start){circle.textContent="開始\n"+Math.ceil((start-now)/86400000)+"日"; circle.style.color="#00f";}
     else if(now>=start && now<=end){circle.textContent="終了\n"+Math.ceil((end-now)/86400000)+"日"; circle.style.color="red";}
     else{circle.textContent="終了"; circle.style.color="#888";}
 
-    const titleDiv = document.createElement("div");
-    titleDiv.className = "event-title";
+    // ★ タイトル
+    const titleDiv=document.createElement("div");
+    titleDiv.className="event-title";
     titleDiv.textContent = e._title || e.title || "イベント";
 
-    const dateText = document.createElement("div");
-    dateText.style.textAlign="center";
-    dateText.style.fontSize="12px";
-    dateText.style.margin="6px 0 28px 0";
-    dateText.textContent = `期間: ${e.start.substr(0,10)} ~ ${e.end.substr(0,10)}`;
+    const dateText=document.createElement("div");
+    dateText.style.textAlign="center"; dateText.style.fontSize="12px"; dateText.style.margin="6px 0 28px 0";
+    dateText.textContent=`期間: ${e.start.substr(0,10)} ~ ${e.end.substr(0,10)}`;
 
-    const btn = document.createElement("div");
-    btn.className = "open-btn";
-    btn.textContent = "開く";
-    btn.onclick = (ev)=>{
-      ev.stopPropagation();
-      location.href = directLink(e.url);
-    };
+    const btn=document.createElement("div"); btn.className="open-btn"; btn.textContent="開く";
+    btn.onclick=(ev)=>{ev.stopPropagation(); location.href=directLink(e.url);};
 
     card.append(box,circle,titleDiv,dateText,btn);
     wrap.appendChild(card);
@@ -441,15 +299,14 @@ function render(events){
 }
 
 // ===== モーダル =====
-let currentImages = [];
+let currentImages=[];
 function openModal(hero, images, eventData){
-  const img = document.getElementById("modal-img");
-  const btnsWrap = document.getElementById("modal-btns");
+  const img=document.getElementById("modal-img");
+  const btnsWrap=document.getElementById("modal-btns");
+  currentImages=[];
 
-  currentImages = [];
   const isGiftRanking = eventData && eventData.url && eventData.url.includes("gift_ranking");
 
-  // 🎁 gift_ranking 専用
   if(isGiftRanking){
     if(eventData.image){
       const heroImg = eventData.image.replace("mainbnr","hero");
@@ -458,14 +315,8 @@ function openModal(hero, images, eventData){
     const match = eventData.image && eventData.image.match(/gift_ranking\/([^/]+)/);
     if(match){
       const id = match[1];
-      currentImages.push({
-        src:`https://cdn.mirrativ.com/mirrorman-prod/assets/avatar/img/etc/gift_ranking/${id}/ranking/day_1.png`,
-        name:"奇数日"
-      });
-      currentImages.push({
-        src:`https://cdn.mirrativ.com/mirrorman-prod/assets/avatar/img/etc/gift_ranking/${id}/ranking/day_2.png`,
-        name:"偶数日"
-      });
+      currentImages.push({src:`https://cdn.mirrativ.com/mirrorman-prod/assets/avatar/img/etc/gift_ranking/${id}/ranking/day_1.png`,name:"奇数日"});
+      currentImages.push({src:`https://cdn.mirrativ.com/mirrorman-prod/assets/avatar/img/etc/gift_ranking/${id}/ranking/day_2.png`,name:"偶数日"});
     }
   }else{
     if(hero) currentImages.push({src:hero,name:"Hero"});
@@ -476,12 +327,12 @@ function openModal(hero, images, eventData){
 
   if(currentImages.length===0) return;
 
-  btnsWrap.innerHTML = "";
+  btnsWrap.innerHTML="";
   currentImages.forEach((item,index)=>{
-    const b = document.createElement("button");
-    b.textContent = item.name;
+    const b=document.createElement("button");
+    b.textContent=item.name;
     if(index===0) b.classList.add("active");
-    b.onclick = ()=>{
+    b.onclick=()=>{
       loadModalImage(item.src);
       btnsWrap.querySelectorAll("button").forEach(bt=>bt.classList.remove("active"));
       b.classList.add("active");
@@ -493,28 +344,15 @@ function openModal(hero, images, eventData){
   document.getElementById("modal").style.display="flex";
 }
 function loadModalImage(src){
-  const loader = document.getElementById("modal-loader");
-  const img = document.getElementById("modal-img");
+  const loader=document.getElementById("modal-loader");
+  const img=document.getElementById("modal-img");
   loader.style.display="block";
   img.style.display="none";
-  img.onload = ()=>{loader.style.display="none"; img.style.display="block";};
-  img.src = proxyImage(src);
+  img.onload=()=>{loader.style.display="none"; img.style.display="block";};
+  img.src=proxyImage(src);
 }
 function closeModal(){document.getElementById("modal").style.display="none";}
 document.addEventListener("keydown",e=>{if(e.key==="Escape") closeModal();});
-
-// ===== 上部コントロール（検索 + 新着のみ） =====
-const searchEl = document.getElementById("search");
-searchEl.addEventListener("input", ()=>{
-  searchText = searchEl.value || "";
-  applyAndRender();
-});
-const onlyNewBtn = document.getElementById("onlyNewBtn");
-onlyNewBtn.addEventListener("click", ()=>{
-  onlyNew = !onlyNew;
-  onlyNewBtn.classList.toggle("active", onlyNew);
-  applyAndRender();
-});
 
 // ===== スケジュールロード =====
 loadSchedule();
@@ -526,7 +364,7 @@ document.addEventListener('copy',e=>e.preventDefault());
 document.addEventListener('keydown',e=>{
   if(e.ctrlKey && ["c","C","s","S","p","P"].includes(e.key)){
     e.preventDefault();
-    const w = document.getElementById("screenshot-warning");
+    const w=document.getElementById("screenshot-warning");
     w.style.display="flex";
     setTimeout(()=>w.style.display="none",3000);
   }
