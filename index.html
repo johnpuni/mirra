@@ -1,242 +1,75 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <title>ホームページ</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      font-family: "Segoe UI", "ヒラギノ角ゴ ProN", Meiryo, sans-serif;
-      margin: 0;
-      background-color: #f5f5f5;
-      line-height: 1.6;
-    }
-
-    /* --- ヘッダー --- */
-    header {
-      background-color: #333;
-      padding: 10px 0;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-
-    nav {
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    ul.menu {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-    }
-
-    ul.menu > li {
-      position: relative;
-    }
-
-    ul.menu > li > a {
-      display: block;
-      padding: 15px 20px;
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-      cursor: pointer;
-      transition: color 0.3s;
-      position: relative;
-      font-size: 1em;
-    }
-
-    ul.menu > li > a::after {
-      content: "";
-      position: absolute;
-      left: 50%;
-      bottom: 8px;
-      width: 0;
-      height: 2px;
-      background: #ffd700;
-      transition: all 0.3s ease;
-      transform: translateX(-50%);
-    }
-
-    ul.menu > li > a:hover {
-      color: #ffd700;
-    }
-
-    ul.menu > li > a:hover::after {
-      width: 60%;
-    }
-
-    /* サブメニュー */
-    ul.submenu {
-      display: none;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      background-color: #444;
-      min-width: 180px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-      border-radius: 0 0 5px 5px;
-      z-index: 1000;
-    }
-
-    ul.submenu li a {
-      display: block;
-      padding: 10px 15px;
-      color: white;
-      text-decoration: none;
-      transition: background 0.2s;
-    }
-
-    ul.submenu li a:hover {
-      background-color: #666;
-    }
-
-    ul.menu > li:hover > ul.submenu {
-      display: block;
-    }
-
-    /* --- 本文 --- */
-    main {
-      max-width: 900px;
-      margin: 40px auto;
-      background-color: white;
-      padding: 30px;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-
-    main h2 {
-      margin-top: 0;
-      color: #333;
-    }
-
-    main p {
-      margin-bottom: 20px;
-      color: #444;
-    }
-
-    main ul.recent-item {
-      text-align: left;
-      padding-left: 0;
-      display: grid;
-      gap: 12px;
-    }
-
-    main ul.recent-item li {
-      background: #fafafa;
-      padding: 14px 16px;
-      border-radius: 6px;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-      list-style: none;
-      font-size: 1.05em;
-    }
-
-    /* --- お問い合わせフォームカード --- */
-    section.contact {
-      margin-top: 50px;
-      padding: 25px;
-      background: #fafafa;
-      border-radius: 10px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-    }
-
-    section.contact h3 {
-      font-size: 1.3em;
-      color: #222;
-      margin-bottom: 15px;
-      padding-left: 12px;
-      border-left: 5px solid #0078d7;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    section.contact h3::before {
-      content: "📩";
-    }
-
-    section.contact p {
-      margin-bottom: 15px;
-      color: #555;
-    }
-
-    section.contact iframe {
-      width: 100%;
-      min-height: 600px;
-      border: none;
-      border-radius: 8px;
-      background: white;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-
-    /* --- スマホ対応 --- */
-    @media (max-width: 600px) {
-      main {
-        padding: 20px;
-      }
-      section.contact {
-        padding: 15px;
-      }
-      section.contact iframe {
-        min-height: 500px;
-      }
-      /* メニューを小さめに調整 */
-      ul.menu > li > a {
-        padding: 12px 16px;
-        font-size: 1em;
-      }
-      ul.menu {
-        flex-direction: column;
-        align-items: stretch;
-      }
-    }
-  </style>
-</head>
-<body>
-
-<header>
-  <nav>
- <ul class="menu">
-  <li><a href="#">ホーム</a></li>
-  <li>
-    <a href="#">メニュー ▾</a>
-    <ul class="submenu">
-      <li><a href="emomo.html">エモモイベント</a></li>
-      <li><a href="schedule.html">スケジュール</a></li>
-    </ul>
-  </li>
-
-  <li><a href="#">unknown</a></li>
-</ul>
-  </nav>
-</header>
-
-<main>
-  <h2>ようこそ！</h2>
-  <p>これはミラティブの情報を集めたサイトです！</p>
-
-  <section>
-    <h3>🆕 公開予定</h3>
-    <ul class="recent-item">
-      <li>エモバト情報サイト</li>
-      <li>あるぴ情報サイト</li>
-      <li>エモラン情報サイト</li>
-    </ul>
-  </section>
-
-  <!-- お問い合わせフォーム -->
-  <section class="contact">
-    <h3>ご要望・お問い合わせ</h3>
-    <p>お気軽にご連絡ください！</p>
-    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSc-1pia8ia5Ym1pA_6lA7LLqkfpMLXl60awItQKWE0jl9JpNw/viewform?embedded=true">
-      読み込んでいます…
-    </iframe>
-  </section>
-</main>
-
-</body>
-</html>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>通信キャリアマスター｜料金・オプション・ネット・でんきクイズ</title>
+<style>
+:root{--bg:#09111f;--panel:#111c2f;--panel2:#17253d;--text:#f4f7fb;--muted:#9fb0c8;--accent:#66e3b4;--danger:#ff7e8a;--warn:#ffd166;--line:#273955}*{box-sizing:border-box}body{margin:0;background:linear-gradient(135deg,#08101d,#0d1930 60%,#10233b);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;min-height:100vh}.wrap{max-width:1050px;margin:auto;padding:20px}.hero{padding:28px 0 18px}.hero h1{font-size:clamp(27px,5vw,48px);margin:0 0 8px}.hero p{color:var(--muted);margin:0;line-height:1.7}.badge{display:inline-flex;gap:7px;align-items:center;background:#17334a;border:1px solid #2d5773;border-radius:999px;padding:7px 11px;font-size:13px;margin-bottom:12px}.grid{display:grid;grid-template-columns:280px 1fr;gap:18px}.card{background:rgba(17,28,47,.94);border:1px solid var(--line);border-radius:18px;box-shadow:0 14px 35px rgba(0,0,0,.2)}.side{padding:16px;align-self:start;position:sticky;top:12px}.section-title{font-size:13px;color:var(--muted);font-weight:700;letter-spacing:.08em;margin:10px 0 7px}.chips{display:flex;flex-wrap:wrap;gap:7px}.chip{border:1px solid #35506f;background:#111d30;color:#dce7f7;border-radius:999px;padding:8px 10px;cursor:pointer;font-size:13px}.chip.active{background:var(--accent);color:#052318;border-color:var(--accent);font-weight:800}.btn{width:100%;border:0;border-radius:12px;padding:12px;font-weight:800;cursor:pointer;margin-top:10px;background:var(--accent);color:#06261a}.btn.secondary{background:#223552;color:#e8f0fa}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}.stat{background:#0c1728;border:1px solid #233650;border-radius:11px;padding:9px;text-align:center}.stat b{display:block;font-size:18px}.stat span{font-size:11px;color:var(--muted)}.main{padding:20px}.topline{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:16px}.progress{height:9px;background:#0a1424;border-radius:99px;overflow:hidden;flex:1}.progress i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),#62aef6);width:0}.qmeta{font-size:13px;color:var(--muted);white-space:nowrap}.tags{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px}.tag{font-size:12px;background:#1a304a;border:1px solid #315170;border-radius:999px;padding:5px 8px}.question{font-size:clamp(20px,3vw,28px);line-height:1.5;margin:13px 0 18px}.answers{display:grid;gap:10px}.answer{border:1px solid #334b69;background:#101c2f;color:#eef5ff;border-radius:13px;padding:14px;text-align:left;cursor:pointer;font-size:16px;line-height:1.45}.answer:hover{border-color:#6ba8d9;transform:translateY(-1px)}.answer.correct{background:#153e34;border-color:#4de0ac}.answer.wrong{background:#472632;border-color:#ff8490}.answer:disabled{cursor:default;transform:none}.result{display:none;margin-top:17px;padding:15px;background:#0d1828;border-left:4px solid var(--accent);border-radius:10px;line-height:1.7}.result.bad{border-left-color:var(--danger)}.source{display:inline-block;margin-top:8px;color:#82c8ff;text-decoration:none;font-weight:700}.next{display:none;margin-top:15px;width:auto;padding:12px 24px}.empty{text-align:center;padding:40px;color:var(--muted)}.notice{margin-top:18px;padding:14px 16px;background:#211f16;border:1px solid #594d25;color:#ffe8a6;border-radius:13px;line-height:1.6;font-size:13px}.footer{color:var(--muted);text-align:center;font-size:12px;padding:25px 0 10px}.review{margin-top:14px;font-size:13px;color:var(--muted)}@media(max-width:760px){.grid{grid-template-columns:1fr}.side{position:static}.main{padding:16px}.topline{align-items:flex-start;flex-direction:column}.progress{width:100%}.stats{grid-template-columns:repeat(3,1fr)}}
+</style></head>
+<body><div class="wrap"><header class="hero"><div class="badge">📡 公式情報ベース・2026年8月2日確認</div><h1>通信キャリアマスター</h1><p>携帯料金・通話オプション・光回線・ホームルーター・でんきを、キャリア別／全社混合、初級〜上級で反復学習できます。</p></header>
+<div class="grid"><aside class="card side"><div class="section-title">キャリア</div><div class="chips" id="carrierChips"></div><div class="section-title">分野</div><div class="chips" id="topicChips"></div><div class="section-title">難易度</div><div class="chips" id="levelChips"></div><button class="btn" id="startBtn">この条件でスタート</button><button class="btn secondary" id="randomBtn">全キャリアランダム</button><button class="btn secondary" id="resetBtn">学習記録をリセット</button><div class="stats"><div class="stat"><b id="correctStat">0</b><span>正解</span></div><div class="stat"><b id="totalStat">0</b><span>回答</span></div><div class="stat"><b id="rateStat">0%</b><span>正答率</span></div></div><div class="review" id="reviewText"></div></aside>
+<main class="card main"><div id="quiz"><div class="topline"><div class="progress"><i id="bar"></i></div><div class="qmeta" id="counter"></div></div><div class="tags" id="tags"></div><div class="question" id="question"></div><div class="answers" id="answers"></div><div class="result" id="result"></div><button class="btn next" id="nextBtn">次の問題へ</button></div><div class="empty" id="empty" style="display:none">条件に合う問題がありません。</div><div class="notice">⚠️ 料金・キャンペーン・適用条件は変更されることがあります。接客前には必ず各問題の「公式情報を確認」から最新条件をご確認ください。キャンペーン限定価格ではなく、原則として通常料金・基本仕様を問題にしています。</div></main></div><div class="footer">Carrier Quiz Study Tool — 学習記録はこの端末内に保存されます。</div></div>
+<script>
+const Q=[
+{id:1,c:'SoftBank',t:'料金',l:'初級',q:'SoftBankの「テイガク無制限」の特徴として正しいものは？',a:['データ容量無制限の定額プラン','毎月5GBまでの従量制','通話専用プラン','法人専用プラン'],ok:0,e:'「テイガク無制限」は、データ容量を気にせず使える無制限系の料金プランです。',s:'https://www.softbank.jp/mobile/price_plan/'},
+{id:2,c:'SoftBank',t:'料金',l:'初級',q:'SoftBankの「ミニフィットプラン＋」はどのようなタイプ？',a:['使用データ量に応じて段階的に料金が変わる','完全な無制限','30GB固定','音声通話のみ'],ok:0,e:'少量利用者向けの段階制プランです。',s:'https://www.softbank.jp/mobile/price_plan/'},
+{id:3,c:'SoftBank',t:'ネット',l:'初級',q:'SoftBank Airの主な特徴は？',a:['工事不要のホームルーター','光ファイバー工事が必須','持ち歩き専用Wi-Fi','固定電話だけのサービス'],ok:0,e:'Airターミナルをコンセントにつないで使う、工事不要の家庭用Wi‑Fiです。',s:'https://www.softbank.jp/internet/air/'},
+{id:4,c:'SoftBank',t:'ネット',l:'中級',q:'SoftBank AirのAir 4G/5G共通プラン基本料金は、2026年8月確認時点で月額いくら？',a:['4,180円','5,368円','5,720円','6,380円'],ok:1,e:'基本料金は月額5,368円です。端末代や割引は別に確認します。',s:'https://www.softbank.jp/internet/air/price/'},
+{id:5,c:'SoftBank',t:'ネット',l:'中級',q:'SoftBank 光 1ギガの2年自動更新プランで、戸建ての代表的な基本料金は？',a:['4,180円','5,280円','5,720円','6,930円'],ok:2,e:'戸建ての代表的な基本料金は月額5,720円。集合住宅は代表的に4,180円です。',s:'https://www.softbank.jp/internet/sbhikari/simulator/'},
+{id:6,c:'SoftBank',t:'ネット',l:'上級',q:'SoftBankの「おうち割 光セット」を組む際、対象固定回線だけ契約すれば必ず適用される？',a:['はい、固定回線のみでよい','いいえ、指定オプション等の条件確認が必要','SoftBank Airでは絶対に不可','法人のみ適用'],ok:1,e:'SoftBank 光では指定オプション（月額550円〜など）が条件になるケースがあります。',s:'https://www.softbank.jp/internet/sbhikari/simulator/'},
+{id:7,c:'SoftBank',t:'でんき',l:'初級',q:'SoftBankの「自然でんき」の基本料金は？',a:['0円','550円','1,100円','契約アンペアで必ず変動'],ok:0,e:'自然でんきは基本料金0円で、電力量料金などがかかります。',s:'https://www.softbank.jp/energy/prices/'},
+{id:8,c:'SoftBank',t:'でんき',l:'中級',q:'おうちでんきのセット割は、でんき1契約につき最大何回線まで対象になり得る？',a:['3回線','5回線','10回線','20回線'],ok:2,e:'でんき1契約につき最大10回線までと案内されています。対象プランや割引額は要確認です。',s:'https://www.softbank.jp/energy/special/ouchi-denki/'},
+{id:9,c:'Y!mobile',t:'料金',l:'初級',q:'Y!mobile「シンプル3」の容量構成として正しいものは？',a:['1GB・3GB・5GB','5GB・30GB・35GB','20GB・50GB・無制限','30GBのみ'],ok:1,e:'シンプル3はS=5GB、M=30GB、L=35GBです。',s:'https://www.ymobile.jp/plan/'},
+{id:10,c:'Y!mobile',t:'料金',l:'中級',q:'シンプル3 Sの基本使用料は、2026年の料金改定後いくら？',a:['990円','2,178円','3,278円','4,378円'],ok:2,e:'改定後の基本使用料は税込3,278円。割引適用後価格と混同しないことが重要です。',s:'https://www.ymobile.jp/sp/ym/'},
+{id:11,c:'Y!mobile',t:'オプション',l:'初級',q:'「だれとでも定額＋」の内容は？',a:['国内通話1回10分以内が定額対象','国内通話が完全無料','国際通話が無制限','データ容量を10GB追加'],ok:0,e:'1回10分以内の国内通話が定額対象です。一部対象外通話があります。',s:'https://www.ymobile.jp/plan/'},
+{id:12,c:'Y!mobile',t:'オプション',l:'中級',q:'「スーパーだれとでも定額＋」の通常月額は？',a:['550円','880円','1,980円','2,970円'],ok:2,e:'通常は月額1,980円。60歳以上向け割引などは別条件です。',s:'https://www.ymobile.jp/plan/'},
+{id:13,c:'Y!mobile',t:'ネット',l:'初級',q:'Y!mobileの「おうち割 光セット（A）」の対象固定通信として代表的なのは？',a:['SoftBank 光／SoftBank Air','ドコモ光のみ','auひかりのみ','楽天ひかりのみ'],ok:0,e:'SoftBank 光やSoftBank Airとのセットが代表的です。',s:'https://www.ymobile.jp/plan/discount/ouchiwari/'},
+{id:14,c:'Y!mobile',t:'でんき',l:'上級',q:'シンプル3 M/Lの「おうち割 でんきセット（E）」と、おうち割 光セット（A）は重複できる？',a:['必ず重複できる','重複できない','Lのみ重複できる','法人契約のみ重複できる'],ok:1,e:'重複割引はできないと案内されています。',s:'https://www.softbank.jp/energy/special/ouchi-denki/'},
+{id:15,c:'docomo',t:'料金',l:'初級',q:'ドコモの大容量・無制限系の中心プラン名は？',a:['ドコモ MAX','irumo','ギガライト2','docomo S'],ok:0,e:'現行の中心となる大容量系プランは「ドコモ MAX」です。',s:'https://www.docomo.ne.jp/charge/'},
+{id:16,c:'docomo',t:'料金',l:'初級',q:'ドコモの小容量向けプラン名は？',a:['ドコモ mini','ドコモ Air','ドコモ Light X','mini ahamo'],ok:0,e:'小容量向けは「ドコモ mini」です。',s:'https://www.docomo.ne.jp/charge/docomo_mini/'},
+{id:17,c:'docomo',t:'料金',l:'中級',q:'ドコモ miniで、ドコモ光／home 5Gセット割の割引額は最大いくら？',a:['550円','880円','1,100円','1,210円'],ok:3,e:'対象条件を満たすと月額1,210円割引です。',s:'https://www.docomo.ne.jp/charge/docomo_mini/'},
+{id:18,c:'docomo',t:'ネット',l:'初級',q:'home 5Gはどの分類？',a:['工事不要のホームルーター','光回線','モバイル音声プラン','電気サービス'],ok:0,e:'専用端末を自宅に置いて使うホームルーターサービスです。',s:'https://www.docomo.ne.jp/home_5g/'},
+{id:19,c:'docomo',t:'ネット',l:'中級',q:'home 5G プランの月額料金は？',a:['4,180円','4,950円','5,280円','5,720円'],ok:2,e:'月額5,280円。端末代やユニバーサルサービス料等は別です。',s:'https://www.docomo.ne.jp/home_5g/charge/'},
+{id:20,c:'docomo',t:'ネット',l:'中級',q:'ドコモ光1ギガの代表的な最低月額は？',a:['3,278円から','4,180円から','5,280円から','6,380円から'],ok:1,e:'マンション等で月額4,180円からと案内されています。タイプ・契約期間で異なります。',s:'https://www.docomo.ne.jp/internet/hikari/1g_plan/'},
+{id:21,c:'docomo',t:'ネット',l:'上級',q:'同一ファミリー割引グループ内にドコモ光とhome 5Gの両方がある場合、優先されるセット割は？',a:['home 5Gセット割','ドコモ光セット割','両方二重適用','どちらも適用されない'],ok:1,e:'公式案内ではドコモ光セット割が適用されます。',s:'https://www.docomo.ne.jp/home_5g/charge/'},
+{id:22,c:'docomo',t:'でんき',l:'中級',q:'ドコモ miniの「ドコモでんきセット割」は月額いくら？',a:['55円','110円','550円','1,210円'],ok:1,e:'対象条件を満たすと月額110円割引です。',s:'https://www.docomo.ne.jp/charge/docomo_mini/'},
+{id:23,c:'ahamo',t:'料金',l:'初級',q:'ahamo基本プランの月間データ容量と料金は？',a:['20GB・2,728円','30GB・2,970円','50GB・3,278円','100GB・4,950円'],ok:1,e:'30GBで月額2,970円です。',s:'https://ahamo.com/plan/index.html'},
+{id:24,c:'ahamo',t:'料金',l:'初級',q:'ahamo大盛り適用時の合計容量と料金は？',a:['80GB・3,980円','100GB・4,950円','110GB・4,950円','120GB・5,500円'],ok:2,e:'基本30GB＋大盛り80GBで合計110GB、月額4,950円です。',s:'https://ahamo.com/special/oomori/'},
+{id:25,c:'ahamo',t:'オプション',l:'初級',q:'ahamo基本料金に含まれる国内通話特典は？',a:['1回5分以内無料','1回10分以内無料','完全かけ放題','通話特典なし'],ok:0,e:'1回5分以内の国内通話が無料。一部対象外があります。',s:'https://ahamo.com/plan/index.html'},
+{id:26,c:'ahamo',t:'料金',l:'中級',q:'ahamoで海外データ通信を追加料金なしで使える容量上限は、国内利用分と合算で何GB？',a:['10GB','20GB','30GB','110GB'],ok:2,e:'海外では30GBまで追加料金不要。大盛りでも海外上限は30GBです。',s:'https://ahamo.com/plan/index.html'},
+{id:27,c:'ahamo',t:'料金',l:'上級',q:'ahamo大盛りオプション単体の内容は？',a:['月額1,980円で80GB追加','月額1,100円で30GB追加','月額2,200円で100GB追加','無料で80GB追加'],ok:0,e:'大盛りは月額1,980円で80GB追加し、合計110GBとなります。',s:'https://faq.ahamo.com/faq/show/937'},
+{id:28,c:'au',t:'料金',l:'初級',q:'auの使い放題系中心プラン名は？',a:['auバリューリンクプラン','au mini 3','ピタット5','au MAX 20'],ok:0,e:'現行の中心プランの一つが「auバリューリンクプラン」です。',s:'https://www.au.com/mobile/charge/'},
+{id:29,c:'au',t:'料金',l:'初級',q:'au「スマホミニプラン＋」の月間上限容量は？',a:['3GB','5GB','10GB','20GB'],ok:1,e:'5GBまでの段階制プランです。',s:'https://www.au.com/mobile/charge/'},
+{id:30,c:'au',t:'料金',l:'中級',q:'スマホミニプラン＋で、各種割引適用時の1GBまでの料金例は？',a:['1,078円','2,398円','3,278円','4,048円'],ok:1,e:'公式掲載の各種割引適用時の例は税込2,398円です。適用条件の確認が必要です。',s:'https://www.au.com/mobile/charge/'},
+{id:31,c:'au',t:'ネット',l:'初級',q:'auスマートバリューとは何のセット割？',a:['対象の自宅インターネット等とauスマホ','auでんきだけとスマホ','端末補償とスマホ','家族割のみ'],ok:0,e:'対象の固定通信サービス等とauスマホを組み合わせる割引です。',s:'https://www.au.com/mobile/charge/charge-discount/smartvalue/'},
+{id:32,c:'au',t:'でんき',l:'初級',q:'auでんきへ切り替えると、電気の品質や送電線は基本的にどうなる？',a:['従来と同じ送電網で品質も基本同じ','専用の電線工事が必須','停電が必ず増える','au回線がないと送電されない'],ok:0,e:'従来と同じ送配電網を利用するため、電気の品質は基本的に変わりません。',s:'https://www.au.com/energy/denki/pr/prime/base/'},
+{id:33,c:'au',t:'でんき',l:'中級',q:'auでんきの一般家庭向け代表プラン名は？',a:['でんきMプラン','au電力MAX','スマート電気30','Ponta電気S'],ok:0,e:'一般家庭向けの代表プランは「でんきMプラン」です。',s:'https://www.au.com/energy/denki/merit/plan/'},
+{id:34,c:'UQ mobile',t:'料金',l:'初級',q:'UQ mobileが利用する主なネットワークは？',a:['au 5G／4G LTE','SoftBankのみ','ドコモのみ','楽天回線のみ'],ok:0,e:'UQ mobileはauの5G／4G LTEネットワークを利用します。',s:'https://www.uqwimax.jp/mobile/'},
+{id:35,c:'UQ mobile',t:'ネット',l:'初級',q:'UQ mobileの「自宅セット割」は何との組み合わせが代表的？',a:['対象インターネットサービスまたはauでんき','ドコモ光だけ','SoftBank Airだけ','楽天ひかりだけ'],ok:0,e:'対象のインターネットコースまたはでんきコースがあります。',s:'https://www.uqwimax.jp/mobile/plan/discount/jitaku-setwari/'},
+{id:36,c:'UQ mobile',t:'オプション',l:'中級',q:'UQ mobileのキャリアメール「@uqmobile.jp」は一般にどう扱われる？',a:['有料オプション','全プラン無料標準','利用不可','法人専用'],ok:0,e:'メールサービスは有料オプションとして提供されています。最新料金は公式で確認してください。',s:'https://www.uqwimax.jp/mobile/plan/option/mail/'},
+{id:37,c:'楽天モバイル',t:'料金',l:'初級',q:'Rakuten最強プランの料金体系は？',a:['使ったデータ量に応じて段階的に変化','毎月完全固定','通話時間だけで変化','年齢だけで変化'],ok:0,e:'使用データ量に応じて料金が変わる段階制です。',s:'https://network.mobile.rakuten.co.jp/fee/saikyo-plan/'},
+{id:38,c:'楽天モバイル',t:'料金',l:'中級',q:'最強家族割適用時、3GBまでの月額料金は？',a:['968円','1,078円','2,178円','3,168円'],ok:0,e:'税込968円です。通常料金と家族割適用後を混同しないようにします。',s:'https://network.mobile.rakuten.co.jp/fee/saikyo-plan/'},
+{id:39,c:'楽天モバイル',t:'料金',l:'中級',q:'最強家族割適用時、データ無制限の月額料金は？',a:['2,970円','3,168円','3,278円','4,950円'],ok:1,e:'税込3,168円です。公平なサービス提供のため速度制御される場合があります。',s:'https://network.mobile.rakuten.co.jp/fee/saikyo-plan/'},
+{id:40,c:'楽天モバイル',t:'オプション',l:'初級',q:'国内通話を無料で利用するために基本となるアプリは？',a:['Rakuten Link','my docomo','My SoftBank','au PAY'],ok:0,e:'Rakuten Linkアプリ利用時に国内通話無料となります。一部対象外番号があります。',s:'https://network.mobile.rakuten.co.jp/service/rakuten-link/'},
+{id:41,c:'楽天モバイル',t:'料金',l:'中級',q:'最強家族割の1人あたりの月額割引額は？',a:['55円','110円','550円','1,100円'],ok:1,e:'1人あたり月額110円割引です。',s:'https://network.mobile.rakuten.co.jp/fee/family/'},
+{id:42,c:'楽天モバイル',t:'でんき',l:'初級',q:'楽天でんきの申し込み窓口として正しいものは？',a:['楽天エナジー公式サイト','ドコモショップのみ','au Styleのみ','SoftBankショップのみ'],ok:0,e:'楽天エナジーの公式サイトから申し込みできます。',s:'https://energy.rakuten.co.jp/electricity/'},
+{id:43,c:'全キャリア',t:'比較',l:'初級',q:'30GB・月額2,970円・5分通話無料が標準のオンラインプランは？',a:['ahamo','Y!mobile シンプル3 S','SoftBank Air','楽天でんき'],ok:0,e:'ahamoの基本仕様です。',s:'https://ahamo.com/plan/index.html'},
+{id:44,c:'全キャリア',t:'比較',l:'初級',q:'工事不要ホームルーターの組み合わせとして正しいものは？',a:['SoftBank Air／home 5G','SoftBank 光／ドコモ光','auひかり／楽天ひかり','ahamo／LINEMO'],ok:0,e:'SoftBank Airとhome 5Gはいずれもホームルーターです。',s:'https://www.softbank.jp/internet/air/'},
+{id:45,c:'全キャリア',t:'比較',l:'中級',q:'月額5,280円のホームルータープランは？',a:['home 5G','SoftBank Air','ahamo大盛り','ドコモ光1ギガマンション'],ok:0,e:'home 5Gプランは月額5,280円です。',s:'https://www.docomo.ne.jp/home_5g/charge/'},
+{id:46,c:'全キャリア',t:'比較',l:'中級',q:'基本料金が使用データ量に応じて自動で変動する代表的なキャリアプランは？',a:['Rakuten最強プラン','ahamo','LINEMOベストプランV','home 5G'],ok:0,e:'Rakuten最強プランは段階制です。',s:'https://network.mobile.rakuten.co.jp/fee/saikyo-plan/'},
+{id:47,c:'全キャリア',t:'比較',l:'上級',q:'固定回線・ホームルーターの提案で最初に確認すべきこととして最も適切なのは？',a:['住所・提供エリア・住居形態・利用人数','好きな端末色だけ','年齢だけ','現在の待受画像'],ok:0,e:'提供可否や最適サービスは住所、住居形態、利用人数、用途、工事可否などで変わります。',s:'https://www.docomo.ne.jp/internet/'},
+{id:48,c:'全キャリア',t:'比較',l:'上級',q:'「割引後○円」と案内するとき最も重要なのは？',a:['適用条件・期間・終了後料金をセットで説明する','最安値だけ伝える','端末代を必ず省く','キャンペーン終了日を隠す'],ok:0,e:'割引条件、適用期間、通常料金、端末代、事務手数料などを分けて説明するのが重要です。',s:'https://www.soumu.go.jp/main_sosiki/joho_tsusin/'},
+{id:49,c:'LINEMO',t:'料金',l:'初級',q:'LINEMOベストプランの料金段階は？',a:['3GB以下990円、10GB以下2,090円','30GBのみ2,970円','5GBのみ1,078円','無制限3,168円'],ok:0,e:'3GB以下は990円、10GB以下は2,090円です。',s:'https://www.linemo.jp/plan/'},
+{id:50,c:'LINEMO',t:'料金',l:'初級',q:'LINEMOベストプランVのデータ容量と月額は？',a:['20GB・2,728円','30GB・2,970円','35GB・3,278円','110GB・4,950円'],ok:1,e:'30GBで月額2,970円です。',s:'https://www.linemo.jp/plan/'},
+{id:51,c:'LINEMO',t:'オプション',l:'中級',q:'LINEMOの特徴的なデータ特典は？',a:['LINEギガフリー','YouTube完全無制限','全SNS無制限','テザリング禁止'],ok:0,e:'対象のLINE機能はデータ消費としてカウントされない「LINEギガフリー」が特徴です。',s:'https://www.linemo.jp/service/line_free/'},
+{id:52,c:'全キャリア',t:'比較',l:'上級',q:'電気サービスの料金比較で、基本料金と電力量料金以外に確認すべきものは？',a:['燃料費調整額・市場連動額・再エネ賦課金等','スマホの壁紙','端末のカメラ画素数','SIMカードの色'],ok:0,e:'電気料金は燃料費調整、市場価格調整、再エネ賦課金、地域・使用量などでも変わります。',s:'https://www.softbank.jp/energy/support/contact/m-01/charge-calculation/'}
+];
+const carriers=['全て',...new Set(Q.map(x=>x.c))],topics=['全て',...new Set(Q.map(x=>x.t))],levels=['全て','初級','中級','上級'];let sel={c:'全て',t:'全て',l:'全て'},pool=[],idx=0,answered=false;let history=JSON.parse(localStorage.getItem('cqHistory')||'{"correct":0,"total":0,"wrongIds":[]}');
+function chips(id,arr,key){const el=document.getElementById(id);el.innerHTML='';arr.forEach(v=>{let b=document.createElement('button');b.className='chip'+(sel[key]===v?' active':'');b.textContent=v;b.onclick=()=>{sel[key]=v;chips(id,arr,key)};el.appendChild(b)})}
+function shuffle(a){return [...a].sort(()=>Math.random()-.5)}
+function begin(random=false){if(random){sel={c:'全て',t:'全て',l:'全て'};chips('carrierChips',carriers,'c');chips('topicChips',topics,'t');chips('levelChips',levels,'l')}pool=shuffle(Q.filter(x=>(sel.c==='全て'||x.c===sel.c||x.c==='全キャリア')&&(sel.t==='全て'||x.t===sel.t)&&(sel.l==='全て'||x.l===sel.l)));idx=0;render()}
+function render(){answered=false;document.getElementById('result').style.display='none';document.getElementById('nextBtn').style.display='none';if(!pool.length){document.getElementById('quiz').style.display='none';document.getElementById('empty').style.display='block';return}document.getElementById('quiz').style.display='block';document.getElementById('empty').style.display='none';const x=pool[idx];document.getElementById('counter').textContent=`${idx+1} / ${pool.length}`;document.getElementById('bar').style.width=`${(idx/pool.length)*100}%`;document.getElementById('tags').innerHTML=`<span class="tag">${x.c}</span><span class="tag">${x.t}</span><span class="tag">${x.l}</span>`;document.getElementById('question').textContent=x.q;let order=shuffle(x.a.map((v,i)=>({v,i})));let box=document.getElementById('answers');box.innerHTML='';order.forEach(o=>{let b=document.createElement('button');b.className='answer';b.textContent=o.v;b.onclick=()=>answer(b,o.i,x,box);box.appendChild(b)})}
+function answer(btn,choice,x,box){if(answered)return;answered=true;[...box.children].forEach(b=>b.disabled=true);const good=choice===x.ok;btn.classList.add(good?'correct':'wrong');if(!good){[...box.children].find(b=>b.textContent===x.a[x.ok])?.classList.add('correct')}history.total++;if(good)history.correct++;else if(!history.wrongIds.includes(x.id))history.wrongIds.push(x.id);if(good)history.wrongIds=history.wrongIds.filter(id=>id!==x.id);localStorage.setItem('cqHistory',JSON.stringify(history));stats();let r=document.getElementById('result');r.className='result'+(good?'':' bad');r.innerHTML=`<b>${good?'正解！':'不正解'}</b><br>${x.e}<br><a class="source" href="${x.s}" target="_blank" rel="noopener">公式情報を確認 ↗</a>`;r.style.display='block';document.getElementById('nextBtn').style.display='inline-block';document.getElementById('bar').style.width=`${((idx+1)/pool.length)*100}%`}
+function stats(){document.getElementById('correctStat').textContent=history.correct;document.getElementById('totalStat').textContent=history.total;document.getElementById('rateStat').textContent=history.total?Math.round(history.correct/history.total*100)+'%':'0%';document.getElementById('reviewText').textContent=history.wrongIds.length?`復習待ち：${history.wrongIds.length}問`:'復習待ちはありません'}
+document.getElementById('nextBtn').onclick=()=>{idx++;if(idx>=pool.length){pool=shuffle(pool);idx=0}render()};document.getElementById('startBtn').onclick=()=>begin(false);document.getElementById('randomBtn').onclick=()=>begin(true);document.getElementById('resetBtn').onclick=()=>{history={correct:0,total:0,wrongIds:[]};localStorage.setItem('cqHistory',JSON.stringify(history));stats()};chips('carrierChips',carriers,'c');chips('topicChips',topics,'t');chips('levelChips',levels,'l');stats();begin(true);
+</script></body></html>
